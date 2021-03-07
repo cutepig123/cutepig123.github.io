@@ -19,7 +19,7 @@
 # in the templates via {{ site.myvariable }}.
 
 title: cutepig's blog
-email: jinshouhe@gmail.com
+email: NA
 description: >- # this means to ignore newlines until "baseurl:"
   专注于计算机视觉，和C++
   CP程序员在香港。
