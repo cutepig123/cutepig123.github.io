@@ -38,7 +38,8 @@ permalink: /posts/:year-:month-:day-:title.html
 #exclude: [images]
 
 # Build settings
-theme: minima
+theme: no-style-please
+
 plugins:
   - jekyll-feed
   - jekyll-toc
