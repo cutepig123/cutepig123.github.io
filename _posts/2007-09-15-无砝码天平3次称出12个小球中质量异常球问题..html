@@ -1,0 +1,66 @@
+<p>无砝码天平3次称出12个小球中质量异常球问题</p>
+<p><br />
+原题为：<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 　 有十二个小球特征相同，其中只有一个质量异常，要求用一部没有砝码的天平称三次，将那个质量异常的球找出来。<br />
+&nbsp;&nbsp; <br />
+解：<br />
+&nbsp;&nbsp; 设标准小球质量为w，并代表任意一个正常小球，将12个小球依次编号为a1,a2,...,a12，分组为：<br />
+　 a1,a2 ,a3 ,a4&nbsp;&nbsp; 为A1组<br />
+&nbsp;&nbsp; a5,a6 ,a7 ,a8&nbsp;&nbsp; 为A2组<br />
+&nbsp;&nbsp; a9,a10,a11,a12&nbsp; 为A3组<br />
+&nbsp;&nbsp; <br />
+==（第一次）1选定任意2组--取A1,A2进行比较，如果<br />
+1&nbsp;&nbsp; A1=A2 则A3组为异常球组<br />
+&nbsp;&nbsp;&nbsp; 重新分组为:<br />
+&nbsp;&nbsp;&nbsp; B1:a9&nbsp; a10<br />
+&nbsp;&nbsp;&nbsp; B2:a11 w<br />
+&nbsp;&nbsp;&nbsp; B3:a12 w<br />
+&nbsp;&nbsp;&nbsp; <br />
+====（第二次）取B2 B3 任意1组--B2 与 B1 进行比较，如果<br />
+1.1&nbsp;&nbsp; B1=B2 则 B1 B2 为正常组，B3(a12,w)为异常组，异常球为a12<br />
+1.2&nbsp;&nbsp; B1 != B2 B3(a12,w) 为正常组,以B1&lt;B2为例说明:<br />
+&nbsp;&nbsp; 表达式&nbsp; EXP0:a9+a10 &lt; a11 +w<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+========（第三次）取a9 a10 进行比较,如果<br />
+1.2.1 a9 = a10&nbsp; 则 a11 为异常球<br />
+1.2.2 a9 != a10 则 a11 为正常球，根据 EXP0,得 a9+a10 &lt;2w <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 所以异常球质量小于正常球，a9 与 a10 轻者即为异常球</p>
+<p>2 　A1 != A2,则A3(a9,a10,a11,a12)为正常组;以A1&lt;A2说明：<br />
+　　得表达式1: EXP1: a1+a2+a3+a4&lt;a5+a6+a7+a8　　<br />
+&nbsp;&nbsp;&nbsp; 重新分组为:<br />
+&nbsp;&nbsp;&nbsp; B1:a1,a2,a3<br />
+&nbsp;&nbsp;&nbsp; B2:a4,a5,a6<br />
+&nbsp;&nbsp;&nbsp; B3:a7,a8,w<br />
+&nbsp;&nbsp;&nbsp; <br />
+====（第二次）取B3与B2比较<br />
+2.1 B3=B2 <br />
+&nbsp;&nbsp;&nbsp; a4=a5=a6=a7=a8=w 根据 EXP1 得 <br />
+&nbsp;&nbsp;&nbsp; a1+a2+a3&lt;3w 得异常球质量小于标准球<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+========（第三次）取a1 a2 进行比较,如果<br />
+2.1.1 a1 = a2&nbsp; 则 a3 为异常球<br />
+2.1.2 a1 != a2 则 a3 为正常球，a1 与 a2 轻者即为异常球</p>
+<p>2.2 B3&gt;B2 则B1为正常组<br />
+&nbsp;&nbsp;&nbsp; a1=a2=a3=w 根据 EXP1 得<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3w+ a4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt; a5 + a6 + a7 + a8<br />
+&nbsp;&nbsp;&nbsp; (B3&lt;B2)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a4 + a5 + a6 &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a7 + a8 + w<br />
+&nbsp;&nbsp;&nbsp; 相加&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3w+2a4 + a5 + a6 &lt; a5 + a6 + 2a7+2a8 + w<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2a4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a7+ a8<br />
+========（第三次）取 a7 a8 比较<br />
+2.2.1 a7 =a8 a4 为异常球,质量小于标准球<br />
+2.2.2 a7!=a8 a4 为正常球,可知 2w &lt; a7+a8,得a7 a8 中重者为异常球</p>
+<p>2.3 B2&lt;B3 则B1为正常组<br />
+&nbsp;&nbsp;&nbsp; a1=a2=a3=w 根据 EXP1 得<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3w+ a4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt; a5 + a6 + a7 + a8<br />
+&nbsp;&nbsp;&nbsp; (B2&lt;B3)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a4 + a5 + a6 &gt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a7 + a8 + w<br />
+&nbsp;&nbsp;&nbsp; 转换:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -a4 - a5 - a6 &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - a7 - a8 - w<br />
+&nbsp;&nbsp;&nbsp; 相加&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3w&nbsp;&nbsp;&nbsp;&nbsp; - a5 - a6 &lt; a5 + a6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - w<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a5 + a6 &gt; 2w<br />
+&nbsp;&nbsp;&nbsp; 可知 异常球质量大于标准球<br />
+========（第三次）取 a5 a6 比较<br />
+2.3.1 a5 a6 中重者为异常球</p>
+<p>由上述各节可知，a1,a2,...,a12 为异常球的概率均为1/12。</p>
+<p>&nbsp;</p>
+<p><br />
+Trackback: http://tb.blog.csdn.net/TrackBack.aspx?PostId=414490</p>
+<p>&nbsp;</p>

@@ -1,0 +1,197 @@
+<p>写了一个（不完整的）基于协程的task调度库</p>
+<p>&nbsp;</p>
+<p>sample code如下</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">my_spawn(
+  </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> ()
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 1</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    
+    </span><span style="color: #0000ff;">local</span> t1 =<span style="color: #000000;"> my_spawn(
+      </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> ()
+        </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 3</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        task_yield_to_be_schedule()
+        </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 4</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+      </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+    )
+    
+    </span><span style="color: #008000;">--</span><span style="color: #008000;">task_yield_to_be_schedule()</span>
+<span style="color: #000000;">    my_wait_task(t1)
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 2</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+  </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+)
+
+</span><span style="color: #0000ff;">local</span> num_run = <span style="color: #800080;">0</span>
+<span style="color: #0000ff;">while</span> my_run_once() <span style="color: #0000ff;">do</span><span style="color: #000000;">
+  dbgprint(</span><span style="color: #800000;">'</span><span style="color: #800000;">&gt;&gt;exec </span><span style="color: #800000;">'</span><span style="color: #000000;">, num_run)
+  num_run </span>= num_run + <span style="color: #800080;">1</span>
+<span style="color: #0000ff;">end</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>features</p>
+<ul>
+<li>支持spwan</li>
+<li>支持在task里面spawn</li>
+<li>支持task里面yield</li>
+<li>支持task里面等待其他task</li>
+</ul>
+<p>todo</p>
+<ul>
+<li>支持在task里面sleep</li>
+<li>支持在task里面设置和等待event</li>
+</ul>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>完整源代码如下</p>
+<div class="cnblogs_code">
+<pre><span style="color: #ff00ff;">require</span>(<span style="color: #800000;">'</span><span style="color: #800000;">mobdebug</span><span style="color: #800000;">'</span><span style="color: #000000;">).coro() 
+</span><span style="color: #0000ff;">local</span> inspect = <span style="color: #ff00ff;">require</span>(<span style="color: #800000;">'</span><span style="color: #800000;">inspect</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+
+</span><span style="color: #0000ff;">local</span> debug_on = <span style="color: #0000ff;">true</span>
+
+<span style="color: #0000ff;">local</span> <span style="color: #0000ff;">function</span><span style="color: #000000;"> dbgprint(...)
+  </span><span style="color: #0000ff;">if</span> debug_on <span style="color: #0000ff;">then</span>
+    <span style="color: #ff00ff;">print</span><span style="color: #000000;">(...)
+  </span><span style="color: #0000ff;">end</span>
+<span style="color: #0000ff;">end</span>
+
+<span style="color: #0000ff;">if</span> <span style="color: #0000ff;">false</span> <span style="color: #0000ff;">then</span>
+  <span style="color: #0000ff;">function</span><span style="color: #000000;"> f()
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">in f</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span><span style="color: #ff00ff;">coroutine.yield</span>(<span style="color: #800080;">100</span><span style="color: #000000;">)
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">in f2</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    
+  </span><span style="color: #0000ff;">end</span>
+
+  <span style="color: #0000ff;">local</span> task1 = <span style="color: #ff00ff;">coroutine.create</span><span style="color: #000000;">(f)
+  </span><span style="color: #ff00ff;">print</span>(<span style="color: #ff00ff;">coroutine.status</span><span style="color: #000000;">(task1))
+  </span><span style="color: #0000ff;">local</span> ret, r2, r3 = <span style="color: #ff00ff;">coroutine.resume</span><span style="color: #000000;">(task1)
+  </span><span style="color: #ff00ff;">print</span><span style="color: #000000;">(ret)
+  </span><span style="color: #ff00ff;">print</span>(<span style="color: #ff00ff;">coroutine.status</span><span style="color: #000000;">(task1))
+  </span><span style="color: #ff00ff;">print</span>(<span style="color: #ff00ff;">coroutine.resume</span><span style="color: #000000;">(task1))
+  </span><span style="color: #ff00ff;">print</span>(<span style="color: #ff00ff;">coroutine.resume</span><span style="color: #000000;">(task1))
+  </span><span style="color: #ff00ff;">print</span>(<span style="color: #ff00ff;">coroutine.status</span><span style="color: #000000;">(task1))
+  
+  </span><span style="color: #0000ff;">return</span>
+<span style="color: #0000ff;">end</span>
+
+
+
+<span style="color: #008000;">--</span><span style="color: #008000;"> scheduler</span><span style="color: #008000;">
+--</span><span style="color: #008000;"> lowlevel support: spawn, wait, events and timeout</span>
+
+<span style="color: #008000;">--</span><span style="color: #008000;"> to be run tasks</span>
+<span style="color: #0000ff;">local</span> tasks_to_be_scheduled =<span style="color: #000000;"> {}
+
+</span><span style="color: #008000;">--</span><span style="color: #008000;"> to be timeout tasks</span>
+<span style="color: #0000ff;">local</span> tasks_to_be_timeout =<span style="color: #000000;"> {}
+
+</span><span style="color: #008000;">--</span><span style="color: #008000;"> to be set event tasks</span>
+<span style="color: #0000ff;">local</span> tasks_to_be_event =<span style="color: #000000;"> {}
+
+</span><span style="color: #008000;">--</span><span style="color: #008000;"> to be waited tasks, this is a map where key is task handle, value is the tasks waiting this task</span>
+<span style="color: #0000ff;">local</span> tasks_to_be_wait =<span style="color: #000000;"> {}
+
+</span><span style="color: #008000;">--</span><span style="color: #008000;"> task yield flags</span>
+<span style="color: #0000ff;">local</span> yield_flag_to_be_schedule = <span style="color: #800080;">1</span>
+<span style="color: #0000ff;">local</span> yield_flag_timeout = <span style="color: #800080;">2</span>
+<span style="color: #0000ff;">local</span> yield_flag_event = <span style="color: #800080;">3</span>
+<span style="color: #0000ff;">local</span> yield_flag_wait_task = <span style="color: #800080;">3</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> my_spawn(f)
+  </span><span style="color: #0000ff;">local</span> t = <span style="color: #ff00ff;">coroutine.create</span><span style="color: #000000;">(f)
+  </span><span style="color: #ff00ff;">table.insert</span><span style="color: #000000;">(tasks_to_be_scheduled, t)
+  </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> t
+</span><span style="color: #0000ff;">end</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> my_run_once()
+  
+  </span><span style="color: #008000;">--</span><span style="color: #008000;"> loop to be scueduled tasks</span>
+  <span style="color: #0000ff;">if</span> #tasks_to_be_scheduled &gt; <span style="color: #800080;">0</span> <span style="color: #0000ff;">then</span>
+    
+    <span style="color: #008000;">--</span><span style="color: #008000;"> fetch a task</span>
+    <span style="color: #0000ff;">local</span> t = <span style="color: #ff00ff;">table.remove</span>(tasks_to_be_scheduled, <span style="color: #800080;">1</span><span style="color: #000000;">)
+    </span><span style="color: #ff00ff;">assert</span>(<span style="color: #ff00ff;">coroutine.status</span>(t)==<span style="color: #800000;">"</span><span style="color: #800000;">suspended</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+    
+    </span><span style="color: #008000;">--</span><span style="color: #008000;"> exec</span>
+    <span style="color: #0000ff;">local</span> ret, data1, data2 = <span style="color: #ff00ff;">coroutine.resume</span><span style="color: #000000;">(t)
+    dbgprint (</span><span style="color: #800000;">'</span><span style="color: #800000;">&gt;&gt;resume coroutine returns </span><span style="color: #800000;">'</span><span style="color: #000000;">, ret, inspect(data1), data2)
+    </span><span style="color: #ff00ff;">assert</span><span style="color: #000000;">(ret)
+    
+    </span><span style="color: #008000;">--</span><span style="color: #008000;"> handle following</span>
+    <span style="color: #0000ff;">if</span> <span style="color: #ff00ff;">coroutine.status</span>(t) ~= <span style="color: #800000;">'</span><span style="color: #800000;">dead</span><span style="color: #800000;">'</span> <span style="color: #0000ff;">then</span>
+      <span style="color: #ff00ff;">assert</span>(data1 <span style="color: #0000ff;">and</span><span style="color: #000000;"> data1.yield_flag)
+      </span><span style="color: #0000ff;">local</span> dispatch=<span style="color: #000000;">{}
+      dispatch[yield_flag_to_be_schedule] </span>= <span style="color: #0000ff;">function</span><span style="color: #000000;"> ()
+        </span><span style="color: #ff00ff;">table.insert</span><span style="color: #000000;">(tasks_to_be_scheduled, t)
+      </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+      
+      dispatch[yield_flag_wait_task] </span>= <span style="color: #0000ff;">function</span><span style="color: #000000;"> ()
+      </span><span style="color: #0000ff;">end</span>
+      
+      <span style="color: #0000ff;">local</span> disp =<span style="color: #000000;"> dispatch[data1.yield_flag]
+      </span><span style="color: #0000ff;">if</span> disp <span style="color: #0000ff;">then</span><span style="color: #000000;">
+        disp()
+      </span><span style="color: #0000ff;">else</span>
+        <span style="color: #ff00ff;">assert</span>(<span style="color: #800080;">0</span><span style="color: #000000;">)
+      </span><span style="color: #0000ff;">end</span>
+    <span style="color: #0000ff;">else</span>
+      <span style="color: #008000;">--</span><span style="color: #008000;"> loop to see who are waiting this task?</span>
+      <span style="color: #0000ff;">local</span> tasks_to_be_schedule =<span style="color: #000000;"> tasks_to_be_wait[t]
+      </span><span style="color: #0000ff;">if</span> tasks_to_be_schedule <span style="color: #0000ff;">then</span><span style="color: #000000;">
+        dbgprint (</span><span style="color: #800000;">'</span><span style="color: #800000;">&gt;&gt;trigger depent tasks </span><span style="color: #800000;">'</span><span style="color: #000000;">, inspect(tasks_to_be_schedule))
+        </span><span style="color: #0000ff;">for</span> i, task_to_be_schedule <span style="color: #0000ff;">in</span> <span style="color: #ff00ff;">ipairs</span>(tasks_to_be_schedule) <span style="color: #0000ff;">do</span>
+          <span style="color: #ff00ff;">table.insert</span><span style="color: #000000;">(tasks_to_be_scheduled, task_to_be_schedule)
+        </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+        tasks_to_be_wait[t] </span>= <span style="color: #0000ff;">nil</span>
+      <span style="color: #0000ff;">end</span>
+      
+    <span style="color: #0000ff;">end</span>
+    
+    <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">true</span>
+  <span style="color: #0000ff;">end</span>
+  
+  <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">false</span>
+<span style="color: #0000ff;">end</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> task_yield_to_be_schedule()
+  </span><span style="color: #ff00ff;">coroutine.yield</span> ({yield_flag=<span style="color: #000000;">yield_flag_to_be_schedule})
+</span><span style="color: #0000ff;">end</span>
+
+<span style="color: #0000ff;">function</span><span style="color: #000000;"> my_wait_task(t)
+  </span><span style="color: #008000;">--</span><span style="color: #008000;"> when t done, need notify this_task</span>
+  <span style="color: #0000ff;">local</span> this_task = <span style="color: #ff00ff;">coroutine.running</span><span style="color: #000000;">()
+  </span><span style="color: #0000ff;">if</span> <span style="color: #0000ff;">not</span> tasks_to_be_wait[this_task] <span style="color: #0000ff;">then</span><span style="color: #000000;">
+    tasks_to_be_wait[t] </span>=<span style="color: #000000;"> {this_task}
+  </span><span style="color: #0000ff;">else</span>
+    <span style="color: #ff00ff;">table.insert</span><span style="color: #000000;">(tasks_to_be_wait[t], this_task)
+  </span><span style="color: #0000ff;">end</span>
+  
+  <span style="color: #008000;">--</span><span style="color: #008000;"> yield from current task</span>
+  <span style="color: #ff00ff;">coroutine.yield</span> ({yield_flag=yield_flag_wait_task, handle=<span style="color: #000000;">t})
+</span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+
+my_spawn(
+  </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> ()
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 1</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    
+    </span><span style="color: #0000ff;">local</span> t1 =<span style="color: #000000;"> my_spawn(
+      </span><span style="color: #0000ff;">function</span><span style="color: #000000;"> ()
+        </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 3</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        task_yield_to_be_schedule()
+        </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 4</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+      </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+    )
+    
+    </span><span style="color: #008000;">--</span><span style="color: #008000;">task_yield_to_be_schedule()</span>
+<span style="color: #000000;">    my_wait_task(t1)
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f: 2</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+  </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+)
+
+</span><span style="color: #0000ff;">local</span> num_run = <span style="color: #800080;">0</span>
+<span style="color: #0000ff;">while</span> my_run_once() <span style="color: #0000ff;">do</span><span style="color: #000000;">
+  dbgprint(</span><span style="color: #800000;">'</span><span style="color: #800000;">&gt;&gt;exec </span><span style="color: #800000;">'</span><span style="color: #000000;">, num_run)
+  num_run </span>= num_run + <span style="color: #800080;">1</span>
+<span style="color: #0000ff;">end</span></pre>
+</div>
+<p>&nbsp;</p>

@@ -1,0 +1,244 @@
+<H1 class=block_title><A id=viewpost1_TitleUrl href="http://www.cppblog.com/littlesupersun/archive/2007/08/31/31302.html">Ajax简介</A></H1>
+<DIV class=post>
+<DIV class=postcontent>
+<P>　　作为J2EE开发人员，我们似乎经常关注“后端机制（backend mechanics）”。我们通常会忘记，J2EE的主要成功之处在Web应用程序方面；许多原因使得人们喜欢利用Web开发应用程序，但主要还是因为其易于部署的特点允许站点以尽可能低的成本拥有上百万的用户。遗憾的是，在过去几年中，我们在后端投入了太多的时间，而在使我们的Web用户界面对用户自然和响应灵敏方面却投入不足。</P>
+<P>　　本文介绍一种方法，Ajax，使用它可以构建更为动态和响应更灵敏的Web应用程序。该方法的关键在于对浏览器端的JavaScript、 DHTML和与服务器异步通信的组合。本文也演示了启用这种方法是多么简单：利用一个Ajax框架（指DWR）构造一个应用程序，它直接从浏览器与后端服务进行通信。如果使用得当，这种强大的力量可以使应用程序更加自然和响应灵敏，从而提升用户的浏览体验。</P>
+<P>　　该应用程序中所使用的示例代码已打包为单独的WAR文件，可供下载。</P>
+<P><STRONG>简介</STRONG></P>
+<P>　　术语Ajax用来描述一组技术，它使浏览器可以为用户提供更为自然的浏览体验。在Ajax之前，Web站点强制用户进入提交/等待/重新显示范例，用户的动作总是与服务器的“思考时间”同步。Ajax提供与服务器异步通信的能力，从而使用户从请求/响应的循环中解脱出来。借助于Ajax，可以在用户单击按钮时，使用JavaScript和DHTML立即更新UI，并向服务器发出异步请求，以执行更新或查询数据库。当请求返回时，就可以使用 JavaScript和CSS来相应地更新UI，而不是刷新整个页面。最重要的是，用户甚至不知道浏览器正在与服务器通信：Web站点看起来是即时响应的。</P>
+<P>　　虽然Ajax所需的基础架构已经出现了一段时间，但直到最近异步请求的真正威力才得到利用。能够拥有一个响应极其灵敏的Web站点确实激动人心，因为它最终允许开发人员和设计人员使用标准的HTML/CSS/JavaScript堆栈创建“桌面风格的（desktop-like）”可用性。</P>
+<P>　　通常，在J2EE中，开发人员过于关注服务和持久性层的开发，以至于用户界面的可用性已经落后。在一个典型的J2EE开发周期中，常常会听到这样的话，“我们没有可投入UI的时间”或“不能用HTML实现”。但是，以下Web站点证明，这些理由再也站不住脚了：</P>
+<UL>
+<LI><A href="http://backpackit.com/" target=_blank>BackPack</A> 
+<LI><A href="http://www.google.com/webhp?complete=1&amp;hl=en" target=_blank>Google Suggest</A> 
+<LI><A href="http://maps.google.com/" target=_blank>Google Maps</A> 
+<LI><A href="http://www.palmsphere.com/" target=_blank>PalmSphere</A> </LI></UL>
+<P>　　所有这些Web站点都告诉我们，Web应用程序不必完全依赖于从服务器重新载入页面来向用户呈现更改。一切似乎就在瞬间发生。简而言之，在涉及到用户界面的响应灵敏度时，基准设得更高了。</P>
+<P><STRONG>定义Ajax</STRONG></P>
+<P>　　Adaptive Path公司的Jesse James Garrett这样<A href="http://www.adaptivepath.com/publications/essays/archives/000385.php" target=_blank>定义Ajax</A>：</P>
+<P>　　Ajax不是一种技术。实际上，它由几种蓬勃发展的技术以新的强大方式组合而成。Ajax包含：</P>
+<UL>
+<LI>基于<A href="http://www.w3.org/TR/xhtml1/" target=_blank>XHTML</A>和<A href="http://www.w3.org/Style/CSS/" target=_blank>CSS</A>标准的表示； 
+<LI>使用<A href="http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/introduction.html" target=_blank>Document Object Model</A>进行动态显示和交互； 
+<LI>使用XMLHttpRequest与服务器进行异步通信； 
+<LI>使用JavaScript绑定一切。 </LI></UL>
+<P>　　这非常好，但为什么要以Ajax命名呢？其实术语Ajax是由Jesse James Garrett创造的，他说它是“Asynchronous JavaScript + XML的简写”。</P>
+<P><STRONG>Ajax的工作原理</STRONG></P>
+<P>　　Ajax的核心是JavaScript对象XmlHttpRequest。该对象在Internet Explorer 5中首次引入，它是一种支持异步请求的技术。简而言之，XmlHttpRequest使您可以使用JavaScript向服务器提出请求并处理响应，而不阻塞用户。</P>
+<P>　　在创建Web站点时，在客户端执行屏幕更新为用户提供了很大的灵活性。下面是使用Ajax可以完成的功能：</P>
+<UL>
+<LI>动态更新购物车的物品总数，无需用户单击Update并等待服务器重新发送整个页面。 
+<LI>提升站点的性能，这是通过减少从服务器下载的数据量而实现的。例如，在Amazon的购物车页面，当更新篮子中的一项物品的数量时，会重新载入整个页面，这必须下载 32K的数据。如果使用Ajax计算新的总量，服务器只会返回新的总量值，因此所需的带宽仅为原来的百分之一。 
+<LI>消除了每次用户输入时的页面刷新。例如，在Ajax中，如果用户在分页列表上单击Next，则服务器数据只刷新列表而不是整个页面。 
+<LI>直接编辑表格数据，而不是要求用户导航到新的页面来编辑数据。对于Ajax，当用户单击Edit时，可以将静态表格刷新为内容可编辑的表格。用户单击Done之后，就可以发出一个Ajax请求来更新服务器，并刷新表格，使其包含静态、只读的数据。 </LI></UL>
+<P>　　一切皆有可能！但愿它能够激发您开始开发自己的基于Ajax的站点。然而，在开始之前，让我们介绍一个现有的Web站点，它遵循传统的提交/等待/重新显示的范例，我们还将讨论Ajax如何提升用户体验。</P>
+<P><STRONG>Ajax可用于那些场景？——一个例子：MSN Money页面</STRONG></P>
+<P>　　前几天，在浏览MSN Money页面的时候，有一篇<A href="http://moneycentral.msn.com/content/Investing/Realestate/P63633.asp" target=_blank>关于房地产投资的文章</A>引起了我的好奇心。我决定使用站点的“Rate this article”（评价本文）功能，鼓励其他的用户花一点时间来阅读这篇文章。在我单击vote按钮并等待了一会儿之后，整个页面被刷新，在原来投票问题所在的地方出现了一个漂亮的感谢画面。</P>
+<P><IMG height=63 src="file:///D:/java技术文档/2005110103_files/0511010101.jpg" width=303> </P>
+<P>　　而Ajax能够使用户的体验更加愉快，它可以提供响应更加灵敏的UI，并消除页面刷新所带来的闪烁。目前，由于要刷新整个页面，需要传送大量的数据，因为必须重新发送整个页面。如果使用Ajax，服务器可以返回一个包含了感谢信息的500字节的消息，而不是发送26,813字节的消息来刷新整个页面。即使使用的是高速Internet，传送26K和1/2K的差别也非常大。同样重要的是，只需要刷新与投票相关的一小节，而不是刷新整个屏幕。</P>
+<P>　　让我们利用Ajax实现自己的基本投票系统。</P>
+<P><STRONG>原始的Ajax：直接使用XmlHttpRequest</STRONG></P>
+<P>　　如上所述，Ajax的核心是JavaScript对象XmlHttpRequest。下面的示例文章评价系统将带您熟悉Ajax的底层基本知识：<A href="http://tearesolutions.com/ajax-demo/raw-ajax.html" target=_blank>http://tearesolutions.com/ajax-demo/raw-ajax.html</A>。注：如果您已经在本地WebLogic容器中安装了<A href="http://dev2dev.bea.com/2005/08/ajax-demo.war">ajax-demo.war</A>，可以导航到<A href="http://localhost:7001/ajax-demo/raw-ajax.html" target=_blank>http://localhost:7001/ajax-demo/raw-ajax.html</A>，</P>
+<P>　　浏览应用程序，参与投票，并亲眼看它如何运转。熟悉了该应用程序之后，继续阅读，进一步了解其工作原理细节。</P>　　首先，您拥有一些简单的定位点标记，它连接到一个JavaScriptcastVote(rank)函数。 <PRE class=code>function castVote(rank) {
+var url = "/ajax-demo/static-article-ranking.html";
+var callback = processAjaxResponse;
+executeXhr(callback, url);
+}
+</PRE>
+<P>　　该函数为您想要与之通信的服务器资源创建一个URL并调用内部函数executeXhr，提供一个回调JavaScript函数，一旦服务器响应可用，该函数就被执行。由于我希望它运行在一个简单的Apache环境中，“cast vote URL”只是一个简单的HTML页面。在实际情况中，被调用的URL将记录票数并动态地呈现包含投票总数的响应。</P>　　下一步是发出一个XmlHttpRequest请求： <PRE class=code>function executeXhr(callback, url) {
+// branch for native XMLHttpRequest object
+if (window.XMLHttpRequest) {
+req = new XMLHttpRequest();
+req.onreadystatechange = callback;
+req.open("GET", url, true);
+req.send(null);
+} // branch for IE/Windows ActiveX version
+else if (window.ActiveXObject) {
+req = new ActiveXObject("Microsoft.XMLHTTP");
+if (req) {
+req.onreadystatechange = callback;
+req.open("GET", url, true);
+req.send();
+}
+}
+}
+</PRE>
+<P>　　如您所见，执行一个XmlHttpRequest并不简单，但非常直观。和平常一样，在JavaScript领域，大部分的工作量都花在确保浏览器兼容方面。在这种情况下，首先要确定XmlHttpRequest是否可用。如果不能用，很可能要使用Internet Explorer，这样就要使用所提供的ActiveX实现。</P>
+<P>executeXhr()方法中最关键的部分是这两行： </P><PRE class=code>req.onreadystatechange = callback;
+req.open("GET", url, true);
+</PRE>
+<P>　　第一行定义了JavaScript回调函数，您希望一旦响应就绪它就自动执行，而req.open()方法中所指定的“true”标志说明您想要异步执行该请求。</P>　　一旦服务器处理完XmlHttpRequest并返回给浏览器，使用req.onreadystatechange指派所设置的回调方法将被自动调用。 <PRE class=code>function processAjaxResponse() {
+// only if req shows "loaded"
+if (req.readyState == 4) {
+// only if "OK"
+if (req.status == 200) {
+$('votes').innerHTML = req.responseText;
+} else {
+alert("There was a problem retrieving the XML data:\n" +
+req.statusText);
+}
+}
+}
+</PRE>
+<P>　　该代码相当简洁，并且使用了几个幻数，这使得难以一下子看出发生了什么。为了弄清楚这一点，下面的表格（引用自<A href="http://developer.apple.com/internet/webcontent/xmlhttpreq.html" target=_blank>http://developer.apple.com/internet/webcontent/xmlhttpreq.html</A>）列举了常用的XmlHttpRequest对象属性。</P>
+<TABLE cellSpacing=1 cellPadding=0 width="80%" bgColor=#cccccc border=0>
+<TBODY>
+<TR bgColor=#ffffff>
+<TD height=22>
+<P><STRONG>属性</STRONG></P></TD>
+<TD>
+<P><STRONG>描述</STRONG></P></TD></TR>
+<TR bgColor=#ffffff>
+<TD vAlign=top height=22>
+<P>onreadystatechange</P></TD>
+<TD vAlign=top>
+<P>每次状态改变所触发事件的事件处理程序</P></TD></TR>
+<TR bgColor=#ffffff>
+<TD vAlign=top height=22>
+<P>readyState</P></TD>
+<TD vAlign=top>
+<P>对象状态值： </P>
+<UL>
+<LI>0 = 未初始化（uninitialized） 
+<LI>1 = 正在加载（loading） 
+<LI>2 = 加载完毕（loaded） 
+<LI>3 = 交互（interactive） 
+<LI>4 = 完成（complete） </LI></UL></TD></TR>
+<TR bgColor=#ffffff>
+<TD vAlign=top height=22>
+<P>responseText</P></TD>
+<TD vAlign=top>
+<P>从服务器进程返回的数据的字符串形式</P></TD></TR>
+<TR bgColor=#ffffff>
+<TD vAlign=top height=22>
+<P>responseXML</P></TD>
+<TD vAlign=top>
+<P>从服务器进程返回的DOM兼容的文档数据对象</P></TD></TR>
+<TR bgColor=#ffffff>
+<TD vAlign=top height=22>
+<P>status</P></TD>
+<TD vAlign=top>
+<P>从服务器返回的数字代码，比如404（未找到）或200（就绪）</P></TD></TR>
+<TR bgColor=#ffffff>
+<TD vAlign=top height=22>
+<P>statusText</P></TD>
+<TD vAlign=top>
+<P>伴随状态码的字符串信息</P></TD></TR></TBODY></TABLE>
+<P>　　现在processVoteResponse()函数开始显示出其意义了。它首先检查XmlHttpRequest的整体状态以保证它已经完成（readyStatus == 4），然后根据服务器的设定询问请求状态。如果一切正常（status == 200）,就使用innerHTML属性重写DOM的“votes”节点的内容。</P>
+<P>　　既然您亲眼看到了XmlHttpRequest对象是如何工作的，就让我们利用一个旨在简化JavaScript与Java应用程序之间的异步通信的框架来对具体的细节进行抽象。</P>
+<P><STRONG>Ajax: DWR方式</STRONG></P>
+<P>　　按照与文章评价系统相同的流程，我们将使用Direct Web Remoting（DWR）框架实现同样的功能。</P>
+<P>　　假定文章和投票结果存储在一个数据库中，使用某种对象/关系映射技术来完成抽取工作。为了部署起来尽可能地简单，我们不会使用数据库进行持久性存储。此外，为使应用程序尽可能通用，也不使用Web框架。相反，应用程序将从一个静态HTML文件开始，可以认为它由服务器动态地呈现。除了这些简化措施，应用程序还应该使用Spring Framework关联一切，以便轻松看出如何在一个“真实的”应用程序中使用DWR。</P>
+<P>　　现在应该下载示例应用程序并熟悉它。该应用程序被压缩为标准的WAR文件，因此您可以把它放置到任何一个Web容器中——无需进行配置。部署完毕之后，就可以导航到<A href="http://localhost:7001/ajax-demo/dwr-ajax.html" target=_blank>http://localhost:7001/ajax_demo/dwr-ajax.html</A>来运行程序。</P>
+<P>　　可以查看<A href="http://dev2dev.bea.com/2005/08/source.html" target=_blank>HTML 源代码</A>，了解它如何工作。给人印象最深的是，代码如此简单——所有与服务器的交互都隐藏在JavaScript对象ajaxSampleSvc的后面。更加令人惊讶的是，ajaxSampleSvc服务不是由手工编写而是完全自动生成的！让我们继续，看看这是如何做到的。</P>
+<P><STRONG>引入DWR</STRONG></P>
+<P>　　如同在“原始的Ajax”一节所演示的那样，直接使用XmlHttpRequest创建异步请求非常麻烦。不仅JavaScript代码冗长，而且必须考虑服务器端为定位Ajax请求到适当的服务所需做的工作，并将结果封送到浏览器。</P>
+<P>　　设计DWR的目的是要处理将Web页面安装到后端服务上所需的所有信息管道。它是一个Java框架，可以很轻松地将它插入到Web应用程序中，以便JavaScript代码可以调用服务器上的服务。它甚至直接与Spring Framework集成，从而允许用户直接向Web客户机公开bean。</P>
+<P>　　DWR真正的巧妙之处是，在用户配置了要向客户机公开的服务之后，它使用反射来生成JavaScript对象，以便Web页面能够使用这些对象来访问该服务。然后Web页面只需接合到生成的JavaScript对象，就像它们是直接使用服务一样；DWR无缝地处理所有有关Ajax和请求定位的琐碎细节。</P>
+<P>　　让我们仔细分析一下示例代码，弄清它是如何工作的。</P>
+<P><STRONG>应用程序细节：DWR分析</STRONG></P>
+<P>　　关于应用程序，首先要注意的是，它是一个标准的Java应用程序，使用分层架构（Layered Architecture）设计模式。使用DWR通过JavaScript公开一些服务并不影响您的设计。 </P>
+<P><IMG height=344 src="file:///D:/java技术文档/2005110103_files/0511010102.jpg" width=209> </P>
+<P>　　下面是一个简单的Java服务，我们将使用DWR框架直接将其向JavaScript代码公开：</P><PRE class=code>package com.tearesolutions.service;
+public interface AjaxSampleSvc {
+Article castVote(int rank);
+}
+</PRE>
+<P>　　这是一个被简化到几乎不可能的程度的例子，其中只有一篇文章可以投票。该服务由Spring管理，它使用的bean名是ajaxSampleSvc，它的持久性需求则依赖于ArticleDao。详情请参见applicationContext.xml。</P>
+<P>　　为了把该服务公开为JavaScript对象，需要配置DWR，添加dwr.xml文件到WEB-INF目录下： </P><PRE class=code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE dwr PUBLIC
+"-//GetAhead Limited//DTD Direct Web Remoting 0.4//EN"
+"http://www.getahead.ltd.uk/dwr/dwr.dtd"&gt;
+&lt;dwr&gt;
+&lt;allow&gt;
+&lt;create creator="spring" javascript="ajaxSampleSvc"&gt;
+&lt;param name="beanName" value="ajaxSampleSvc" /&gt;
+&lt;/create&gt;
+&lt;convert converter="bean" match="com.tearesolutions.model.Article"/&gt;
+&lt;exclude method="toString"/&gt;
+&lt;exclude method="setArticleDao"/&gt;
+&lt;/allow&gt;
+&lt;/dwr&gt;
+</PRE>
+<P>　　dwr.xml文件告诉DWR哪些服务是要直接向JavaScript代码公开的。注意，已经要求公开Spring bean ajaxSampleSvc。DWR将自动找到由应用程序设置的SpringApplicationContext。为此，必须使用标准的servlet 过滤器ContextLoaderListener来初始化Spring ApplicationContext。</P>　　DWR被设置为一个servlet，所以把它的定义添加到web.xml： <PRE class=code>&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;!DOCTYPE web-app PUBLIC "-//Sun Microsystems, Inc.//DTD
+Web Application 2.3//EN" "http://java.sun.com/dtd/web-app_2_3.dtd"&gt;
+&lt;web-app&gt;
+&lt;display-name&gt;Ajax Examples&lt;/display-name&gt;
+&lt;listener&gt;
+&lt;listener-class&gt;
+org.springframework.web.context.ContextLoaderListener
+&lt;/listener-class&gt;
+&lt;/listener&gt;
+&lt;servlet&gt;
+&lt;servlet-name&gt;ajax_sample&lt;/servlet-name&gt;
+&lt;servlet-class&gt;com.tearesolutions.web.AjaxSampleServlet&lt;/servlet-class&gt;
+&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+&lt;servlet&gt;
+&lt;servlet-name&gt;dwr-invoker&lt;/servlet-name&gt;
+&lt;display-name&gt;DWR Servlet&lt;/display-name&gt;
+&lt;description&gt;Direct Web Remoter Servlet&lt;/description&gt;
+&lt;servlet-class&gt;uk.ltd.getahead.dwr.DWRServlet&lt;/servlet-class&gt;
+&lt;init-param&gt;
+&lt;param-name&gt;debug&lt;/param-name&gt;
+&lt;param-value&gt;true&lt;/param-value&gt;
+&lt;/init-param&gt;
+&lt;/servlet&gt;
+&lt;servlet-mapping&gt;
+&lt;servlet-name&gt;ajax_sample&lt;/servlet-name&gt;
+&lt;url-pattern&gt;/ajax_sample&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+&lt;servlet-mapping&gt;
+&lt;servlet-name&gt;dwr-invoker&lt;/servlet-name&gt;
+&lt;url-pattern&gt;/dwr/*&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</PRE>
+<P>　　做完这些之后，可以加载<A href="http://localhost:7001/ajax-demo/dwr" target=_blank>http://localhost:7001/ajax-demo/dwr</A>，看看哪些服务可用。结果如下：</P>
+<P><IMG height=102 src="file:///D:/java技术文档/2005110103_files/0511010103.jpg" width=305></P>
+<P>图3. 可用的服务</P>　　单击ajaxSampleSvc链接，查看有关如何在HTML页面内直接使用服务的示例实现。其中包含的两个JavaScript文件完成了大部分的功能： <PRE class=code>&lt;script type='text/javascript'
+src='/ajax-demo/dwr/interface/ajaxSampleSvc.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript'
+src='/ajax-demo/dwr/engine.js'&gt;&lt;/script&gt;
+</PRE>
+<P>ajaxSampleSvc.js是动态生成的：</P><PRE class=code>function ajaxSampleSvc() { }
+ajaxSampleSvc.castVote = function(callback, p0)
+{
+DWREngine._execute(callback, '/ajax-demo/dwr',
+'ajaxSampleSvc', 'castVote', p0);
+}
+</PRE>
+<P>　　现在可以使用JavaScript对象ajaxSampleSvc替换所有的XmlHttpRequest代码，从而重构raw-ajax.html文件。可以在dwr-ajax.html文件中看到改动的结果；下面是新的JavaScript函数：</P><PRE class=code>function castVote(rank) {
+ajaxSampleSvc.castVote(processResponse, rank);
+}
+function processResponse(data) {
+var voteText = "
+<P><STRONG>Thanks for Voting!</STRONG></P>
+"
++ "
+<P>Current ranking: " + data.voteAverage
++ " out of 5</P>
+"
++ "
+<P>Number of votes placed: "
++ data.numberOfVotes + "</P>
+";
+$('votes').innerHTML = voteText;
+}
+</PRE>
+<P>　　惊人地简单，不是吗？由ajaxSampleSvc对象返回的Article域对象序列化为一个JavaScript对象，允许在它上面调用诸如numberOfVotes()和voteAverage()之类的方法。在动态生成并插入到DIV元素“votes”中的HTML代码内使用这些数据。</P>
+<P><STRONG>下一步工作</STRONG></P>
+<P>　　　在后续文章中，我将继续有关Ajax的话题，涉及下面这些方面：</P>
+<UL>
+<LI>Ajax最佳实践 </LI></UL>
+<P>　　像许多技术一样，Ajax是一把双刃剑。对于一些用例，其应用程序其实没有必要使用Ajax，使用了反而有损可用性。我将介绍一些不适合使用的模式，突出说明Ajax的一些消极方面，并展示一些有助于缓和这些消极方面的机制。例如，对<A href="http://www.netflix.com/BrowseSelection">Netflix电影浏览器</A>来说，Ajax是合适的解决方案吗？或者，如何提示用户确实出了一些问题，而再次单击按钮也无济于事？</P>
+<UL>
+<LI>管理跨请求的状态 </LI></UL>
+<P>　　在使用Ajax时，最初的文档DOM会发生一些变化，并且有大量的页面状态信息存储在客户端变量中。当用户跟踪一个链接到应用程序中的另一个页面时，状态就丢失了。当用户按照惯例单击Back按钮时，呈现给他们的是缓存中的初始页面。这会使用户感到非常迷惑！</P>
+<UL>
+<LI>调试技巧 </LI></UL>
+<P>　　使用JavaScript在客户端执行更多的工作时，如果事情不按预期方式进行，就需要一些调试工具来帮助弄清出现了什么问题。</P>
+<P><STRONG>结束语</STRONG></P>
+<P>　　本文介绍了Ajax方法，并展示了如何使用它来创建一个动态且响应灵敏的Web应用程序。通过使用DWR框架，可以轻松地把Ajax融合到站点中，而无需担心所有必须执行的实际管道工作。</P>
+<P>　　特别感谢Getahead IT咨询公司的Joe Walker和他的团队开发出DWR这样神奇的工具。感谢你们与世界共享它！</P></DIV></DIV>

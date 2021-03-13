@@ -1,0 +1,437 @@
+[TOC]
+
+
+# wiki
+
+https://github.com/microsoft/Detours/wiki
+
+# Disas
+
+Tests the Detours disassembler tables.
+
+Uses
+DetourEnumerateExports, DetourEnumerateModules, DetourGetEntryPoint, DetourGetModuleSize.
+
+# Dtest
+
+Detours the Win32 Sleep function and a private function. The private function is first detoured, then detoured recursively 3 times using the DetourAttach API.
+
+Uses
+DetourAttach, DetourTransactionBegin, DetourTransactionCommit, DetourUpdateThread.
+
+
+
+# Simple 
+
+detour to modify the Windows Sleep API.
+
+# withdll load一个dll到指定进程
+
+The withdll.exe program include in the Detours package uses the DetourCreateProcessWithDlls API to start a new process with a named DLL.
+
+
+
+example of withdll
+
+![1570716876227](C:\Users\cutep\AppData\Roaming\Typora\typora-user-images\1570716876227.png)
+
+
+
+# tracebld显示相关进程涉及的文件读写操作
+
+command
+
+```python
+F:\codes\Detours-4.0.1\bin.X86>tracebld.exe /o:1.txt notepad
+TRACEBLD: Ready for clients.  Press Ctrl-C to stop.
+TRACEBLD: Starting: `notepad'
+TRACEBLD:   with `F:\codes\Detours-4.0.1\bin.X86\trcbld32.dll'
+TRACEBLD: 1 processes.
+
+```
+
+output file
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+
+-<t:Process xmlns:t="http://schemas.microsoft.com/research/tracebld/2008" exe="notepad" par="" id="::0.::">
+
+<t:Directory>F:\codes\Detours-4.0.1\bin.X86</t:Directory>
+
+<t:Executable>%SYSDIR%\notepad.exe</t:Executable>
+
+<t:Line>%SYSDIR%\notepad.exe </t:Line>
+
+<t:Return>0</t:Return>
+
+
+-<t:Files>
+
+<t:File write="true" read="true">\\.\NvAdminDevice</t:File>
+
+<t:File read="true">C:\ProgramData\NVIDIA Corporation\Drs\nvdrssel.bin</t:File>
+
+<t:File read="true">C:\ProgramData\NVIDIA Corporation\Drs\nvdrsdb1.bin</t:File>
+
+<t:File read="true">C:\Windows\Fonts\staticcache.dat</t:File>
+
+</t:Files>
+
+<t:Vars> </t:Vars>
+
+</t:Process>
+```
+
+
+
+# My Instrumentation tool: 
+
+
+
+配置文件 input.txt
+
+```python
+dll=kernel32.dll fun=OpenFile
+dll=user32.dll fun=MessageBoxA
+dll=user32.dll fun=MessageBoxW
+dll=user32.dll fun=OffsetRect
+dll=kernel32.dll fun=WaitForSingleObject
+dll=kernel32.dll fun=CloseHandle
+```
+
+
+
+测试
+
+```python
+F:\codes\Detours-4.0.1\bin.X86>withdll.exe /d:C:\Users\cutep\source\repos\ConsoleApplication1\Debug\dll1.dll notepad
+Press any key to continue . . .
+withdll.exe: Starting: `notepad'
+withdll.exe:   with `C:\Users\cutep\source\repos\ConsoleApplication1\Debug\dll1.dll'
+Resume Thread...
+Press any key to continue . . .
+```
+
+
+
+输出
+
+```python
+'notepad.exe' (Win32): Loaded 'C:\Windows\syswow64\notepad.exe'. Cannot find or open the PDB file.
+...
+'notepad.exe' (Win32): Loaded 'C:\Users\cutep\source\repos\ConsoleApplication1\Debug\Dll1.dll'. Symbols loaded.
+...
+processing line: dll=kernel32.dll fun=OpenFile
+processing line: dll=user32.dll fun=MessageBoxA
+processing line: dll=user32.dll fun=MessageBoxW
+processing line: dll=user32.dll fun=OffsetRect
+processing line: dll=kernel32.dll fun=WaitForSingleObject
+processing line: dll=kernel32.dll fun=CloseHandle
+processing line: 
+
+>>dll=kernel32.dll fun=WaitForSingleObject
+
+>>dll=kernel32.dll fun=CloseHandle
+
+.....
+>>dll=user32.dll fun=OffsetRect
+
+>>dll=user32.dll fun=OffsetRect
+...
+
+>>dll=kernel32.dll fun=CloseHandle
+
+Exception thrown at 0x0FF81BCC (ucrtbased.dll) in notepad.exe: 0xC0000005: Access violation reading location 0xFEEEFEEE.
+
+The program '[0x1DE0] notepad.exe' has exited with code 0 (0x0).
+
+```
+
+
+
+link： https://files.cnblogs.com/files/cutepig/ConsoleApplication1.7z
+
+
+
+核心代码
+
+```cpp
+//dllmain.cpp
+
+// dllmain.cpp : Defines the entry point for the DLL application.
+#include "stdafx.h"
+#include <detours.h>
+#include "../Injector.h"
+
+Injector gInj;
+static int (WINAPI * TrueEntryPoint)(VOID) = NULL;
+static int (WINAPI * RawEntryPoint)(VOID) = NULL;
+
+static void DebugStr(const char *fmt, ...)
+{
+	va_list l;
+	va_start(l, fmt);
+
+	char s[100];
+	vsnprintf(s, 100, fmt, l);
+	printf(s);
+	OutputDebugStringA(s);
+}
+
+int WINAPI TimedEntryPoint(VOID)
+{
+	FILE *fp = fopen("input.txt", "r");
+	if (!fp)
+	{
+		DebugStr("Open file fails");
+		return -1;
+	}
+	
+	char s[300];
+	while (fgets(s, 300, fp))
+	{
+		DebugStr("processing line: %s", s);
+
+		char dll[100];
+		char fun[100];
+		if (2 != sscanf(s, "dll=%s fun=%s", dll, fun))
+		{
+			DebugStr("Error scanf from line: %s", s);
+			continue;
+		}
+		PVOID pFun = DetourFindFunction(dll, fun);
+		if (!pFun)
+		{
+			DebugStr("Error DetourFindFunction from line: %s %s", dll, fun);
+			continue;
+		}
+
+		gInj.Inject(pFun, s);
+	}
+	
+	return TrueEntryPoint();
+}
+
+BOOL WINAPI DllMain(HINSTANCE hinst, DWORD dwReason, LPVOID reserved)
+{
+	LONG error;
+	(void)hinst;
+	(void)reserved;
+
+	if (DetourIsHelperProcess()) {
+		return TRUE;
+	}
+
+	if (dwReason == DLL_PROCESS_ATTACH) {
+		DetourRestoreAfterWith();
+
+		
+
+		// NB: DllMain can't call LoadLibrary, so we hook the app entry point.
+		TrueEntryPoint = (int (WINAPI *)(VOID))DetourGetEntryPoint(NULL);
+		RawEntryPoint = TrueEntryPoint;
+
+
+		DetourTransactionBegin();
+		DetourUpdateThread(GetCurrentThread());
+		DetourAttach(&(PVOID&)TrueEntryPoint, TimedEntryPoint);
+		error = DetourTransactionCommit();
+
+		if (error == NO_ERROR) {
+			printf("dslept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
+				" Detoured EntryPoint().\n");
+		}
+		else {
+			printf("dslept" DETOURS_STRINGIFY(DETOURS_BITS) ".dll: "
+				" Error detouring EntryPoint(): %d\n", error);
+		}
+	}
+	else if (dwReason == DLL_PROCESS_DETACH) {
+		
+	}
+	return TRUE;
+}
+
+
+```
+
+
+
+```cpp
+// injector.cpp
+
+#include <Windows.h>
+#include <assert.h>
+#include <vector>
+#include <algorithm>
+#include <detours.h>
+#include "Injector.h"
+
+void GenCode(char *&p, int n, const char *data)
+{
+	//std::copy(data, data + n, p);
+	memcpy(p, data, n);
+	p += n;
+}
+
+void GenAddEsp4(char *&p)
+{
+	char data[3] = { 0x83, 0xC4, 0x04 };
+	GenCode(p, 3, data);
+}
+
+void GenPushPtr(char *&p, void const *pData)
+{
+	char *pcoffset = (char *)&pData;
+	char data[5] = { 0x68, pcoffset[0], pcoffset[1], pcoffset[2], pcoffset[3] };
+	GenCode(p, 5, data);
+}
+
+void GenCall(char *&p, void const *pFn)
+{
+	DWORD offset = (DWORD)pFn - ((DWORD)p + 5);
+	char *pcoffset = (char *)&offset;
+	char data[5] = { 0xe8, pcoffset[0], pcoffset[1], pcoffset[2], pcoffset[3] };
+	GenCode(p, 5, data);
+}
+
+void GenJump(char *&p, void const *pFn)
+{
+	DWORD offset = (DWORD)pFn - ((DWORD)p + 5);
+	char *pcoffset = (char *)&offset;
+	char data[5] = { 0xe9, pcoffset[0], pcoffset[1], pcoffset[2], pcoffset[3] };
+	GenCode(p, 5, data);
+}
+
+class InjectorImpl
+{
+	struct Code {
+		char* adr;
+		char* codeOfJump;
+		Code() :adr(0), codeOfJump(0)
+		{}
+	};
+
+	struct Item {
+		std::string desc;
+		void const *fOriginal;
+		void  *fTramper;	// the original function is changed to tramper after inject
+		Code code;
+		char *codeOfJump;	// ptr pointer to jump. It shoulod be updated after Submit
+
+		Item():fOriginal(0), fTramper(0), codeOfJump(0)
+		{}
+	};
+
+	std::vector<Item> mvItems;
+
+	static void MyInstrument(Item *item)
+	{
+		char s[100];
+		_snprintf_s(s, 100, ">>%s\n", item->desc.c_str());
+		printf(s);
+		OutputDebugStringA(s);
+	}
+
+	static Code GenInjectCodePart1(Item const *item)
+	{
+		int size = 100;
+		char *adr = (char*)VirtualAlloc(NULL, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE);
+
+		Code code;
+		code.adr = adr;
+		// write code to the region
+		char *p = adr;
+
+		// Call Instrument("hello")
+		GenPushPtr(p, item);
+		GenCall(p, MyInstrument);
+		GenAddEsp4(p);
+
+		// call test()
+		//GenCall(p, Test);
+
+		// Jump to Add()
+		code.codeOfJump = p;
+		
+		return code;
+	}
+
+	static void GenInjectCodePart2(Item const *item)
+	{
+		int size = 100;
+		assert(item->fTramper != item->fOriginal);
+
+		char *p = item->code.codeOfJump;
+		GenJump(p, item->fTramper);
+
+		// Set as executable
+		DWORD oldProtection;
+		BOOL ok = VirtualProtect(item->code.adr, size, PAGE_EXECUTE_READ, &oldProtection);
+		assert(ok);
+
+		FlushInstructionCache(GetCurrentProcess(), item->code.adr, size);
+	}
+	void FreeInjectCode(char* adr)
+	{
+		VirtualFree(adr, 0, MEM_RELEASE);
+	}
+public:
+	InjectorImpl()
+	{
+		mvItems.reserve(100);
+	}
+	~InjectorImpl()
+	{}
+
+	void Inject(void const *f, char const *desc)
+	{
+		assert(mvItems.size() < mvItems.capacity());
+
+		mvItems.push_back(Item());
+		Item &item = mvItems.back();
+		item.fOriginal = item.fTramper = (void*)f;
+		item.desc = desc;
+
+		Code code = GenInjectCodePart1(&item);
+		item.code = code;
+
+		DetourTransactionBegin();
+		DetourUpdateThread(GetCurrentThread());
+		DetourAttach(&(PVOID&)item.fTramper, item.code.adr);
+		DetourTransactionCommit();
+
+		GenInjectCodePart2(&item);
+	}
+
+	//void Test()
+	//{
+	//	Item item;
+	//	item.fOriginal = item.fTramper = (void*)Add;
+	//	item.desc = "desc";
+	//	Code code = GenInjectCodePart1(&item);
+	//	item.code = code;
+	//	GenInjectCodePart2(&item);
+
+	//	int(*pAdd)(int a, int b) = (int(*)(int a, int b))item.code.adr;
+	//	assert(pAdd(1, 2) == 3);
+	//}
+private:
+
+};
+
+// Injector
+/////////////////////
+
+Injector::Injector():impl(new InjectorImpl)
+{
+}
+Injector::~Injector(){}
+
+void Injector::Inject(void const *f, char const *desc)
+{
+	impl->Inject(f, desc);
+}
+
+```

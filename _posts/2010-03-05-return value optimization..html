@@ -1,0 +1,36 @@
+<p><a href="http://en.wikipedia.org/wiki/Return_value_optimization" target="_blank">http://en.wikipedia.org/wiki/Return_value_optimization</a></p>
+<p><a href="http://msdn.microsoft.com/en-us/library/ms364057(VS.80).aspx" target="_blank">http://msdn.microsoft.com/en-us/library/ms364057(VS.80).aspx</a></p>
+<p>simple example </p>
+<p>&nbsp;</p><pre class="code">A MyMethod (B &amp;var)
+{
+   A retVal;
+   retVal.member = var.value + bar(var);
+   return retVal;
+}
+</pre>
+<p>&nbsp;</p>
+<p>valA = MyMethod(valB);<br /></p>
+<p>&nbsp;</p>
+<p><strong>Hidden argument code without NRVO (pseudo code)</strong></p>
+<p>&nbsp;</p><pre class="code">A MyMethod (A &amp;_hiddenArg, B &amp;var)
+{
+   A retVal;
+   retVal.A::A(); // constructor for retVal
+   retVal.member = var.value + bar(var);
+   _hiddenArg.A::A(retVal);  // the copy constructor for A
+   return;
+retVal.A::~A();  // destructor for retVal
+
+}
+</pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>Hidden argument code with NRVO (pseudo code)</strong></p>
+<p>A MyMethod(A &amp;_hiddenArg, B &amp;var)<br />{<br />&nbsp;&nbsp; _hiddenArg.A::A();<br />&nbsp;&nbsp; _hiddenArg.member = var.value + bar(var);<br />&nbsp;&nbsp; Return<br />}<br /></p>
+<p>Code Samples </p>
+<h4 class="dtH1">Sample 1: Simple example</h4><pre class="code"><font color="#0000ff" size="2"><font color="#0000ff" size="2"> <p>#include</font></font><font size="2"> </font><font color="#a31515" size="2"><font color="#a31515" size="2">&lt;stdio.h&gt;</p></font></font><font color="#0000ff" size="2"><font color="#0000ff" size="2"><p>class</font></font><font size="2"> RVO</p><p>{</p></font><font color="#0000ff" size="2"><font color="#0000ff" size="2"><p>public</font></font><font size="2">:</p><p>RVO()</p><p>{</p><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"I am in constructor %d\n"</font></font><font size="2">, </font><font color="#0000ff" size="2"><font color="#0000ff" size="2">this</font></font><font size="2">);</p><p>}</p><p>RVO (</font><font color="#0000ff" size="2"><font color="#0000ff" size="2">const</font></font><font size="2"> RVO&amp; c_RVO) </p><p>{</p><p>printf (</font><font color="#a31515" size="2"><font color="#a31515" size="2">"I am in copy constructor %d\n"</font></font><font size="2">, </font><font color="#0000ff" size="2"><font color="#0000ff" size="2">this</font></font><font size="2">);</p><p>}</p><p>~RVO()</p><p>{</p><p>printf (</font><font color="#a31515" size="2"><font color="#a31515" size="2">"I am in destructor %d\n"</font></font><font size="2">, </font><font color="#0000ff" size="2"><font color="#0000ff" size="2">this</font></font><font size="2">);</p><p>}</p><p>RVO&amp; </font><font color="#0000ff" size="2"><font color="#0000ff" size="2">operator</font></font><font size="2">=(</font><font color="#0000ff" size="2"><font color="#0000ff" size="2">const</font></font><font size="2"> RVO&amp; rhs)</p><p>{</p><p>printf (</font><font color="#a31515" size="2"><font color="#a31515" size="2">"I am in operator %d = %d\n"</font></font><font size="2">, </font><font color="#0000ff" size="2"><font color="#0000ff" size="2">this</font></font><font size="2">, &amp;rhs);</p><p></font><font color="#0000ff" size="2"><font color="#0000ff" size="2">return</font></font><font size="2"> *</font><font color="#0000ff" size="2"><font color="#0000ff" size="2">this</font></font><font size="2">;</p><p>}</p><p></font><font color="#0000ff" size="2"><font color="#0000ff" size="2">int</font></font><font size="2"> mem_var; </p><p>};</p><p>RVO MyMethod (</font><font color="#0000ff" size="2"><font color="#0000ff" size="2">int</font></font><font size="2"> i)</p><p>{</p><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"3\n"</font></font><font size="2">);</p><p>RVO rvo; </font><font color="#008000" size="2"><font color="#008000" size="2">//I am in constructor 1244896</p></font></font><font size="2"><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"4\n"</font></font><font size="2">);</p><p>rvo.mem_var = i;</p><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"5\n"</font></font><font size="2">);</p><p></font><font color="#0000ff" size="2"><font color="#0000ff" size="2">return</font></font><font size="2"> (rvo); </font><font color="#008000" size="2"><font color="#008000" size="2">//1244948CC, ~1244896</p></font></font><font size="2"><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"6\n"</font></font><font size="2">);</p><p>}</p></font><font color="#0000ff" size="2"><font color="#0000ff" size="2"><p>int</font></font><font size="2"> main()</p><p>{</p><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"1\n"</font></font><font size="2">);</p><p>RVO rvo; </font><font color="#008000" size="2"><font color="#008000" size="2">//I am in constructor 1245016</p></font></font><font size="2"><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"2\n"</font></font><font size="2">);</p><p>rvo=MyMethod(5); </font><font color="#008000" size="2"><font color="#008000" size="2">//I am in copy constructor</p></font></font><font size="2"><p>printf(</font><font color="#a31515" size="2"><font color="#a31515" size="2">"7\n"</font></font><font size="2">);</p><p></font><font color="#0000ff" size="2"><font color="#0000ff" size="2">return</font></font><font size="2"> 0; </font><font color="#008000" size="2"><font color="#008000" size="2">//~1245016</p></font></font><font size="2"><p>}</p></font></pre>
+<p class="label"><strong>Figure 4. Sample1.cpp</strong></p>
+<p>Compiling sample1.cpp with and without NRVO turned on will yield different behavior.</p>
+<p>Without NRVO (cl /Od sample1.cpp), the expected output would be:</p><pre class="code">1<br />I am in constructor 1245016<br />2<br />3<br />I am in constructor 1244888<br />4<br />5<br />I am in copy constructor 1244944<br />I am in destructor 1244888<br />I am in operator 1245016 = 1244944<br />I am in destructor 1244944<br />7<br />I am in destructor 1245016</pre>
+<p>With NRVO (cl /O2 sample1.cpp), the expected output would be:</p><pre class="code">1<br />I am in constructor 1245048<br />2<br />3<br />I am in constructor 1245052<br />4<br />5<br />I am in operator 1245048 = 1245052<br />I am in destructor 1245052<br />7<br />I am in destructor 1245048</pre>
+<p>&nbsp;</p>

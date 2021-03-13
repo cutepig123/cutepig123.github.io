@@ -1,0 +1,7 @@
+<p><br /><strong>树莓派 rust</strong><br />https://tech.iotcomeon.com/2018/06/tech/deploy/515/<br />sudo curl https://sh.rustup.rs -sSf | sh</p>
+<p><strong>利用树莓派搭建PPTP协议的VPN服务端</strong><br />http://www.nrjs.cn/ctt/11120053.html<br />https://www.domoticz.cn/wiki/%E5%9C%A8%E6%A0%91%E8%8E%93%E6%B4%BE%E4%B8%AD%E5%AE%89%E8%A3%85PPTP-VPN%E6%9C%8D%E5%8A%A1%E5%99%A8</p>
+<p>&nbsp;</p>
+<p>----</p>
+<p>ref:<br /><strong>IPtables中SNAT和MASQUERADE的区别</strong><br />http://server.zhiding.cn/server/2008/0317/772069.shtml</p>
+<p>centos 6.5搭建 pptp VPN连接上了无法上网<br />https://zhidao.baidu.com/question/433558963614296524.html<br />你的默认网关走的是vpn线路吗？<br />vpn服务器设置了nat地址转换吗？<br />追问<br />NAT转换下面这一条命令就够了吧？<br />iptables -t nat -A POSTROUTING&nbsp; -o eth1 -s 192.168.0.0/24 -j MASQUERADE<br />追答<br />-o 是你的出口网卡，怎么是eth1 ? 你有两块网卡吗？<br />-s 参数如果不确定，可以不要。</p>
+<p>然后用tcpdump抓一下包，看看有没有vpn客户的数据包过来。<br />tcpdump -i ppp0</p>

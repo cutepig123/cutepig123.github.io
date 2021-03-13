@@ -1,0 +1,1 @@
+http://en.wikipedia.org/wiki/Condition_number

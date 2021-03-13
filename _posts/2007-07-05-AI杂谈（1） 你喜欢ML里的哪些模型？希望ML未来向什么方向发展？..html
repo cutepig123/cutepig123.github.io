@@ -1,0 +1,11 @@
+<p>发信人: EchoState (AI), 信区: AI<br>标&nbsp; 题: 你喜欢ML里的哪些模型？希望ML未来向什么方向发展？<br>发信站: 水木社区 (Sun Jun 17 01:27:00 2007), 站内</p>
+<p>最近闲得没事瞎琢磨，感兴趣的一起来聊聊<br>我只是个Beginner，肯定有很多地方说的错误。欢迎大家纠正和讨论。<br>文中的ML = Machine Learning，禁止无端联想~~~~~</p>
+<p>Machine Learning算一个交叉学科，与许多学科都有密切的关系，比如：<br>--Statistics(ML的一个同义词是Statistical Learning)<br>--AI(ML被认为是AI的一个分支，虽然和AI一些传统领域不尽相同)<br>--Information Theory(很多模型都是用了信息论的理论基础，比如熵、MDL)<br>--Brain and Cognitive Sciences(一个典型的例子是Neural Networks的起源来自脑)<br>--Psychology/Social Science(ML经常受启发于human learning/animla learning，比如离子群/蚁群/其他传统的进化计算)</p>
+<p>所以，ML研究的模型/方向也是五花八门，并且各自的根基大不相同。<br>那么，大家对ML里面什么方向最感兴趣呢？你们希望ML的未来走向那个方向？</p>
+<p>是图模型吗？未来的ML将更紧密地和Statistics结合吗(毕竟决策问题说到底是最大后验概率。ML无论是有监督学习还是无监督学习都逃不出这个框框)？当今的ML界，以Jordan、Kollar、Laffery等人镇守的&#8220;图模型&#8221;流可谓ML的一个大山头。这些人颇有些统计出身的味道(很多人就是统计出来的)，在图模型范畴内发展起来的各种模型，比如经典的Bayesian networks和Markov Random Field，以及后来针对不同应用设计出来的五花八门的各种有向/无向的图模型，充斥着每年的NIPS、ICML、JMLR，JML。但是我常常在想，完全依赖于统计推理的ML是不是我们心中的ML呢？或者说它与ML最初提出时的初衷一致吗？这种ML是最吸引人的ML吗？</p>
+<p>另一大类模型/方向，不是从纯粹的统计推理出发，而是从high-dimensional space/geometry的角度进行研究。当然，这些模型最终也要放到统计框架下证明其有效性，但是他们提出时的intuition，并不是统计，而是一些基于geometry/high-dimensional space的想法。比如k-NN/SVM(Kernal-base Methods、Max Margin Methods)/Dimension Reduction(PCA/MDS/Manifold Learning)/Graph-based Semi-Supervised Learning。这些方法我个人总觉更加地intuitive，也更加吸引人，直观上更漂亮。如果同时理论上也比较完备(比如SVM)，就可以成为一个经典。</p>
+<p>一些方向是基于认知科学，比如著名的Neural Networks。NN的初识想法是很吸引人的，做到现在遇到了一个瓶颈期。目前的研究也陷入僵局，比如Artificial NN这块已经抛弃生物学意义，在单纯地设计Network Architecture作为一种Computation Tool，有时候让人觉得莫名其妙。</p>
+<p>一些方向是基于信息论。Decision tree是一个例子吧，当然也可以从其他角度解释它。</p>
+<p>一些方向是基于社会科学的。比如离子群/蚁群/其他传统的进化计算，研究个体的微观行为规则与整体的行为结果之间的关系----当然这些严格地说不是ML的一部分，而是优化科学。</p>
+<p>一些方向是基于human learning的。一个很热的方向就是ensemble learning。著名的诸如bagging、boosting，多是研究如何训练多个classifier，如何让其协作，可以产生更好的效果。个人觉得，Ensemble Learning直观上非常有趣，但是目前仅限于直观上的启发式研究，还没有发展出理论根基。</p>
+<p>还有很多很多，我自己不太懂也不瞎列举了。总之ML内部不同的方向之间存在着挺大的差异。主要是每个方向都有自己不同的intuition source。大家对ML里面什么方向最感兴趣呢？你们希望ML的未来走向那个方向？<br></p>

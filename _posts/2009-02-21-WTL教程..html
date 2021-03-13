@@ -1,0 +1,49 @@
+<h3><font><font color="#33cc99">WTL for MFC programmer 系列文章(翻译)</font></font></h3><table width="90%" align="center" border="3" bordercolor="#a8d8ff" cellpadding="1" cellspacing="1"><tbody><tr><td width="30%" bgcolor="#ffcccc">项目</td>
+    <td width="70%" bgcolor="#d1fccd">说明</td>
+  </tr>
+  <tr> 
+    <td width="30%" height="12"> 
+      <p><a href="http://www.winmsg.com/wtl/Prologue.htm" target="_blank">中文版序言</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part1.htm" target="_blank">Part I 
+        ATL GUI Classes</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part2.htm" target="_blank">Part II 
+        WTL GUI Base Classes</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part3.htm" target="_blank">Part III 
+        Toolbars and Status Bars</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part4.htm" target="_blank">Part IV 
+        - Dialogs and Controls</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part5.htm" target="_blank">Part V 
+        - Advanced Dialog UI Classes</a></p>
+      <p> <a href="http://www.winmsg.com/wtl/Part6.htm" target="_blank">Part VI 
+        - Hosting ActiveX Controls</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part7.htm" target="_blank">Part VII 
+        - Splitter Windows</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part8.htm">Part VIII - Property Sheets 
+        and Wizards</a></p>
+      <p><a href="http://www.winmsg.com/wtl/Part9.htm">Part IX - GDI Classes, 
+        Common Dialogs, and Utility Classes</a></p>
+      <p><a href="http://www.winmsg.com/download/wtl_for_mfc_programmers_cn.zip">全文打包下载</a></p>
+      </td>
+    <td width="70%" height="12"> 
+      <p>WTL
+具有两面性，确实是这样的。它没有MFC的界面（GUI）类库那样功能强大，但是能够生成很小的可执行文件。如果你象我一样使用MFC进行界面编程，你会
+觉得MFC提供的界面控件封装使用起来非常舒服，更不用说MFC内置的消息处理机制。当然，如果你也象我一样不希望自己的程序仅仅因为使用了MFC的框架
+就增加几百K的大小的话，WTL就是你的选择。当然，我们还要克服一些障碍：</p>
+      <p>ATL样式的模板类初看起来有点怪异 <br>
+        没有类向导的支持，所以要手工处理所有的消息映射。 <br>
+        MSDN没有正式的文档支持，你需要到处去收集有关的文档，甚至是查看WTL的源代码。 <br>
+        买不到参考书籍 <br>
+        没有微软的官方支持 <br>
+        ATL/WTL的窗口与MFC的窗口有很大的不同，你所了解的有关MFC的知识并不全部适用与WTL。</p>
+      <p>从另一方面讲，WTL也有它自身的优势：</p>
+      <p>不需要学习或掌握复杂的文档/视图框架。 <br>
+        具有MFC的基本的界面特色，比如DDX/DDV和命令状态的自动更新功能（译者加：比如菜单的Check标记和Enable标记）。 <br>
+        增强了一些MFC的特性（比如更加易用的分隔窗口）。 <br>
+        可生成比静态链接的MFC程序更小的可执行文件（译者加：WTL的所有源代码都是静态链接到你的程序中的）。 <br>
+        你可以修正自己使用的WTL中的错误（BUG）而不会影响其他的应用程序(相比之下，如果你修正了有BUG的MFC/CRT动态库就可能会引起其它应用程序的崩溃。 
+        <br>
+如果你仍然需要使用MFC，MFC的窗口和ATL/WTL的窗口可以“和平共处”。（例如我工作中的一个原型就使用了了MFC的CFrameWnd，并在
+其内包含了WTL的CSplitterWindow，在CSplitterWindow中又使用了MFC的CDialogs --
+我并不是为了炫耀什么，只是修改了MFC的代码使之能够使用WTL的分割窗口，它比MFC的分割窗口好的多）。 </p>
+      <p><br>
+        在这一系列文章中，我将首先介绍ATL的窗口类，毕竟WTL是构建与ATL之上的一系列附加类，所以需要很好的了解ATL的窗口类。介绍完ATL之后我将介绍WTL的特性以并展示它是如何使界面编程变得轻而易举。</p></td></tr></tbody></table><br><br>

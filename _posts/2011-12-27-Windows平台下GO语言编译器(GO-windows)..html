@@ -1,0 +1,10 @@
+<h3><span class="link_title"><a title="Windows平台下GO语言编译器(GO-windows) " href="http://blog.csdn.net/savechina/article/details/5280408">Windows平台下GO语言编译器(GO-windows) </a></span></h3>
+<div class="article_manage"><span class="link_categories">
+        分类：
+            <a href="http://blog.csdn.net/savechina/article/category/650764">GO</a> 
+        </span> <span class="link_postdate">2010-02-02 13:49</span> <span class="link_view" title="阅读次数">1463人阅读</span> <span class="link_comments" title="评论次数"><a href="http://blog.csdn.net/savechina/article/details/5280408#comments">评论</a>(4)</span> <span class="link_collect"><a title="收藏">收藏</a></span> <span class="link_report"><a title="举报" href="http://blog.csdn.net/savechina/article/details/5280408#report">举报</a></span></div>
+<div id="article_content" class="article_content">
+<p><br /> go for windows下载:http://code.google.com/p/go-windows/ ,http://savechina.download.csdn.net/ <br /> <br /> 使用前需要dos执行<br /> set GOROOT=&lt;the go folder&gt;<br /> set GOOS=mingw<br /> set GOARCH=386<br /> set PATH=&lt;the go folder&gt;/bin<br /> <br /> 编译执行test.go文件需要执行<br /> 8g test.go //编译生成test.8<br /> 8l test.8&nbsp; //连接生成8.exe<br /> 8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //执行8.exe</p>
+<p>example:</p>
+<p>package main<br />import "fmt"<br />func main() { <br />&nbsp;&nbsp; &nbsp;fmt.Print("Hello, World\n") <br />} <br />&nbsp;<br /> 中文支持需要保证go文件采用utf-8格式存放，且没有BOM字符<br /> 1、dos执行chcp 65001 //修改代码页为utf-8，否则无法通过编译<br /> 2、修改dos窗口字体为新宋体，否则显示的字符为乱码<br /> 3、在chcp之后似乎就不支持批处理文件了。<br /> 如果你写了一个bat来编译执行，那么，失败不是你的人品问题。<br /> 4、关于BOM，请看http://en.wikipedia.org/wiki/Byte_order_mark，大意就是windows下的编辑器 notepad在保存utf-8文件的时候会自动在文件开头加三个Byte,内容为EF BB BF。你可以用VIM 或者Notepad++来编辑代码。如果是用editplus,在工具-参数选择-文件里把&ldquo;不添加字节顺序标记到UTF-8文件&rdquo;勾上就可以了。没有 editplus？呵呵，写个go文件删除指定文件开头的三个字节就可以了。</p>
+</div>

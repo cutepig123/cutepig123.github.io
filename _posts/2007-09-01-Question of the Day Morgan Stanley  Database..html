@@ -1,0 +1,172 @@
+<p><span style="color: red">1. Difference between clustered and non clustered index <br />
+</span>http://space.exue.com/i10691.html<br />
+In SQL Server what's the different Clustered index and non-clustered index?</p>
+<p>A clustered index determines the physical order of data in a table.E学地带$D(l4Kf;e%v<br />
+For A nonclustered index the data is stored in one place, the index in another, with pointers to the storage location of the data.</p>
+<p>Consider using a clustered index for:</p>
+<p>Columns that contain a large number of distinct values. <br />
+Queries that return a range of values using operators such as BETWEEN, &gt;, &gt;=, &lt;, and &lt;=. <br />
+Columns that are accessed sequentially. <br />
+Queries that return large result sets. <br />
+Columns that are frequently accessed by queries involving join or GROUP BY clauses; typically these are foreign key columns. An index on the column(s) specified in the ORDER BY or GROUP BY clause eliminates the need for SQL Server to sort the data because the rows are already sorted. This improves query performance. <br />
+OLTP-type applications where very fast single row lookup is required, typically by means of the primary key. Create a clustered index on the primary key</p>
+<p>Clustered indexes are not a good choice for:</p>
+<p>Columns that undergo frequent changes. <br />
+Wide keys</p>
+<p>Consider using nonclustered indexes for:</p>
+<p>Columns that contain a large number of distinct values, such as a combination of last name and first name (if a clustered index is used for other columns). If there are very few distinct values, such as only 1 and 0, most queries will not use the index because a table scan is usually more efficient. <br />
+Queries that do not return large result sets. <br />
+Columns frequently involved in search conditions of a query (WHERE clause) that return exact matches. <br />
+Decision-support-system applications for which joins and grouping are frequently required. Create multiple nonclustered indexes on columns involved in join and grouping operations, and a clustered index on any foreign key columns. <br />
+Covering all columns from one table in a given query. This eliminates accessing the table or clustered index altogether.E学地带/~'s#msU]</p>
+<p>Resources:</p>
+<p>Using clustered indexes <br />
+Using non-clustered indexes <br />
+&nbsp;</p>
+<p><span style="color: red">2. Difference between having and where </span><br />
+Haveing分组，跟在Group by的后面。 <br />
+where 条件<br />
+select column_name <br />
+&nbsp;from table_name <br />
+&nbsp;where <br />
+&nbsp;group by column_name <br />
+&nbsp;having <br />
+&nbsp;</p>
+<p><br />
+http://book.csdn.net/bookfiles/235/10023510864.shtml<br />
+http://dev.yesky.com/230/2669730.shtml</p>
+<p>在介绍GROUP BY 和 HAVING 子句前，我们必需先讲讲sql语言中一种特殊的函数：聚合函数，例如SUM, COUNT, MAX, AVG等。这些函数和其它函数的根本区别就是它们一般作用在多条记录上。 </p>
+<p>SELECT SUM(population) FROM bbc </p>
+<p>　　这里的SUM作用在所有返回记录的population字段上，结果就是该查询只返回一个结果，即所有国家的总人口数。</p>
+<p>　　通过使用GROUP BY 子句，可以让SUM 和 COUNT 这些函数对属于一组的数据起作用。当你指定 GROUP BY region 时， 属于同一个region（地区）的一组数据将只能返回一行值，也就是说，表中所有除region（地区）外的字段，只能通过 SUM, COUNT等聚合函数运算后返回一个值。</p>
+<p>　　HAVING子句可以让我们筛选成组后的各组数据，WHERE子句在聚合前先筛选记录．也就是说作用在GROUP BY 子句和HAVING子句前．<br />
+而 HAVING子句在聚合后对组记录进行筛选。</p>
+<p>　　让我们还是通过具体的实例来理解GROUP BY 和 HAVING 子句，还采用第三节介绍的bbc表。</p>
+<p>　　SQL实例：</p>
+<p>　　一、显示每个地区的总人口数和总面积：</p>
+<p>SELECT region, SUM(population), SUM(area)<br />
+FROM bbc<br />
+GROUP BY region </p>
+<p>　　先以region把返回记录分成多个组，这就是GROUP BY的字面含义。分完组后，然后用聚合函数对每组中的不同字段（一或多条记录）作运算。</p>
+<p>　　二、 显示每个地区的总人口数和总面积．仅显示那些面积超过1000000的地区。</p>
+<p>SELECT region, SUM(population), SUM(area)<br />
+FROM bbc<br />
+GROUP BY region<br />
+HAVING SUM(area)&gt;1000000 </p>
+<p>　　在这里，我们不能用where来筛选超过1000000的地区，因为表中不存在这样一条记录</p>
+<p><br />
+on、where、having这三个都可以加条件的子句中，on是最先执行，where次之，having最后。有时候如果这先后顺序不影响中间结果的话，那最终结果是相同的。但因为on是先把不符合条件的记录过滤后才进行统计，它就可以减少中间运算要处理的数据，按理说应该速度是最快的。 <br />
+&nbsp;<br />
+&nbsp;根据上面的分析，可以知道where也应该比having快点的，因为它过滤数据后才进行sum，所以having是最慢的。但也不是说having没用，因为有时在步骤3还没出来都不知道那个记录才符合要求时，就要用having了。 <br />
+&nbsp;<br />
+&nbsp;在两个表联接时才用on的，所以在一个表的时候，就剩下where跟having比较了。在这单表查询统计的情况下，如果要过滤的条件没有涉及到要计算字段，那它们的结果是一样的，只是where可以使用rushmore技术，而having就不能，在速度上后者要慢。 <br />
+&nbsp;<br />
+&nbsp;如果要涉及到计算的字段，就表示在没计算之前，这个字段的值是不确定的，根据上篇写的工作流程，where的作用时间是在计算之前就完成的，而having就是在计算后才起作用的，所以在这种情况下，两者的结果会不同。 <br />
+&nbsp;<br />
+&nbsp;在多表联接查询时，on比where更早起作用。系统首先根据各个表之间的联接条件，把多个表合成一个临时表后，再由where进行过滤，然后再计算，计算完后再由having进行过滤。由此可见，要想过滤条件起到正确的作用，首先要明白这个条件应该在什么时候起作用，然后再决定放在那里<br />
+作实验，where 后的过滤条件不能出现要计算字段。</p>
+<p><span style="color: red">3. What is query optimization</span><br />
+http://blog.chinaunix.net/u/10080/showart.php?id=170107<br />
+Query optimization<br />
+查询优化<br />
+与传统RDBMS的查询相比，因为所有的数据在内存中所以查询的执行是很快的。但fastdb通过应用许多优化措施更加提高了查询执行的速度：使用索引，逆引用和查询并行化。下面几节提供这些优化的详细信息。<br />
+Using indices in queries<br />
+查询中使用索引<br />
+索引是提升RDBMS性能的传统方法。Fastdb使用两种类型的索引：extensible hash table 和 T-tree。第一种对指定了关键字的值的记录的访问速度最快（一般来是常量时间）。而T-tree，是AVL-tree和数组的混合体，在MMRDBMS的角色与B-tree在传统的RDBMS角色是一样的。提供了对数算法复杂度的搜索、插入和删除操作（也就是说，对一个有N个记录的表的搜索/插入/删除的操作的时间是C*log2(N)，其中C是某一常量）。T-tree比B-tree更适用于MMDBMS，因为B-tree试图最小化需要装载的页面数目（对于基于磁盘的数据库来说页面装载代价是昂贵的），而T-tree则试图优化比较/移动操作的次数。T-tree最适合于范围操作或者记录有显著的顺序。<br />
+fastdb使用简单的规则来应用索引，让程序员来预言什么时候以及哪一个索引将被使用。索引的适用性检查在每一次查询执行期间进行，因此该决策可以依赖于操作数的值来决定。下面的规则说明了fastdb应用索引的算法：<br />
+编译好的条件表达式总是从左到右检查 <br />
+如果最终（topmost）表达式是AND，则尝试在表达式的左半部分使用索引，右半部分作为过滤（filter） <br />
+如果最终表达式是OR，则如果左半可以使用索引则使用，然后测试右半使用索引的可能性 <br />
+此外，当下列条件满足时，则索引适用于表达式 <br />
+最终表达式是关系操作 (= &lt; &gt; &lt;= &gt;= between like) <br />
+操作数的类型是布尔型，数值型，字符串和引用 <br />
+表达式的右操作数是文本常量或者C++变量，或者 <br />
+左操作数是记录的索引字段 <br />
+索引与关系操作兼容<br />
+现在我们应当确认&#8220;索引与操作兼容&#8221;的意思以及在没种情况中使用什么类型的索引，一个哈希表在下列情况下可以使用:<br />
+相等=比较； <br />
+Between操作并且两个端点操作数的值相等 <br />
+Like操作并且模式串 不包含特别字符（&#8217;%&#8217;或者&#8217;_&#8217;）并且没有转义字符（在escape部分指定）<br />
+当hash表不适合并且如下条件满足时，可以使用T-tree:<br />
+比较运算（ = &lt; &gt; &lt;= &gt;= between)<br />
+Like运算并且模式串包含非空前缀（也就是说模式的第一个字符不是&#8217;%&#8217;或者&#8217;_&#8217;）<br />
+如果用索引来搜索like表达式的前缀，并且其后缀不只是&#8217;%&#8217;字符，则这个索引搜索操作能够返回的记录比真正匹配模式的记录要多。在这种情况下，我们应当过滤模式匹配的索引搜索的结果。。<br />
+如果搜索条件是一些子表达式的析取（用or操作符连接的许多可选项的表达式），则查询的执行可以使用多个索引。为了避免此时的记录重复，在游标中使用位图来标记记录已经选中了。<br />
+如果搜索条件需要扫描线型表，在order by子句中包含了定义T-tree索引的单一记录字段，则可以使用T-tree索引。只要排序是一个非常昂贵的操作，使用索引来代替排序显著的减少了查询执行的时间。<br />
+使用参数-DDEBUG=DEBUG_TRACE编译fastdb,可以检查查询执行中使用了哪些索引，以及在索引搜索期间所作的许多探测。在这种情况下，fastdb将dump数据库操作性能包括索引的追踪信息。<br />
+逆引用<br />
+逆引用提供了在表之间建立关系的高效并且可靠的方法。Fastdb在插入/更新/删除记录时以及查询优化时使用逆引用的信息。记录之间的关系可以是这些类型：一对一，一对多以及多对多。<br />
+.一对一的关系用自身以及目标记录的一个引用字段表示。 <br />
+. 一对多用自身的一个引用字段及目标表中的一个引用数组字段表示。 <br />
+多对一用自身的一个引用数组字段以及所引用的表中的记录的一个引用字段表示 <br />
+多对多用自身及目标记录中的引用数组字段表示。<br />
+当一个声明了关系的记录被插入表中，所有表中的与该记录关联的逆引用，都被更新至指向这个记录。当更新了一个记录并且一个指明了该记录的关系的字段发生变化，则该逆引用自动重构，删除那些不再与该被更新的记录关联的记录对该记录的引用，并且设置包含在该关系中的新记录的的逆引用至该更新的记录。当一个记录被删除，所有逆引用字段中指向其的引用都被删除。<br />
+出于效率的原因，fastdb并不保证所有引用的一致性。如果你从表中删除一个记录，在数据库中仍然可能会有指向该记录的引用。访问这些引用将会造成应用程序不可预料的结果甚至数据库崩溃。使用逆引用可以清除这个问题，因为所有的引用都会自动更新从而引用的一致性得以保留。<br />
+使用下面的表作为例子：<br />
+&nbsp;<br />
+class Contract;<br />
+&nbsp;<br />
+class Detail { <br />
+&nbsp; public:<br />
+&nbsp;&nbsp;&nbsp; char const* name;<br />
+&nbsp;&nbsp;&nbsp; char const* material;<br />
+&nbsp;&nbsp;&nbsp; char const* color;<br />
+&nbsp;&nbsp;&nbsp; real4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; weight;<br />
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp; dbArray&lt; dbReference&lt;Contract&gt; &gt; contracts;<br />
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp; TYPE_DESCRIPTOR((KEY(name, INDEXED|HASHED), <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KEY(material, HASHED), <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KEY(color, HASHED),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KEY(weight, INDEXED),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RELATION(contracts, detail)));<br />
+};<br />
+&nbsp;<br />
+class Supplier { <br />
+&nbsp; public:<br />
+&nbsp;&nbsp;&nbsp; char const* company;<br />
+&nbsp;&nbsp;&nbsp; char const* location;<br />
+&nbsp;&nbsp;&nbsp; bool&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; foreign;<br />
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp; dbArray&lt; dbReference&lt;Contract&gt; &gt; contracts;<br />
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp; TYPE_DESCRIPTOR((KEY(company, INDEXED|HASHED), <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KEY(location, HASHED), <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; FIELD(foreign),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RELATION(contracts, supplier)));<br />
+};<br />
+&nbsp;<br />
+&nbsp;<br />
+class Contract { <br />
+&nbsp; public:<br />
+&nbsp;&nbsp;&nbsp; dbDateTime&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delivery;<br />
+&nbsp;&nbsp;&nbsp; int4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; quantity;<br />
+&nbsp;&nbsp;&nbsp; int8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; price;<br />
+&nbsp;&nbsp;&nbsp; dbReference&lt;Detail&gt;&nbsp;&nbsp; detail;<br />
+&nbsp;&nbsp;&nbsp; dbReference&lt;Supplier&gt; supplier;<br />
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp; TYPE_DESCRIPTOR((KEY(delivery, HASHED|INDEXED), <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KEY(quantity, INDEXED), <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; KEY(price, INDEXED),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RELATION(detail, contracts),<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; RELATION(supplier, contracts)));<br />
+};<br />
+这个例子中，在表Detail-Contract 和 Supplier-Contract之间存在一对多的关系。当一个Contract记录插入数据库中，仅仅只要把引用detail和supplier设置到Detail和Supplier表的相应记录上。这些记录的逆引用contracts将自动更新。当一个Contract记录被删除时同样：从被引用的Detail和Supplier的记录的contracts字段中自动排除被删除的记录的引用。<br />
+此外，使用逆引用可以在查询执行时选择更有效的规划。考虑下面的查询，选择某公司装船的细节：<br />
+&nbsp;<br />
+&nbsp;&nbsp;&nbsp; q = "exists i:(contracts[i].supplier.company=",company,")";<br />
+这个查询执行的最直接地方法是扫描Detail表，并用这个条件测试每一条记录。但使用逆引用我们可以选择另一种方法：用指定的公司名在Supplier表中进行记录的索引搜索，然后从表Detail中使用逆引用定位记录，Detail表与所选的supplier记录有传递关系。当然我们要清除重复的记录，这是有可能的因为一个公司可能运送许多不同的货物。这个通过游标对象的位图来实现。由于索引查找明显的快于顺序查找并且通过引用访问是非常快的操作，这个查询的总执行时间比直接方法要短得多。<br />
+从1.20版本开始，fastdb支持串联（cascade）删除。如果使用OWNER宏声明一个字段，该记录就被当作是这个层次关系的所有者（owner）。当所有者记录被删除，该关系的所有的成员（从所有者引用的记录）将被自动删除。如果该关系的成员记录要保持对所有者记录的引用，该字段应当用RELATION宏声明。<br />
+&nbsp;<br />
+<span style="color: red">4.Clustered Index Scan和Clustered Index Seek的区别? </span></p>
+<p>这是在做Show Plan时出现的 <br />
+&nbsp;1. SELECT au_id <br />
+&nbsp;FROM authors <br />
+&nbsp;WHERE au_id = '409-56-7008' (Clustered Index Seek) <br />
+&nbsp;<br />
+&nbsp;2. SELECT city <br />
+&nbsp;FROM authors <br />
+&nbsp;WHERE city LIKE 'San%'&nbsp;&nbsp; (Clustered Index Scan) <br />
+&nbsp;Index Seek means that SQL Server will traverse the index from the root down to the leaf level, comparing the values in the SARG to the key values in the index rows to determine which page to look at next. Seeking through an index typically means a root-to-leaf traversal. <br />
+&nbsp;<br />
+&nbsp;A scan, the alternative to Index Seek, means that SQL Server will stay at the leaf level and traverse just that one level of the index from the first page to the last. I like to think of a seek as a vertical traversal of an index and a scan as a horizontal traversal. Remember that for a clustered index, the leaf level of the index is the table data itself, so scanning the clustered index really means scanning the table. In fact, the only time you'll see Table Scan as an operator in the plan is for heaps.</p>

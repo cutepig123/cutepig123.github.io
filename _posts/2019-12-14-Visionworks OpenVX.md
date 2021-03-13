@@ -607,4 +607,4 @@ the function is called by optimize function
 
 # What optimization is done in optimize()?
 
-Choose the best 
+Choose the best

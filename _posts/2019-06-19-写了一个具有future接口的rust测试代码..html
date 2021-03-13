@@ -1,0 +1,27 @@
+<p>写了一个具有future接口的rust测试代码</p>
+<p>但没有实现future功能，内部是直接求值</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">struct</span> Future&lt;T&gt;<span style="color: #000000;"> {
+</span><span style="color: #008080;"> 2</span> <span style="color: #000000;">    t: T,
+</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">}
+</span><span style="color: #008080;"> 4</span> 
+<span style="color: #008080;"> 5</span> impl&lt;T&gt; Future&lt;T&gt;<span style="color: #000000;"> {
+</span><span style="color: #008080;"> 6</span>     fn <span style="color: #0000ff;">new</span>(callback: impl FnOnce() -&gt; T) -&gt; Future&lt;T&gt;<span style="color: #000000;"> {
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">        Future { t: callback() }
+</span><span style="color: #008080;"> 8</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;"> 9</span>     fn then&lt;T2&gt;(self, callback: impl FnOnce(T) -&gt; T2) -&gt; Future&lt;T2&gt;<span style="color: #000000;"> {
+</span><span style="color: #008080;">10</span> <span style="color: #000000;">        Future {
+</span><span style="color: #008080;">11</span> <span style="color: #000000;">            t: callback(self.t),
+</span><span style="color: #008080;">12</span> <span style="color: #000000;">        }
+</span><span style="color: #008080;">13</span> <span style="color: #000000;">    }
+</span><span style="color: #008080;">14</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span> <span style="color: #000000;">#[test]
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">fn t1() {
+</span><span style="color: #008080;">18</span>     let f1 = Future::<span style="color: #0000ff;">new</span>(|| <span style="color: #800080;">1</span><span style="color: #000000;">);
+</span><span style="color: #008080;">19</span>     let f2 = f1.then(|x| format!(<span style="color: #800000;">"</span><span style="color: #800000;">s={}</span><span style="color: #800000;">"</span>, x + <span style="color: #800080;">1</span><span style="color: #000000;">));
+</span><span style="color: #008080;">20</span>     println!(<span style="color: #800000;">"</span><span style="color: #800000;">{}</span><span style="color: #800000;">"</span><span style="color: #000000;">, f2.t);
+</span><span style="color: #008080;">21</span> }</pre>
+</div>
+<p>&nbsp;</p>

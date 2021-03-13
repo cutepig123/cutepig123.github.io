@@ -1,0 +1,50 @@
+<div class="CopyrightStatement lh22">原创作品，允许转载，转载时请务必以超链接形式标明文章&nbsp;<a href="http://scoke.blog.51cto.com/769125/490546" target="_blank">原始出处</a>&nbsp;、作者信息和本声明。否则将追究法律责任。<a href="http://scoke.blog.51cto.com/769125/490546">http://scoke.blog.51cto.com/769125/490546</a></div>
+<div class="showContent">
+<p>IO调度器的总体目标是希望让磁头能够总是往一个方向移动,移动到底了再往反方向走,这恰恰就是现实生活中的电梯模型,所以IO调度器也被叫做电梯. (elevator)而相应的算法也就被叫做电梯算法.而Linux中IO调度的电梯算法有好几种,一个叫做as(Anticipatory),一个叫做 cfq(Complete Fairness Queueing),一个叫做deadline,还有一个叫做noop(No Operation).具体使用哪种算法我们可以在启动的时候通过内核参数elevator来指定.</p>
+<p><br />一)I/O调度的4种算法</p>
+<p>1)CFQ(完全公平排队I/O调度程序)</p>
+<p>特点:<br />在最新的内核版本和发行版中,都选择CFQ做为默认的I/O调度器,对于通用的服务器也是最好的选择.<br />CFQ试图均匀地分布对I/O带宽的访问,避免进程被饿死并实现较低的延迟,是deadline和as调度器的折中.<br />CFQ对于多媒体应用(video,audio)和桌面系统是最好的选择.<br />CFQ赋予I/O请求一个优先级,而I/O优先级请求独立于进程优先级,高优先级的进程的读写不能自动地继承高的I/O优先级.</p>
+<p><br />工作原理:<br />CFQ为每个进程/线程,单独创建一个队列来管理该进程所产生的请求,也就是说每个进程一个队列,各队列之间的调度使用时间片来调度,<br />以此来保证每个进程都能被很好的分配到I/O带宽.I/O调度器每次执行一个进程的4次请求.</p>
+<p><br />2)NOOP(电梯式调度程序)</p>
+<p>特点:<br />在Linux2.4或更早的版本的调度程序,那时只有这一种I/O调度算法.<br />NOOP实现了一个简单的FIFO队列,它像电梯的工作主法一样对I/O请求进行组织,当有一个新的请求到来时,它将请求合并到最近的请求之后,以此来保证请求同一介质.<br />NOOP倾向饿死读而利于写.<br />NOOP对于闪存设备,RAM,嵌入式系统是最好的选择.</p>
+<p>电梯算法饿死读请求的解释:<br />因为写请求比读请求更容易.<br />写请求通过文件系统cache,不需要等一次写完成,就可以开始下一次写操作,写请求通过合并,堆积到I/O队列中.<br />读请求需要等到它前面所有的读操作完成,才能进行下一次读操作.在读操作之间有几毫秒时间,而写请求在这之间就到来,饿死了后面的读请求.</p>
+<p>3)Deadline(截止时间调度程序)</p>
+<p>特点:<br />通过时间以及硬盘区域进行分类,这个分类和合并要求类似于noop的调度程序.<br />Deadline确保了在一个截止时间内服务请求,这个截止时间是可调整的,而默认读期限短于写期限.这样就防止了写操作因为不能被读取而饿死的现象.<br />Deadline对数据库环境(ORACLE RAC,MYSQL等)是最好的选择.</p>
+<p><br />4)AS(预料I/O调度程序)</p>
+<p>特点:<br />本质上与Deadline一样,但在最后一次读操作后,要等待6ms,才能继续进行对其它I/O请求进行调度.<br />可以从应用程序中预订一个新的读请求,改进读操作的执行,但以一些写操作为代价.<br />它会在每个6ms中插入新的I/O操作,而会将一些小写入流合并成一个大写入流,用写入延时换取最大的写入吞吐量.<br />AS适合于写入较多的环境,比如文件服务器<br />AS对数据库环境表现很差.</p>
+<p>查看当前系统支持的IO调度算法<br />dmesg | grep -i scheduler</p>
+<p>[root@localhost ~]# dmesg | grep -i scheduler<br />io scheduler noop registered<br />io scheduler anticipatory registered<br />io scheduler deadline registered<br />io scheduler cfq registered (default)</p>
+<p>查看当前系统的I/O调度方法:</p>
+<p>cat /sys/block/sda/queue/scheduler<br />noop anticipatory deadline [cfq]</p>
+<p>临地更改I/O调度方法:<br />例如:想更改到noop电梯调度算法:<br />echo noop &gt; /sys/block/sda/queue/scheduler</p>
+<p>想永久的更改I/O调度方法:<br />修改内核引导参数,加入elevator=调度程序名<br />vi /boot/grub/menu.lst<br />更改到如下内容:<br />kernel /boot/vmlinuz-2.6.18-8.el5 ro root=LABEL=/ elevator=deadline rhgb quiet</p>
+<p><br />重启之后,查看调度方法:<br />cat /sys/block/sda/queue/scheduler<br />noop anticipatory [deadline] cfq<br />已经是deadline了</p>
+<p>&nbsp;</p>
+<p>四)I/O调度程序的测试</p>
+<p>本次测试分为只读,只写,读写同时进行.<br />分别对单个文件600MB,每次读写2M,共读写300次.</p>
+<p>1)测试磁盘读:<br />[root@test1 tmp]# echo deadline &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/sda1 f=/dev/null bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 6.81189 seconds, 92.4 MB/s</p>
+<p>real 0m6.833s<br />user 0m0.001s<br />sys 0m4.556s<br />[root@test1 tmp]# echo noop &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/sda1 f=/dev/null bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 6.61902 seconds, 95.1 MB/s</p>
+<p>real 0m6.645s<br />user 0m0.002s<br />sys 0m4.540s<br />[root@test1 tmp]# echo anticipatory &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/sda1 f=/dev/null bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 8.00389 seconds, 78.6 MB/s</p>
+<p>real 0m8.021s<br />user 0m0.002s<br />sys 0m4.586s<br />[root@test1 tmp]# echo cfq &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/sda1 f=/dev/null bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 29.8 seconds, 21.1 MB/s</p>
+<p>real 0m29.826s<br />user 0m0.002s<br />sys 0m28.606s<br />结果:<br />第一 noop:用了6.61902秒,速度为95.1MB/s<br />第二 deadline:用了6.81189秒,速度为92.4MB/s<br />第三 anticipatory:用了8.00389秒,速度为78.6MB/s<br />第四 cfq:用了29.8秒,速度为21.1MB/s</p>
+<p><br />2)测试写磁盘:<br />[root@test1 tmp]# echo cfq &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/zero f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 6.93058 seconds, 90.8 MB/s</p>
+<p>real 0m7.002s<br />user 0m0.001s<br />sys 0m3.525s<br />[root@test1 tmp]# echo anticipatory &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/zero f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 6.79441 seconds, 92.6 MB/s</p>
+<p>real 0m6.964s<br />user 0m0.003s<br />sys 0m3.489s<br />[root@test1 tmp]# echo noop &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/zero f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 9.49418 seconds, 66.3 MB/s</p>
+<p>real 0m9.855s<br />user 0m0.002s<br />sys 0m4.075s<br />[root@test1 tmp]# echo deadline &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# time dd if=/dev/zero f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 6.84128 seconds, 92.0 MB/s</p>
+<p>real 0m6.937s<br />user 0m0.002s<br />sys 0m3.447s</p>
+<p>测试结果:<br />第一 anticipatory,用了6.79441秒,速度为92.6MB/s<br />第二 deadline,用了6.84128秒,速度为92.0MB/s<br />第三 cfq,用了6.93058秒,速度为90.8MB/s<br />第四 noop,用了9.49418秒,速度为66.3MB/s</p>
+<p><br />3)测试同时读/写</p>
+<p>[root@test1 tmp]# echo deadline &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# dd if=/dev/sda1 f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 15.1331 seconds, 41.6 MB/s<br />[root@test1 tmp]# echo cfq &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# dd if=/dev/sda1 f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 36.9544 seconds, 17.0 MB/s<br />[root@test1 tmp]# echo anticipatory &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# dd if=/dev/sda1 f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 23.3617 seconds, 26.9 MB/s<br />[root@test1 tmp]# echo noop &gt; /sys/block/sda/queue/scheduler<br />[root@test1 tmp]# dd if=/dev/sda1 f=/tmp/test bs=2M count=300<br />300+0 records in<br />300+0 records out<br />629145600 bytes (629 MB) copied, 17.508 seconds, 35.9 MB/s</p>
+<p>测试结果:<br />第一 deadline,用了15.1331秒,速度为41.6MB/s<br />第二 noop,用了17.508秒,速度为35.9MB/s<br />第三 anticipatory,用了23.3617秒,速度为26.9MS/s<br />第四 cfq,用了36.9544秒,速度为17.0MB/s</p>
+<p>五)ionice</p>
+<p>ionice可以更改任务的类型和优先级,不过只有cfq调度程序可以用ionice.<br />有三个例子说明ionice的功能:<br />采用cfq的实时调度,优先级为7<br />ionice -c1 -n7 -ptime dd if=/dev/sda1 f=/tmp/test bs=2M count=300&amp;<br />采用缺省的磁盘I/O调度,优先级为3<br />ionice -c2 -n3 -ptime dd if=/dev/sda1 f=/tmp/test bs=2M count=300&amp;<br />采用空闲的磁盘调度,优先级为0<br />ionice -c3 -n0 -ptime dd if=/dev/sda1 f=/tmp/test bs=2M count=300&amp;</p>
+<p>ionice的三种调度方法,实时调度最高,其次是缺省的I/O调度,最后是空闲的磁盘调度.<br />ionice的磁盘调度优先级有8种,最高是0,最低是7.<br />注意,磁盘调度的优先级与进程nice的优先级没有关系.<br />一个是针对进程I/O的优先级,一个是针对进程CPU的优先级.</p>
+<p>&nbsp;</p>
+<p>Anticipatory I/O scheduler 适用于大多数环境,但不太合适数据库应用</p>
+<p>Deadline I/O scheduler 通常与Anticipatory相当,但更简洁小巧,更适合于数据库应用</p>
+<p>CFQ I/O scheduler 为所有进程分配等量的带宽,适合于桌面多任务及多媒体应用，默认IO调度器</p>
+<p>Default I/O scheduler</p>
+<p>&nbsp;</p>
+<p>问题一：<br />Device:         rrqm/s   wrqm/s   r/s   w/s    rkB/s    wkB/s avgrq-sz avgqu-sz   await  svctm  %util<br /> <br />sdi              82.40     8.90 67.00  5.30  8641.20    56.80   240.61     0.08    1.09   0.93   6.76<br /> <br />上面sdi是一块SSD盘，SSD又不是机械盘，怎么会有rrqm这些合并值呢？<br /> <br />我的理解是内核把这些指标统一对待了？  意思是这些指标对SSD不适用<br /> <br /> <br />问题二：<br />SSD的%util参数很低，但是明显感觉SSD性能到瓶颈了，难道说%util参数也是打酱油的？<br /> </p>
+
+</div>

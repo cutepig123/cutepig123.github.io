@@ -1,0 +1,17 @@
+<p>pyotherside 试用<br /><br /><strong>这是啥？</strong><br />用python写qt<br /><br /><br /><strong>步骤：</strong><br />安装qt： http://www.qt.io/download-open-source/#section-2<br />安装python3:<br />下载源代码 https://github.com/thp/pyotherside<br />编译 pyotherside：&nbsp;&nbsp; &nbsp;他主页上有一个简短的说明<br />&nbsp;&nbsp;&nbsp; qmake<br />&nbsp;&nbsp;&nbsp; make<br />&nbsp;&nbsp;&nbsp; make install<br />&nbsp;&nbsp; &nbsp;<br /><strong>编译完可以执行个测试</strong>&nbsp;&nbsp; &nbsp; ./tests/tests</p>
+<p>&nbsp;</p>
+<p><strong>运行example程序</strong></p>
+<p>F:\wamp\www\git_repos\GitHub\pyotherside&gt;qmlscene F:\wamp\www\git_repos\GitHub\pyotherside\examples\helloworld.qml<br />qml: PyOtherSide version: 1.4.0<br />qml: Python version: 3.4.3<br />qml: python error: Not a parameter list in call to pyotherside.send:<br />"PyOtherSide error: No module named 'thismoduledoesnotexisthopefully'"<br />qml: python error: Cannot import module: thismoduledoesnotexisthopefully (No module named 'thismodul<br />edoesnotexisthopefully')<br />"PyOtherSide error: invalid syntax (&lt;string&gt;, line 1)"<br />qml: python error: Cannot evaluate '[ 123 [.syntax234-error!' (invalid syntax (&lt;string&gt;, line 1))<br />qml: Python module "os" is now imported<br />qml: python error: Not a parameter list in call to os.chdir:<br />qml: python error: Not a parameter list in call to os.listdir:<br />qml: files in /: undefined<br />qml: dir listing: .git,docs,examples,LICENSE,Makefile,pyotherside.pri,pyotherside.pro,python.pri,REA<br />DME,src,tests<br /><br /><strong>关于pyotherside的视频</strong>：有什么特点，内部是怎样个原理， 怎样用<br />https://www.youtube.com/watch?v=2HAFOZ5_Xks</p>
+<p>&nbsp;</p>
+<p><strong>Q1: This application failed to start because it could not find or load the Qt platfo rm plugin "windows".</strong></p>
+<p>path F:\sw\Qt\Qt5.4.2\5.4\msvc2013_opengl\bin;F:\sw\Qt\Qt5.4.2\Tools\QtCreator\bin;</p>
+<p>注意顺序！</p>
+<p>&nbsp;</p>
+<p>Q2:file:///F:/wamp/www/git_repos/GitHub/pyotherside/examples/helloworld.qml:2 module "io.thp.pyotherside" is not installed</p>
+<p>file:///F:/wamp/www/git_repos/GitHub/pyotherside/examples/helloworld.qml:2 module "io.thp.pyotherside" plugin "pyothersideplugin" not found</p>
+<p>这是因为系统不知道这个plugin在哪里</p>
+<p>执行 nmake install就可以</p>
+<p>其实他是执行了这两条命令</p>
+<p>copy /y "release\pyothersideplugin.dll" "F:\sw\Qt\Qt5.4.2\5.4\msvc2013_opengl\qml\io\thp\pyotherside\pyothersideplugin.dll"<br />copy /y F:\wamp\www\git_repos\GitHub\pyotherside\src\qmldir F:\sw\Qt\Qt5.4.2\5.4\msvc2013_opengl\qml\io\thp\pyotherside</p>
+<p>而dmldir文件内容为</p>
+<p>module io.thp.pyotherside<br />plugin pyothersideplugin<br /><br /></p>

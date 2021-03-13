@@ -1,0 +1,48 @@
+<p>现在维护的一个软件还是用mfc写的，最近被要加入一个功能弄得焦头烂额。主要现象就是加入的菜单的响应函数没被call到</p>
+<p>上网搜索，在官方网站找到了不少资料</p>
+<p>主要链接如下</p>
+<p>https://msdn.microsoft.com/en-us/library/shfzay75.aspx</p>
+<p>https://msdn.microsoft.com/en-us/library/2zdbzhex.aspx</p>
+<p>&nbsp;</p>
+<p>文中介绍了一个例子</p>
+<ol>
+<li>
+<p>The main frame window receives the command message first.</p>
+</li>
+<li>
+<p>The main MDI frame window gives the currently active MDI child window a chance to handle the command.</p>
+</li>
+<li>
+<p>The standard routing of an MDI child frame window gives its view a chance at the command before checking its own message map.</p>
+</li>
+<li>
+<p>The view checks its own message map first and, finding no handler, next routes the command to its associated document.</p>
+</li>
+<li>
+<p>The document checks its message map and finds a handler. This document member function is called and the routing stops.</p>
+</li>
+</ol>
+<p>&nbsp;最后找到一个办法，就是重载CMainFrm的OnCmdMsg函数</p>
+<p>但比较恶心的是需要检查menu id，否则在dialog的omcmdmsg可能会回掉会mainfrm导致循环调用爆掉</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>BOOL <span style="color: #008080;">CMainFrame:</span>:OnCmdMsg(UINT nID, <span style="color: #0000ff;">int</span><span style="color: #000000;"> nCode, void* pExtra, AFX_CMDHANDLERINFO* pHandlerInfo)
+{
+    
+    
+    if (</span><span style="color: #008080;">CFrameWndEx:</span><span style="color: #000000;">:OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
+        return TRUE</span><span style="color: #008000;">;
+</span><span style="color: #000000;">
+    if (nID == ID_VIEW_TEST)
+    {
+        if (aboutDlg)
+        {
+            if (aboutDlg-&gt;OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))
+                return TRUE</span><span style="color: #008000;">;
+</span><span style="color: #000000;">        }
+    }
+
+    return FALSE</span><span style="color: #008000;">;
+</span>}</pre>
+</div>
+<p>&nbsp;</p>

@@ -1,0 +1,65 @@
+<span id="ctl00_MainContentPlaceholder_ctl01_ctl00_lblEntry"><h4 class="beTitle" id="subjcns!FEF0D083246BBED0!842">VC8 的 type_traits 关键字</h4><div id="msgcns!FEF0D083246BBED0!842" class="bvMsg"><div>引言</div>
+<div>&nbsp;</div>
+<div>type traits 用来在编译期间获取类型的信息，在 boost 库中用了很多诡异的方法来检测，主要是模板特化机制，比如两个类型是否一直：</div>
+<div>&nbsp;</div>
+<div>template &lt;typename T1, typename T2&gt;<br>struct is_same<br>{<br>&nbsp;&nbsp;&nbsp; static const bool value = false;<br>};</div>
+<div>template &lt;typename T&gt;<br>struct is_same&lt;T, T&gt;<br>{<br>&nbsp;&nbsp;&nbsp; static const bool value = true;<br>};</div>
+<div>&nbsp;</div>
+<div>一个普通版本的模板，一个特化的，就可以区分传入的类型是否一致：</div>
+<div>int*p = is_same&lt;int, long&gt;::value; // 编译成功，因为false是有效的空指针常量</div>
+<div>int*p = is_same&lt;int, int&gt;::value; // 编译错误，因为true不是指针。<br></div>
+<div>如果要实现检测是否是整数呢？</div>
+<div>
+<div>template &lt;typename T&gt;<br>struct is_integral<br>{<br>&nbsp;&nbsp;&nbsp; static const bool value = false;<br>};</div>
+<div>&nbsp;</div></div>
+<div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;bool&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;char&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;wchar_t&gt;{&nbsp;&nbsp; static const bool value = true; };</div></div>
+<div>template &lt;&gt; struct is_integral &lt;signed char&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;unsigned char&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;short&gt;{&nbsp;&nbsp; static const bool value = true; };</div>template &lt;&gt; struct is_integral &lt;unsigned short&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;int&gt;{&nbsp;&nbsp; static const bool value = true; };</div>template &lt;&gt; struct is_integral &lt;unsigned int&gt;{&nbsp;&nbsp; static const bool value = true; };</div></div>
+<div>
+<div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;long&gt;{&nbsp;&nbsp; static const bool value = true; };</div>template &lt;&gt; struct is_integral &lt;unsigned long&gt;{&nbsp;&nbsp; static const bool value = true; };</div></div>
+<div>...</div>
+<div>&nbsp;</div>
+<div>发现还遗漏了一点，就是类型加上 cv 限制后跟原来的类型不一致，那么 is_interal&lt;const int&gt;::value 就不再为真，所以，要修正这个bug，还需要特化：</div></div></div></div></div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;const int&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;volatile int&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>
+<div>template &lt;&gt; struct is_integral &lt;const volatile int&gt;{&nbsp;&nbsp; static const bool value = true; };</div>
+<div>好吧，那先把上面的在扩大三倍再说吧。</div>
+<div>&nbsp;</div>
+<div>这些都比较容易实现，复杂的就需要根据一些规则来推算，如果不是这个，又不是那个，又不是……，那么就是某物，比如判断是否是自定义的类类型：</div>
+<div>不是内置类型<br>不是数组<br>不是指针<br>不是引用<br>不是函数<br>不是函数指针<br>不是成员函数</div>
+<div>不是成员函数指针</div>
+<div>那么一定是类类型。</div>
+<div>&nbsp;</div>
+<div>麻烦吗？更麻烦的还有呢。</div>
+<div>&nbsp;</div>
+<div>比如如何判断是不是 enum，是不是 union？办法有，不过是越来越复杂。</div>
+<div>&nbsp;</div>
+<div>再比如如何判断是不是 POD 类型，尤其是判断 POD 类型，对模板库的性能有较大帮助，因为 POD 类型可以直接用</div>
+<div>memcpy 搬移，不需要构造和析构。很遗憾，有些用上面的规则无法推出。</div>
+<div>&nbsp;</div>
+<div>其实这些信息就在编译器内部，与其偷偷摸摸地检测，这样不但慢而且容易出错，不如直接问编译器要，据说 sgi 的编译器老早就实现了一些编译器内置的 type traits 支持，</div>
+<div>现在好消息来了，VC 2005 也支持了：</div>
+<div><a href="http://msdn2.microsoft.com/en-us/library/ms177194%28VS.80%29.aspx">http://msdn2.microsoft.com/en-us/library/ms177194(VS.80).aspx</a></div>
+<div>&nbsp;</div>
+<div>不过 VC 2005 也只支持了一些用模板特化机制难以检测，列表如下：</div>
+<div>__has_assign( type ) <br>__has_copy( type ) <br>__has_finalizer( type ) <br>__has_nothrow_assign( type ) <br>__has_nothrow_constructor( type ) <br>__has_nothrow_copy( type ) <br>__has_trivial_assign( type ) <br>__has_trivial_constructor( type ) <br>__has_trivial_copy( type ) <br>__has_trivial_destructor( type ) <br>__has_user_destructor( type ) <br>__has_virtual_destructor( type ) <br>__is_abstract( type ) <br>__is_base_of( base , derived)<br>__is_class( type ) <br>__is_convertible_to( from , to ) <br>__is_delegate( type ) <br>__is_empty( type ) <br>__is_enum( type ) <br>__is_interface_class( type ) <br>__is_pod( type ) <br>__is_polymorphic( type ) <br>__is_ref_array( type ) <br>__is_ref_class( type ) <br>__is_sealed( type ) <br>__is_simple_value_class( type ) <br>__is_union( type ) <br>__is_value_class( type ) <br></div>
+<div>特别感谢 <a href="mailto:ctrlz@newsmth">ctrlz@newsmth</a> 提供信息，VC 2005 发布快两年了，还没把它的扩展语法都看一遍，真是惭愧。</div>
+<div>&nbsp;</div></div></div></div></div></div></div></span>

@@ -1,0 +1,228 @@
+<p>&nbsp;</p>
+<p>&nbsp;https://medium.com/pyladies-taiwan/%E6%B7%B1%E5%BA%A6%E5%AD%B8%E7%BF%92%E6%96%B0%E6%89%8B%E6%9D%91-pytorch%E5%85%A5%E9%96%80-511df3c1c025</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;http://pytorch.org/tutorials/beginner/deep_learning_60min_blitz.html</p>
+<h1><span>深度学习与PyTorch：60分钟的闪电战</span></h1>
+<p><strong>作者</strong><span>：</span><a class="reference external" href="http://soumith.ch/">Soumith Chintala</a></p>
+<p><span>本教程的目标：</span></p>
+<ul class="simple">
+<li><span>高度理解PyTorch的张量库和神经网络。</span></li>
+<li><span>训练一个小型神经网络来分类图像</span></li>
+</ul>
+<p><em>本教程假设您对numpy有基本的了解</em></p>
+<div class="admonition note">
+<p class="first admonition-title"><span>注意</span></p>
+<p class="last"><span>确保安装了</span><a class="reference external" href="https://github.com/pytorch/pytorch">割炬</a><span>和</span><a class="reference external" href="https://github.com/pytorch/vision">torchvision</a><span>软件包。</span></p>
+</div>
+<div class="toctree-wrapper compound">&nbsp;</div>
+<p>&nbsp;</p>
+<div class="sphx-glr-thumbcontainer">
+<div id="id1" class="figure"><img src="http://pytorch.org/tutorials/_images/tensor_illustration_flat.png" alt="../_images/tensor_illustration_flat.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="http://pytorch.org/tutorials/beginner/blitz/tensor_tutorial.html#sphx-glr-beginner-blitz-tensor-tutorial-py"><span class="std std-ref">什么是PyTorch？</span></a></span></p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="sphx-glr-thumbcontainer">
+<div id="id2" class="figure"><img src="http://pytorch.org/tutorials/_images/mnist1.png" alt="../_images/mnist1.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="http://pytorch.org/tutorials/beginner/blitz/neural_networks_tutorial.html#sphx-glr-beginner-blitz-neural-networks-tutorial-py"><span class="std std-ref">神经网络</span></a></span></p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="sphx-glr-thumbcontainer">
+<div id="id3" class="figure"><img src="http://pytorch.org/tutorials/_images/cifar101.png" alt="../_images/cifar101.png" />
+<p class="caption"><span class="caption-text"><a class="reference internal" href="http://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#sphx-glr-beginner-blitz-cifar10-tutorial-py"><span class="std std-ref">训练分类器</span></a></span></p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<div class="sphx-glr-thumbcontainer">
+<div id="id4" class="figure"><img src="http://pytorch.org/tutorials/_images/data_parallel.png" alt="../_images/data_parallel.png" /></div>
+</div>
+<p>&nbsp;</p>
+<p>https://morvanzhou.github.io/tutorials/machine-learning/torch/</p>
+<ul class="table-of-contents-ul section ie-size">
+<li class="chapter-li">
+<h4>PyTorch 简介</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/1-1-A-ANN-and-NN/">1.1 科普: 人工神经网络 VS 生物神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/1-1-B-NN/">1.2 什么是神经网络 (Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/1-1-C-gradient-descent/">1.3 神经网络 梯度下降</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/1-1-D-feature-representation/">1.4 科普: 神经网络的黑盒不黑</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/1-1-why/">1.5 Why Pytorch?</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/1-2-install/">1.6 Pytorch 安装</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>PyTorch 神经网络基础</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/2-01-torch-numpy/">2.1 Torch 或 Numpy</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/2-02-variable/">2.2 变量 (Variable)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/2-03-A-activation-function/">2.3 什么是激励函数 (Activation Function)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/2-03-activation/">2.4 激励函数 (Activation)</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>建造第一个神经网络</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-01-regression/">3.1 关系拟合 (回归)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-02-classification/">3.2 区分类型 (分类)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-03-fast-nn/">3.3 快速搭建法</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-04-save-reload/">3.4 保存提取</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-05-train-on-batch/">3.5 批训练</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-06-A-speed-up-learning/">3.6 加速神经网络训练 (Speed Up Training)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/3-06-optimizer/">3.7 Optimizer 优化器</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>高级神经网络结构</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-01-A-CNN/">4.1 什么是卷积神经网络 CNN (Convolutional Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-01-CNN/">4.2 CNN 卷积神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-02-A-RNN/">4.3 什么是循环神经网络 RNN (Recurrent Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-02-B-LSTM/">4.4 什么是 LSTM 循环神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-02-RNN-classification/">4.5 RNN 循环神经网络 (分类)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-03-RNN-regression/">4.6 RNN 循环神经网络 (回归)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-04-A-autoencoder/">4.7 什么是自编码 (Autoencoder)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-04-autoencoder/">4.8 AutoEncoder (自编码/非监督学习)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-05-A-DQN/">4.9 什么是 DQN</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-05-DQN/">4.10 DQN 强化学习</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-06-A-GAN/">4.11 什么是生成对抗网络 (GAN)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/4-06-GAN/">4.12 GAN (Generative Adversarial Nets 生成对抗网络)</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>高阶内容</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/5-01-dynamic/">5.1 为什么 Torch 是动态的</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/5-02-GPU/">5.2 GPU 加速运算</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/5-03-A-overfitting/">5.3 什么是过拟合 (Overfitting)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/5-03-dropout/">5.4 Dropout 缓解过拟合</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/5-04-A-batch-normalization/">5.5 什么是批标准化 (Batch Normalization)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/torch/5-04-batch-normalization/">5.6 Batch Normalization 批标准化</a></li>
+</ol></li>
+</ul>
+<p>&nbsp;----------------------------</p>
+<ul class="table-of-contents-ul section ie-size">
+<li class="chapter-li">
+<h4>Tensorflow 简介</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-1-A-ANN-and-NN/">1.1 科普: 人工神经网络 VS 生物神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-1-B-NN/">1.2 什么是神经网络 (Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-1-C-gradient-descent/">1.3 神经网络 梯度下降</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-1-D-feature-representation/">1.4 科普: 神经网络的黑盒不黑</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-1-why/">1.5 为什么选 Tensorflow?</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-2-install/">1.6 Tensorflow 安装</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/1-3-what-does-NN-do/">1.7 神经网络在干嘛</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>Tensorflow 基础构架</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-1-structure/">2.1 处理结构</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-2-example2/">2.2 例子2</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-3-session/">2.3 Session 会话控制</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-4-variable/">2.4 Variable 变量</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-5-placeholde/">2.5 Placeholder 传入值</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-6-A-activation-function/">2.6 什么是激励函数 (Activation Function)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/2-6-activation/">2.7 激励函数 Activation Function</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>建造我们第一个神经网络</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/3-1-add-layer/">3.1 例子3 添加层 def add_layer()</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/3-2-create-NN/">3.2 例子3 建造神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/3-3-visualize-result/">3.3 例子3 结果可视化</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/3-4-A-speed-up-learning/">3.4 加速神经网络训练 (Speed Up Training)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/3-4-optimizer/">3.5 优化器 optimizer</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>可视化好助手 Tensorboard</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/4-1-tensorboard1/">4.1 Tensorboard 可视化好帮手 1</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/4-2-tensorboard2/">4.2 Tensorboard 可视化好帮手 2</a></li>
+</ol></li>
+<li class="chapter-li">
+<h4>高阶内容</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-01-classifier/">5.1 Classification 分类学习</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-02-A-overfitting/">5.2 什么是过拟合 (Overfitting)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-02-dropout/">5.3 Dropout 解决 overfitting</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-03-A-CNN/">5.4 什么是卷积神经网络 CNN (Convolutional Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-03-CNN1/">5.5 CNN 卷积神经网络 1</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-04-CNN2/">5.6 CNN 卷积神经网络 2</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-05-CNN3/">5.7 CNN 卷积神经网络 3</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-06-save/">5.8 Saver 保存读取</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-07-A-RNN/">5.9 什么是循环神经网络 RNN (Recurrent Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-07-B-LSTM/">5.10 什么是 LSTM 循环神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-07-RNN1/">5.11 RNN 循环神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-08-RNN2/">5.12 RNN LSTM 循环神经网络 (分类例子)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-09-RNN3/">5.13 RNN LSTM (回归例子)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-10-RNN4/">5.14 RNN LSTM (回归例子可视化)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-11-A-autoencoder/">5.15 什么是自编码 (Autoencoder)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-11-autoencoder/">5.16 自编码 Autoencoder (非监督学习)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-12-scope/">5.17 scope 命名方法</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-13-A-batch-normalization/">5.18 什么是批标准化 (Batch Normalization)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-13-BN/">5.19 Batch Normalization 批标准化</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-14-tf2017/">5.20 Tensorflow 2017 更新</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-15-tf-gradient-descent/">5.21 用 Tensorflow 可视化梯度下降</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-16-A-tranfer-learning/">5.22 什么是迁移学习 Transfer Learning</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/tensorflow/5-16-transfer-learning/">5.23 迁移学习 Transfer Learning</a></li>
+<li class="content-li"><br />x&nbsp;----------------------------
+<ul class="table-of-contents-ul section ie-size">
+<li class="chapter-li">
+<h4>Theano 简介</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-1-A-ANN-and-NN/">1.1 科普: 人工神经网络 VS 生物神经网络</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-1-B-NN/">1.2 什么是神经网络 (Neural Network)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-1-C-gradient-descent/">1.3 神经网络 梯度下降</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-1-D-feature-representation/">1.4 科普: 神经网络的黑盒不黑</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-1-why/">1.5 Why Theano?</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-2-install/">1.6 Theano 安装</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/1-3-NN-job/">1.7 神经网络在做什么</a></li>
+
+
+</ol></li>
+<li class="chapter-li">
+<h4>Theano 基础构架</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/2-1-basic-usage/">2.1 基本用法</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/2-2-function/">2.2 Function 用法</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/2-3-shared-variable/">2.3 Shared 变量</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/2-4-A-activation-function/">2.4 什么是激励函数 (Activation Function)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/2-4-activation/">2.5 Activation function 激励函数</a></li>
+
+
+</ol></li>
+<li class="chapter-li">
+<h4>搭建自己的神经网络</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-1-layer/">3.1 定义 Layer 类</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-2-regression/">3.2 Regression 回归例子</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-3-visualize/">3.3 可视化结果 回归例子</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-4-classification/">3.4 Classification 分类学习</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-5-A-overfitting/">3.5 什么是过拟合 (Overfitting)</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-5-regularization/">3.6 Regularization 正规化</a></li>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/3-6-save/">3.7 Save 保存 提取</a></li>
+
+
+</ol></li>
+<li class="chapter-li">
+<h4>总结</h4>
+<ol>
+<li class="content-li"><a href="https://morvanzhou.github.io/tutorials/machine-learning/theano/4-1-summary/">4.1 总结和更多</a></li>
+<li></li>
+
+
+</ol></li>
+
+
+</ul>
+
+
+</li>
+
+
+
+</ol></li>
+
+
+
+</ul>

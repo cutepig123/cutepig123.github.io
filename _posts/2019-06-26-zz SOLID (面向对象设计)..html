@@ -1,0 +1,81 @@
+<h1 id="firstHeading" class="firstHeading" lang="zh-Hans-CN">SOLID (面向对象设计)</h1>
+<div id="siteSub" class="noprint">维基百科，自由的百科全书</div>
+<p><a class="mw-jump-link" href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#mw-head">跳到导航</a> <a class="mw-jump-link" href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#p-search">跳到搜索</a></p>
+<div id="mw-content-text" class="mw-content-ltr" lang="zh-Hans-CN" dir="ltr">
+<div class="mw-parser-output">
+<p>在<a title="程序设计" href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">程序设计</a>领域， <strong>SOLID</strong>（<strong>单一功能、开闭原则、里氏替换、接口隔离</strong>以及<strong>依赖反转</strong>）是由<a class="new" title="Robert C. Martin（页面不存在）" href="https://zh.wikipedia.org/w/index.php?title=Robert_C._Martin&amp;action=edit&amp;redlink=1">罗伯特&middot;C&middot;马丁</a>在21世纪早期<sup id="cite_ref-metz-presentation-2009_1-0" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-metz-presentation-2009-1">[1]</a></sup> 引入的<a title="记忆术" href="https://zh.wikipedia.org/wiki/%E8%AE%B0%E5%BF%86%E6%9C%AF">记忆术</a><a class="mw-redirect" title="首字母缩略字" href="https://zh.wikipedia.org/wiki/%E9%A6%96%E5%AD%97%E6%AF%8D%E7%BC%A9%E7%95%A5%E5%AD%97">首字母缩略字</a><sup id="cite_ref-ub-old-web-solid_2-0" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-ub-old-web-solid-2">[2]</a></sup><sup id="cite_ref-ub-solid_3-0" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-ub-solid-3">[3]</a></sup>，指代了<a class="mw-redirect" title="面向对象编程" href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%BC%96%E7%A8%8B">面向对象编程</a>和<a title="面向对象设计" href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1">面向对象设计</a>的五个基本原则。当这些原则被一起应用时，它们使得一个<a title="程序员" href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BA%8F%E5%91%98">程序员</a>开发一个容易进行<a title="软件维护" href="https://zh.wikipedia.org/wiki/%E8%BB%9F%E9%AB%94%E7%B6%AD%E8%AD%B7">软件维护</a>和扩展的系统变得更加可能。<sup id="cite_ref-metz-presentation-2009_1-1" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-metz-presentation-2009-1">[1]</a></sup> SOLID所包含的原则是通过引发编程者进行软件<a title="源代码" href="https://zh.wikipedia.org/wiki/%E6%BA%90%E4%BB%A3%E7%A0%81">源代码</a>的<a title="代码重构" href="https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%A0%81%E9%87%8D%E6%9E%84">代码重构</a>进行软件的<a title="代码异味" href="https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%A0%81%E5%BC%82%E5%91%B3">代码异味</a>清扫，从而使得软件清晰可读以及可扩展时可以应用的指南。SOLID被典型的应用在<a title="测试驱动开发" href="https://zh.wikipedia.org/wiki/%E6%B5%8B%E8%AF%95%E9%A9%B1%E5%8A%A8%E5%BC%80%E5%8F%91">测试驱动开发</a>上，并且是<a class="mw-redirect" title="敏捷开发" href="https://zh.wikipedia.org/wiki/%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91">敏捷开发</a>以及<a class="new" title="Adaptive programming（页面不存在）" href="https://zh.wikipedia.org/w/index.php?title=Adaptive_programming&amp;action=edit&amp;redlink=1">自适应软件开发</a>的基本原则的重要组成部分。<sup id="cite_ref-metz-presentation-2009_1-2" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-metz-presentation-2009-1">[1]</a></sup><sup id="cite_ref-schmitz-presentation-2009_4-0" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-schmitz-presentation-2009-4">[4]</a></sup></p>
+<div id="toc" class="toc"><input id="toctogglecheckbox" class="toctogglecheckbox" style="display: none;" type="checkbox" />
+<div class="toctitle" lang="zh-Hans-CN" dir="ltr">
+<h2>目录</h2>
+</div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#概述"><span class="tocnumber">1 <span class="toctext">概述</span></span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#参考"><span class="tocnumber">2 <span class="toctext">参考</span></span></a>
+<ul>
+<li class="toclevel-2 tocsection-3"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#基本概念以及相关主题"><span class="tocnumber">2.1 <span class="toctext">基本概念以及相关主题</span></span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#设计和开发原则"><span class="tocnumber">2.2 <span class="toctext">设计和开发原则</span></span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-5"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#引用"><span class="tocnumber">3 <span class="toctext">引用</span></span></a></li>
+</ul>
+</div>
+<h2><span id=".E6.A6.82.E8.BF.B0"><span id="概述" class="mw-headline">概述</span></span></h2>
+</div>
+</div>
+<table class="wikitable" style="width: auto; font-size: 95%; table-layout: fixed; line-height: 1.25; margin-left: auto; margin-right: auto;">
+<tbody>
+<tr><th>首字母</th><th>指代</th><th>概念</th></tr>
+<tr><th>S</th>
+<td><a title="单一功能原则" href="https://zh.wikipedia.org/wiki/%E5%8D%95%E4%B8%80%E5%8A%9F%E8%83%BD%E5%8E%9F%E5%88%99">单一功能原则</a></td>
+<td>认为<a title="对象 (计算机科学)" href="https://zh.wikipedia.org/wiki/%E5%AF%B9%E8%B1%A1_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">对象</a>应该仅具有一种单一功能的概念。</td>
+</tr>
+<tr><th>O</th>
+<td><a title="开闭原则" href="https://zh.wikipedia.org/wiki/%E5%BC%80%E9%97%AD%E5%8E%9F%E5%88%99">开闭原则</a></td>
+<td>认为&ldquo;软件体应该是对于扩展开放的，但是对于修改封闭的&rdquo;的概念。</td>
+</tr>
+<tr><th>L</th>
+<td><a title="里氏替换原则" href="https://zh.wikipedia.org/wiki/%E9%87%8C%E6%B0%8F%E6%9B%BF%E6%8D%A2%E5%8E%9F%E5%88%99">里氏替换原则</a></td>
+<td>认为&ldquo;程序中的对象应该是可以在不改变程序正确性的前提下被它的子类所替换的&rdquo;的概念。
+<p>参考<a title="契约式设计" href="https://zh.wikipedia.org/wiki/%E5%A5%91%E7%BA%A6%E5%BC%8F%E8%AE%BE%E8%AE%A1">契约式设计</a>。</p>
+</td>
+</tr>
+<tr><th>I</th>
+<td><a title="接口隔离原则" href="https://zh.wikipedia.org/wiki/%E6%8E%A5%E5%8F%A3%E9%9A%94%E7%A6%BB%E5%8E%9F%E5%88%99">接口隔离原则</a></td>
+<td>认为&ldquo;多个特定客户端接口要好于一个宽泛用途的接口&rdquo;<sup id="cite_ref-martin-design-principles_5-0" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-martin-design-principles-5">[5]</a></sup> 的概念。</td>
+</tr>
+<tr><th>D</th>
+<td><a title="依赖反转原则" href="https://zh.wikipedia.org/wiki/%E4%BE%9D%E8%B5%96%E5%8F%8D%E8%BD%AC%E5%8E%9F%E5%88%99">依赖反转原则</a></td>
+<td>认为一个方法应该遵从&ldquo;依赖于抽象而不是一个实例&rdquo;<sup id="cite_ref-martin-design-principles_5-1" class="reference"><a href="https://zh.wikipedia.org/wiki/SOLID_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)#cite_note-martin-design-principles-5">[5]</a></sup> 的概念。<br /><a title="依赖注入" href="https://zh.wikipedia.org/wiki/%E4%BE%9D%E8%B5%96%E6%B3%A8%E5%85%A5">依赖注入</a>是该原则的一种实现方式。
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+<h2><span id=".E5.8F.82.E8.80.83"><span id="参考" class="mw-headline">参考</span></span></h2>
+<h3><span id=".E5.9F.BA.E6.9C.AC.E6.A6.82.E5.BF.B5.E4.BB.A5.E5.8F.8A.E7.9B.B8.E5.85.B3.E4.B8.BB.E9.A2.98"><span id="基本概念以及相关主题" class="mw-headline">基本概念以及相关主题</span></span></h3>
+<ul>
+<li><a class="new" title="自适应软件开发（页面不存在）" href="https://zh.wikipedia.org/w/index.php?title=%E8%87%AA%E9%80%82%E5%BA%94%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91&amp;action=edit&amp;redlink=1">自适应软件开发</a></li>
+<li><a title="敏捷软件开发" href="https://zh.wikipedia.org/wiki/%E6%95%8F%E6%8D%B7%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91">敏捷软件开发</a></li>
+<li><a title="代码复用" href="https://zh.wikipedia.org/wiki/%E4%BB%A3%E7%A0%81%E5%A4%8D%E7%94%A8">代码复用</a></li>
+<li><a title="程序设计" href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">程序设计</a></li>
+<li><a title="面向对象程序设计" href="https://zh.wikipedia.org/wiki/%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1">面向对象程序设计</a>
+<ul>
+<li><a title="继承 (计算机科学)" href="https://zh.wikipedia.org/wiki/%E7%BB%A7%E6%89%BF_(%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%A7%91%E5%AD%A6)">继承 (计算机科学)</a></li>
+
+</ul>
+
+</li>
+<li><a title="奥卡姆剃刀" href="https://zh.wikipedia.org/wiki/%E5%A5%A5%E5%8D%A1%E5%A7%86%E5%89%83%E5%88%80">奥卡姆剃刀</a></li>
+
+</ul>
+<h3><span id=".E8.AE.BE.E8.AE.A1.E5.92.8C.E5.BC.80.E5.8F.91.E5.8E.9F.E5.88.99"><span id="设计和开发原则" class="mw-headline">设计和开发原则</span></span></h3>
+<ul>
+<ul>
+<li><a class="mw-redirect" title="不要重复你自己" href="https://zh.wikipedia.org/wiki/%E4%B8%8D%E8%A6%81%E9%87%8D%E5%A4%8D%E4%BD%A0%E8%87%AA%E5%B7%B1">不要重复你自己</a></li>
+<li><a class="new" title="GRASP (面向对象设计)（页面不存在）" href="https://zh.wikipedia.org/w/index.php?title=GRASP_(%E9%9D%A2%E5%90%91%E5%AF%B9%E8%B1%A1%E8%AE%BE%E8%AE%A1)&amp;action=edit&amp;redlink=1">GRASP (面向对象设计)</a></li>
+<li><a title="KISS原则" href="https://zh.wikipedia.org/wiki/KISS%E5%8E%9F%E5%88%99">KISS原则</a></li>
+
+</ul>
+</ul>

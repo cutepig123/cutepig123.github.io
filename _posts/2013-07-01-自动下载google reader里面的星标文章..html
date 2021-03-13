@@ -1,0 +1,83 @@
+<p>1. google reader马上就要关闭了，最后一次看看俺的浏览记录吧</p>
+<h2 id="trends-item-count">最近 30 天的统计信息</h2>
+<ul id="trends-item-count-list">
+<li>全部订阅： <strong>367</strong></li>
+<li>已读条目： <strong>151</strong></li>
+<li>已点击的条目：<strong>41 个</strong></li>
+<li>加星标条目： <strong>16</strong></li>
+<li>已发电子邮件条目： <strong>0</strong></li>
+</ul>
+<div id="trends-total-item-read-count" class="localized loaded">自 <strong>2007年8月3日</strong>以来，您一共阅读了 <strong>27,306</strong> 个条目。</div>
+<p>2. 对于以前订阅的资料和星标文章，可以通过takeout功能把链接下载下来，加到别的rss阅读器里面（俺用的是greatnews客户端阅读器）</p>
+<p>对于星标的文章，按自己写了个py script把链接的内容也一起下载下来</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('dc9cf6c0-cfbe-4f41-91eb-588b6e70cd39')"><img id="code_img_closed_dc9cf6c0-cfbe-4f41-91eb-588b6e70cd39" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_dc9cf6c0-cfbe-4f41-91eb-588b6e70cd39" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('dc9cf6c0-cfbe-4f41-91eb-588b6e70cd39',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_dc9cf6c0-cfbe-4f41-91eb-588b6e70cd39" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">#</span><span style="color: #008000;">E:\soft\Python27\down_googlereader_starred.py</span>
+
+<span style="color: #0000ff;">import</span><span style="color: #000000;"> urllib,os,sys
+</span><span style="color: #0000ff;">import</span><span style="color: #000000;"> json,string
+
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> getUrlContent(url):
+    fp </span>=<span style="color: #000000;">urllib.urlopen(url)
+    cont </span>=<span style="color: #000000;">fp.read()
+    fp.close()
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> cont
+    
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> ToFname(title):
+    rep_chars </span>=<span style="color: #800000;">'</span><span style="color: #800000;">\n;:%&amp;^|\\/?&lt;&gt;</span><span style="color: #800000;">'</span><span style="color: #000000;">
+    s</span>=<span style="color: #000000;"> title
+    </span><span style="color: #0000ff;">for</span> i <span style="color: #0000ff;">in</span><span style="color: #000000;"> rep_chars:
+        s </span>= s.replace(<span style="color: #800000;">'</span><span style="color: #800000;">%c</span><span style="color: #800000;">'</span>%(i),<span style="color: #800000;">''</span><span style="color: #000000;">)
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> s
+    
+    valid_chars </span>= <span style="color: #800000;">"</span><span style="color: #800000;">-_.() %s%s</span><span style="color: #800000;">"</span> %<span style="color: #000000;"> (string.ascii_letters, string.digits)
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800000;">''</span>.join(c <span style="color: #0000ff;">for</span> c <span style="color: #0000ff;">in</span> title <span style="color: #0000ff;">if</span> c <span style="color: #0000ff;">in</span><span style="color: #000000;"> valid_chars)
+
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> GetCfg_latest_id():
+    fname </span>=<span style="color: #800000;">'</span><span style="color: #800000;">cfg.txt</span><span style="color: #800000;">'</span><span style="color: #000000;">
+    latest_id </span>=<span style="color: #000000;">0
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> os.path.isfile(fname):
+        fp </span>=open(fname,<span style="color: #800000;">'</span><span style="color: #800000;">r</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        latest_id </span>=<span style="color: #000000;">int(fp.readline().strip())
+        fp.close()
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> latest_id
+    
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> logFile(fname, cont):
+    </span><span style="color: #008000;">#</span><span style="color: #008000;">if os.path.isfile(fname):</span>
+    <span style="color: #008000;">#</span><span style="color: #008000;">    print fname, 'esist!'</span>
+<span style="color: #000000;">    
+    fp</span>=open(fname,<span style="color: #800000;">'</span><span style="color: #800000;">w</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    fp.write(cont)
+    fp.close()
+    
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> SetCfg_latest_id(id):
+    fname </span>=<span style="color: #800000;">'</span><span style="color: #800000;">cfg.txt</span><span style="color: #800000;">'</span><span style="color: #000000;">
+    logFile(fname, </span><span style="color: #800000;">'</span><span style="color: #800000;">%d</span><span style="color: #800000;">'</span>%<span style="color: #000000;">(id))
+    
+cont </span>=open(r<span style="color: #800000;">'</span><span style="color: #800000;">F:\sw\&lt;foldername&gt;-takeout\Reader\starred.json</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">r</span><span style="color: #800000;">'</span><span style="color: #000000;">).read()
+li </span>=<span style="color: #000000;">json.loads(cont)
+
+latest_id </span>=<span style="color: #000000;">GetCfg_latest_id()
+</span><span style="color: #0000ff;">for</span> item <span style="color: #0000ff;">in</span> li[<span style="color: #800000;">'</span><span style="color: #800000;">items</span><span style="color: #800000;">'</span><span style="color: #000000;">][latest_id:]:
+    url </span>=item[<span style="color: #800000;">'</span><span style="color: #800000;">alternate</span><span style="color: #800000;">'</span>][0][<span style="color: #800000;">'</span><span style="color: #800000;">href</span><span style="color: #800000;">'</span><span style="color: #000000;">]
+    title </span>=item[<span style="color: #800000;">'</span><span style="color: #800000;">title</span><span style="color: #800000;">'</span><span style="color: #000000;">]
+    </span><span style="color: #0000ff;">print</span><span style="color: #000000;"> title
+    fname </span>=<span style="color: #800000;">'</span><span style="color: #800000;">%.3d.%s.htm</span><span style="color: #800000;">'</span>%<span style="color: #000000;">(latest_id, ToFname(title))
+    </span><span style="color: #0000ff;">print</span><span style="color: #000000;"> fname
+    isExcept </span>=<span style="color: #000000;">0
+    </span><span style="color: #0000ff;">try</span><span style="color: #000000;">:
+        urlcont </span>=<span style="color: #000000;">getUrlContent(url)
+        open(fname,</span><span style="color: #800000;">'</span><span style="color: #800000;">w</span><span style="color: #800000;">'</span><span style="color: #000000;">).write(urlcont)
+    </span><span style="color: #0000ff;">except</span><span style="color: #000000;"> Exception, e:
+        </span><span style="color: #0000ff;">print</span><span style="color: #000000;"> e
+        isExcept </span>=1<span style="color: #000000;">
+        urlcont </span>=<span style="color: #800000;">'</span><span style="color: #800000;">%s\n&lt;br&gt;\n%s&lt;br&gt;\n%s</span><span style="color: #800000;">'</span>%<span style="color: #000000;">(url,str(e),fname)
+        urlcont</span>= urlcont.encode(<span style="color: #800000;">'</span><span style="color: #800000;">gb2312</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        fname </span>=<span style="color: #800000;">'</span><span style="color: #800000;">%.3d.Except.htm</span><span style="color: #800000;">'</span>%<span style="color: #000000;">(latest_id)
+        open(fname,</span><span style="color: #800000;">'</span><span style="color: #800000;">w</span><span style="color: #800000;">'</span><span style="color: #000000;">).write(urlcont)
+    
+    latest_id </span>=latest_id+1<span style="color: #000000;">
+    SetCfg_latest_id(latest_id)</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>

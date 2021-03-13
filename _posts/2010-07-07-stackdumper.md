@@ -1,0 +1,1 @@
+http://www.codeproject.com/KB/tips/stackdumper.aspx

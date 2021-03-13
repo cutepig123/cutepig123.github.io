@@ -1,0 +1,39 @@
+<div class="cnblogs_code">
+<pre>// t9.cpp : Defines the entry point <span style="color: #0000ff;">for</span><span style="color: #000000;"> the console application.
+</span>//
+
+<span style="color: #008000;">#</span><span style="color: #008000;">include "stdafx.h"</span>
+
+
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CRecordBase{
+public:
+    virtual </span>~CRecordBase()=<span style="color: #000000;">0{}
+    virtual CRecordBase</span>* scale(float scale)=<span style="color: #000000;">0;
+};
+
+template </span>&lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> CRecordBaseT: public CRecordBase{
+public:
+    virtual CRecordBase</span>*<span style="color: #000000;"> scale(float scale){
+        T</span>*<span style="color: #000000;"> ret(new T);
+        ((T</span>*)this)-&gt;<span style="color: #000000;">scaleTo(scale, ret);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> ret;
+    }
+};
+
+</span><span style="color: #0000ff;">class</span> BRecord:public CRecordBaseT&lt;BRecord&gt;<span style="color: #000000;">{
+public:
+    int scaleTo(float scale, BRecord</span>*<span style="color: #000000;"> res){
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> 0;
+    }
+
+};
+
+</span>// CRecordBase &lt;-- CRecordBaseT&lt;&gt; &lt;--<span style="color: #000000;"> BRecord
+
+void main(){
+    BRecord r;
+    r.scale(</span>1<span style="color: #000000;">);
+}</span></pre>
+</div>
+<p>&nbsp;</p>

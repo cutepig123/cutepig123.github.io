@@ -1,0 +1,790 @@
+<p>连上usb线，系统会跳出detect到camera的提示，这里一定要选择&ldquo;unmount&rdquo;，否则会面的命令执行会有问题</p>
+<p>&nbsp;</p>
+<p>hjs@ubuntu:~$ <strong>gphoto2 --auto-detect</strong></p>
+<p>Model&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Port&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>----------------------------------------------------------</p>
+<p>Canon PowerShot SX110 IS&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; usb:001,002&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>hjs@ubuntu:~$ <strong>gphoto2 --summary</strong></p>
+<p>Camera summary:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>Manufacturer: Canon Inc.</p>
+<p>Model: Canon PowerShot SX110 IS</p>
+<p>&nbsp; Version: 1-5.2.1.0</p>
+<p>&nbsp; Serial Number: 4DC57827F79840BF8F1A8AD63DB3ABC3</p>
+<p>Vendor Extension ID: 0xb (1.0)</p>
+<p>&nbsp;</p>
+<p>Capture Formats: JPEG</p>
+<p>Display Formats: Association/Directory, Script, DPOF, MS AVI, MS Wave, JPEG, Defined Type, CRW, Unknown(b103), Unknown(b104), Unknown(bf01)</p>
+<p>&nbsp;</p>
+<p><strong>Device Capabilities:</strong></p>
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; File Download, File Deletion, File Upload</strong></p>
+<p><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Generic Image Capture, No Open Capture, Canon Capture</strong></p>
+<p>&nbsp;</p>
+<p>Storage Devices Summary:</p>
+<p>store_00010001:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; StorageDescription: None</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; VolumeLabel: None</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Storage Type: Removable RAM (memory card)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Filesystemtype: Digital Camera Layout (DCIM)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Access Capability: Read-Write</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Maximum Capability: 2147155968 (2047 MB)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Free Space (Bytes): 1551794176 (1479 MB)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Free Space (Images): -1</p>
+<p>&nbsp;</p>
+<p>Device Property Summary:</p>
+<p>Event Emulate Mode(0xd045):(readwrite) (type=0x4) Enumeration [1,2,3,4,5,6,7] value: 2</p>
+<p>Property 0xd04a:(readwrite) (type=0x2) Enumeration [0,1,2,3] value: 0</p>
+<p>Size of Output Data from Camera(0xd02e):(read only) (type=0x6) 524288</p>
+<p>Size of Input Data to Camera(0xd02f):(read only) (type=0x6) 524288</p>
+<p>Battery Type(0xd002):(read only) (type=0x4) Enumeration [0,1,2,3,4,5] value: Unknown (0)</p>
+<p>Battery Mode(0xd003):(read only) (type=0x6) Enumeration [0,1,2,3] value: Normal (1)</p>
+<p>UNIX Time(0xd034):(readwrite) (type=0x6) 1428148490</p>
+<p>Type of Slideshow(0xd047):(read only) (type=0x4) 0</p>
+<p>DPOF Version(0xd046):(read only) (type=0x4) 257</p>
+<p>Supported Thumb Size(0xd02d):(read only) (type=0x4006) a[4] 119,0,159,0</p>
+<p>Average Filesizes(0xd048):(read only) (type=0x4006) a[19] 3981312,2785280,2050048,0,254976,2357248,1658880,1142784,0,153600,1126400,798720,569344,0,86016,0,1026048,571392,284672</p>
+<p>Size Quality Mode(0xd02c):(read only) (type=0x4006) Enumeration [</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 2592,3456,1,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 2592,3456,6,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 2592,3456,11,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 2112,2816,2,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 2112,2816,7,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 2112,2816,12,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 1704,2272,3,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 1704,2272,8,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 1704,2272,13,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 1200,1600,17,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 1200,1600,18,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 1200,1600,19,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 480,640,5,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 480,640,10,0,0,0,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; a[6] 480,640,15,0,0,0</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ] value: a[6] 0,0,0,0,0,0</p>
+<p>Remote API Version(0xd030):(read only) (type=0x6) 256</p>
+<p>Model ID(0xd049):(read only) (type=0x6) 38928384</p>
+<p>Camera Model(0xd032):(read only) (type=0xffff) 'Canon PowerShot SX110 IS'</p>
+<p>Camera Owner(0xd033):(readwrite) (type=0x4002) a[0]</p>
+<p>Firmware Version(0xd031):(read only) (type=0x6) 16777216</p>
+<p>Property 0xd050:(read only) (type=0x2) 0</p>
+<p>Property 0xd402:(read only) (type=0xffff) 'Canon PowerShot SX110 IS'</p>
+<p>Property 0xd406:(readwrite) (type=0xffff) 'Windows'</p>
+<p>Property 0xd407:(read only) (type=0x6) 1</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>hjs@ubuntu:~$<strong> gphoto2 --set-config /main/settings/capture=1</strong></p>
+<p>hjs@ubuntu:~$<strong> gphoto2 --capture-image-and-download&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>New file is in location /store_00010001/DCIM/100CANON/IMG_6552.JPG on the camera</p>
+<p>Downloading 'IMG_6552.JPG' from folder '/store_00010001/DCIM/100CANON'...</p>
+<p>Saving file as IMG_6552.JPG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<p>Deleting file /store_00010001/DCIM/100CANON/IMG_6552.JPG on the camera</p>
+<p>Deleting 'IMG_6552.JPG' from folder '/store_00010001/DCIM/100CANON'...</p>
+<p>&nbsp;</p>
+<p>Basic usage</p>
+<pre><a href="http://adamish.com/blog/archives/676">text</a><a href="http://adamish.com/blog/archives/676">pop-up</a></pre>
+<pre><strong>&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gphoto2 --set-config /main/settings/capture=1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # extend lens</strong></pre>
+<pre><strong>&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gphoto2 --set-config /main/settings/output=0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # view finder on</strong></pre>
+<pre><strong>&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gphoto2 --set-config /main/imgsettings/imagesize=0 # max image quality</strong></pre>
+<pre><strong>&middot;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gphoto2 --capture-image-and-download&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # snap</strong></pre>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>hjs@ubuntu:~$ gphoto2 </p>
+<p>Usage: gphoto2 [-?valLnPTDR] [-?|--help] [--usage] [--debug]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--debug-logfile=FILENAME] [--quiet] [--hook-script=FILENAME]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--stdout] [--stdout-size] [--auto-detect] [--show-exif=STRING]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--show-info=STRING] [--summary] [--manual] [--about]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--storage-info] [--shell] [-v|--version] [--list-cameras]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--list-ports] [-a|--abilities] [--port=FILENAME] [--speed=SPEED]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--camera=MODEL] [--usbid=USBIDs] [--config] [--list-config]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<strong>--list-all-config</strong>] [--get-config=STRING] [<strong>--set-config=STRING</strong>]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--set-config-index=STRING] [--set-config-value=STRING] [--reset]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--keep] [--no-keep] [--wait-event=COUNT]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--wait-event-and-download=COUNT] [--capture-preview]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-B|--bulb=SECONDS] [-F|--frames=COUNT] [-I|--interval=SECONDS]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;[--reset-interval] [<strong>--capture-imag</strong>e] [--trigger-capture]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [<strong>--capture-image-and-download</strong>] [--capture-movie=COUNT or SECONDS]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--capture-sound] [--capture-tethered=COUNT] [--trigger-capture]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-l|--list-folders] [-L|--list-files] [-m|--mkdir=DIRNAME]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-r|--rmdir=DIRNAME] [-n|--num-files] [-p|--get-file=RANGE]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-P|--get-all-files] [-t|--get-thumbnail=RANGE]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-T|--get-all-thumbnails] [--get-metadata=RANGE] [--get-all-metadata]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--upload-metadata=STRING] [--get-raw-data=RANGE]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--get-all-raw-data] [--get-audio-data=RANGE] [--get-all-audio-data]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-d|--delete-file=RANGE] [-D|--delete-all-files]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-u|--upload-file=FILENAME] [--filename=FILENAME_PATTERN]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [-f|--folder=FOLDER] [-R|--recurse] [--no-recurse] [--new]</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; [--force-overwrite]</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>hjs@ubuntu:~$ <strong>gphoto2 --list-all-config</strong> &gt;1.txt</p>
+<p><strong>/main/actions/focuslock</strong></p>
+<p>Label: Focus Lock</p>
+<p>Type: TOGGLE</p>
+<p>Current: 2</p>
+<p><strong>/main/actions/syncdatetime</strong></p>
+<p>Label: Synchronize camera date and time with PC</p>
+<p>Type: TOGGLE</p>
+<p>Current: 0</p>
+<p><strong>/main/settings/output</strong></p>
+<p>Label: Camera Output</p>
+<p>Type: RADIO</p>
+<p>Current: Video OUT</p>
+<p>Choice: 0 LCD</p>
+<p>Choice: 1 Video OUT</p>
+<p>Choice: 2 Off</p>
+<p>/main/settings/ownername</p>
+<p>Label: Owner Name</p>
+<p>Type: TEXT</p>
+<p>Current:</p>
+<p>/main/settings/capturetarget</p>
+<p>Label: Capture Target</p>
+<p>Type: RADIO</p>
+<p>Current: Internal RAM</p>
+<p>Choice: 0 Internal RAM</p>
+<p>Choice: 1 Memory card</p>
+<p><strong>/main/settings/capture</strong></p>
+<p>Label: Capture</p>
+<p>Type: TOGGLE</p>
+<p>Current: 1</p>
+<p>/main/status/serialnumber</p>
+<p>Label: Serial Number</p>
+<p>Type: TEXT</p>
+<p>Current: 4DC57827F79840BF8F1A8AD63DB3ABC3</p>
+<p>/main/status/manufacturer</p>
+<p>Label: Camera Manufacturer</p>
+<p>Type: TEXT</p>
+<p>Current: Canon Inc.</p>
+<p>/main/status/cameramodel</p>
+<p>Label: Camera Model</p>
+<p>Type: TEXT</p>
+<p>Current: Canon PowerShot SX110 IS</p>
+<p>/main/status/deviceversion</p>
+<p>Label: Device Version</p>
+<p>Type: TEXT</p>
+<p>Current: 1-5.2.1.0</p>
+<p>/main/status/vendorextension</p>
+<p>Label: Vendor Extension</p>
+<p>Type: TEXT</p>
+<p>Current: None</p>
+<p>/main/status/model</p>
+<p>Label: Camera Model</p>
+<p>Type: TEXT</p>
+<p>Current: Canon PowerShot SX110 IS</p>
+<p>/main/status/firmwareversion</p>
+<p>Label: Firmware Version</p>
+<p>Type: TEXT</p>
+<p>Current: 1.0.0.0</p>
+<p>/main/status/orientation</p>
+<p>Label: Camera Orientation</p>
+<p>Type: TEXT</p>
+<p>Current: 0'</p>
+<p><strong>/main/imgsettings/imagequality</strong></p>
+<p>Label: Image Quality</p>
+<p>Type: RADIO</p>
+<p>Current: superfine</p>
+<p>Choice: 0 superfine</p>
+<p>Choice: 1 fine</p>
+<p>Choice: 2 normal</p>
+<p><strong>/main/imgsettings/imageformat</strong></p>
+<p>Label: Image Format</p>
+<p>Type: RADIO</p>
+<p>Current: Unknown value 0001</p>
+<p>Choice: 0 Unknown value 0001</p>
+<p><strong>/main/imgsettings/imagesize</strong></p>
+<p>Label: Image Size</p>
+<p>Type: RADIO</p>
+<p>Current: Large</p>
+<p>Choice: 0 Large</p>
+<p>Choice: 1 Medium 1</p>
+<p>Choice: 2 Medium 2</p>
+<p>Choice: 3 Medium 3</p>
+<p>Choice: 4 Small</p>
+<p><strong>/main/imgsettings/iso</strong></p>
+<p>Label: ISO Speed</p>
+<p>Type: RADIO</p>
+<p>Current: 800</p>
+<p>Choice: 0 Auto</p>
+<p>Choice: 1 80</p>
+<p>Choice: 2 100</p>
+<p>Choice: 3 200</p>
+<p>Choice: 4 400</p>
+<p>Choice: 5 800</p>
+<p>Choice: 6 1600</p>
+<p><strong>/main/imgsettings/whitebalance</strong></p>
+<p>Label: WhiteBalance</p>
+<p>Type: RADIO</p>
+<p>Current: Cloudy</p>
+<p>Choice: 0 Auto</p>
+<p>Choice: 1 Daylight</p>
+<p>Choice: 2 Cloudy</p>
+<p>Choice: 3 Tungsten</p>
+<p>Choice: 4 Fluorescent</p>
+<p>Choice: 5 Fluorescent H</p>
+<p>Choice: 6 Custom</p>
+<p><strong>/main/capturesettings/zoom</strong></p>
+<p>Label: Zoom</p>
+<p>Type: RANGE</p>
+<p>Current: 0</p>
+<p>Bottom: 0</p>
+<p>Top: 28</p>
+<p>Step: 1</p>
+<p><strong>/main/capturesettings/assistlight</strong></p>
+<p>Label: Assist Light</p>
+<p>Type: RADIO</p>
+<p>Current: On</p>
+<p>Choice: 0 Off</p>
+<p>Choice: 1 On</p>
+<p><strong>/main/capturesettings/autorotation</strong></p>
+<p>Label: Rotation Flag</p>
+<p>Type: RADIO</p>
+<p>Current: Off</p>
+<p>Choice: 0 On</p>
+<p>Choice: 1 Off</p>
+<p><strong>/main/capturesettings/exposurecompensation</strong></p>
+<p>Label: Exposure Compensation</p>
+<p>Type: RADIO</p>
+<p>Current: 0</p>
+<p>Choice: 0 +2</p>
+<p>Choice: 1 +1 2/3</p>
+<p>Choice: 2 +1 1/3</p>
+<p>Choice: 3 +1</p>
+<p>Choice: 4 +2/3</p>
+<p>Choice: 5 +1/3</p>
+<p>Choice: 6 0</p>
+<p>Choice: 7 -1/3</p>
+<p>Choice: 8 -2/3</p>
+<p>Choice: 9 -1</p>
+<p>Choice: 10 -1 1/3</p>
+<p>Choice: 11 -1 2/3</p>
+<p>Choice: 12 -2</p>
+<p><strong>/main/capturesettings/flashcompensation</strong></p>
+<p>Label: Flash Compensation</p>
+<p>Type: RADIO</p>
+<p>Current: 0</p>
+<p>Choice: 0 +2</p>
+<p>Choice: 1 +1 2/3</p>
+<p>Choice: 2 +1 1/3</p>
+<p>Choice: 3 +1</p>
+<p>Choice: 4 +2/3</p>
+<p>Choice: 5 +1/3</p>
+<p>Choice: 6 0</p>
+<p>Choice: 7 -1/3</p>
+<p>Choice: 8 -2/3</p>
+<p>Choice: 9 -1</p>
+<p>Choice: 10 -1 1/3</p>
+<p>Choice: 11 -1 2/3</p>
+<p>Choice: 12 -2</p>
+<p><strong>/main/capturesettings/flashmode</strong></p>
+<p>Label: Flash Mode</p>
+<p>Type: RADIO</p>
+<p>Current: Unknown value 0000</p>
+<p>Choice: 0 Unknown value 0000</p>
+<p><strong>/main/capturesettings/shootingmode</strong></p>
+<p>Label: Canon Shooting Mode</p>
+<p>Type: RADIO</p>
+<p>Current: Auto</p>
+<p>Choice: 0 Auto</p>
+<p>Choice: 1 TV</p>
+<p>Choice: 2 AV</p>
+<p>Choice: 3 Manual</p>
+<p><strong>/main/capturesettings/aperture</strong></p>
+<p>Label: Aperture</p>
+<p>Type: RADIO</p>
+<p>Current: 2.8</p>
+<p>Choice: 0 auto</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 1.1</p>
+<p>Choice: 3 1.2</p>
+<p>Choice: 4 1.2</p>
+<p>Choice: 5 1.4</p>
+<p>Choice: 6 1.6</p>
+<p>Choice: 7 1.8</p>
+<p>Choice: 8 1.8</p>
+<p>Choice: 9 2</p>
+<p>Choice: 10 2.2</p>
+<p>Choice: 11 2.5</p>
+<p>Choice: 12 2.5</p>
+<p>Choice: 13 2.8</p>
+<p>Choice: 14 3.2</p>
+<p>Choice: 15 3.5</p>
+<p>Choice: 16 3.5</p>
+<p>Choice: 17 4</p>
+<p>Choice: 18 4.5</p>
+<p>Choice: 19 4.5</p>
+<p>Choice: 20 5</p>
+<p>Choice: 21 5.6</p>
+<p>Choice: 22 6.3</p>
+<p>Choice: 23 6.7</p>
+<p>Choice: 24 7.1</p>
+<p>Choice: 25 8</p>
+<p>Choice: 26 9</p>
+<p>Choice: 27 9.5</p>
+<p>Choice: 28 10</p>
+<p>Choice: 29 11</p>
+<p>Choice: 30 13</p>
+<p>Choice: 31 13</p>
+<p>Choice: 32 14</p>
+<p>Choice: 33 16</p>
+<p>Choice: 34 18</p>
+<p>Choice: 35 19</p>
+<p>Choice: 36 20</p>
+<p>Choice: 37 22</p>
+<p>Choice: 38 25</p>
+<p>Choice: 39 27</p>
+<p>Choice: 40 29</p>
+<p>Choice: 41 32</p>
+<p>Choice: 42 36</p>
+<p>Choice: 43 38</p>
+<p>Choice: 44 40</p>
+<p>Choice: 45 45</p>
+<p>Choice: 46 51</p>
+<p>Choice: 47 54</p>
+<p>Choice: 48 57</p>
+<p>Choice: 49 64</p>
+<p>Choice: 50 72</p>
+<p>Choice: 51 76</p>
+<p>Choice: 52 81</p>
+<p>Choice: 53 91</p>
+<p><strong>/main/capturesettings/focusingpoint</strong></p>
+<p>Label: Focusing Point</p>
+<p>Type: RADIO</p>
+<p>Current: Multiple Focusing Points (Center)</p>
+<p>Choice: 0 Focusing Point on Center Only, Manual</p>
+<p>Choice: 1 Focusing Point on Center Only, Auto</p>
+<p>Choice: 2 Multiple Focusing Points (No Specification), Manual</p>
+<p>Choice: 3 Multiple Focusing Points, Auto</p>
+<p>Choice: 4 Multiple Focusing Points (Right)</p>
+<p>Choice: 5 Multiple Focusing Points (Center)</p>
+<p>Choice: 6 Multiple Focusing Points (Left)</p>
+<p><strong>/main/capturesettings/shutterspeed</strong></p>
+<p>Label: Shutter Speed</p>
+<p>Type: RADIO</p>
+<p>Current: 1/30</p>
+<p>Choice: 0 auto</p>
+<p>Choice: 1 bulb</p>
+<p>Choice: 2 bulb</p>
+<p>Choice: 3 30</p>
+<p>Choice: 4 25</p>
+<p>Choice: 5 20</p>
+<p>Choice: 6 20</p>
+<p>Choice: 7 15</p>
+<p>Choice: 8 13</p>
+<p>Choice: 9 10</p>
+<p>Choice: 10 10</p>
+<p>Choice: 11 8</p>
+<p>Choice: 12 6</p>
+<p>Choice: 13 6</p>
+<p>Choice: 14 5</p>
+<p>Choice: 15 4</p>
+<p>Choice: 16 3.2</p>
+<p>Choice: 17 3</p>
+<p>Choice: 18 2.5</p>
+<p>Choice: 19 2</p>
+<p>Choice: 20 1.6</p>
+<p>Choice: 21 1.5</p>
+<p>Choice: 22 1.3</p>
+<p>Choice: 23 1</p>
+<p>Choice: 24 0.8</p>
+<p>Choice: 25 0.7</p>
+<p>Choice: 26 0.6</p>
+<p>Choice: 27 0.5</p>
+<p>Choice: 28 0.4</p>
+<p>Choice: 29 0.3</p>
+<p>Choice: 30 0.3</p>
+<p>Choice: 31 1/4</p>
+<p>Choice: 32 1/5</p>
+<p>Choice: 33 1/6</p>
+<p>Choice: 34 1/6</p>
+<p>Choice: 35 1/8</p>
+<p>Choice: 36 1/10</p>
+<p>Choice: 37 1/10</p>
+<p>Choice: 38 1/13</p>
+<p>Choice: 39 1/15</p>
+<p>Choice: 40 1/20</p>
+<p>Choice: 41 1/20</p>
+<p>Choice: 42 1/25</p>
+<p>Choice: 43 1/30</p>
+<p>Choice: 44 1/40</p>
+<p>Choice: 45 1/45</p>
+<p>Choice: 46 1/50</p>
+<p>Choice: 47 1/60</p>
+<p>Choice: 48 1/80</p>
+<p>Choice: 49 1/90</p>
+<p>Choice: 50 1/100</p>
+<p>Choice: 51 1/125</p>
+<p>Choice: 52 1/160</p>
+<p>Choice: 53 1/180</p>
+<p>Choice: 54 1/200</p>
+<p>Choice: 55 1/250</p>
+<p>Choice: 56 1/320</p>
+<p>Choice: 57 1/350</p>
+<p>Choice: 58 1/400</p>
+<p>Choice: 59 1/500</p>
+<p>Choice: 60 1/640</p>
+<p>Choice: 61 1/750</p>
+<p>Choice: 62 1/800</p>
+<p>Choice: 63 1/1000</p>
+<p>Choice: 64 1/1250</p>
+<p>Choice: 65 1/1500</p>
+<p>Choice: 66 1/1600</p>
+<p>Choice: 67 1/2000</p>
+<p>Choice: 68 1/2500</p>
+<p>Choice: 69 1/3000</p>
+<p>Choice: 70 1/3200</p>
+<p>Choice: 71 1/4000</p>
+<p>Choice: 72 1/5000</p>
+<p>Choice: 73 1/6000</p>
+<p>Choice: 74 1/6400</p>
+<p>Choice: 75 1/8000</p>
+<p>/main/capturesettings/meteringmode</p>
+<p>Label: Metering Mode</p>
+<p>Type: RADIO</p>
+<p>Current: Evaluative</p>
+<p>Choice: 0 Evaluative</p>
+<p>Choice: 1 Center-weighted</p>
+<p>Choice: 2 Spot</p>
+<p>/main/capturesettings/afdistance</p>
+<p>Label: AF Distance</p>
+<p>Type: RADIO</p>
+<p>Current: Auto</p>
+<p>Choice: 0 Auto</p>
+<p>Choice: 1 Zone Focus (Close-up)</p>
+<p>/main/other/d045</p>
+<p>Label: Event Emulate Mode</p>
+<p>Type: MENU</p>
+<p>Current: 7</p>
+<p>Choice: 0 1</p>
+<p>Choice: 1 2</p>
+<p>Choice: 2 3</p>
+<p>Choice: 3 4</p>
+<p>Choice: 4 5</p>
+<p>Choice: 5 6</p>
+<p>Choice: 6 7</p>
+<p>/main/other/d04a</p>
+<p>Label: PTP Property 0xd04a</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 2</p>
+<p>Choice: 3 3</p>
+<p>/main/other/d02e</p>
+<p>Label: Size of Output Data from Camera</p>
+<p>Type: TEXT</p>
+<p>Current: 524288</p>
+<p>/main/other/d02f</p>
+<p>Label: Size of Input Data to Camera</p>
+<p>Type: TEXT</p>
+<p>Current: 524288</p>
+<p>/main/other/d002</p>
+<p>Label: Battery Type</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 2</p>
+<p>Choice: 3 3</p>
+<p>Choice: 4 4</p>
+<p>Choice: 5 5</p>
+<p>/main/other/d003</p>
+<p>Label: Battery Mode</p>
+<p>Type: MENU</p>
+<p>Current: 1</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 2</p>
+<p>Choice: 3 3</p>
+<p>/main/other/d034</p>
+<p>Label: UNIX Time</p>
+<p>Type: TEXT</p>
+<p>Current: 1428148948</p>
+<p>/main/other/d047</p>
+<p>Label: Type of Slideshow</p>
+<p>Type: TEXT</p>
+<p>Current: 0</p>
+<p>/main/other/d046</p>
+<p>Label: DPOF Version</p>
+<p>Type: TEXT</p>
+<p>Current: 257</p>
+<p>/main/other/d02d</p>
+<p>Label: Supported Thumb Size</p>
+<p>Type: TEXT</p>
+<p>Current: (null)</p>
+<p>/main/other/d048</p>
+<p>Label: Average Filesizes</p>
+<p>Type: TEXT</p>
+<p>Current: (null)</p>
+<p>/main/other/d02c</p>
+<p>Label: Size Quality Mode</p>
+<p>Type: MENU</p>
+<p>Current: (null)</p>
+<p>/main/other/d030</p>
+<p>Label: Remote API Version</p>
+<p>Type: TEXT</p>
+<p>Current: 256</p>
+<p>/main/other/d049</p>
+<p>Label: Model ID</p>
+<p>Type: TEXT</p>
+<p>Current: 38928384</p>
+<p>/main/other/d032</p>
+<p>Label: Camera Model</p>
+<p>Type: TEXT</p>
+<p>Current: Canon PowerShot SX110 IS</p>
+<p>/main/other/d033</p>
+<p>Label: Camera Owner</p>
+<p>Type: TEXT</p>
+<p>Current: (null)</p>
+<p>/main/other/d031</p>
+<p>Label: Firmware Version</p>
+<p>Type: TEXT</p>
+<p>Current: 16777216</p>
+<p>/main/other/d050</p>
+<p>Label: PTP Property 0xd050</p>
+<p>Type: TEXT</p>
+<p>Current: 0</p>
+<p>/main/other/d402</p>
+<p>Label: PTP Property 0xd402</p>
+<p>Type: TEXT</p>
+<p>Current: Canon PowerShot SX110 IS</p>
+<p>/main/other/d406</p>
+<p>Label: PTP Property 0xd406</p>
+<p>Type: TEXT</p>
+<p>Current: Windows</p>
+<p>/main/other/d407</p>
+<p>Label: PTP Property 0xd407</p>
+<p>Type: TEXT</p>
+<p>Current: 1</p>
+<p>/main/other/d029</p>
+<p>Label: Capture Transfer Mode</p>
+<p>Type: MENU</p>
+<p>Current: 13</p>
+<p>Choice: 0 1</p>
+<p>Choice: 1 2</p>
+<p>Choice: 2 3</p>
+<p>Choice: 3 8</p>
+<p>Choice: 4 9</p>
+<p>Choice: 5 10</p>
+<p>Choice: 6 11</p>
+<p>Choice: 7 12</p>
+<p>Choice: 8 13</p>
+<p>Choice: 9 14</p>
+<p>Choice: 10 15</p>
+<p>/main/other/d00a</p>
+<p>Label: Flash Mode</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>/main/other/d042</p>
+<p>Label: Flash Quantity Count</p>
+<p>Type: MENU</p>
+<p>Current: 65535</p>
+<p>/main/other/d020</p>
+<p>Label: Flash Compensation</p>
+<p>Type: MENU</p>
+<p>Current: 24</p>
+<p>Choice: 0 8</p>
+<p>Choice: 1 11</p>
+<p>Choice: 2 13</p>
+<p>Choice: 3 16</p>
+<p>Choice: 4 19</p>
+<p>Choice: 5 21</p>
+<p>Choice: 6 24</p>
+<p>Choice: 7 27</p>
+<p>Choice: 8 29</p>
+<p>Choice: 9 32</p>
+<p>Choice: 10 35</p>
+<p>Choice: 11 37</p>
+<p>Choice: 12 40</p>
+<p>/main/other/d006</p>
+<p>Label: Image Quality</p>
+<p>Type: MENU</p>
+<p>Current: 5</p>
+<p>Choice: 0 5</p>
+<p>Choice: 1 3</p>
+<p>Choice: 2 2</p>
+<p>/main/other/d007</p>
+<p>Label: Full View File Format</p>
+<p>Type: MENU</p>
+<p>Current: 1</p>
+<p>/main/other/d008</p>
+<p>Label: Image Size</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 3</p>
+<p>Choice: 3 7</p>
+<p>Choice: 4 2</p>
+<p>/main/other/d00e</p>
+<p>Label: Drive Mode</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>/main/other/d010</p>
+<p>Label: Metering Mode</p>
+<p>Type: MENU</p>
+<p>Current: 3</p>
+<p>Choice: 0 3</p>
+<p>Choice: 1 0</p>
+<p>Choice: 2 1</p>
+<p>/main/other/d011</p>
+<p>Label: AF Distance</p>
+<p>Type: MENU</p>
+<p>Current: 1</p>
+<p>Choice: 0 1</p>
+<p>Choice: 1 3</p>
+<p>/main/other/d012</p>
+<p>Label: Focusing Point</p>
+<p>Type: MENU</p>
+<p>Current: 12291</p>
+<p>/main/other/d013</p>
+<p>Label: White Balance</p>
+<p>Type: MENU</p>
+<p>Current: 2</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 2</p>
+<p>Choice: 3 3</p>
+<p>Choice: 4 4</p>
+<p>Choice: 5 7</p>
+<p>Choice: 6 6</p>
+<p>/main/other/d01c</p>
+<p>Label: ISO Speed</p>
+<p>Type: MENU</p>
+<p>Current: 96</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 69</p>
+<p>Choice: 2 72</p>
+<p>Choice: 3 80</p>
+<p>Choice: 4 88</p>
+<p>Choice: 5 96</p>
+<p>Choice: 6 104</p>
+<p>/main/other/d01f</p>
+<p>Label: Exposure Compensation</p>
+<p>Type: MENU</p>
+<p>Current: 24</p>
+<p>Choice: 0 8</p>
+<p>Choice: 1 11</p>
+<p>Choice: 2 13</p>
+<p>Choice: 3 16</p>
+<p>Choice: 4 19</p>
+<p>Choice: 5 21</p>
+<p>Choice: 6 24</p>
+<p>Choice: 7 27</p>
+<p>Choice: 8 29</p>
+<p>Choice: 9 32</p>
+<p>Choice: 10 35</p>
+<p>Choice: 11 37</p>
+<p>Choice: 12 40</p>
+<p>/main/other/d041</p>
+<p>Label: Assist Light</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>Choice: 0 1</p>
+<p>Choice: 1 0</p>
+<p>/main/other/d044</p>
+<p>Label: Rotation Scene</p>
+<p>Type: MENU</p>
+<p>Current: 1</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>/main/other/d00c</p>
+<p>Label: Shooting Mode</p>
+<p>Type: MENU</p>
+<p>Current: 1</p>
+<p>Choice: 0 1</p>
+<p>Choice: 1 2</p>
+<p>Choice: 2 3</p>
+<p>Choice: 3 4</p>
+<p>/main/other/d01d</p>
+<p>Label: Aperture</p>
+<p>Type: MENU</p>
+<p>Current: 32</p>
+<p>/main/other/d01e</p>
+<p>Label: Shutter Speed</p>
+<p>Type: MENU</p>
+<p>Current: 96</p>
+<p>/main/other/d02a</p>
+<p>Label: Zoom</p>
+<p>Type: MENU</p>
+<p>Current: 0</p>
+<p>Choice: 0 0</p>
+<p>Choice: 1 1</p>
+<p>Choice: 2 2</p>
+<p>Choice: 3 3</p>
+<p>Choice: 4 4</p>
+<p>Choice: 5 5</p>
+<p>Choice: 6 6</p>
+<p>Choice: 7 7</p>
+<p>Choice: 8 8</p>
+<p>Choice: 9 9</p>
+<p>Choice: 10 10</p>
+<p>Choice: 11 11</p>
+<p>Choice: 12 12</p>
+<p>Choice: 13 13</p>
+<p>Choice: 14 14</p>
+<p>Choice: 15 15</p>
+<p>Choice: 16 16</p>
+<p>Choice: 17 17</p>
+<p>Choice: 18 18</p>
+<p>Choice: 19 19</p>
+<p>Choice: 20 20</p>
+<p>Choice: 21 21</p>
+<p>Choice: 22 22</p>
+<p>Choice: 23 23</p>
+<p>Choice: 24 24</p>
+<p>Choice: 25 25</p>
+<p>Choice: 26 26</p>
+<p>Choice: 27 27</p>
+<p>Choice: 28 28</p>
+<p>/main/other/d036</p>
+<p>Label: Camera Output</p>
+<p>Type: MENU</p>
+<p>Current: 2</p>
+<p>Choice: 0 1</p>
+<p>Choice: 1 2</p>
+<p>Choice: 2 3</p>
+<p>/main/other/d037</p>
+<p>Label: Disp Av</p>
+<p>Type: TEXT</p>
+<p>Current: 0</p>
+<p>/main/other/d038</p>
+<p>Label: Av Open Apex</p>
+<p>Type: TEXT</p>
+<p>Current: 32</p>
+<p>/main/other/d039</p>
+<p>Label: Digital Zoom Magnification</p>
+<p>Type: TEXT</p>
+<p>Current: 3456</p>
+<p>/main/other/d03b</p>
+<p>Label: Disp Av Max</p>
+<p>Type: TEXT</p>
+<p>Current: 0</p>
+<p>/main/other/d03c</p>
+<p>Label: Av Max Apex</p>
+<p>Type: TEXT</p>
+<p>Current: 56</p>
+<p>/main/other/d03d</p>
+<p>Label: EZoom Start Position</p>
+<p>Type: TEXT</p>
+<p>Current: 23</p>
+<p>/main/other/d043</p>
+<p>Label: Rotation Angle</p>
+<p>Type: TEXT</p>
+<p>Current: 0</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>hjs@ubuntu:~$ gphoto2 --version</strong></p>
+<p>gphoto2 2.5.3</p>
+<p>&nbsp;</p>
+<p>Copyright (c) 2000-2014 Lutz Mueller and others</p>
+<p>&nbsp;</p>
+<p>gphoto2 comes with NO WARRANTY, to the extent permitted by law. You may</p>
+<p>redistribute copies of gphoto2 under the terms of the GNU General Public</p>
+<p>License. For more information about these matters, see the files named COPYING.</p>
+<p>&nbsp;</p>
+<p>This version of gphoto2 is using the following software versions and options:</p>
+<p>gphoto2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.5.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; gcc, popt(m), exif, cdk, aa, jpeg, readline</p>
+<p>libgphoto2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2.5.3.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; all camlibs, gcc, ltdl, EXIF</p>
+<p>libgphoto2_port 0.10.0&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;gcc, ltdl, no USB, serial without locking</p>
+<p><strong>hjs@ubuntu:~$ gphoto2 --capture-image</strong></p>
+<p>New file is in location /store_00010001/DCIM/100CANON/IMG_6554.JPG on the camera</p>
+<p>&nbsp;</p>

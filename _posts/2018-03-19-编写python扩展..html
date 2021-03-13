@@ -1,0 +1,46 @@
+<p>&nbsp;</p>
+<p>代码：</p>
+<div class="cnblogs_code">
+<pre>#include &lt;Python.h&gt;
+<span style="color: #0000ff;">static</span> PyObject *<span style="color: #000000;">
+spam_system(PyObject </span>*self, PyObject *<span style="color: #000000;">args)
+{
+    </span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span> *<span style="color: #000000;">command;
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> sts;
+
+    </span><span style="color: #0000ff;">if</span> (!PyArg_ParseTuple(args, <span style="color: #800000;">"</span><span style="color: #800000;">s</span><span style="color: #800000;">"</span>, &amp;<span style="color: #000000;">command))
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> NULL;
+    sts </span>=<span style="color: #000000;"> system(command);
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> PyLong_FromLong(sts);
+}
+
+</span><span style="color: #0000ff;">static</span> PyMethodDef SpamMethods[] =<span style="color: #000000;"> {
+{</span><span style="color: #800000;">"</span><span style="color: #800000;">system</span><span style="color: #800000;">"</span><span style="color: #000000;">,  spam_system, METH_VARARGS,
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Execute a shell command.</span><span style="color: #800000;">"</span><span style="color: #000000;">},
+{NULL, NULL, </span><span style="color: #800080;">0</span>, NULL}        <span style="color: #008000;">/*</span><span style="color: #008000;"> Sentinel </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+};
+
+</span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">struct</span> PyModuleDef spammodule =<span style="color: #000000;"> {
+    PyModuleDef_HEAD_INIT,
+    </span><span style="color: #800000;">"</span><span style="color: #800000;">spam</span><span style="color: #800000;">"</span>,   <span style="color: #008000;">/*</span><span style="color: #008000;"> name of module </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    NULL, </span><span style="color: #008000;">/*</span><span style="color: #008000;"> module documentation, may be NULL </span><span style="color: #008000;">*/</span>
+    -<span style="color: #800080;">1</span>,       <span style="color: #008000;">/*</span><span style="color: #008000;"> size of per-interpreter state of the module,
+              or -1 if the module keeps state in global variables. </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    SpamMethods
+};
+
+PyMODINIT_FUNC
+PyInit_spam(</span><span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    </span><span style="color: #0000ff;">return</span> PyModule_Create(&amp;<span style="color: #000000;">spammodule);
+}</span></pre>
+</div>
+<p>编译选项：</p>
+<p>releaee版</p>
+<p>dll名字必须为spam.pyd</p>
+<p>&nbsp;</p>
+<p>测试：</p>
+<p>&gt;&gt;&gt; import spam<br />&gt;&gt;&gt; dir(spam)<br />['__doc__', '__file__', '__loader__', '__name__', '__package__', '__spec__', 'system']<br />&gt;&gt;&gt; spam.system('dir')<br /> 驱动器 G 中的卷是 ll6_za<br /> 卷的序列号是 C0F5-30DE</p>
+<p> G:\temp\ConsoleApplication1\Release 的目录</p>
+<p>2018/03/19  00:38    &lt;DIR&gt;          .<br />2018/03/19  00:38    &lt;DIR&gt;          ..<br />2018/03/19  00:36               746 ConsoleApplication1.exp<br />2018/03/19  00:36            27,307 ConsoleApplication1.iobj<br />2018/03/19  00:36            33,648 ConsoleApplication1.ipdb<br />2018/03/19  00:36             1,942 ConsoleApplication1.lib<br />2018/03/19  00:36           512,000 ConsoleApplication1.pdb</p>
+<p>&nbsp;</p>

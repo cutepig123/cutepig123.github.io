@@ -1,0 +1,465 @@
+<font color="#ff0000">地球轨道计算方法</font><br><link rel="File-List" href="file:///C:%5CDOCUME%7E1%5Chjs%5CLOCALS%7E1%5CTemp%5Cmsohtml1%5C01%5Cclip_filelist.xml"><!--[if gte mso 9]><xml>
+ <w:WordDocument>
+  <w:View>Normal</w:View>
+  <w:Zoom>0</w:Zoom>
+  <w:PunctuationKerning/>
+  <w:DrawingGridVerticalSpacing>7.8 磅</w:DrawingGridVerticalSpacing>
+  <w:DisplayHorizontalDrawingGridEvery>0</w:DisplayHorizontalDrawingGridEvery>
+  <w:DisplayVerticalDrawingGridEvery>2</w:DisplayVerticalDrawingGridEvery>
+  <w:ValidateAgainstSchemas/>
+  <w:SaveIfXMLInvalid>false</w:SaveIfXMLInvalid>
+  <w:IgnoreMixedContent>false</w:IgnoreMixedContent>
+  <w:AlwaysShowPlaceholderText>false</w:AlwaysShowPlaceholderText>
+  <w:Compatibility>
+   <w:SpaceForUL/>
+   <w:BalanceSingleByteDoubleByteWidth/>
+   <w:DoNotLeaveBackslashAlone/>
+   <w:ULTrailSpace/>
+   <w:DoNotExpandShiftReturn/>
+   <w:AdjustLineHeightInTable/>
+   <w:BreakWrappedTables/>
+   <w:SnapToGridInCell/>
+   <w:WrapTextWithPunct/>
+   <w:UseAsianBreakRules/>
+   <w:DontGrowAutofit/>
+   <w:UseFELayout/>
+  </w:Compatibility>
+  <w:BrowserLevel>MicrosoftInternetExplorer4</w:BrowserLevel>
+ </w:WordDocument>
+</xml><![endif]--><!--[if gte mso 9]><xml>
+ <w:LatentStyles DefLockedState="false" LatentStyleCount="156">
+ </w:LatentStyles>
+</xml><![endif]--><style>
+<!--
+ /* Font Definitions */
+ @font-face
+	{font-family:宋体;
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-alt:SimSun;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+@font-face
+	{font-family:"\@宋体";
+	panose-1:2 1 6 0 3 1 1 1 1 1;
+	mso-font-charset:134;
+	mso-generic-font-family:auto;
+	mso-font-pitch:variable;
+	mso-font-signature:3 135135232 16 0 262145 0;}
+ /* Style Definitions */
+ p.MsoNormal, li.MsoNormal, div.MsoNormal
+	{mso-style-parent:"";
+	margin:0cm;
+	margin-bottom:.0001pt;
+	text-align:justify;
+	text-justify:inter-ideograph;
+	mso-pagination:none;
+	font-size:10.5pt;
+	mso-bidi-font-size:12.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:宋体;
+	mso-font-kerning:1.0pt;}
+ /* Page Definitions */
+ @page
+	{mso-page-border-surround-header:no;
+	mso-page-border-surround-footer:no;}
+@page Section1
+	{size:612.0pt 792.0pt;
+	margin:72.0pt 90.0pt 72.0pt 90.0pt;
+	mso-header-margin:36.0pt;
+	mso-footer-margin:36.0pt;
+	mso-paper-source:0;}
+div.Section1
+	{page:Section1;}
+-->
+</style><!--[if gte mso 10]>
+<style>
+ /* Style Definitions */
+ table.MsoNormalTable
+	{mso-style-name:普通表格;
+	mso-tstyle-rowband-size:0;
+	mso-tstyle-colband-size:0;
+	mso-style-noshow:yes;
+	mso-style-parent:"";
+	mso-padding-alt:0cm 5.4pt 0cm 5.4pt;
+	mso-para-margin:0cm;
+	mso-para-margin-bottom:.0001pt;
+	mso-pagination:widow-orphan;
+	font-size:10.0pt;
+	font-family:"Times New Roman";
+	mso-fareast-font-family:"Times New Roman";
+	mso-ansi-language:#0400;
+	mso-fareast-language:#0400;
+	mso-bidi-language:#0400;}
+</style>
+<![endif]--><span style="font-size: 10.5pt; font-family: &quot;Times New Roman&quot;;" lang="EN-US">http://math.sjtu.edu.cn/jidi/sxsy/</span><br><br><font color="#ff0000">开普勒三大定律的证明</font><br>http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B<br><h1 id="firstHeading" class="firstHeading">开普勒定律</h1>
+		
+			<h3 id="siteSub">维基百科，自由的百科全书</h3>
+			
+									<div id="jump-to-nav">跳转到: <a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#column-one">导航</a>, <a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#searchInput">搜索</a></div>			<!-- start content -->
+			<div class="NavFrame collapsed noprint" style="border: medium none ; margin: 0pt 0.5em 0.5em auto; z-index: 1; top: -1.2em; position: relative; background-color: transparent;" id="TagConversionHeader">
+<div class="uncollapse toggleHotspot" style="padding: 0pt; position: absolute; right: 0pt; background-color: transparent; width: 4em; cursor: pointer;" title="本頁使用了標題或全文手工轉換，單擊檢視"><span style="padding: 1px 3px; background: slategray none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">汉</span><span style="padding: 1px 3px; background: sienna none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: white;">漢</span><span class="toggleShow" style="color: black;">▼</span><span class="toggleHide" style="color: black; display: none;">▲</span></div>
+<div class="NavContent toggleHide" style="border: 1px solid gray; padding: 0.3em; position: absolute; display: none; right: 0pt; top: 1.5em; z-index: 100; width: 650px; font-size: 90%; background-color: rgb(240, 242, 240); color: black;">
+<div style="background: rgb(77, 77, 77) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(255, 255, 255);">为了阅读方便，本文使用<a href="http://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E5%A4%84%E7%90%86#.E6.A2.9D.E7.9B.AE.E6.A8.99.E9.A1.8C" title="Help:中文维基百科的繁简处理" class="mw-redirect"><span style="color: rgb(255, 255, 255); font-weight: bold;">標題手工轉換</span></a>。</div>
+<ul><li>转换标题为：<b>简体：开普勒定律；繁體：開普勒定律；台灣：克卜勒定律；</b></li><li>实际标题為：<b>开普勒定律</b>；當前顯示為：<b>开普勒定律</b></li></ul>
+<div style="background: rgb(77, 77, 77) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: rgb(255, 255, 255);" id="CContentH">为了阅读方便，本文使用<a href="http://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E5%A4%84%E7%90%86#.E6.8E.A7.E5.88.B6.E8.87.AA.E5.8A.A8.E8.BD.AC.E6.8D.A2.E7.9A.84.E4.BB.A3.E7.A2.BC" title="Help:中文维基百科的繁简处理" class="mw-redirect"><span style="color: rgb(255, 255, 255); font-weight: bold;">全文手工轉換</span></a>。转换内容：</div>
+<div style="padding: 3px; overflow: auto; height: 220px;" id="CContentList">下方采用<a href="http://zh.wikipedia.org/wiki/%E7%89%A9%E7%90%86%E5%AD%B8" title="物理學" class="mw-redirect"><span style="color: rgb(51, 51, 51); font-weight: bold;">物理學</span></a>組全文轉換 [<span class="editlink noprint plainlinksneverexpand"><a href="http://zh.wikipedia.org/w/index.php?title=Template:CGroup/Physics&amp;action=edit" class="external text" title="http://zh.wikipedia.org/w/index.php?title=Template:CGroup/Physics&amp;action=edit" rel="nofollow"><span style="color: rgb(51, 51, 51); font-weight: bold;">編輯</span></a></span>]
+<p><b>请在每个转换项目的后面注明转换的原因。</b></p>
+<p><br></p>
+<ol><li><b>台灣：萬有引力；大陆：万有引力；香港：萬有引力；</b> 当前用字模式下显示为→<b>万有引力</b></li><li><b>台灣：牽引力；大陆：牵引力；</b> 当前用字模式下显示为→<b>牵引力</b></li></ol>
+<ol><li><b><span class="lanLabel">原始语言：Andrade；台灣：安德拉德；香港：安達迪；大陆：安德拉德；</span></b> 当前用字模式下显示为→<b>安德拉德</b></li><li><b><span class="lanLabel">原始语言：Avogadro；台灣：亞佛加厥；大陆：阿伏伽德罗；</span></b> 当前用字模式下显示为→<b>阿伏伽德罗</b></li><li><b><span class="lanLabel">原始语言：Bernoulli；台灣：白努利；大陆：伯努利；</span></b> 当前用字模式下显示为→<b>伯努利</b></li><li><b><span class="lanLabel">原始语言：Bohr；台灣：波耳；大陆：玻尔；</span></b> 当前用字模式下显示为→<b>玻尔</b></li><li><b><span class="lanLabel">原始语言：Boltzmann；台灣：玻茲曼；大陆：玻尔兹曼；</span></b> 当前用字模式下显示为→<b>玻尔兹曼</b></li><li><b><span class="lanLabel">原始语言：Brillouin；台灣：布里元；大陆：布里渊；</span></b> 当前用字模式下显示为→<b>布里渊</b></li><li><b><span class="lanLabel">原始语言：Doppler；台灣：都卜勒；大陆：多普勒；</span></b> 当前用字模式下显示为→<b>多普勒</b></li><li><b><span class="lanLabel">原始语言：Franck；台灣：法蘭克；大陆：弗兰克；</span></b> 当前用字模式下显示为→<b>弗兰克</b></li><li><b><span class="lanLabel">原始语言：Gordon；台灣：戈登；大陆：高登；</span></b> 当前用字模式下显示为→<b>高登</b></li><li><b><span class="lanLabel">原始语言：Heaviside；台灣：黑維塞；大陆：赫维赛德；</span></b> 当前用字模式下显示为→<b>赫维赛德</b></li><li><b><span class="lanLabel">原始语言：Hooke；台灣：虎克；大陆：胡克；</span></b> 当前用字模式下显示为→<b>胡克</b></li><li><b><span class="lanLabel">原始语言：Hubble；原文：哈勃；大陆：哈勃；香港：哈勃；台灣：哈柏；</span></b> 当前用字模式下显示为→<b>哈勃</b></li><li><b><span class="lanLabel">原始语言：Ising；台灣：易辛；大陆：伊辛；</span></b> 当前用字模式下显示为→<b>伊辛</b></li><li><b><span class="lanLabel">原始语言：Jacobi；台灣：亞可比；大陆：雅可比；</span></b> 当前用字模式下显示为→<b>雅可比</b></li><li><b><span class="lanLabel">原始语言：Kelvin；台灣：克耳文；大陆：开尔文；</span></b> 当前用字模式下显示为→<b>开尔文</b></li><li><b><span class="lanLabel">原始语言：Kepler；台灣：克卜勒；大陆：开普勒；</span></b> 当前用字模式下显示为→<b>开普勒</b></li><li><b><span class="lanLabel">原始语言：Killing；台灣：基林；大陆：基灵；</span></b> 当前用字模式下显示为→<b>基灵</b></li><li><b><span class="lanLabel">原始语言：Kirchhoff；台灣：克希荷夫；大陆：基尔霍夫；香港：基爾霍夫；</span></b> 当前用字模式下显示为→<b>基尔霍夫</b></li><li><b><span class="lanLabel">原始语言：Kruskal；台灣：克魯斯卡；大陆：克鲁斯卡尔；</span></b> 当前用字模式下显示为→<b>克鲁斯卡尔</b></li><li><b><span class="lanLabel">原始语言：Langmuir；台灣：蘭米爾；大陆：朗缪尔；</span></b> 当前用字模式下显示为→<b>朗缪尔</b></li><li><b><span class="lanLabel">原始语言：Lenz；台灣：冷次；大陆：楞次；</span></b> 当前用字模式下显示为→<b>楞次</b></li><li><b><span class="lanLabel">原始语言：Lorentz；台灣：勞侖茲；大陆：洛伦兹；</span></b> 当前用字模式下显示为→<b>洛伦兹</b></li><li><b><span class="lanLabel">原始语言：Lorenz；台灣：勞侖次；大陆：洛伦茨；</span></b> 当前用字模式下显示为→<b>洛伦茨</b></li><li><b><span class="lanLabel">原始语言：Maxwell；台灣：馬克士威；大陆：麦克斯韦；</span></b> 当前用字模式下显示为→<b>麦克斯韦</b></li><li><b><span class="lanLabel">原始语言：Minkowski；台灣：閔考斯基；大陆：闵可夫斯基；</span></b> 当前用字模式下显示为→<b>闵可夫斯基</b></li><li><b><span class="lanLabel">原始语言：Nordström；台灣：諾德斯特洛姆；大陆：诺斯特朗姆；</span></b> 当前用字模式下显示为→<b>诺斯特朗姆</b></li><li><b><span class="lanLabel">原始语言：Pauli；台灣：包立；大陆：泡利；</span></b> 当前用字模式下显示为→<b>泡利</b></li><li><b><span class="lanLabel">原始语言：Penrose；台灣：潘洛斯；大陆：彭罗斯；</span></b> 当前用字模式下显示为→<b>彭罗斯</b></li><li><b><span class="lanLabel">原始语言：Poisson；台灣：帕松；大陆：泊松；</span></b> 当前用字模式下显示为→<b>泊松</b></li><li><b><span class="lanLabel">原始语言：Reissner；台灣：萊斯納；大陆：雷斯勒；</span></b> 当前用字模式下显示为→<b>雷斯勒</b></li><li><b><span class="lanLabel">原始语言：Rutherford；大陆：卢瑟福；台灣：拉塞福；</span></b> 当前用字模式下显示为→<b>卢瑟福</b></li><li><b><span class="lanLabel">原始语言：Rydberg；台灣：芮得柏；大陆：里德伯；</span></b> 当前用字模式下显示为→<b>里德伯</b></li><li><b><span class="lanLabel">原始语言：Schrödinger；台灣：薛丁格；大陆：薛定谔；</span></b> 当前用字模式下显示为→<b>薛定谔</b></li><li><b><span class="lanLabel">原始语言：Schwarzschild；台灣：史瓦茲旭爾得；大陆：史瓦西；</span></b> 当前用字模式下显示为→<b>史瓦西</b></li><li><b><span class="lanLabel">原始语言：Joseph Thomson；台灣：湯姆森；大陆：汤姆孙；</span></b> 当前用字模式下显示为→<b>汤姆孙</b></li><li><b><span class="lanLabel">原始语言：Van de Graaff；台灣：凡德格拉夫；大陆：范德格拉夫；</span></b> 当前用字模式下显示为→<b>范德格拉夫</b></li><li><b><span class="lanLabel">原始语言：Van der Waals；台灣：凡得瓦；大陆：范德瓦耳斯；</span></b> 当前用字模式下显示为→<b>范德瓦耳斯</b></li><li><b><span class="lanLabel">原始语言：Witten；台灣：維騰；大陆：威滕；</span></b> 当前用字模式下显示为→<b>威滕</b></li><li><b><span class="lanLabel">原始语言：Big Bang；台灣：大霹靂；大陆：大爆炸；香港：大爆炸；</span></b> 当前用字模式下显示为→<b>大爆炸</b></li><li><b><span class="lanLabel">原始语言：Biot-Savart law；台灣：畢歐-沙伐定律；大陆：毕奥-萨伐尔定律；</span></b> 当前用字模式下显示为→<b>毕奥-萨伐尔定律</b></li><li><b><span class="lanLabel">原始语言：Central force；台灣：連心力；大陆：有心力；</span></b> 当前用字模式下显示为→<b>有心力</b></li><li><b><span class="lanLabel">原始语言：classical mechanics；台灣：古典力學；大陆：经典力学；</span></b> 当前用字模式下显示为→<b>经典力学</b></li><li><b><span class="lanLabel">原始语言：Complex plane；台灣：複平面；大陆：复平面；</span></b> 当前用字模式下显示为→<b>复平面</b></li><li><b><span class="lanLabel">原始语言：Complex function；台灣：複函數；大陆：复函数；</span></b> 当前用字模式下显示为→<b>复函数</b></li><li><b><span class="lanLabel">原始语言：Coefficient；台灣：係數；大陆：系数；</span></b> 当前用字模式下显示为→<b>系数</b></li><li><b><span class="lanLabel">原始语言：Decoherence；台灣：去相干；大陆：退相干；</span></b> 当前用字模式下显示为→<b>退相干</b></li><li><b><span class="lanLabel">原始语言：Degenerate；台灣：簡併；大陆：简并；</span></b> 当前用字模式下显示为→<b>简并</b></li><li><b><span class="lanLabel">原始语言：Detect；台灣：偵測；大陆：探测；</span></b> 当前用字模式下显示为→<b>探测</b></li><li><b><span class="lanLabel">原始语言：Dimension；台灣：因次；大陆：量纲；</span></b> 当前用字模式下显示为→<b>量纲</b></li><li><b><span class="lanLabel">原始语言：Double-slit；台灣：雙狹縫；大陆：双缝；</span></b> 当前用字模式下显示为→<b>双缝</b></li><li><b><span class="lanLabel">原始语言：eigen；台灣：本徵；大陆：本征；</span></b> 当前用字模式下显示为→<b>本征</b></li><li><b><span class="lanLabel">原始语言：Equation；台灣：方程式；大陆：方程；</span></b> 当前用字模式下显示为→<b>方程</b></li><li><b><span class="lanLabel">原始语言：Fractal；台灣：碎形；大陆：分形；</span></b> 当前用字模式下显示为→<b>分形</b></li><li><b><span class="lanLabel">原始语言：Fusion reaction；台灣：融合反應；大陆：聚变反应；</span></b> 当前用字模式下显示为→<b>聚变反应</b></li><li><b><span class="lanLabel">原始语言：Gravitational; Gravity; Gravitational force；台灣：重力；大陆：引力；</span></b> 当前用字模式下显示为→<b>引力</b></li><li><b><span class="lanLabel">原始语言：Holography；台灣：全像；大陆：全息；</span></b> 当前用字模式下显示为→<b>全息</b></li><li><b><span class="lanLabel">原始语言：Informatics；台灣：資訊學；大陆：信息学；</span></b> 当前用字模式下显示为→<b>信息学</b></li><li><b><span class="lanLabel">原始语言：Information；台灣：資訊；大陆：信息；</span></b> 当前用字模式下显示为→<b>信息</b></li><li><b><span class="lanLabel">原始语言：Interaction；台灣：交互作用；大陆：相互作用；</span></b> 当前用字模式下显示为→<b>相互作用</b></li><li><b><span class="lanLabel">原始语言：Ionizing radiation；台灣：游離輻射；大陆：电离辐射；</span></b> 当前用字模式下显示为→<b>电离辐射</b></li><li><b><span class="lanLabel">原始语言：Legendre transformation；台灣：勒壤得轉換；大陆：勒让德变换；</span></b> 当前用字模式下显示为→<b>勒让德变换</b></li><li><b><span class="lanLabel">原始语言：Loop quantum gravity theory；台灣：迴圈量子重力理論；大陆：圈量子引力论；</span></b> 当前用字模式下显示为→<b>圈量子引力论</b></li><li><b><span class="lanLabel">原始语言：Macroscopic；台灣：巨觀；大陆：宏观；</span></b> 当前用字模式下显示为→<b>宏观</b></li><li><b><span class="lanLabel">原始语言：Nuclear fission；台灣：核分裂；大陆：核裂变；</span></b> 当前用字模式下显示为→<b>核裂变</b></li><li><b><span class="lanLabel">原始语言：Nuclear fusion；台灣：核融合；大陆：核聚变；香港：核聚變；</span></b> 当前用字模式下显示为→<b>核聚变</b></li><li><b><span class="lanLabel">原始语言：Neutrino；台灣：微中子；大陆：中微子；</span></b> 当前用字模式下显示为→<b>中微子</b></li><li><b><span class="lanLabel">原始语言：Plasma；台灣：電漿；大陆：等离子；香港：等離子；</span></b> 当前用字模式下显示为→<b>等离子</b></li><li><b><span class="lanLabel">原始语言：Plasma state；台灣：電漿態；大陆：等离子态；香港：等離子態；</span></b> 当前用字模式下显示为→<b>等离子态</b></li><li><b><span class="lanLabel">原始语言：Probability；台灣：機率；大陆：概率；</span></b> 当前用字模式下显示为→<b>概率</b></li><li><b><span class="lanLabel">原始语言：Proper time；台灣：原時；大陆：固有时；</span></b> 当前用字模式下显示为→<b>固有时</b></li><li><b><span class="lanLabel">原始语言：Quantum gravity；台灣：量子重力；大陆：量子引力；</span></b> 当前用字模式下显示为→<b>量子引力</b></li><li><b><span class="lanLabel">原始语言：Rayleigh criterion；台灣：瑞利準則；大陆：瑞利判据；</span></b> 当前用字模式下显示为→<b>瑞利判据</b></li><li><b><span class="lanLabel">原始语言：Redundancy；台灣：冗餘；大陆：冗余；</span></b> 当前用字模式下显示为→<b>冗余</b></li><li><b><span class="lanLabel">原始语言：Scalar；台灣：純量；大陆：标量；</span></b> 当前用字模式下显示为→<b>标量</b></li><li><b><span class="lanLabel">原始语言：Tesla；台灣：特斯拉；大陆：特斯拉；香港：忒斯拉；</span></b> 当前用字模式下显示为→<b>特斯拉</b></li><li><b><span class="lanLabel">原始语言：Turbulence；台灣：亂流；大陆：湍流；</span></b> 当前用字模式下显示为→<b>湍流</b></li><li><b><span class="lanLabel">原始语言：Vector；台灣：向量；大陆：矢量；</span></b> 当前用字模式下显示为→<b>矢量</b></li><li><b><span class="lanLabel">原始语言：Viscosity；台灣：黏性；大陆：粘性；</span></b> 当前用字模式下显示为→<b>粘性</b></li><li><b><span class="lanLabel">原始语言：Viscoelasticity；台灣：黏彈性；大陆：粘弹性；</span></b> 当前用字模式下显示为→<b>粘弹性</b></li></ol>
+<p>以下為本條目單獨的全文轉換，請從本頁面進行編輯：</p>
+<ol><li><b>简体：开普勒；繁體：開普勒；台灣：克卜勒；</b> 当前用字模式下显示为→<b>开普勒</b></li></ol>
+</div>
+<div class="NavFrame collapsed" style="border: medium none ; margin: 0pt; padding: 0pt; background-color: transparent;">
+<div class="NavHead uncollapse toggleHotspot" style="font-weight: normal; height: 1.5em; text-align: left; background-color: rgb(77, 77, 77); color: rgb(255, 255, 255); cursor: pointer;"><span style="display: inline;" class="NavToggle"><span class="toggleShow">顯示↓</span><span style="display: none;" class="toggleHide">關閉↑</span></span><a href="http://zh.wikipedia.org/wiki/Help:%E4%B8%AD%E6%96%87%E7%BB%B4%E5%9F%BA%E7%99%BE%E7%A7%91%E7%9A%84%E7%B9%81%E7%AE%80%E3%80%81%E5%9C%B0%E5%8C%BA%E8%AF%8D%E5%A4%84%E7%90%86" title="Help:中文维基百科的繁简、地区词处理"><span style="color: rgb(51, 51, 51); font-weight: bold;">字詞轉換</span></a>说明</div>
+<div style="display: none;" class="NavContent toggleHide">
+<p>字詞轉換是中文维基的一項自動轉換，目的是通過计算机程序自動消除繁简、地区词等不同<b>用字模式</b>的差異，以達到閱讀方便。字詞轉換包括全局轉換和手動轉換，本說明所使用的标题转换和全文转换技術，都屬於手動轉換。</p>
+</div>
+</div>
+</div>
+</div>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 402px;"><a href="http://zh.wikipedia.org/wiki/File:Kepler_laws_diagram.svg" class="image" title="图示遵守开普勒行星运动定律的两个行星轨道与。 (1)  第一个行星的椭圆轨道焦点是  与  ，第二个行星的椭圆轨道焦点是  与  。太阳的位置是在点  。 (2) A1 与 A2 是两个面积相等的阴影区域。太陽与第一个行星的連線，扫过这两个阴影区域，所需的時間相等。(3) 各个行星绕太阳公转周期的比率为 ；这里， 与  分别为第一个行星与第二个行星的半长轴长度。"><img alt="" src="http://upload.wikimedia.org/wikipedia/commons/thumb/9/98/Kepler_laws_diagram.svg/400px-Kepler_laws_diagram.svg.png" class="thumbimage" width="400" border="0" height="343"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="http://zh.wikipedia.org/wiki/File:Kepler_laws_diagram.svg" class="internal" title="放大"><img src="http://zh.wikipedia.org/skins-1.5/common/images/magnify-clip.png" alt="" width="15" height="11"></a></div>
+图示遵守开普勒行星运动定律的两个行星轨道与。 (1) 第一个行星的椭圆轨道焦点是 <img class="tex" alt="f1\,\!" src="http://upload.wikimedia.org/math/3/c/0/3c02acb03a65437e129aa0abb3f566ac.png"> 与 <img class="tex" alt="f2\,\!" src="http://upload.wikimedia.org/math/0/e/9/0e98ddf77c32361fa6167085c49f64fe.png"> ，第二个行星的椭圆轨道焦点是 <img class="tex" alt="f1\,\!" src="http://upload.wikimedia.org/math/3/c/0/3c02acb03a65437e129aa0abb3f566ac.png"> 与 <img class="tex" alt="f3\,\!" src="http://upload.wikimedia.org/math/a/9/6/a96e179fb1565a994445ed4bbe069550.png"> 。太阳的位置是在点 <img class="tex" alt="f1\,\!" src="http://upload.wikimedia.org/math/3/c/0/3c02acb03a65437e129aa0abb3f566ac.png"> 。 (2) A1 与 A2 是两个面积相等的阴影区域。太陽与第一个行星的連線，扫过这两个阴影区域，所需的時間相等。(3) 各个行星绕太阳公转周期的比率为<img class="tex" alt="a1^{3/2}:a2^{3/2}\,\!" src="http://upload.wikimedia.org/math/9/1/1/911f22f5f8c30b0e69348a784bcca68b.png"> ；这里，<img class="tex" alt="a1\,\!" src="http://upload.wikimedia.org/math/d/8/f/d8f703669627199b738920805dc54f03.png"> 与 <img class="tex" alt="a2\,\!" src="http://upload.wikimedia.org/math/4/8/2/48254d1d32c32b492ea25bf6ba9ebf89.png"> 分别为第一个行星与第二个行星的半长轴长度。</div>
+</div>
+</div>
+<p><b>开普勒定律</b>是<a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92" title="开普勒" class="mw-redirect">开普勒</a>发现的关于<a href="http://zh.wikipedia.org/wiki/%E8%A1%8C%E6%98%9F" title="行星">行星</a>运动的<a href="http://zh.wikipedia.org/wiki/%E5%AE%9A%E5%BE%8B" title="定律">定律</a>。他於<a href="http://zh.wikipedia.org/wiki/1609%E5%B9%B4" title="1609年">1609年</a>在他出版的《<b>新天文学</b>》上发表了关于行星运动的两条定律，又於<a href="http://zh.wikipedia.org/wiki/1618%E5%B9%B4" title="1618年">1618年</a>，发现了第三条定律。</p>
+<p>开普勒很幸运地能够得到，著名的丹麦天文学家<a href="http://zh.wikipedia.org/wiki/%E7%AC%AC%E8%B0%B7%C2%B7%E5%B8%83%E6%8B%89%E8%B5%AB" title="第谷·布拉赫">第谷·布拉赫</a>所观察与收集的，非常精确的天文資料。大约于 1605 年，根据布拉赫的行星位置資料，开普勒发现行星的移动遵守三条相当简单的定律。</p>
+<p>开普勒的定律给予<a href="http://zh.wikipedia.org/wiki/%E4%BA%9A%E9%87%8C%E5%A3%AB%E5%A4%9A%E5%BE%B7" title="亚里士多德">亚里士多德</a>派与<a href="http://zh.wikipedia.org/wiki/%E6%89%98%E5%8B%92%E5%AF%86" title="托勒密">托勒密</a>派在天文学与物理学上极大的挑战。他主张<a href="http://zh.wikipedia.org/wiki/%E5%9C%B0%E7%90%83" title="地球">地球</a>是不斷地移动的；<a href="http://zh.wikipedia.org/wiki/%E8%A1%8C%E6%98%9F%E8%BD%A8%E9%81%93" title="行星轨道" class="mw-redirect">行星轨道</a>不是<a href="http://zh.wikipedia.org/w/index.php?title=%E5%91%A8%E8%BD%AC%E5%9C%86&amp;action=edit&amp;redlink=1" class="new" title="周转圆">周转圆</a> (<span xml:lang="en" lang="en">epicycle</span> 的，而是<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86" title="椭圆">椭圆</a>形的；行星<a href="http://zh.wikipedia.org/wiki/%E5%85%AC%E8%BD%AC" title="公转">公转</a>的速度不等恒。这些论点，大大地动摇了当时的天文学与物理学。经过了几乎一世纪披星戴月，废寝忘食的研究，物理学家终于能够用物理理论解释其中的道理。<a href="http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF" title="牛顿">牛顿</a>利用他的<a href="http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B" title="牛顿第二定律" class="mw-redirect">第二定律</a>和<a href="http://zh.wikipedia.org/wiki/%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E5%AE%9A%E5%BE%8B" title="万有引力定律" class="mw-redirect">万有引力定律</a>，在数学上严格地証明开普勒定律，也让人们了解其中的<a href="http://zh.wikipedia.org/wiki/%E7%89%A9%E7%90%86" title="物理" class="mw-redirect">物理</a>意义。</p>
+<table id="toc" class="toc" summary="目录">
+<tbody><tr>
+<td>
+<div id="toctitle">
+<h2>目录</h2>
+ <span class="toctoggle">[<a href="javascript:toggleToc()" class="internal" id="togglelink">隐藏</a>]</span></div>
+<ul><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E5.AE.9A.E5.BE.8B"><span class="tocnumber">1</span> <span class="toctext">开普勒定律</span></a>
+<ul><li class="toclevel-2"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.80.E5.AE.9A.E5.BE.8B"><span class="tocnumber">1.1</span> <span class="toctext">开普勒第一定律</span></a></li><li class="toclevel-2"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.BA.8C.E5.AE.9A.E5.BE.8B"><span class="tocnumber">1.2</span> <span class="toctext">开普勒第二定律</span></a></li><li class="toclevel-2"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B"><span class="tocnumber">1.3</span> <span class="toctext">开普勒第三定律</span></a></li></ul>
+</li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E6.95.B0.E5.AD.A6.E5.AF.BC.E5.BC.95"><span class="tocnumber">2</span> <span class="toctext">数学导引</span></a>
+<ul><li class="toclevel-2"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.BA.8C.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95"><span class="tocnumber">2.1</span> <span class="toctext">开普勒第二定律导引</span></a></li><li class="toclevel-2"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.80.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95"><span class="tocnumber">2.2</span> <span class="toctext">开普勒第一定律导引</span></a></li><li class="toclevel-2"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95"><span class="tocnumber">2.3</span> <span class="toctext">开普勒第三定律导引</span></a></li></ul>
+</li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B#.E5.8F.83.E8.A6.8B"><span class="tocnumber">3</span> <span class="toctext">參見</span></a></li></ul>
+</td>
+</tr>
+</tbody></table>
+<script type="text/javascript">
+//<![CDATA[
+ if (window.showTocToggle) { var tocShowText = "显示"; var tocHideText = "隐藏"; showTocToggle(); } 
+//]]&gt;
+</script>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E5.AE.9A.E5.BE.8B" id=".E5.BC.80.E6.99.AE.E5.8B.92.E5.AE.9A.E5.BE.8B"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=1" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒定律</span></h2>
+<p><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92" title="开普勒" class="mw-redirect">开普勒</a>的三条行星运动定律改变了整个<a href="http://zh.wikipedia.org/wiki/%E5%A4%A9%E6%96%87%E5%AD%A6" title="天文学">天文学</a>，彻底摧毁了<a href="http://zh.wikipedia.org/wiki/%E6%89%98%E5%8B%92%E5%AF%86" title="托勒密">托勒密</a>复杂的宇宙体系，完善并简化了<a href="http://zh.wikipedia.org/wiki/%E5%93%A5%E7%99%BD%E5%B0%BC" title="哥白尼" class="mw-redirect">哥白尼</a>的<a href="http://zh.wikipedia.org/wiki/%E6%97%A5%E5%BF%83%E8%AF%B4" title="日心说">日心说</a>。</p>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.80.E5.AE.9A.E5.BE.8B" id=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.80.E5.AE.9A.E5.BE.8B"></a></p>
+<h3><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=2" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒第一定律</span></h3>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 370px;"><a href="http://zh.wikipedia.org/wiki/File:Kpl-dl1.gif" class="image" title="开普勒第一定律"><img alt="" src="http://upload.wikimedia.org/wikipedia/zh/b/b8/Kpl-dl1.gif" class="thumbimage" width="368" border="0" height="120"></a>
+<div class="thumbcaption">开普勒第一定律</div>
+</div>
+</div>
+<p><b>开普勒第一定律</b>，也称<b>椭圆定律</b>：每一个<a href="http://zh.wikipedia.org/wiki/%E8%A1%8C%E6%98%9F" title="行星">行星</a>都沿各自的<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86" title="椭圆">椭圆</a>轨道环绕<a href="http://zh.wikipedia.org/wiki/%E5%A4%AA%E9%98%B3" title="太阳">太阳</a>，而太阳则处在椭圆的一个<a href="http://zh.wikipedia.org/wiki/%E7%84%A6%E9%BB%9E" title="焦點">焦点</a>中。</p>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.BA.8C.E5.AE.9A.E5.BE.8B" id=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.BA.8C.E5.AE.9A.E5.BE.8B"></a></p>
+<h3><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=3" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒第二定律</span></h3>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 354px;"><a href="http://zh.wikipedia.org/wiki/File:Kpl-dl2.gif" class="image" title="开普勒第二定律"><img alt="" src="http://upload.wikimedia.org/wikipedia/zh/1/18/Kpl-dl2.gif" class="thumbimage" width="352" border="0" height="200"></a>
+<div class="thumbcaption">开普勒第二定律</div>
+</div>
+</div>
+<p><b>开普勒第二定律</b>，也称<b>面积定律</b>：在相等<a href="http://zh.wikipedia.org/wiki/%E6%97%B6%E9%97%B4" title="时间">时间</a>内，<a href="http://zh.wikipedia.org/wiki/%E5%A4%AA%E9%98%B3" title="太阳">太阳</a>和<a href="http://zh.wikipedia.org/wiki/%E8%BF%90%E5%8A%A8" title="运动" class="mw-redirect">运动</a>着的<a href="http://zh.wikipedia.org/wiki/%E8%A1%8C%E6%98%9F" title="行星">行星</a>的连线所扫过的<a href="http://zh.wikipedia.org/wiki/%E9%9D%A2%E7%A7%AF" title="面积">面积</a>都是相等的。</p>
+<p>这一定律实际揭示了行星绕太阳公转的<a href="http://zh.wikipedia.org/wiki/%E8%A7%92%E5%8A%A8%E9%87%8F" title="角动量">角动量</a>守恒。用公式表示为</p>
+<dl><dd><img class="tex" alt="S_{AB}=S_{CD}=S_{EK}\,\!" src="http://upload.wikimedia.org/math/8/3/5/8354e2d9825e81d891abab67f115f03d.png"> 。</dd></dl>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B" id=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B"></a></p>
+<h3><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=4" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒第三定律</span></h3>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 162px;"><a href="http://zh.wikipedia.org/wiki/File:Kpl-dl3.jpg" class="image" title="开普勒第三定律"><img alt="" src="http://upload.wikimedia.org/wikipedia/zh/3/32/Kpl-dl3.jpg" class="thumbimage" width="160" border="0" height="82"></a>
+<div class="thumbcaption">开普勒第三定律</div>
+</div>
+</div>
+<p><b>开普勒第三定律</b>，也称<b>调和定律</b>：各个<a href="http://zh.wikipedia.org/wiki/%E8%A1%8C%E6%98%9F" title="行星">行星</a>绕<a href="http://zh.wikipedia.org/wiki/%E5%A4%AA%E9%98%B3" title="太阳">太阳</a><a href="http://zh.wikipedia.org/wiki/%E5%85%AC%E8%BD%AC" title="公转">公转</a><a href="http://zh.wikipedia.org/wiki/%E5%91%A8%E6%9C%9F" title="周期" class="mw-redirect">周期</a>的<a href="http://zh.wikipedia.org/wiki/%E5%B9%B3%E6%96%B9" title="平方">平方</a>和它们的<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86" title="椭圆">椭圆</a><a href="http://zh.wikipedia.org/wiki/%E8%BD%A8%E9%81%93" title="轨道" class="mw-redirect">轨道</a>的<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86" title="椭圆">半长轴</a>的<a href="http://zh.wikipedia.org/wiki/%E7%AB%8B%E6%96%B9" title="立方">立方</a>成<a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E6%AF%94" title="正比" class="mw-redirect">正比</a>。</p>
+<p>由这一定律不难导出：行星与太阳之间的引力与半径的平方成反比。这是<a href="http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF" title="牛顿">牛顿</a>的<a href="http://zh.wikipedia.org/wiki/%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E5%AE%9A%E5%BE%8B" title="万有引力定律" class="mw-redirect">万有引力定律</a>的一个重要基础。</p>
+<p>用公式表示为</p>
+<dl><dd><img class="tex" alt="\frac{a^3}{\tau^2}=K\,\!" src="http://upload.wikimedia.org/math/2/a/0/2a077d3afa6ed07d2e98a3401cb21cd5.png"> ；</dd></dl>
+<p>这里，<img class="tex" alt="a\,\!" src="http://upload.wikimedia.org/math/1/2/d/12de7673992b1735e29cdd211851fa05.png"> 是行星公转轨道半长轴，<img class="tex" alt="\tau\,\!" src="http://upload.wikimedia.org/math/1/8/6/18641f3cca77893e1c73938c9d01b1e5.png"> 是行星公转周期，<img class="tex" alt="K\,\!" src="http://upload.wikimedia.org/math/0/7/a/07ab8bd2ced78ca04d507625c0c5c584.png"> 是常数。</p>
+<p><a name=".E6.95.B0.E5.AD.A6.E5.AF.BC.E5.BC.95" id=".E6.95.B0.E5.AD.A6.E5.AF.BC.E5.BC.95"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=5" title="编辑段落">编辑</a>]</span> <span class="mw-headline">数学导引</span></h2>
+<p>开普勒定律是关于行星环绕太阳的运动，而牛顿定律更广义的是关于几个粒子因万有引力相互吸引而产生的运动。在只有两个粒子，其中一个粒子超轻于另外
+一个粒子，这些特别状况下，轻的粒子会环绕重的粒子移动，就好似行星根据开普勒定律环绕太阳的移动。然而牛顿定律还容许其它解答，行星轨道可以呈<a href="http://zh.wikipedia.org/wiki/%E6%8A%9B%E7%89%A9%E7%BA%BF" title="抛物线">抛物线</a>运动或<a href="http://zh.wikipedia.org/wiki/%E5%8F%8C%E6%9B%B2%E7%BA%BF" title="双曲线">双曲线</a>运动。这是开普勒定律无法预测到的。在一个粒子并不超轻于另外一个粒子的状况下，依照广义<a href="http://zh.wikipedia.org/wiki/%E4%BA%8C%E9%AB%94%E5%95%8F%E9%A1%8C" title="二體問題">二体问题</a>的解答，每一个粒子环绕它们的共同<a href="http://zh.wikipedia.org/wiki/%E8%B4%A8%E5%BF%83" title="质心">质心</a>移动。这也是开普勒定律无法预测到的。</p>
+<p>开普勒定律，或者是用几何语言，或者是用方程式，将行星的坐标及时间跟轨道参数相连结。牛顿第二定律是一个微分方程式。开普勒定律的导引涉及解微分方程式的艺术。我们会先导引开普勒第二定律，因为开普勒第一定律的导引必须建立于开普勒第二定律。</p>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.BA.8C.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95" id=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.BA.8C.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95"></a></p>
+<h3><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=6" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒第二定律导引</span></h3>
+<p><a href="http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E4%B8%87%E6%9C%89%E5%BC%95%E5%8A%9B%E5%AE%9A%E5%BE%8B" title="牛顿万有引力定律">牛顿万有引力定律</a>阐明：任意两个粒子由通过连线方向的力相互吸引。该引力的的大小与它们的<a href="http://zh.wikipedia.org/wiki/%E8%B4%A8%E9%87%8F" title="质量">质量</a>乘积成正比，与它们距离的平方成反比。由于太阳超重于行星，我们可以假设太阳是固定的。用方程式表示，</p>
+<dl><dd><img class="tex" alt=" \mathbf{F}= - G \frac{mM}{r^2}\ \hat{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/4/3/8/438c032c15b2fd1a57037c987d4b7e78.png"> ；</dd></dl>
+<p>这里，<img class="tex" alt="\mathbf{F}\,\!" src="http://upload.wikimedia.org/math/f/d/0/fd0c5227e8bf90f64a2396463f14fa9b.png"> 是太阳作用於行星的万有引力、<img class="tex" alt="m\,\!" src="http://upload.wikimedia.org/math/d/4/f/d4f5579278053dcc711fa0e6e45244fa.png"> 是行星的质量、<img class="tex" alt="M\,\!" src="http://upload.wikimedia.org/math/3/b/6/3b652357e59da356dbb6f2105020406e.png"> 是太阳的质量、<img class="tex" alt="\mathbf{r}\,\!" src="http://upload.wikimedia.org/math/5/1/7/517713571d01a89e2826c50436ce63de.png"> 是行星相对于太阳的<a href="http://zh.wikipedia.org/wiki/%E4%BD%8D%E7%A7%BB" title="位移">位移</a>向量、<img class="tex" alt="\hat{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/c/0/7/c076fc292cb7f27657ef229bf1e0414f.png"> 是 <img class="tex" alt="\mathbf{r}\,\!" src="http://upload.wikimedia.org/math/5/1/7/517713571d01a89e2826c50436ce63de.png"> 的<a href="http://zh.wikipedia.org/wiki/%E5%8D%95%E4%BD%8D%E5%90%91%E9%87%8F" title="单位向量">单位向量</a>。</p>
+<p><a href="http://zh.wikipedia.org/wiki/%E7%89%9B%E9%A1%BF%E7%AC%AC%E4%BA%8C%E5%AE%9A%E5%BE%8B" title="牛顿第二定律" class="mw-redirect">牛顿第二定律</a>声明：物體受力後所产生的<a href="http://zh.wikipedia.org/wiki/%E5%8A%A0%E9%80%9F%E5%BA%A6" title="加速度">加速度</a> <img class="tex" alt="\ddot{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/2/0/5/205c91eacbd12976c5f3ad8a3d306336.png"> ，和其所受的淨力 <img class="tex" alt="\mathbf{F}\,\!" src="http://upload.wikimedia.org/math/f/d/0/fd0c5227e8bf90f64a2396463f14fa9b.png"> 成正比，和其質量 <img class="tex" alt="m\,\!" src="http://upload.wikimedia.org/math/d/4/f/d4f5579278053dcc711fa0e6e45244fa.png"> 成反比。用方程式表示，</p>
+<dl><dd><img class="tex" alt="\mathbf{F}=m\ddot{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/c/1/8/c18f6bb7ab8470406f8a5420554b3f87.png"> 。</dd></dl>
+<p>合并这两个方程式，</p>
+<dl><dd><img class="tex" alt="\ddot{\mathbf{r}}= - G \frac{M}{r^2}\ \hat{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/e/b/9/eb97edf1997bbb062a5c480939a37665.png"> 。 <span style="position: absolute; right: 15%;">(1)</span></dd></dl>
+<p>思考位置向量 <img class="tex" alt="\mathbf{r}= r \hat{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/f/a/4/fa4975f86d00cba6f75a6879af00d1cb.png"> ，随时间 <img class="tex" alt="t\,\!" src="http://upload.wikimedia.org/math/d/8/8/d88b8f97ff8ee3cf14cd03de68312c3e.png"> 微分一次可得到速度向量，再微分一次则可得到加速度向量：</p>
+<dl><dd><img class="tex" alt="\dot\mathbf{r} =\dot{r}\hat\mathbf{r} + r \dot{\hat\mathbf{r}}
+=\dot{r}\hat\mathbf{r} +r\dot{\theta}\hat{\boldsymbol{\theta}}\,\!" src="http://upload.wikimedia.org/math/8/8/e/88e170ecfc40a0d3be716eb136a4570c.png"> ，</dd><dd><img class="tex" alt="\ddot\mathbf{r} 
+= (\ddot{r}\hat{\mathbf{r}} +\dot{r}\dot\hat{\mathbf{r}} )
++ (\dot{r}\dot{\theta}\hat{\boldsymbol{\theta}} + r\ddot{\theta}\hat{\boldsymbol{\theta}}
++ r\dot{\theta} \dot\hat{\boldsymbol{\theta}})
+= (\ddot{r} - r\dot{\theta}^2) \hat{\mathbf{r}} + (r\ddot{\theta} + 2\dot{r}\dot{\theta}) \hat{\boldsymbol{\theta}}\,\!" src="http://upload.wikimedia.org/math/5/8/6/58645e0d68edada141e483976bd3a729.png"> 。<span style="position: absolute; right: 15%;">(2)</span></dd></dl>
+<p>在这里，我们用到了单位向量微分方程式：</p>
+<dl><dd><img class="tex" alt=" \dot\hat{\mathbf{r}} = \dot{\theta}  \hat{\boldsymbol{\theta}}\,\!" src="http://upload.wikimedia.org/math/e/7/3/e73feed28803e6b0fdf88fc397662847.png"> ，</dd><dd><img class="tex" alt=" \dot\hat{\boldsymbol{\theta}} = - \dot{\theta} \hat{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/e/5/8/e5801c91de4d92dd1ab91ab4bb84c8ee.png"> 。</dd></dl>
+<p>合并方程式 (1) 与 (2) ，可以得到向量运动方程式：</p>
+<dl><dd><img class="tex" alt=" (\ddot{r} - r\dot{\theta}^2) \hat{\mathbf{r}} + (r\ddot{\theta} + 2\dot{r} \dot{\theta}) \hat{\boldsymbol{\theta}}=  - \frac{GM}{r^2}\hat{\mathbf{r}}\,\!" src="http://upload.wikimedia.org/math/6/3/6/6368dff7a63771eb1d3fbb29ca7facd5.png"></dd></dl>
+<p>取各个分量，我们得到两个<a href="http://zh.wikipedia.org/wiki/%E5%B8%B8%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B" title="常微分方程">常微分方程式</a>，一个是关于径向加速度，另一个是关于切向加速度：</p>
+<dl><dd><img class="tex" alt="\ddot{r} - r\dot{\theta}^2 = - \frac{GM}{r^2}\,\!" src="http://upload.wikimedia.org/math/4/e/0/4e07949b8cd2147b40af9bb7a8ac2ac9.png"> ，<span style="position: absolute; right: 15%;">(3)</span></dd><dd><img class="tex" alt="r\ddot{\theta} + 2\dot{r}\dot{\theta} = 0\,\!" src="http://upload.wikimedia.org/math/c/e/1/ce15af072d2ea7d91a78da1c1b7af879.png"> 。<span style="position: absolute; right: 15%;">(4)</span></dd></dl>
+<p>导引开普勒第二定律只需切向加速度方程式。试想行星的<a href="http://zh.wikipedia.org/wiki/%E8%A7%92%E5%8A%A8%E9%87%8F" title="角动量">角动量</a> <img class="tex" alt="\ell=m r^2\dot{\theta}\,\!" src="http://upload.wikimedia.org/math/4/4/7/4473e5abb0d322bff1adb577f8944b35.png"> 。由于行星的质量是常数，角动量随时间的导数为</p>
+<dl><dd><img class="tex" alt="\dot{\ell}=mr (2\dot{r}\dot{\theta}+r\ddot{\theta})=0\,\!" src="http://upload.wikimedia.org/math/a/f/2/af29c720a5fd505f67dae4938fd15f47.png"> 。</dd></dl>
+<p>角动量 <img class="tex" alt="\ell\,\!" src="http://upload.wikimedia.org/math/d/3/3/d33634677891d2e31b310757c9488a63.png"> 也是一个<a href="http://zh.wikipedia.org/wiki/%E8%BF%90%E5%8A%A8%E5%B8%B8%E6%95%B0" title="运动常数" class="mw-redirect">运动常数</a>，即使距离 <img class="tex" alt="r\,\!" src="http://upload.wikimedia.org/math/c/4/f/c4f4c3516ae8626abc95626b5686a2b1.png"> 与角速度 <img class="tex" alt="\dot{\theta}\,\!" src="http://upload.wikimedia.org/math/5/0/c/50c6c555aa066a0637f8ece898a3fe55.png"> 都可能会随时间变化。</p>
+<p>从时间 <img class="tex" alt="t_1\,\!" src="http://upload.wikimedia.org/math/1/6/f/16f84bf5b78da148130d6787b77198d8.png"> 到时间 <img class="tex" alt="t_2\,\!" src="http://upload.wikimedia.org/math/6/d/7/6d701870fd1ef2115372e6746a13afba.png"> 扫过的区域 <img class="tex" alt="\Delta A\,\!" src="http://upload.wikimedia.org/math/f/3/a/f3a4f1917a89504ee535be5374daac21.png"> ，</p>
+<dl><dd><img class="tex" alt="\Delta A=\int_{t_1}^{t_2}\frac{1}{2}\cdot r\cdot r\dot \theta\cdot dt=\int_{t_1}^{t_2}\frac{\ell}{2m}dt=\frac{\ell}{2m}\cdot(t_2-t_1) \,\!" src="http://upload.wikimedia.org/math/4/8/9/4896ff22bae668ee1c9282063c29a6b1.png"> 。</dd></dl>
+<p>行星太阳连线扫过的区域面积相依于间隔时间 <img class="tex" alt="t_2 - t_1\,\!" src="http://upload.wikimedia.org/math/c/e/d/cedc112818b52bfb18c3d76bcfe34bef.png"> 。所以，开普勒第二定律是正确的。</p>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.80.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95" id=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.80.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95"></a></p>
+<h3><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=7" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒第一定律导引</span></h3>
+<p>设定 <img class="tex" alt="u =\frac{1}{r}\,\!" src="http://upload.wikimedia.org/math/3/8/d/38da63720c63f0a96a490dcf30480bf5.png"> 。这样，角速度是</p>
+<dl><dd><img class="tex" alt="\dot{\theta} =\frac{\ell}{mr^2}=\frac{\ell u^2}{m}\,\!" src="http://upload.wikimedia.org/math/5/2/a/52a26d6f3c554112a654062423cdfc67.png"> 。</dd></dl>
+<p>随时间微分与随角度微分的关系为</p>
+<dl><dd><img class="tex" alt="\frac{d}{dt}=\dot{\theta}\frac{d}{d\theta}=\frac{\ell u^2}{m} \frac{d}{d\theta}\,\!" src="http://upload.wikimedia.org/math/c/c/5/cc55abd56c9fd24688d95cda8a4a1d0f.png"> 。</dd></dl>
+<p>随时间微分徑向距離 <img class="tex" alt="r=\frac{1}{u}\,\!" src="http://upload.wikimedia.org/math/6/d/1/6d19f623467c82b2866f7675d1f2846d.png"> ：</p>
+<dl><dd><img class="tex" alt="\dot{r}=\frac{\ell u^2}{m} \frac{d}{d\theta}\frac{1}{u} = - \frac{\ell u^2}{m}\frac{1}{u^2}\frac{du}{d\theta}= - \frac{\ell }{m}\frac{du}{d\theta} \,\!" src="http://upload.wikimedia.org/math/d/4/3/d4303753830c8a96ee2562747c881c4f.png"> 。</dd></dl>
+<p>再微分一次：</p>
+<dl><dd><img class="tex" alt="\ddot{r} =\frac{\ell u^2}{m} \frac{d\dot{r}}{d\theta}=\frac{\ell u^2}{m}  \frac{d}{d\theta} ( - \frac{\ell}{m}\frac{du}{d\theta})=  - \frac{\ell^2 u^2}{m^2}\frac{d^2 u}{d\theta^2}\,\!" src="http://upload.wikimedia.org/math/2/9/2/292d93121623859c9693466557679306.png"> 。</dd></dl>
+<p>代入径向运动方程式 (3) ，<img class="tex" alt="\ddot{r} - r\dot{\theta}^2 = - \frac{GM}{r^2}\,\!" src="http://upload.wikimedia.org/math/4/e/0/4e07949b8cd2147b40af9bb7a8ac2ac9.png"> ，</p>
+<dl><dd><img class="tex" alt=" - \frac{\ell^2 u^2}{m^2}\frac{d^2 u}{d\theta^2} - \frac{\ell^2 u^3}{m^2} = - GMu^2\,\!" src="http://upload.wikimedia.org/math/8/1/0/810a001040e072b17c92bc374624fdc1.png"> 。</dd></dl>
+<p>将此方程式除以 <img class="tex" alt=" - \frac{\ell^2 u^2}{m^2}\,\!" src="http://upload.wikimedia.org/math/c/6/0/c60cb2de6fab3831835334fa25bcc420.png"> ，则可得到一个简单的<a href="http://zh.wikipedia.org/wiki/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B#.E5.B8.B8.E4.BF.82.E6.95.B0.E9.9D.9E.E9.BD.90.E6.AC.A1.E7.BA.BF.E6.80.A7.E5.85.A8.E5.BE.AE.E5.88.86.E6.96.B9.E7.A8.8B" title="微分方程">常係数非齐次线性全微分方程式</a>来描述行星轨道：</p>
+<dl><dd><img class="tex" alt="\frac{d^2u}{d\theta^2} + u = \frac{GMm^2}{\ell^2}\,\!" src="http://upload.wikimedia.org/math/b/6/c/b6c660cebb8ae0cbac00d786baf52182.png"> 。</dd></dl>
+<p>特征方程式为</p>
+<dl><dd><img class="tex" alt="u=\frac{GMm^2}{\ell^2}\,\!" src="http://upload.wikimedia.org/math/9/9/4/994b264b04a6a2dc74048251b7d0e62a.png"> 。</dd></dl>
+<p>求解剩馀的<a href="http://zh.wikipedia.org/wiki/%E5%BE%AE%E5%88%86%E6%96%B9%E7%A8%8B#.E5.B8.B8.E4.BF.82.E6.95.B0.E9.BD.90.E6.AC.A1.E7.BA.BF.E6.80.A7.E5.85.A8.E5.BE.AE.E5.88.86.E6.96.B9.E7.A8.8B" title="微分方程">常係数齐次线性全微分方程式</a>，</p>
+<dl><dd><img class="tex" alt="\frac{d^2u}{d\theta^2} + u = 0\,\!" src="http://upload.wikimedia.org/math/c/4/6/c469a2af1a11ccb29b3fe66ee7fd66b8.png"> 。</dd></dl>
+<p>其特解方程式为</p>
+<dl><dd><img class="tex" alt="u=\epsilon\ \cos(\theta - \theta_0) \,\!" src="http://upload.wikimedia.org/math/3/3/1/3310cd7b45ee9ba9295bc4c071532d8d.png"> ；</dd></dl>
+<p>这里，<img class="tex" alt="\epsilon\,\!" src="http://upload.wikimedia.org/math/2/2/3/223a19789dba17194e2f96e9c37b87d1.png"> 与 <img class="tex" alt="\theta_0\,\!" src="http://upload.wikimedia.org/math/c/3/2/c32b0eb0d112f1d9e15ae49b4ed82968.png"> 都是任意积分常数。综合特征方程式与特解方程式，</p>
+<dl><dd><img class="tex" alt="u=\frac{GMm^2}{\ell^2}+\epsilon\ \cos(\theta-\theta_0)\,\!" src="http://upload.wikimedia.org/math/3/d/3/3d318303e985a361a652747bb939c2c3.png"> 。</dd></dl>
+<p>选择坐标轴，让 <img class="tex" alt="\theta_0=0\,\!" src="http://upload.wikimedia.org/math/6/f/5/6f512eff4b99a52ed5f4472e271f23d7.png"> 。代回 <img class="tex" alt="u=\frac{1}{r}\,\!" src="http://upload.wikimedia.org/math/3/8/d/38da63720c63f0a96a490dcf30480bf5.png"> ，</p>
+<dl><dd><img class="tex" alt="\frac{1}{r}=\frac{GMm^2}{\ell^2}+ \epsilon\ \cos{\theta}\,\!" src="http://upload.wikimedia.org/math/5/d/3/5d3d6706bddd4d7958e3312d996ba52b.png"> 。</dd></dl>
+<p>假若 <img class="tex" alt="\epsilon\ &lt;\ 1\,\!" src="http://upload.wikimedia.org/math/0/9/8/09849933affd156f690f0af97c878d58.png"> ，则 <img class="tex" alt="r\,\!" src="http://upload.wikimedia.org/math/c/4/f/c4f4c3516ae8626abc95626b5686a2b1.png"> 所描述的是椭圆轨道。所以，开普勒第一定律是正确的。</p>
+<p><a name=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95" id=".E5.BC.80.E6.99.AE.E5.8B.92.E7.AC.AC.E4.B8.89.E5.AE.9A.E5.BE.8B.E5.AF.BC.E5.BC.95"></a></p>
+<h3><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B&amp;action=edit&amp;section=8" title="编辑段落">编辑</a>]</span> <span class="mw-headline">开普勒第三定律导引</span></h3>
+<p>在建立牛顿万有引力定律的概念与数学架构上，开普勒第三定律是牛顿依据的重要线索之一。假若我们接受牛顿运动定律。试想一个虚拟行星环绕着太阳公转，行星的移动轨道恰巧呈圆形，轨道半径为 <img class="tex" alt="r\,\!" src="http://upload.wikimedia.org/math/c/4/f/c4f4c3516ae8626abc95626b5686a2b1.png"> 。那末，太阳作用于行星的万有引力为 <img class="tex" alt="F=\frac{mv^2}{r}\,\!" src="http://upload.wikimedia.org/math/6/4/1/6417054d617fda84617cda1025cbfaff.png"> 。行星移动速度为 <img class="tex" alt="v=\frac{2\pi r}{\tau}\,\!" src="http://upload.wikimedia.org/math/c/4/8/c48bb110f0c087558096016b472935bc.png"> 。依照开普勒第三定律，这速度 <img class="tex" alt="v\,\!" src="http://upload.wikimedia.org/math/7/8/e/78e5b690a2281690cf20f3ce49f2caab.png"> 与半径的平方根 <img class="tex" alt="\sqrt{r}\,\!" src="http://upload.wikimedia.org/math/5/b/e/5be0048f1851c3eed16576f7eda80b7e.png"> 成反比。所以，万有引力 <img class="tex" alt="F\propto \frac{1}{r^2}\,\!" src="http://upload.wikimedia.org/math/2/7/3/2739f569af6181f20716705d22f2b3e3.png"> 。猜想这大概是牛顿发现万有引力定律的思路，虽然我们并不能完全确定，因为我们无法在他的计算本裡，找到任何关于这方面的证据。</p>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 402px;"><a href="http://zh.wikipedia.org/wiki/File:Elipse.svg" class="image" title="行星环绕太阳（焦点 F1 ）的椭圆轨道。"><img alt="" src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Elipse.svg/400px-Elipse.svg.png" class="thumbimage" width="400" border="0" height="314"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="http://zh.wikipedia.org/wiki/File:Elipse.svg" class="internal" title="放大"><img src="http://zh.wikipedia.org/skins-1.5/common/images/magnify-clip.png" alt="" width="15" height="11"></a></div>
+行星环绕太阳（焦点 F1 ）的椭圆轨道。</div>
+</div>
+</div>
+<p>开普勒第一定律阐明，行星环绕太阳的轨道是椭圆形的。<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E9.9D.A2.E7.A7.AF.E5.92.8C.E5.91.A8.E9.95.BF" title="椭圆">椭圆</a>的面积是 <img class="tex" alt="\pi ab\,\!" src="http://upload.wikimedia.org/math/e/e/c/eec18db3c5fedb7eba42db3557880902.png"> ；这里，<img class="tex" alt="a\,\!" src="http://upload.wikimedia.org/math/1/2/d/12de7673992b1735e29cdd211851fa05.png"> 与 <img class="tex" alt="b\,\!" src="http://upload.wikimedia.org/math/6/f/1/6f1f9c73279ad1872b1fa74df9858c5c.png"> 分别为椭圆的<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86" title="椭圆">半長軸</a>与<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86" title="椭圆">半短軸</a>。在开普勒第二定律导引里，行星－太阳连线扫过区域速度 <img class="tex" alt="\frac{dA}{dt}\,\!" src="http://upload.wikimedia.org/math/6/d/0/6d089c73471d717bc74a9596a368efc7.png"> 为</p>
+<dl><dd><img class="tex" alt="\frac{dA}{dt}=\frac{\ell}{2m}\,\!" src="http://upload.wikimedia.org/math/1/6/c/16c428cad7462374ba347e846338a664.png"> 。</dd></dl>
+<p>所以，行星公转周期 <img class="tex" alt="\tau\,\!" src="http://upload.wikimedia.org/math/1/8/6/18641f3cca77893e1c73938c9d01b1e5.png"> 为</p>
+<dl><dd><img class="tex" alt="\tau=\frac{2m\pi ab}{\ell}\,\!" src="http://upload.wikimedia.org/math/b/a/8/ba804e7a79c8ad77051afad3fd03c3f0.png"> 。<span style="position: absolute; right: 60%;">(5)</span></dd></dl>
+<p>关于此行星环绕太阳，椭圆的半長軸 <img class="tex" alt="a\,\!" src="http://upload.wikimedia.org/math/1/2/d/12de7673992b1735e29cdd211851fa05.png"> ，半短軸 <img class="tex" alt="b\,\!" src="http://upload.wikimedia.org/math/6/f/1/6f1f9c73279ad1872b1fa74df9858c5c.png"> 与<b>近拱距</b> <img class="tex" alt="r_A\,\!" src="http://upload.wikimedia.org/math/5/f/4/5f46f5e142bfe528284d335bbea5ff02.png"> （<a href="http://zh.wikipedia.org/wiki/%E6%8B%B1%E9%BB%9E" title="拱點">近拱点</a> A 与引力中心之间的距离），<b>远拱距</b> <img class="tex" alt="r_B\,\!" src="http://upload.wikimedia.org/math/9/a/b/9ab236e39fa87503685f9dc004d2373d.png"> （<a href="http://zh.wikipedia.org/wiki/%E6%8B%B1%E9%BB%9E" title="拱點">远拱点</a> B 与引力中心之间的距离）的关系分别为</p>
+<dl><dd><img class="tex" alt="a=(r_A+r_B) / 2\,\!" src="http://upload.wikimedia.org/math/2/c/d/2cd9ad8e3465ae485813f183c274c87c.png"> ，<span style="position: absolute; right: 15%;">(6)</span></dd><dd><img class="tex" alt="b=\sqrt{r_A\ r_B}\,\!" src="http://upload.wikimedia.org/math/f/b/8/fb806a1eea1c006f79125ca2c5adbc8c.png"> 。<span style="position: absolute; right: 15%;">(7)</span></dd></dl>
+<p>如果想要知道半長軸与半短軸，必须先求得近拱距与远拱距。依据<a href="http://zh.wikipedia.org/wiki/%E8%83%BD%E9%87%8F%E5%AE%88%E6%81%92%E5%AE%9A%E5%BE%8B" title="能量守恒定律">能量守恒定律</a>，</p>
+<dl><dd><img class="tex" alt="E=\frac{1}{2}m\dot{r}^2+\frac{1}{2}mr^2\dot{\theta}^2 - G\frac{mM}{r}\,\!" src="http://upload.wikimedia.org/math/2/a/f/2af9367d78919c8e145c54c4979bf25b.png"> 。</dd></dl>
+<p>在近拱点 A 与远拱点 B，径向速度都等于零：</p>
+<dl><dd><img class="tex" alt="\dot{r}=0\,\!" src="http://upload.wikimedia.org/math/4/9/e/49eb9f5bb79fce3228a05c7a63a3655b.png"> 。</dd></dl>
+<p>所以，</p>
+<dl><dd><img class="tex" alt="E=\frac{1}{2}mr^2\dot{\theta}^2 - G\frac{mM}{r}= \frac{\ell^2}{2mr^2} - G\frac{mM}{r}\,\!" src="http://upload.wikimedia.org/math/6/4/1/641bfcc99e6f3de8f2775a953417701f.png"> 。</dd></dl>
+<p>稍为加以编排，可以得到 <img class="tex" alt="r\,\!" src="http://upload.wikimedia.org/math/c/4/f/c4f4c3516ae8626abc95626b5686a2b1.png"> 的一元二次方程式：</p>
+<dl><dd><img class="tex" alt="r^2+\frac{GmM}{E}r -  \frac{\ell^2}{2mE}=0\,\!" src="http://upload.wikimedia.org/math/e/f/5/ef59cf9dbf36eee497a47ff44062b419.png"> 。</dd></dl>
+<p>其兩個根分别为椭圆轨道的近拱距 <img class="tex" alt="r_A\,\!" src="http://upload.wikimedia.org/math/5/f/4/5f46f5e142bfe528284d335bbea5ff02.png"> 与远拱距 <img class="tex" alt="r_B\,\!" src="http://upload.wikimedia.org/math/9/a/b/9ab236e39fa87503685f9dc004d2373d.png"> 。</p>
+<dl><dd><img class="tex" alt="r_A=\left( - \frac{GmM}{E} - \sqrt{\left(\frac{GmM}{E}\right)^2+\frac{2\ell^2}{mE}}\right) / 2\,\!" src="http://upload.wikimedia.org/math/8/9/b/89b55e27612a596bc7f686ae769744dc.png"> ；</dd><dd><img class="tex" alt="r_B=\left( - \frac{GmM}{E} + \sqrt{\left(\frac{GmM}{E}\right)^2+\frac{2\ell^2}{mE}}\right) / 2\,\!" src="http://upload.wikimedia.org/math/9/3/7/937c1286c3393626d79eeb26cef1d32c.png"> 。</dd></dl>
+<p>代入方程式 (6) 与 (7) ，</p>
+<dl><dd><img class="tex" alt="a= - \frac{GmM}{2E}\,\!" src="http://upload.wikimedia.org/math/8/6/7/8677292ea434251e7f447785357b2cdd.png"> ，</dd><dd><img class="tex" alt="b=\frac{\ell}{\sqrt{ - 2mE}}=\frac{\ell}{m}\frac{\sqrt{a}}{\sqrt{GM}}\,\!" src="http://upload.wikimedia.org/math/3/7/3/373cc6d30b7f146f72d6d4dbde5ce9f2.png"> 。</dd></dl>
+<p>代入方程式 (5) ，周期的方程式为</p>
+<dl><dd><img class="tex" alt="\tau=\frac{2\pi a^{3/2}}{\sqrt{GM}}\,\!" src="http://upload.wikimedia.org/math/7/1/9/7197a178f998023e49c14f917567f62a.png"> 。</dd></dl>
+<p><a href="http://zh.wikipedia.org/wiki/Q.E.D." title="Q.E.D.">Q.E.D.</a></p><font color="#ff0000">补充-解析几何之椭圆</font><br><h1 id="firstHeading" class="firstHeading">椭圆</h1>
+		
+			<h3 id="siteSub">维基百科，自由的百科全书</h3>
+			
+									<div id="jump-to-nav">跳转到: <a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#column-one">导航</a>, <a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#searchInput">搜索</a></div>			<!-- start content -->
+			<div class="thumb tright">
+<div class="thumbinner" style="width: 302px;"><a href="http://zh.wikipedia.org/wiki/File:Elipse.svg" class="image" title="椭圆和它的某些数学性质。"><img alt="" src="http://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Elipse.svg/300px-Elipse.svg.png" class="thumbimage" width="300" border="0" height="235"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="http://zh.wikipedia.org/wiki/File:Elipse.svg" class="internal" title="放大"><img src="http://zh.wikipedia.org/skins-1.5/common/images/magnify-clip.png" alt="" width="15" height="11"></a></div>
+椭圆和它的某些数学性质。</div>
+</div>
+</div>
+<p>在<a href="http://zh.wikipedia.org/wiki/%E6%95%B0%E5%AD%A6" title="数学">数学</a>中，<b>椭圆</b>是平面上到两个固定点的距离之和是常数的<a href="http://zh.wikipedia.org/wiki/%E8%BD%A8%E8%BF%B9" title="轨迹">轨迹</a>。这两个固定点叫做<b>焦点</b>。</p>
+<p>经由这个定义，这样画出一个椭圆：先准备一条线，将这条线的两端各绑在一点上（这两个点就当作是椭圆的两个焦点）；取一支笔，将线绷紧，这时候两个点和笔就形成了一个三角形；然后拉着线开始作图，持续的使线绷紧，最后就可以完成一个椭圆的图形了。</p>
+<table id="toc" class="toc" summary="目录">
+<tbody><tr>
+<td>
+<div id="toctitle">
+<h2>目录</h2>
+ <span class="toctoggle">[<a href="javascript:toggleToc()" class="internal" id="togglelink">隐藏</a>]</span></div>
+<ul><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E6.A6.82.E8.BF.B0"><span class="tocnumber">1</span> <span class="toctext">概述</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E7.A6.BB.E5.BF.83.E7.8E.87"><span class="tocnumber">2</span> <span class="toctext">离心率</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E6.96.B9.E7.A8.8B"><span class="tocnumber">3</span> <span class="toctext">方程</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E5.8D.8A.E6.AD.A3.E7.84.A6.E5.BC.A6.E5.92.8C.E6.9E.81.E5.9D.90.E6.A0.87"><span class="tocnumber">4</span> <span class="toctext">半正焦弦和极坐标</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E9.9D.A2.E7.A7.AF.E5.92.8C.E5.91.A8.E9.95.BF"><span class="tocnumber">5</span> <span class="toctext">面积和周长</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E6.A0.87.E5.87.86.E6.96.B9.E7.A8.8B.E7.9A.84.E6.8E.A8.E5.AF.BC"><span class="tocnumber">6</span> <span class="toctext">标准方程的推导</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E6.A4.AD.E5.9C.86.E7.9A.84.E6.97.8B.E8.BD.AC.E5.92.8C.E5.B9.B3.E7.A7.BB"><span class="tocnumber">7</span> <span class="toctext">椭圆的旋转和平移</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E5.8F.82.E8.A7.81"><span class="tocnumber">8</span> <span class="toctext">参见</span></a></li><li class="toclevel-1"><a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86#.E5.A4.96.E9.83.A8.E9.93.BE.E6.8E.A5"><span class="tocnumber">9</span> <span class="toctext">外部链接</span></a></li></ul>
+</td>
+</tr>
+</tbody></table>
+<script type="text/javascript">
+//<![CDATA[
+ if (window.showTocToggle) { var tocShowText = "显示"; var tocHideText = "隐藏"; showTocToggle(); } 
+//]]&gt;
+</script>
+<p><a name=".E6.A6.82.E8.BF.B0" id=".E6.A6.82.E8.BF.B0"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=1" title="编辑段落">编辑</a>]</span> <span class="mw-headline">概述</span></h2>
+<p>椭圆是一种<a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E9%94%A5%E6%9B%B2%E7%BA%BF" title="圆锥曲线">圆锥曲线</a>: 如果一个平面切截一个<a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E9%94%A5" title="圆锥">圆锥</a>面，且不与它的底面相交，也不与它的底面平行，则圆锥和平面交截线是个椭圆。</p>
+<p><a href="http://zh.wikipedia.org/wiki/%E8%A7%A3%E6%9E%90%E5%87%A0%E4%BD%95" title="解析几何">在代数上说</a>，椭圆是在<a href="http://zh.wikipedia.org/wiki/%E7%AC%9B%E5%8D%A1%E5%B0%94%E5%B9%B3%E9%9D%A2" title="笛卡尔平面" class="mw-redirect">笛卡尔平面</a>上如下形式的方程所定义的<a href="http://zh.wikipedia.org/wiki/%E6%9B%B2%E7%BA%BF" title="曲线">曲线</a></p>
+<dl><dd><img class="tex" alt="A x^2 + 2B xy + C y^2 + D x + E y + F = 0 \," src="http://upload.wikimedia.org/math/e/b/5/eb5cd6ac70c44c9f09fdefb96c1048a8.png"></dd></dl>
+<p>使得 <img class="tex" alt="B^2 &lt; AC \," src="http://upload.wikimedia.org/math/9/5/8/958a381c620f3009dfc7f461fd44110b.png">，这里的系数都是实数，并存在定义在椭圆上的点对 (x, y) 的多于一个的解。</p>
+<p>穿过两焦点并终止于椭圆上的<a href="http://zh.wikipedia.org/wiki/%E7%BA%BF%E6%AE%B5" title="线段">线段</a> AB 叫做<b>长轴</b>。长轴是通过连接椭圆上的两个点所能获得的最长线段。穿过中心(两焦点的中点)垂直于长轴并且终止于椭圆的线段 CD 叫做<b>短轴</b>。<b><a href="http://zh.wikipedia.org/wiki/%E5%8D%8A%E9%95%B7%E8%BB%B8" title="半長軸">半长轴</a></b>(图中指示为 <i>a</i>)是长轴的一半: 从中心通过一个焦点到椭圆的边缘的线段。类似的，<b><a href="http://zh.wikipedia.org/wiki/%E5%8D%8A%E7%9F%AD%E8%BB%B8" title="半短軸">半短轴</a></b>(图中指示为 <i>b</i>)是短轴的一半。</p>
+<p>如果两个焦点重合，则这个椭圆是<a href="http://zh.wikipedia.org/wiki/%E5%9C%86" title="圆">圆</a>；换句话说，圆是<a href="http://zh.wikipedia.org/wiki/%E7%A6%BB%E5%BF%83%E7%8E%87" title="离心率" class="mw-redirect">离心率</a>为零的椭圆的特殊情况。</p>
+<p>中心位于<a href="http://zh.wikipedia.org/wiki/%E5%8E%9F%E9%BB%9E" title="原點">原点</a>的椭圆 <img class="tex" alt=" A x^2 + 2B xy + C y^2 = 1 \," src="http://upload.wikimedia.org/math/c/6/6/c66ca2dd95fff84c6be3f12107cb9d6c.png"> 可以被看作<a href="http://zh.wikipedia.org/wiki/%E5%8D%95%E4%BD%8D%E5%9C%86" title="单位圆">单位圆</a>在关联于<a href="http://zh.wikipedia.org/wiki/%E5%B0%8D%E7%A8%B1%E7%9F%A9%E9%99%A3" title="對稱矩陣">对称矩阵</a> <img class="tex" alt="A^\prime =\begin{bmatrix}A &amp; B\\B &amp; C\end{bmatrix} = PDP^T \," src="http://upload.wikimedia.org/math/9/8/6/98678268982e23cd48b8b55ccec8999d.png"> 的<a href="http://zh.wikipedia.org/wiki/%E7%BA%BF%E6%80%A7%E6%98%A0%E5%B0%84" title="线性映射">线性映射</a>下的图像，这里的 D 是带有 <img class="tex" alt="A^\prime" src="http://upload.wikimedia.org/math/b/a/5/ba59ad9d47a591bbcb4f6715727ef7fa.png"> 的<a href="http://zh.wikipedia.org/wiki/%E7%89%B9%E5%BE%81%E5%80%BC" title="特征值" class="mw-redirect">特征值</a>的<a href="http://zh.wikipedia.org/wiki/%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5" title="对角矩阵" class="mw-redirect">对角矩阵</a>，二者沿着主对角线都是正实数的，而 P 是拥有 <img class="tex" alt="A^\prime" src="http://upload.wikimedia.org/math/b/a/5/ba59ad9d47a591bbcb4f6715727ef7fa.png"> 的<a href="http://zh.wikipedia.org/wiki/%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F" title="特征向量" class="mw-redirect">特征向量</a>作为纵列的实数的<a href="http://zh.wikipedia.org/wiki/%E9%85%89%E7%9F%A9%E9%98%B5" title="酉矩阵">酉矩阵</a>。椭圆的长短轴分别沿着 <img class="tex" alt="A^\prime" src="http://upload.wikimedia.org/math/b/a/5/ba59ad9d47a591bbcb4f6715727ef7fa.png"> 的两个特征向量的方向，而两个与之对应的特征值分别是<b>半长轴</b>和<b>半短轴</b>的长度的平方的倒数。</p>
+<p>椭圆可以通过对一个圆的所有点的 <i>x</i> 坐标乘以一个常数而不改变 <i>y</i> 坐标来生成。</p>
+<p><a name=".E7.A6.BB.E5.BF.83.E7.8E.87" id=".E7.A6.BB.E5.BF.83.E7.8E.87"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=2" title="编辑段落">编辑</a>]</span> <span class="mw-headline">离心率</span></h2>
+<p>椭圆的形状可以用叫做椭圆的<a href="http://zh.wikipedia.org/wiki/%E7%A6%BB%E5%BF%83%E7%8E%87" title="离心率" class="mw-redirect">离心率</a>的一个数来表达，习惯上指示为 <img class="tex" alt="\varepsilon \," src="http://upload.wikimedia.org/math/c/f/d/cfdb64c3b87ac533d812eba2b0dcd6d2.png">。离心率是小于 1 大于等于 0 的正数。离心率 0 表示着两个焦点重合而这个椭圆是<a href="http://zh.wikipedia.org/wiki/%E5%9C%86" title="圆">圆</a>。</p>
+<p>对于有半长轴 <i>a</i> 和半短轴 <i>b</i> 的椭圆，离心率是</p>
+<dl><dd><img class="tex" alt="\varepsilon = \sqrt{1 - \frac{b^2}{a^2}}" src="http://upload.wikimedia.org/math/e/b/c/ebc0037f8041628f4574e7868fc51d42.png">.</dd></dl>
+<p>离心率越大，<i>a</i> 与 <i>b</i> 的<a href="http://zh.wikipedia.org/w/index.php?title=%E6%AF%94%E7%8E%87&amp;action=edit&amp;redlink=1" class="new" title="比率 (尚未撰写)">比率</a>就越大，因此椭圆被更加拉长。</p>
+<p>如果 <i>c</i> 等于从中心到任一焦点的距离，则</p>
+<dl><dd><img class="tex" alt="\varepsilon = \frac{c}{a}" src="http://upload.wikimedia.org/math/a/c/0/ac0327ffceef91c2e77c5cdb6444bc4e.png">.</dd></dl>
+<p>距离 <i>c</i> 叫做椭圆的<b>线性离心率</b>。在两个焦点间的距离是 2<i>a</i>ε。</p>
+<p><a name=".E6.96.B9.E7.A8.8B" id=".E6.96.B9.E7.A8.8B"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=3" title="编辑段落">编辑</a>]</span> <span class="mw-headline">方程</span></h2>
+<p>中心位于点 <span class="texhtml">(<i>h</i>,<i>k</i>)</span> 的主轴平行于 <i>x</i> 轴的椭圆由如下方程指定</p>
+<dl><dd><img class="tex" alt="\frac{(x-h)^{2}}{a^{2}} + \frac{(y-k)^{2}}{b^{2}} = 1 " src="http://upload.wikimedia.org/math/8/c/0/8c08f74c1f75ce10bd2a43288f596adc.png">.</dd></dl>
+<p>这个椭圆可以参数化表达为</p>
+<dl><dd><img class="tex" alt="x = h+a\,\cos t,\,\!" src="http://upload.wikimedia.org/math/0/3/0/0303b9124d53c8b22f7d3647141502ed.png"></dd><dd><img class="tex" alt="y = k+b\,\sin t\,\!" src="http://upload.wikimedia.org/math/6/0/0/600f118ec23982d69a1fcaf3bd434b8f.png"></dd></dl>
+<p>这里的 <span class="texhtml"><i>t</i></span> 可以限制于区间 <img class="tex" alt="-\pi\leq t \leq \pi\,\!" src="http://upload.wikimedia.org/math/e/4/1/e41f9628862cf38cd998b71d67795163.png">。</p>
+<p>如果 <span class="texhtml"><i>h</i> = 0</span> 且 <span class="texhtml"><i>k</i> = 0</span> (就是说，如果中心是原点(0,0))，则</p>
+<table class="prettytable" align="center">
+<tbody><tr>
+<td>椭圆方程</td>
+<td><img class="tex" alt="\frac{x^2}{a^2}+\frac{y^2}{b^2}=1(a&gt;b&gt;0)" src="http://upload.wikimedia.org/math/d/e/9/de9f560d8e3f7e70dcc1cb094aadc8de.png"></td>
+<td><img class="tex" alt="\frac{y^2}{a^2}+\frac{x^2}{b^2}=1(a&gt;b&gt;0)" src="http://upload.wikimedia.org/math/7/1/4/71499dce863ee77af9281b013e20b722.png"></td>
+</tr>
+<tr>
+<td>图像</td>
+<td>
+<div class="center">
+<div class="floatnone"><a href="http://zh.wikipedia.org/wiki/File:Ellipse_normal_1.jpg" class="image" title="Ellipse normal 1.jpg"><img alt="" src="http://upload.wikimedia.org/wikipedia/zh/c/cc/Ellipse_normal_1.jpg" width="233" border="0" height="161"></a></div>
+</div>
+</td>
+<td>
+<div class="center">
+<div class="floatnone"><a href="http://zh.wikipedia.org/wiki/File:Ellipse_normal_2.jpg" class="image" title="Ellipse normal 2.jpg"><img alt="" src="http://upload.wikimedia.org/wikipedia/zh/d/d0/Ellipse_normal_2.jpg" width="169" border="0" height="181"></a></div>
+</div>
+</td>
+</tr>
+<tr>
+<td>范围</td>
+<td><img class="tex" alt="-a\le x\le a,  -b\le y\le b" src="http://upload.wikimedia.org/math/8/1/3/81324e2cd86d066d4d78de63c7503f60.png"></td>
+<td><img class="tex" alt="-a\le y\le a,  -b\le x\le b" src="http://upload.wikimedia.org/math/b/6/f/b6f149d2b3f2be54309cf5732ea362fa.png"></td>
+</tr>
+</tbody></table>
+<div class="thumb tright">
+<div class="thumbinner" style="width: 252px;"><a href="http://zh.wikipedia.org/wiki/File:Ellipse_as_hypotrochoid.gif" class="image" title="橢圓(用紅色繪制)可以表達為内旋轮线在 R=2r 時的特殊情況。"><img alt="" src="http://upload.wikimedia.org/wikipedia/commons/5/5c/Ellipse_as_hypotrochoid.gif" class="thumbimage" width="250" border="0" height="250"></a>
+<div class="thumbcaption">
+<div class="magnify"><a href="http://zh.wikipedia.org/wiki/File:Ellipse_as_hypotrochoid.gif" class="internal" title="放大"><img src="http://zh.wikipedia.org/skins-1.5/common/images/magnify-clip.png" alt="" width="15" height="11"></a></div>
+椭圆(用红色绘制)可以表达为<a href="http://zh.wikipedia.org/wiki/%E5%86%85%E6%97%8B%E8%BD%AE%E7%BA%BF" title="内旋轮线">内旋轮线</a>在 R=2r 时的特殊情况。</div>
+</div>
+</div>
+<p>用极坐标可表达为</p>
+<dl><dd><img class="tex" alt="r = \frac{ab}{\sqrt{a^2 \sin^2 \theta + b^2 \cos^2 \theta}}=\frac{b}{\sqrt{1-\varepsilon^2 \cos^2 \theta}}" src="http://upload.wikimedia.org/math/5/9/9/599b40089f16885760cc376973756dd7.png"></dd></dl>
+<p>这里的 <img class="tex" alt="\varepsilon" src="http://upload.wikimedia.org/math/c/6/9/c691dc52cc1ad756972d4629934d37fd.png"> 是椭圆的离心率。</p>
+<p>有一个焦点在原点的椭圆的极坐标方程是</p>
+<dl><dd><img class="tex" alt="r = \frac{ a\cdot(1-\varepsilon^{2})}{1 + \varepsilon\cdot\cos\theta} " src="http://upload.wikimedia.org/math/f/3/1/f31dd50f665daa49a46bfa2ced79b1ef.png">.</dd></dl>
+<p><a name=".E5.8D.8A.E6.AD.A3.E7.84.A6.E5.BC.A6.E5.92.8C.E6.9E.81.E5.9D.90.E6.A0.87" id=".E5.8D.8A.E6.AD.A3.E7.84.A6.E5.BC.A6.E5.92.8C.E6.9E.81.E5.9D.90.E6.A0.87"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=4" title="编辑段落">编辑</a>]</span> <span class="mw-headline">半正焦弦和极坐标</span></h2>
+<p>椭圆的半<a href="http://zh.wikipedia.org/w/index.php?title=%E6%AD%A3%E7%84%A6%E5%BC%A6&amp;action=edit&amp;redlink=1" class="new" title="正焦弦 (尚未撰写)">正焦弦</a>，通常指示为 <img class="tex" alt="l\,\!" src="http://upload.wikimedia.org/math/2/4/a/24a4d5e671be5bb7026ad86a68d14220.png">)，是从椭圆的一个焦点到椭圆自身，沿着垂直主轴的直线测量的距离。它有关于 <img class="tex" alt="a\,\!" src="http://upload.wikimedia.org/math/1/2/d/12de7673992b1735e29cdd211851fa05.png"> 和 <img class="tex" alt="b\,\!" src="http://upload.wikimedia.org/math/6/f/1/6f1f9c73279ad1872b1fa74df9858c5c.png"> (椭圆的半轴)，通过公式 <img class="tex" alt="al=b^2\,\!" src="http://upload.wikimedia.org/math/c/2/5/c253f28aed15089b28190152d00dd11b.png"> 或者如果使用离心率的话 <img class="tex" alt="l=a\cdot(1-\varepsilon^2)\,\!" src="http://upload.wikimedia.org/math/e/f/2/ef23e264038958fc0d7d04f5e0d8fd64.png">。</p>
+<div class="center">
+<div class="floatnone"><a href="http://zh.wikipedia.org/wiki/File:Elps-slr.svg" class="image" title="椭圆，使用半正焦弦展示"><img alt="椭圆，使用半正焦弦展示" src="http://upload.wikimedia.org/wikipedia/commons/thumb/3/35/Elps-slr.svg/312px-Elps-slr.svg.png" width="312" border="0" height="148"></a></div>
+</div>
+<p>在<a href="http://zh.wikipedia.org/wiki/%E6%9E%81%E5%9D%90%E6%A0%87" title="极坐标" class="mw-redirect">极坐标</a>中，一个焦点在原点而另一个焦点在负 <i>x</i> 轴上的椭圆给出自方程</p>
+<dl><dd><img class="tex" alt="r\cdot(1 + \varepsilon\cdot \cos \theta) = l \,\!" src="http://upload.wikimedia.org/math/b/a/5/ba59dddbc20303834d9984d2e8edb264.png"></dd></dl>
+<p>椭圆可以被看作是圆的投影: 在与水平面有角度 φ 的平面上的圆垂直投影到水平面上给出离心率 sin&nbsp;φ 的椭圆，假定 φ 不是 90°。</p>
+<p><a name=".E9.9D.A2.E7.A7.AF.E5.92.8C.E5.91.A8.E9.95.BF" id=".E9.9D.A2.E7.A7.AF.E5.92.8C.E5.91.A8.E9.95.BF"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=5" title="编辑段落">编辑</a>]</span> <span class="mw-headline">面积和周长</span></h2>
+<p>椭圆所包围的面积是 <img class="tex" alt="\pi ab \," src="http://upload.wikimedia.org/math/c/0/c/c0c744ea34b6925ebf98767a91f8e135.png">，这里的 'a' 和 'b' 是半长轴和半短轴。在圆的情况下 <i>a</i> = <i>b</i>，表达式简化为 <i>πa</i><sup>2</sup>。</p>
+<p>椭圆的周长是 <img class="tex" alt="4 a E(\varepsilon)" src="http://upload.wikimedia.org/math/1/3/d/13d5785ac89e912a333a5505cc3c4258.png">，这里的函数 <i>E</i> 是第二类完全<a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E5%9C%86%E7%A7%AF%E5%88%86" title="椭圆积分">椭圆积分</a>。</p>
+<p>精确的<a href="http://zh.wikipedia.org/wiki/%E6%97%A0%E7%A9%B7%E7%BA%A7%E6%95%B0" title="无穷级数">无穷级数</a>为:</p>
+<dl><dd><img class="tex" alt="C = 2\pi a \left[{1 - \left({1\over 2}\right)^2\varepsilon^2 - \left({1\cdot 3\over 2\cdot 4}\right)^2{\varepsilon^4\over 3} - \left({1\cdot 3\cdot 5\over 2\cdot 4\cdot 6}\right)^2{\varepsilon^6\over5} - \dots}\right]\!\," src="http://upload.wikimedia.org/math/3/3/3/333f234c62272b2509a5cfb3071d4309.png"></dd></dl>
+<p>或:</p>
+<dl><dd><img class="tex" alt="C = 2\pi a \sum_{n=0}^\infty {\left\lbrace - \left[\prod_{m=1}^n \left({ 2m-1 \over 2m}\right)\right]^2 {\varepsilon^{2n}\over 2n - 1}\right\rbrace}" src="http://upload.wikimedia.org/math/9/7/3/973e9f2eff62965881fc2d40512412ca.png"></dd></dl>
+<p>一个好的近似是<a href="http://zh.wikipedia.org/wiki/%E6%8B%89%E9%A9%AC%E5%8A%AA%E9%87%91" title="拉马努金">拉马努金</a>的:</p>
+<dl><dd><img class="tex" alt="C \approx \pi \left[3(a+b) - \sqrt{(3a+b)(a+3b)}\right]\!\," src="http://upload.wikimedia.org/math/6/a/e/6ae2da9bd47bab3bde7713c60a04c1bc.png"></dd></dl>
+<p>它还可以写为:</p>
+<dl><dd><img class="tex" alt="C \approx \pi a \left[ 3 (1+\sqrt{1-\varepsilon^2}) - \sqrt{(3+ \sqrt{1-\varepsilon^2})(1+3 \sqrt{1-\varepsilon^2})} \right] \!\," src="http://upload.wikimedia.org/math/d/0/b/d0b466ba8cce6d96a09ba6dfa3e719a3.png"></dd></dl>
+<p><a name=".E6.A0.87.E5.87.86.E6.96.B9.E7.A8.8B.E7.9A.84.E6.8E.A8.E5.AF.BC" id=".E6.A0.87.E5.87.86.E6.96.B9.E7.A8.8B.E7.9A.84.E6.8E.A8.E5.AF.BC"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=6" title="编辑段落">编辑</a>]</span> <span class="mw-headline">标准方程的推导</span></h2>
+<ul><li>如果在一个平面内一个<b>动点</b>到两个<b>定点</b>的<a href="http://zh.wikipedia.org/wiki/%E8%B7%9D%E7%A6%BB" title="距离">距离</a>的<a href="http://zh.wikipedia.org/wiki/%E5%92%8C" title="和" class="mw-redirect">和</a>等于定长，那么这个动点的<a href="http://zh.wikipedia.org/wiki/%E8%BD%A8%E8%BF%B9" title="轨迹">轨迹</a>叫做椭圆。</li></ul>
+<p>假设（注意所有假设只是为了导出椭圆方程时比较简便）动点为<img class="tex" alt="P(x,y) \," src="http://upload.wikimedia.org/math/f/6/1/f616957bc3a26556cc1384225b0ec609.png">，两个定点为<img class="tex" alt="F_1(-c,0) \," src="http://upload.wikimedia.org/math/b/f/e/bfe6b3ecb04c3a08a49e4ea38c3b903b.png">和<img class="tex" alt="F_2(c,0) \," src="http://upload.wikimedia.org/math/3/8/0/380f772e439947fd5ba0850a7728278a.png">，则根据定义，动点<span class="texhtml"><i>P</i></span>的轨迹方程满足（定义式）：</p>
+<dl><dd><img class="tex" alt="|PF_1|+|PF_2|=2a (a&gt;0) \," src="http://upload.wikimedia.org/math/1/7/f/17ffa882a1823ee93daf3477c37766db.png">，其中<img class="tex" alt="2a \," src="http://upload.wikimedia.org/math/a/0/3/a038035b41d3f99ed5dd273b81b5113b.png">为定长。</dd></dl>
+<p>用两点的距离公式可得：<img class="tex" alt="|PF_1|=\sqrt{(x+c)^2+y^2} \," src="http://upload.wikimedia.org/math/2/f/7/2f7eb635def197a9898309577eb22ef1.png">，<img class="tex" alt="|PF_2|=\sqrt{(x-c)^2+y^2} \," src="http://upload.wikimedia.org/math/6/1/4/614014ce0ee23b4842fe95ebc5bb7b57.png">，代入定义式中，得：</p>
+<dl><dd><img class="tex" alt="\sqrt{(x+c)^2+y^2}=2a-\sqrt{(x-c)^2+y^2} \," src="http://upload.wikimedia.org/math/0/8/c/08c431bd51d9efd42075471cfb2b9c24.png"></dd></dl>
+<p>整理上式，并化简，得：</p>
+<dl><dd><img class="tex" alt="(a^2-c^2)x^2+a^2y^2=a^2(a^2-c^2) \," src="http://upload.wikimedia.org/math/3/3/d/33d730d391b7d7449a5ba6cdc0cd2e3a.png"> ①</dd></dl>
+<p>当<img class="tex" alt="a&gt;c \," src="http://upload.wikimedia.org/math/a/9/2/a9280dc767f76d107d3ab25715de085a.png">时，并设<img class="tex" alt="a^2-c^2=b^2 \," src="http://upload.wikimedia.org/math/4/c/1/4c103af2e45666e5db168824ab4b4593.png">，则①式可以进一步化简：</p>
+<dl><dd><img class="tex" alt="b^2x^2+a^2y^2=a^2b^2 \," src="http://upload.wikimedia.org/math/c/5/a/c5ad27ae63f8b71740d56c1d3b4d1dab.png"> ②</dd></dl>
+<p>因为<img class="tex" alt="a^2b^2&gt;0 \," src="http://upload.wikimedia.org/math/1/c/9/1c914357921a21ac4829f50fff6441a0.png">，将②式两边同除以<img class="tex" alt="a^2b^2 \," src="http://upload.wikimedia.org/math/6/6/2/6625e7c2b40eb5065df4cab6faf0f475.png">，可得：</p>
+<dl><dd><img class="tex" alt="x^2/a^2+y^2/b^2=1 \," src="http://upload.wikimedia.org/math/b/4/1/b41e68e317257cff4440eca5ceb7e147.png"></dd></dl>
+<p>则该方程即动点<span class="texhtml"><i>P</i></span>的轨迹方程，即椭圆的方程。这个形式也是<b>椭圆的标准方程</b>。</p>
+<ul><li>椭圆的图像如果在<a href="http://zh.wikipedia.org/wiki/%E7%9B%B4%E8%A7%92%E5%9D%90%E6%A0%87%E7%B3%BB" title="直角坐标系" class="mw-redirect">直角坐标系</a>中表示，那么上述定义中两个定点被定义在了<i>x</i>轴。若将两个定点改在<i>y</i>轴，可以用相同方法求出另一个椭圆的标准<a href="http://zh.wikipedia.org/wiki/%E6%96%B9%E7%A8%8B" title="方程">方程</a>：</li></ul>
+<dl><dd><img class="tex" alt="\frac{y^2}{a^2}+\frac{x^2}{b^2}=1(a&gt;b&gt;0) \," src="http://upload.wikimedia.org/math/a/3/2/a32893d76c6b6d0a4a756b56189485da.png"></dd></dl>
+<ul><li>在方程中，所设的<img class="tex" alt="2a \," src="http://upload.wikimedia.org/math/a/0/3/a038035b41d3f99ed5dd273b81b5113b.png">称为<a href="http://zh.wikipedia.org/w/index.php?title=%E9%95%BF%E8%BD%B4&amp;action=edit&amp;redlink=1" class="new" title="长轴 (尚未撰写)">长轴</a>长，<img class="tex" alt="2b \," src="http://upload.wikimedia.org/math/c/8/4/c84a42deff1c25887b1795b7f86ac85e.png">称为<a href="http://zh.wikipedia.org/w/index.php?title=%E7%9F%AD%E8%BD%B4&amp;action=edit&amp;redlink=1" class="new" title="短轴 (尚未撰写)">短轴</a>长，而所设的<a href="http://zh.wikipedia.org/w/index.php?title=%E5%AE%9A%E7%82%B9&amp;action=edit&amp;redlink=1" class="new" title="定点 (尚未撰写)">定点</a>称为<a href="http://zh.wikipedia.org/wiki/%E7%84%A6%E9%BB%9E" title="焦點">焦点</a>，那么<img class="tex" alt="2c \," src="http://upload.wikimedia.org/math/e/e/3/ee3862e99a0cecdc7afb1a06108f3d35.png">称为<a href="http://zh.wikipedia.org/wiki/%E7%84%A6%E8%B7%9D" title="焦距">焦距</a>。在假设的过程中，假设了<img class="tex" alt="a&gt;c \," src="http://upload.wikimedia.org/math/a/9/2/a9280dc767f76d107d3ab25715de085a.png">，如果不这样假设，会发现得不到椭圆。当<img class="tex" alt="a=c \," src="http://upload.wikimedia.org/math/f/d/6/fd6f2b6cdaef9152caa6b8336c4ca5d7.png">时，这个动点的轨迹是一个<a href="http://zh.wikipedia.org/wiki/%E7%BA%BF%E6%AE%B5" title="线段">线段</a>；当<img class="tex" alt="a&lt;c \," src="http://upload.wikimedia.org/math/2/7/4/2744d3a35dfa21b40c166230b1e4b012.png">时，根本得不到实际存在的轨迹，而这时，其轨迹称为<a href="http://zh.wikipedia.org/w/index.php?title=%E8%99%9A%E6%A4%AD%E5%9C%86&amp;action=edit&amp;redlink=1" class="new" title="虚椭圆 (尚未撰写)">虚椭圆</a>。另外还要注意，在假设中，还有一处：<img class="tex" alt="a^2-c^2=b^2 \," src="http://upload.wikimedia.org/math/4/c/1/4c103af2e45666e5db168824ab4b4593.png">。</li><li>通常认为<a href="http://zh.wikipedia.org/wiki/%E5%9C%86" title="圆">圆</a>是椭圆的一种特殊情况。</li></ul>
+<p><a name=".E6.A4.AD.E5.9C.86.E7.9A.84.E6.97.8B.E8.BD.AC.E5.92.8C.E5.B9.B3.E7.A7.BB" id=".E6.A4.AD.E5.9C.86.E7.9A.84.E6.97.8B.E8.BD.AC.E5.92.8C.E5.B9.B3.E7.A7.BB"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=7" title="编辑段落">编辑</a>]</span> <span class="mw-headline">椭圆的旋转和平移</span></h2>
+<p>对于平面上任意椭圆 <img class="tex" alt=" A x^2 + 2B xy + C y^2 + D x + E y + F = 0 \," src="http://upload.wikimedia.org/math/e/b/5/eb5cd6ac70c44c9f09fdefb96c1048a8.png">，我们总可以将之转化为</p>
+<dl><dd><img class="tex" alt="A(x-u)^2 + 2B(x-u)(y-v) + C(y-v)^2 + f = 0 \," src="http://upload.wikimedia.org/math/a/d/1/ad1bae172aa4c2bd850a28ca2389ac05.png"></dd></dl>
+<p>的形式。具体步骤为，将后式的各乘积乘方项展开，根据与前式对应项系数相等的法则便可求得u,v,f的值。其中，<img class="tex" alt="(u,v) \," src="http://upload.wikimedia.org/math/e/6/5/e65b9c5abbc26c70545217f47391a5a2.png">便是该椭圆的中心。</p>
+<p>若将</p>
+<dl><dd><img class="tex" alt="x=x^\prime - u " src="http://upload.wikimedia.org/math/d/b/e/dbefca1ffdfb369d5a0dd37cf6365d42.png"></dd><dd><img class="tex" alt="y=y^\prime - v " src="http://upload.wikimedia.org/math/3/6/3/363239dbf0ab440dd36231f208ba475b.png"></dd></dl>
+<p>带入式中便可得到平移前的椭圆。</p>
+<p>若<img class="tex" alt="B\ne 0" src="http://upload.wikimedia.org/math/2/2/d/22dd8967be57e6e14e4556ef22687219.png">,则表示椭圆的长短轴与坐标系的坐标轴并不平行或垂直，即发生了旋转。设旋转的角度为<img class="tex" alt="\displaystyle \phi" src="http://upload.wikimedia.org/math/1/9/6/1964adc54d7dc608fd9f63a46cae422b.png">, 则有</p>
+<dl><dd><img class="tex" alt="\displaystyle  tan(2 \phi)=2B/(A-C)" src="http://upload.wikimedia.org/math/2/b/e/2be5705330afafcaf0be82841329282c.png"> 当A-C=0，则说明<img class="tex" alt="\phi=\pm \frac{\pi}{4}" src="http://upload.wikimedia.org/math/7/5/5/755ce29bd908bcc2462235152be5978f.png"></dd></dl>
+<p>若将</p>
+<dl><dd><img class="tex" alt="x=x^\prime cos \phi + y^\prime sin \phi" src="http://upload.wikimedia.org/math/b/f/f/bffd2858ee1f55d04f1927ae4a4a8d99.png"></dd><dd><img class="tex" alt="y=y^\prime cos \phi - x^\prime sin \phi" src="http://upload.wikimedia.org/math/5/2/1/5214892fc749eb6e2db39300569c53d4.png"></dd></dl>
+<p>带入式中便可得到旋转前的椭圆。</p>
+<p><a name=".E5.8F.82.E8.A7.81" id=".E5.8F.82.E8.A7.81"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=8" title="编辑段落">编辑</a>]</span> <span class="mw-headline">参见</span></h2>
+<ul><li><a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E9%94%A5%E6%9B%B2%E7%BA%BF" title="圆锥曲线">圆锥曲线</a></li><li><a href="http://zh.wikipedia.org/wiki/%E5%BC%80%E6%99%AE%E5%8B%92%E5%AE%9A%E5%BE%8B" title="开普勒定律">开普勒定律</a></li><li><a href="http://zh.wikipedia.org/wiki/%E9%A1%9E%E7%90%83%E9%9D%A2" title="類球面">类球面</a></li><li><a href="http://zh.wikipedia.org/wiki/%E6%A9%A2%E7%90%83%E5%9D%90%E6%A8%99%E7%B3%BB" title="橢球坐標系">椭球坐标系</a></li></ul>
+<p><a name=".E5.A4.96.E9.83.A8.E9.93.BE.E6.8E.A5" id=".E5.A4.96.E9.83.A8.E9.93.BE.E6.8E.A5"></a></p>
+<h2><span class="editsection">[<a href="http://zh.wikipedia.org/w/index.php?title=%E6%A4%AD%E5%9C%86&amp;action=edit&amp;section=9" title="编辑段落">编辑</a>]</span> <span class="mw-headline">外部链接</span></h2>
+<ul><li><a href="http://shc2000.sjtu.edu.cn/0409/mingmoq.htm" class="external text" title="http://shc2000.sjtu.edu.cn/0409/mingmoq.htm" rel="nofollow">明末清初西方椭圆知识在中国的传播</a></li></ul>
+
+<table class="navbox collapsible autocollapse" style="margin: auto; width: 98%; text-align: left;"><tbody><tr style="cursor: pointer;" class="uncollapse toggleHotspot">
+<th colspan="2" style="text-align: center;"><span style="width: 3.8em; display: inline;" class="NavToggle"><span style="display: none;" class="toggleShow">显示▼</span><span class="toggleHide">隐藏▲</span></span>
+<div style="float: left; width: 6em; text-align: left;">
+<div class="noprint plainlinksneverexpand" style="padding: 0pt; background-color: transparent; font-weight: normal; font-size: 80%; color: rgb(0, 0, 0); white-space: nowrap;"><a href="http://zh.wikipedia.org/wiki/Template:%E5%87%A0%E4%BD%95%E6%9C%AF%E8%AF%AD" title="Template:几何术语"><span style="color: rgb(0, 43, 184);" title="查看这个模板">查</span></a>&nbsp;<span style="font-size: 80%;">•</span>&nbsp;<a href="http://zh.wikipedia.org/wiki/Template_talk:%E5%87%A0%E4%BD%95%E6%9C%AF%E8%AF%AD" title="Template talk:几何术语"><span style="color: rgb(0, 43, 184);" title="关于这个模板的讨论页面">论</span></a>&nbsp;<span style="font-size: 80%;">•</span>&nbsp;<a href="http://zh.wikipedia.org/w/index.php?title=Template:%E5%87%A0%E4%BD%95%E6%9C%AF%E8%AF%AD&amp;action=edit" class="external text" title="http://zh.wikipedia.org/w/index.php?title=Template:%E5%87%A0%E4%BD%95%E6%9C%AF%E8%AF%AD&amp;action=edit" rel="nofollow"><span style="color: rgb(0, 43, 184);" title="您可以编辑这个模板。请在储存变更之前先预览">编</span></a>&nbsp;<span style="font-size: 80%;">•</span>&nbsp;<a href="http://zh.wikipedia.org/w/index.php?title=Template:%E5%87%A0%E4%BD%95%E6%9C%AF%E8%AF%AD&amp;action=history" class="external text" title="http://zh.wikipedia.org/w/index.php?title=Template:%E5%87%A0%E4%BD%95%E6%9C%AF%E8%AF%AD&amp;action=history" rel="nofollow"><span style="color: rgb(0, 43, 184);" title="查看这个模板的编辑历史">历</span></a></div>
+</div>
+<span style="font-size: 110%;"><a href="http://zh.wikipedia.org/wiki/File:POV-Ray-Dodecahedron.svg" class="image" title="POV-Ray-Dodecahedron.svg"><img alt="" src="http://upload.wikimedia.org/wikipedia/commons/thumb/6/66/POV-Ray-Dodecahedron.svg/14px-POV-Ray-Dodecahedron.svg.png" width="14" border="0" height="14"></a><a href="http://zh.wikipedia.org/wiki/%E5%87%A0%E4%BD%95" title="几何" class="mw-redirect">几何</a><a href="http://zh.wikipedia.org/wiki/%E6%9C%AF%E8%AF%AD" title="术语">术语</a></span></th>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;"><a href="http://zh.wikipedia.org/wiki/%E9%BB%9E" title="點" class="mw-redirect">点</a>和<a href="http://zh.wikipedia.org/wiki/%E7%BA%BF" title="线" class="mw-redirect">线</a></th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E9%A0%82%E9%BB%9E" title="頂點" class="mw-redirect">顶点</a> | <a href="http://zh.wikipedia.org/wiki/%E7%B7%9A%E6%AE%B5" title="線段" class="mw-redirect">线段</a> | <a href="http://zh.wikipedia.org/wiki/%E7%9B%B4%E7%B7%9A" title="直線" class="mw-redirect">直线</a> | <a href="http://zh.wikipedia.org/wiki/%E5%B9%B3%E8%A1%8C" title="平行">平行</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9E%82%E7%9B%B4" title="垂直">垂直</a> | <a href="http://zh.wikipedia.org/wiki/%E5%88%87%E7%BA%BF" title="切线">切线</a> | <a href="http://zh.wikipedia.org/wiki/%E6%B3%95%E7%BA%BF" title="法线">法线</a> | <a href="http://zh.wikipedia.org/wiki/%E6%9B%B2%E7%BA%BF" title="曲线">曲线</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E9%94%A5%E6%9B%B2%E7%BA%BF" title="圆锥曲线">圆锥曲线</a> | <a href="http://zh.wikipedia.org/wiki/%E5%8F%8C%E6%9B%B2%E7%BA%BF" title="双曲线">双曲线</a> | <a href="http://zh.wikipedia.org/wiki/%E6%8A%9B%E7%89%A9%E7%BA%BF" title="抛物线">抛物线</a> | <a href="http://zh.wikipedia.org/wiki/%E8%9E%BA%E7%B7%9A" title="螺線" class="mw-redirect">螺线</a> | <a href="http://zh.wikipedia.org/wiki/%E9%82%8A" title="邊" class="mw-redirect">边</a> | <a href="http://zh.wikipedia.org/wiki/%E5%91%A8%E7%95%8C" title="周界" class="mw-redirect">周界</a> | <a href="http://zh.wikipedia.org/wiki/%E5%BC%A6" title="弦">弦</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;"><a href="http://zh.wikipedia.org/wiki/%E5%B9%B3%E9%9D%A2" title="平面">平面</a>图形</th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E5%9C%93" title="圓" class="mw-redirect">圆</a> | <strong class="selflink">椭圆</strong> | <a href="http://zh.wikipedia.org/wiki/%E6%89%87%E5%BD%A2" title="扇形">扇形</a> | <a href="http://zh.wikipedia.org/wiki/%E5%BC%93%E5%BD%A2" title="弓形">弓形</a> | <a href="http://zh.wikipedia.org/wiki/%E5%A4%9A%E9%82%8A%E5%BD%A2" title="多邊形" class="mw-redirect">多边形</a> | <a href="http://zh.wikipedia.org/wiki/%E4%B8%89%E8%A7%92%E5%BD%A2" title="三角形">三角形</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9B%9B%E9%82%8A%E5%BD%A2" title="四邊形">四边形</a> | <a href="http://zh.wikipedia.org/wiki/%E4%BA%94%E8%BE%B9%E5%BD%A2" title="五边形">五边形</a> | <a href="http://zh.wikipedia.org/wiki/%E5%85%AD%E8%BE%B9%E5%BD%A2" title="六边形">六边形</a> | <a href="http://zh.wikipedia.org/wiki/%E6%A2%AF%E5%BD%A2" title="梯形">梯形</a> | <a href="http://zh.wikipedia.org/wiki/%E5%B9%B3%E8%A1%8C%E5%9B%9B%E9%82%8A%E5%BD%A2" title="平行四邊形" class="mw-redirect">平行四边形</a> | <a href="http://zh.wikipedia.org/wiki/%E8%8F%B1%E5%BD%A2" title="菱形">菱形</a> | <a href="http://zh.wikipedia.org/wiki/%E7%9F%A9%E5%BD%A2" title="矩形">矩形</a> | <a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E6%96%B9%E5%BD%A2" title="正方形">正方形</a> | <a href="http://zh.wikipedia.org/wiki/%E9%B7%82%E5%BD%A2" title="鷂形">鹞形</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;">立体图形</th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E5%A4%9A%E9%9D%A2%E4%BD%93" title="多面体">多面体</a> | <a href="http://zh.wikipedia.org/wiki/%E6%AD%A3%E5%A4%9A%E9%9D%A2%E9%AB%94" title="正多面體">正多面体</a> | <a href="http://zh.wikipedia.org/wiki/%E9%95%B7%E6%96%B9%E9%AB%94" title="長方體">长方体</a> | <a href="http://zh.wikipedia.org/wiki/%E7%AB%8B%E6%96%B9%E9%AB%94" title="立方體">立方体</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E6%9F%B1%E4%BD%93" title="圆柱体">圆柱体</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9B%9B%E9%9D%A2%E9%AB%94" title="四面體">四面体</a> | <a href="http://zh.wikipedia.org/wiki/%E5%B9%B3%E8%A1%8C%E5%85%AD%E9%9D%A2%E4%BD%93" title="平行六面体">平行六面体</a> | <a href="http://zh.wikipedia.org/wiki/%E6%A3%B1%E6%9F%B1" title="棱柱">棱柱</a> | <a href="http://zh.wikipedia.org/w/index.php?title=%E5%8F%8D%E6%A3%B1%E6%9F%B1&amp;action=edit&amp;redlink=1" class="new" title="反棱柱 (尚未撰写)">反棱柱</a> | <a href="http://zh.wikipedia.org/wiki/%E6%A3%B1%E9%94%A5" title="棱锥">棱锥</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E9%94%A5" title="圆锥">圆锥</a> | <a href="http://zh.wikipedia.org/wiki/%E7%90%83%E9%AB%94" title="球體" class="mw-redirect">球体</a> | <a href="http://zh.wikipedia.org/wiki/%E6%8A%9B%E7%89%A9%E9%9D%A2" title="抛物面">抛物面</a> | <a href="http://zh.wikipedia.org/wiki/%E6%A4%AD%E7%90%83" title="椭球">椭球</a> | <a href="http://zh.wikipedia.org/wiki/%E9%9B%99%E6%9B%B2%E9%9D%A2" title="雙曲面">双曲面</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9C%86%E5%8F%B0" title="圆台">圆台</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;">图形关系</th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E7%9B%B8%E4%BC%BC" title="相似">相似</a> | <a href="http://zh.wikipedia.org/wiki/%E5%85%A8%E7%AD%89" title="全等">全等</a> | <a href="http://zh.wikipedia.org/wiki/%E5%AF%B9%E7%A7%B0" title="对称" class="mw-redirect">对称</a> | <a href="http://zh.wikipedia.org/wiki/%E5%B9%B3%E8%A1%8C" title="平行">平行</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9E%82%E7%9B%B4" title="垂直">垂直</a> | <a href="http://zh.wikipedia.org/w/index.php?title=%E7%9B%B8%E9%82%BB&amp;action=edit&amp;redlink=1" class="new" title="相邻 (尚未撰写)">相邻</a> | <a href="http://zh.wikipedia.org/w/index.php?title=%E7%9B%B8%E4%BA%A4&amp;action=edit&amp;redlink=1" class="new" title="相交 (尚未撰写)">相交</a> | <a href="http://zh.wikipedia.org/wiki/%E7%9B%B8%E5%88%87" title="相切" class="mw-redirect">相切</a> | <a href="http://zh.wikipedia.org/wiki/%E9%95%9C%E5%83%8F_%28%E5%87%A0%E4%BD%95%29" title="镜像 (几何)">镜像</a> | <a href="http://zh.wikipedia.org/wiki/%E6%97%8B%E8%BD%AC" title="旋转">旋转</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;"><a href="http://zh.wikipedia.org/wiki/%E4%B8%89%E8%A7%92%E5%BD%A2" title="三角形">三角形</a>关系</th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E7%9B%B8%E4%BC%BC%E4%B8%89%E8%A7%92%E5%BD%A2" title="相似三角形">相似三角形</a> | <a href="http://zh.wikipedia.org/wiki/%E5%85%A8%E7%AD%89%E4%B8%89%E8%A7%92%E5%BD%A2" title="全等三角形">全等三角形</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;"><a href="http://zh.wikipedia.org/wiki/%E9%87%8F" title="量">量</a></th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E8%B7%9D%E9%9B%A2" title="距離" class="mw-redirect">距离</a> | <a href="http://zh.wikipedia.org/wiki/%E9%95%B7%E5%BA%A6" title="長度" class="mw-redirect">长度</a> | <a href="http://zh.wikipedia.org/wiki/%E5%91%A8%E9%95%BF" title="周长">周长</a> | <a href="http://zh.wikipedia.org/wiki/%E9%AB%98%E5%BA%A6" title="高度">高度</a> | <a href="http://zh.wikipedia.org/wiki/%E9%9D%A2%E7%A9%8D" title="面積" class="mw-redirect">面积</a> | <a href="http://zh.wikipedia.org/wiki/%E8%A1%A8%E9%9D%A2%E7%A9%8D" title="表面積">表面积</a> | <a href="http://zh.wikipedia.org/wiki/%E9%AB%94%E7%A9%8D" title="體積" class="mw-redirect">体积</a> | <a href="http://zh.wikipedia.org/wiki/%E8%A7%92%E5%BA%A6" title="角度">角度</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;"><a href="http://zh.wikipedia.org/wiki/%E6%AF%94%E4%BE%8B" title="比例">比例</a></th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E8%A7%92" title="角">角</a> | <a href="http://zh.wikipedia.org/wiki/%E5%9C%93%E5%91%A8%E7%8E%87" title="圓周率">圆周率</a> | <a href="http://zh.wikipedia.org/wiki/%E5%80%8D%E6%95%B8" title="倍數" class="mw-redirect">倍数</a> | <a href="http://zh.wikipedia.org/wiki/%E5%88%86%E6%95%B0" title="分数" class="mw-redirect">分数</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;">作图</th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E5%B0%BA%E5%AD%90" title="尺子">尺子</a>（<a href="http://zh.wikipedia.org/wiki/%E7%9B%B4%E5%B0%BA" title="直尺">直尺</a>） | <a href="http://zh.wikipedia.org/wiki/%E5%9C%93%E8%A6%8F" title="圓規" class="mw-redirect">圆规</a> | <a href="http://zh.wikipedia.org/wiki/%E5%B0%BA%E8%A7%84%E4%BD%9C%E5%9B%BE" title="尺规作图">尺规作图</a></td>
+</tr>
+<tr class="toggleHide">
+<th style="width: 22%; text-align: right;">理论</th>
+<td style="" colspan="1"><a href="http://zh.wikipedia.org/wiki/%E5%AE%9A%E7%90%86" title="定理">定理</a> | <a href="http://zh.wikipedia.org/wiki/%E5%85%AC%E7%90%86" title="公理">公理</a> | <a href="http://zh.wikipedia.org/wiki/%E5%AE%9A%E4%B9%89" title="定义">定义</a> | <a href="http://zh.wikipedia.org/wiki/%E8%AD%89%E6%98%8E" title="證明">证明</a></td></tr></tbody></table><br>

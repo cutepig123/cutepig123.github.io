@@ -1,0 +1,11 @@
+<p>&nbsp;</p>
+<p>举例子：计算pi</p>
+<p><strong>actor model</strong><br />概念：一般有n个actor（task），和一个调度线程（本身也是一个actor）<br />调度线程负责向每个task发送命令执行计算，以及接收每个task的结果并归并到一起<br />接口一般定义为：<br />addTask( new Task{	onReceive(msg,from)..., send(to,xxx)} )<br />	<br /><strong>tasked based parallizm</strong><br />概念：可以定义task和io，io用来计算task的依赖关系。系统自动根据依赖关系执行所有task<br />使用流程：<br />创建子task，子task无依赖<br />创建汇总task，依赖所有的子task<br />最后启动所有task，等待完成即可<br />接口一般定义为：<br />addTask(new task(in, out, callbackfun))</p>
+<p>如何用actor model实现tasked based parallizm？<br />MyTask<br />{<br />	MyTask(in,out)	//记录下io即可<br />	<br />	onReceive（msg)<br />	{<br />		if msg.id in my dependencies<br />			mark this dependency is done<br />			<br />		if all dependencies are done<br />			do the callbackfun<br />			send msg to all out tasks<br />	}<br />}</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>boost：；future实现任务并行化</strong></p>
+<p>for i in N<br />	future_i =start subtask<br />	ins.append(future_i)<br />start merge task(ins as input)<br />wait all task done</p>
+<p>&nbsp;</p>
+<p>Actor model <br /><br />c++ CAF<br />http://actor-framework.org/pdf/cshw-nassp-13.pdf<br />https://github.com/actor-framework/actor-framework<br /><br />QP/C++ <br /><br />Akka<br /><br />https://github.com/Neverlord/libcppa<br /><br />http://www.theron-library.com/<br /><br /></p>
+<p>&nbsp;</p>

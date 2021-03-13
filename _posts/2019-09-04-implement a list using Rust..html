@@ -1,0 +1,97 @@
+<p>Rust果然比較複雜，在經歷了n次compile fail，終于寫成了一個 list</p>
+<p>難點： 對Rc&lt;&gt;的用法不熟悉。對borrow checker不夠熟悉</p>
+<p>有些寫法可能還不是最短的</p>
+<p>&nbsp;</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">use std::rc::Rc;
+
+fn main() {
+    println!("Hello, world!");
+
+    let li = ListInternal {
+        data: 1,
+        next: None,
+    };
+    let li = ListInternal {
+        data: 2,
+        next: Some(Rc::new(li)),
+    };
+
+    let mut l = List { next: Some(li) };
+
+    for i in 1..10{
+        l.push_back(i);
+    }
+    
+    l.print();
+}
+
+struct ListInternal {
+    data: i32,
+    next: Option&lt;Rc&lt;ListInternal&gt;&gt;,
+}
+
+struct List {
+    next: Option&lt;ListInternal&gt;,
+}
+
+impl ListInternal {
+    fn print(&amp;self) {
+        println!("{}", self.data);
+
+        if let Some(ref v) = self.next {
+            v.print();
+        }
+    }
+
+    fn print_loop(&amp;self) {
+        let mut t = self;
+        loop {
+            println!("{}", t.data);
+
+            if let Some(ref v) = t.next {
+                t = v;
+            } else {
+                break;
+            }
+        }
+    }
+
+    fn last(&amp;mut self) -&gt; &amp;mut Self {
+        let mut t = self;
+        loop {
+            if let Some(ref mut v) = t.next {
+                t = Rc::get_mut(v).unwrap();
+            } else {
+                break;
+            }
+        }
+        t
+    }
+}
+impl List {
+    fn new() -&gt; List {
+        List { next: None }
+    }
+
+    fn print(&amp;self) {
+        if let Some(ref v) = self.next {
+            v.print_loop();
+        }
+    }
+    fn push_back(&amp;mut self, data: i32) {
+        let li = ListInternal {
+            data: data,
+            next: None,
+        };
+
+        if let Some(ref mut v) = self.next {
+            v.last().next = Some(Rc::new(li));
+        } else {
+            self.next = Some(li);
+        }
+    }
+}
+</pre>
+</div>
+<p>&nbsp;</p>

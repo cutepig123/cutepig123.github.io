@@ -1,0 +1,10 @@
+<p>开启logging （例子F:\wamp\www\git_repos\GitHub\GeneralUtility\superglue-master\examples\src\logging.cpp）</p>
+<p>#include "sg/option/instr_trace.hpp"</p>
+<p>定义option</p>
+<p>struct MyOptions : public DefaultOptions&lt;MyOptions&gt; {<br />&nbsp;&nbsp;&nbsp; typedef Enable TaskName;<br />&nbsp;&nbsp;&nbsp; typedef Trace&lt;MyOptions&gt; Instrumentation;<br />};</p>
+<p>dump到文件</p>
+<p>Trace&lt;MyOptions&gt;::dump("execution.log");</p>
+<p>&nbsp;</p>
+<p>图形化显示</p>
+<p>F:\sw\Python25_2&gt;path %path%;F:\sw\Python25_2\Lib\site-packages\wx-2.8-msw-ansi\<br />wx<br /><br />F:\sw\Python25_2&gt;python F:\wamp\www\git_repos\GitHub\GeneralUtility\superglue-ma<br />ster\scripts\drawsched.py F:\wamp\www\git_repos\GitHub\GeneralUtility\superglue-<br />master\vsproj\vsproj\execution.log</p>
+<p>&nbsp;</p>

@@ -1,0 +1,307 @@
+<p>測試目的：測試fiber, thread，和單綫程速度差異</p>
+<p>結論：</p>
+<p>&nbsp;testFiber<br />123450000 3869<br />testThread<br />123450000 2598<br />testNoThread<br />123450000 1596<br />testNoThreadNoLock<br />123450000 212<br />Press any key to continue . . .<br /><br /></p>
+<p>代碼：</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:cpp;gutter:true;">#include &lt;boost/fiber/all.hpp&gt;
+
+#define	NTHREAD	10000
+#define NLOOP 12345
+
+// create 1000 fibers, each fiber add a same variable 1000 times
+int testFiber()
+{
+	int n = 0;
+	boost::fibers::mutex m;
+
+	std::vector&lt;boost::fibers::fiber&gt; fs;
+	fs.reserve(NTHREAD);
+	for (size_t i = 0; i &lt; NTHREAD; i++)
+	{
+		fs.push_back(boost::fibers::fiber([&amp;]() {
+			
+			for (size_t j = 0; j &lt; NLOOP; j++)
+			{
+				m.lock();
+				n++;
+				m.unlock();
+			}
+		}));
+	}
+
+	for(auto &amp;f: fs)
+	{
+		f.join();
+	}
+	return n;
+}
+
+#include &lt;boost/thread.hpp&gt;
+#include &lt;boost/thread/mutex.hpp&gt;
+
+#define	NTHREAD	10000
+#define NLOOP 12345
+
+// create 1000 fibers, each fiber add a same variable 1000 times
+int testThread()
+{
+	int n = 0;
+	boost::mutex m;
+
+	std::vector&lt;boost::thread&gt; fs;
+	fs.reserve(NTHREAD);
+	for (size_t i = 0; i &lt; NTHREAD; i++)
+	{
+		fs.push_back(boost::thread([&amp;]() {
+
+			for (size_t j = 0; j &lt; NLOOP; j++)
+			{
+				m.lock();
+				n++;
+				m.unlock();
+			}
+		}));
+	}
+
+	for (auto &amp;f : fs)
+	{
+		f.join();
+	}
+	return n;
+}
+
+int testNoThread()
+{
+	int n = 0;
+	boost::mutex m;
+
+	std::vector&lt;boost::function&lt;void()&gt;&gt; fs;
+	fs.reserve(NTHREAD);
+	for (size_t i = 0; i &lt; NTHREAD; i++)
+	{
+		fs.push_back(([&amp;]() {
+
+			for (size_t j = 0; j &lt; NLOOP; j++)
+			{
+				m.lock();
+				n++;
+				m.unlock();
+			}
+		}));
+	}
+
+	for (auto &amp;f : fs)
+	{
+		f();
+	}
+	return n;
+}
+
+int testNoThreadNoLock()
+{
+	int n = 0;
+	boost::mutex m;
+
+	std::vector&lt;boost::function&lt;void()&gt;&gt; fs;
+	fs.reserve(NTHREAD);
+	for (size_t i = 0; i &lt; NTHREAD; i++)
+	{
+		fs.push_back(([&amp;]() {
+
+			for (size_t j = 0; j &lt; NLOOP; j++)
+			{
+				n++;
+				
+			}
+		}));
+	}
+
+	for (auto &amp;f : fs)
+	{
+		f();
+	}
+	return n;
+}
+
+// https://stackoverflow.com/questions/35249961/boostshared-future-and-when-all-with-multiple-continuations
+
+#include &lt;iostream&gt;
+#include &lt;windows.h&gt;
+
+#define BOOST_THREAD_PROVIDES_FUTURE
+#define BOOST_THREAD_PROVIDES_FUTURE_CONTINUATION
+#define BOOST_THREAD_PROVIDES_FUTURE_WHEN_ALL_WHEN_ANY
+#define BOOST_THREAD_PROVIDES_EXECUTORS
+#include &lt;boost/thread/future.hpp&gt;
+#include &lt;boost/chrono.hpp&gt;
+#include &lt;boost/thread/executors/basic_thread_pool.hpp&gt;
+
+using namespace boost;
+using boost::this_thread::sleep_for;
+using boost::chrono::milliseconds;
+
+#define	N 160
+#define BATCH_SIZE 16
+
+shared_future&lt;int&gt; f1[N];
+
+int func(int a)
+{
+	double j = a, k=0;
+	for (int i = 0; i &lt; 100000; i++)
+		for (int k = 0; k &lt; 1000; k++)
+		j += i + k;
+	return j;
+}
+
+
+void test_shared_future_chain() {
+	boost::chrono::high_resolution_clock::time_point t1;
+	boost::chrono::high_resolution_clock::time_point t2;
+	boost::chrono::high_resolution_clock::time_point t3;
+
+	boost::basic_thread_pool tp(BATCH_SIZE);
+	
+	shared_future&lt;int&gt; *f = f1;
+	
+	t1 = boost::chrono::high_resolution_clock::now();
+
+	for (int i = 0; i&lt;N; i++)
+		{
+			if (i&lt;BATCH_SIZE)
+			{
+				f[i] = async(tp, [i]() {return func(i); });
+			}
+			else
+			{
+				f[i] = f[i - BATCH_SIZE]
+					.then(tp, [](shared_future&lt;int&gt; a) { 
+					return func(a.get());
+				})
+					.share();
+			}
+		}
+	t3 = boost::chrono::high_resolution_clock::now();
+
+	int res = f[N - 1].get();
+	t2 = boost::chrono::high_resolution_clock::now();
+
+	int t = (boost::chrono::duration_cast&lt;boost::chrono::milliseconds&gt;(t2 - t1)).count();
+	int t3elipse = (boost::chrono::duration_cast&lt;boost::chrono::milliseconds&gt;(t3 - t1)).count();
+
+	std::cout &lt;&lt; "res" &lt;&lt; res &lt;&lt; "\n";
+	std::cout &lt;&lt; "test_shared_future_chain" &lt;&lt; t &lt;&lt; "\n";
+	std::cout &lt;&lt; "test_shared_future_chain t3elipse " &lt;&lt; t3elipse &lt;&lt; "\n";
+}
+
+int temp[N] = { 0 };
+
+void test_raw_function() {
+	boost::chrono::high_resolution_clock::time_point t1;
+	boost::chrono::high_resolution_clock::time_point t2;
+
+	t1 = boost::chrono::high_resolution_clock::now();
+
+	for (int i = 0; i &lt; N; i++)
+	{
+		if (i&lt;BATCH_SIZE)
+		{
+			temp[i] = func(i);
+		}
+		else
+		{
+			temp[i] = func(temp[i-BATCH_SIZE]);
+		}
+	}
+	
+
+	t2 = boost::chrono::high_resolution_clock::now();
+
+	int ellipsed = (boost::chrono::duration_cast&lt;boost::chrono::milliseconds&gt;(t2 - t1)).count();
+
+	std::cout &lt;&lt; "res" &lt;&lt; temp[N-1] &lt;&lt; "\n";
+	std::cout &lt;&lt; "test_raw_function" &lt;&lt; ellipsed &lt;&lt; "\n";
+}
+
+void test_boost_thread() {
+	boost::thread threads[BATCH_SIZE];
+
+	boost::chrono::high_resolution_clock::time_point t1;
+	boost::chrono::high_resolution_clock::time_point t2;
+
+	memset(temp, 0, sizeof(temp));
+
+	t1 = boost::chrono::high_resolution_clock::now();
+
+	for (size_t batchindex = 0; batchindex &lt; BATCH_SIZE; batchindex++)
+	{
+		auto exec = [batchindex]() {
+			for (int i = batchindex; i &lt; N; i+= BATCH_SIZE)
+			{
+				if (i&lt;BATCH_SIZE)
+				{
+					temp[i] = func(i);
+				}
+				else
+				{
+					temp[i] = func(temp[i - BATCH_SIZE]);
+				}
+			}
+		};
+
+		threads[batchindex] = thread(exec);
+	}
+
+	for (size_t batchindex = 0; batchindex &lt; BATCH_SIZE; batchindex++)
+		threads[batchindex].join();
+
+	t2 = boost::chrono::high_resolution_clock::now();
+
+	int ellipsed = (boost::chrono::duration_cast&lt;boost::chrono::milliseconds&gt;(t2 - t1)).count();
+
+	std::cout &lt;&lt; "res" &lt;&lt; temp[N - 1] &lt;&lt; "\n";
+	std::cout &lt;&lt; "test_boost_thread" &lt;&lt; ellipsed &lt;&lt; "\n";
+}
+
+
+
+template &lt;class F&gt;
+void timeMe(F f)
+{
+	auto t1 = boost::chrono::high_resolution_clock::now();
+	auto r = f();
+	auto t2 = boost::chrono::high_resolution_clock::now();
+
+	int ellipsed = (boost::chrono::duration_cast&lt;boost::chrono::milliseconds&gt;(t2 - t1)).count();
+
+	std::cout &lt;&lt; r &lt;&lt; " " &lt;&lt; ellipsed &lt;&lt; "\n";
+}
+
+void main2() {
+	std::cout &lt;&lt; "aaaa\n";
+	test_shared_future_chain();
+	test_raw_function();
+	test_boost_thread();
+}
+
+int testFiber();
+int testThread();
+int testNoThread();
+int testNoThreadNoLock();
+
+int main() {
+	std::cout &lt;&lt; "testFiber\n";
+	timeMe(testFiber);
+
+	std::cout &lt;&lt; "testThread\n";
+	timeMe(testThread);
+
+	std::cout &lt;&lt; "testNoThread\n";
+	timeMe(testNoThread);
+
+	std::cout &lt;&lt; "testNoThreadNoLock\n";
+	timeMe(testNoThreadNoLock);
+}
+</pre>
+</div>
+<p>&nbsp;</p>

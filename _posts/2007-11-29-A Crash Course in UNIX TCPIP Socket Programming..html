@@ -1,0 +1,484 @@
+
+<SCRIPT src="http://fortunecity.us.intellitxt.com/v3/door.jsp?ts=1196336846125&amp;pagecl=17415&amp;ias=251ad65e2c7d456fb49c05849b09db6e|1196336926|1201520926&amp;ipid=10049&amp;refurl=http://www.fortunecity.com/skyscraper/arpanet/6/cc.htm&amp;iasf=1" type=text/javascript></SCRIPT>
+
+<SCRIPT src="http://sc.intellitxt.com/tsc.jsp?ias=251ad65e2c7d456fb49c05849b09db6e|1196336926|1201520926" type=text/javascript></SCRIPT>
+&nbsp;
+<CENTER>
+<SCRIPT language=Javascript>
+<!--
+
+function FCGetWindowSize() {
+
+	FCWindowWidth = document.images.FCimg11bnr.width * 100;
+
+	if(document.images.FCimg12bnr.height <= 2) {FCWindowWidth = 1;}		// too small vertically
+}
+
+document.write('<font size=-3><img src="http://www.fortunecity.com/banners/track1.gif" height=1 width=1% border="0" name="FCimg11bnr" hspace=0 vspace=0>');
+document.write('<img src="http://www.fortunecity.com/banners/foo.gif" height=1% width=1 border="0" name="FCimg12bnr" hspace=0 vspace=0><br clear=all></font>');
+
+FCGetWindowSize();
+
+var fcadunit = 'misc';		// default
+
+
+// -->
+</SCRIPT>
+<FONT size=-3><IMG height=1 hspace=0 src="http://www.fortunecity.com/banners/track1.gif" width="1%" border=0 name=FCimg11bnr><IMG height="1%" hspace=0 src="http://www.fortunecity.com/banners/foo.gif" width=1 border=0 name=FCimg12bnr><BR clear=all></FONT>
+<SCRIPT language=Javascript src="http://www.fortunecity.com/js/adscript.global.js">
+</SCRIPT>
+
+<TABLE id=fcnavbartable style="VISIBILITY: visible" cellSpacing=0 cellPadding=0 width=730 border=0>
+<TBODY>
+<TR id=fcnavbartablerow align=middle>
+<TD>
+<TABLE cellSpacing=0 cellPadding=0 width="100%" border=0>
+<TBODY>
+<TR align=middle>
+<TD width="3%"><A id=fcnavlogo href="http://www.fortunecity.com/" target=_new><IMG height=15 alt="web hosting, domain name, free web site, email address" src="http://www.fortunecity.com/images/fclogo_inline_new.gif" width=120 border=0></A></TD>
+<TD id=fctdhosting width="22%"><A id=fcnavhosting style="FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: Verdana,sans-serif" href="http://www.fortunecity.com/?sid=fcnavhosting" target=_new>web hosting</A></TD>
+<TD id=fctddomains width="24%"><A id=fcnavdomains style="FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: Verdana,sans-serif" href="http://www.fortunecity.com/?sid=fcnavdomains" target=_new>domain names</A></TD>
+<TD id=fctdemail width="26%"><A id=fcnavmpa style="FONT-WEIGHT: bold; FONT-SIZE: 11px; FONT-FAMILY: Verdana,sans-serif" href="http://www.myphotoalbum.com/?sid=fcnavmpa" target=_new>photo sharing</A></TD>
+<TD id=fcnavsrchsub width="2%"><IMG height=15 alt="" src="http://www.fortunecity.com/images/nb_top_right.gif" width=30 border=0></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE>
+<SCRIPT language=Javascript>
+<!--
+
+DisplayFCAdBanner();
+
+document.getElementById('fcnavhosting').search = '?sid=fcnavhosting';
+document.getElementById('fcnavdomains').search = '?sid=fcnavdomains';
+document.getElementById('fcnavmpa').search = '?sid=fcnavmpa';
+
+// -->
+</SCRIPT>
+
+<SCRIPT language=Javascript src="http://oascentral.fortunecity.com/RealMedia/ads/adstream_jx.ads/FC/misc@Top2!Top2"></SCRIPT>
+<BR>
+<SCRIPT language=Javascript>
+<!-- 
+
+DisplayFCAdButtons();
+
+// -->
+</SCRIPT>
+
+<SCRIPT src="http://pagead2.googlesyndication.com/pagead/show_ads.js" type=text/javascript></SCRIPT>
+<IFRAME name=google_ads_frame marginWidth=0 marginHeight=0 src="http://pagead2.googlesyndication.com/pagead/ads?client=ca-pub-1479578193153787&amp;dt=1196336819375&amp;lmt=1196336819&amp;format=728x15_0ads_al&amp;output=html&amp;correlator=1196336819375&amp;channel=9208266148&amp;url=http%3A%2F%2Fwww.fortunecity.com%2Fskyscraper%2Farpanet%2F6%2Fcc.htm&amp;ref=http%3A%2F%2Fwww.newsmth.net%2Fbbstcon.php%3Fboard%3DLinuxApp%26gid%3D547682&amp;cc=831&amp;ga_vid=526882018.1196336819&amp;ga_sid=1196336819&amp;ga_hid=1630734476&amp;flash=7&amp;u_h=768&amp;u_w=1024&amp;u_ah=738&amp;u_aw=1024&amp;u_cd=32&amp;u_tz=480&amp;u_java=true" frameBorder=0 width=728 scrolling=no height=15 allowTransparency></IFRAME></CENTER><B><FONT face=Arial size=4>
+<P>A Crash Course in UNIX TCP/IP Socket Programming</P></B></FONT><FONT size=2>
+<P>John Selbie</P>
+<P>CEN 4500</P>
+<P>Spring 1997</P>
+<P>&nbsp;</P><B>
+<P>Introduction</P></B>
+<P>A "socket" is a loose term used to describe "an end point for communication." The traditional Berkley Socket API is a set of C function calls used to support network communication. The Sockets API is not specific to TCP/IP. Therefore, developing TCP/IP network applications requires slightly more overhead of programming and understanding to account for the generic parameters of the library's function calls. Once understood, Socket programming is as easy as reading and writing to disk files.</P>
+<P>&nbsp;</P>
+<P>The material presented here is somewhat specific to C, UNIX, and TCP/IP. However the general format for the Socket API has been ported to such languages as Java and Perl. In addition some UNIX vendors support other protocols such as IPX, SNA, and DEC-NET with their socket libraries. The Microsoft Windows version of the Socket API ("WinSock") is also very similar. It's believed that once a software developer gains a good understanding of UNIX/C Sockets, he or she can quickly understand implementations for other languages and operating systems.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>Include Files</P></B>
+<P>When writing C or C++ programs that use the socket library go ahead and include all these header files:</P>
+<P>&nbsp;</P>
+<P>UNIX:</P></FONT><FONT face="Courier New" size=2>
+<P>#include &lt;sys/types.h&gt;</P>
+<P>#include &lt;sys/socket.h&gt;</P>
+<P>#include &lt;netinet/in.h&gt;</P>
+<P>#include &lt;arpa/inet.h&gt;</P>
+<P>#include &lt;netdb.h&gt;</P>
+<P>#include &lt;unistd.h&gt;</P>
+<P>#include &lt;signal.h&gt;</P>
+<P>#include &lt;stdio.h&gt;</P>
+<P>#include &lt;fcntl.h&gt;</P>
+<P>#include &lt;errno.h&gt;</P>
+<P>#include &lt;sys/time.h&gt;</P>
+<P>#include &lt;stdlib.h&gt;</P>
+<P>#include &lt;memory.h&gt;</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></FONT><B><FONT size=2>
+<P>Compiling and Linking</P></B>
+<P>Under most versions of UNIX (Linux, BSD, SunOS, IRIX) compiling is done as usual:</P></FONT><FONT face="Courier New" size=2>
+<P>gcc my_socket_program.c -o my_socket_program</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>However, Solaris requires the developer to explicitly link the socket and network services library with the program:</P></FONT><FONT face="Courier New" size=2>
+<P>cc my_socket_program -o my_socket_program <B>-lsocket -lnsl</P></B></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>The Solaris C compiler that is usually located in /opt/SUNWspro/bin, is recommended over gcc.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>Applications and TCP/IP</P></B>
+<P>Programs written by a software developer may use either TCP or UDP for communicating with remote hosts on the Internet. Both are services that work on top of the IP network protocol. TCP is a reliable "streams" service that requires a connection establishment phase between a host making an active connection to a remote server host making a passive one. UDP is an unreliable datagram service and does not require any connection establishment before sending.</P>
+<P>&nbsp;</P>
+<P>The general order of library calls for a UDP communication session is as follows:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>socket()</P>
+<P>bind()</P>
+<P>sendto() and/or recvfrom()</P>
+<P>close()</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>For TCP clients, the order of library calls is as follows:</P></FONT><FONT face="Courier New" size=2>
+<P>socket()</P>
+<P>bind()</P>
+<P>connect()</P>
+<P>send() and/or recv()</P>
+<P>close()</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>For TCP server programs, the order of library calls is as follows:</P></FONT><FONT face="Courier New" size=2>
+<P>socket()</P>
+<P>bind()</P>
+<P>listen()</P>
+<P>accept()</P>
+<P>send() and/or recv()</P>
+<P>close()</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>Socket Address Structures</P></B>
+<P>From an application programming point of view, the only differences between network protocols are the address schemes used. Otherwise, operations such as <I>connect</I>, <I>send</I>, <I>receive</I>, and <I>disconnect</I> are probably the only things a developer has to think about when designing a network application. For TCP/IP, an ideal API would be one that understood IP addresses and port numbers. Since the socket library is designed to be used for multiple protocols, addresses are referenced by a generic structure as follows:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>struct sockaddr {</P>
+<P>unsigned short sa_family;</P>
+<P>char sa_data[14];</P>
+<P>};</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>The <I>sa_family</I> field specifies the type of protocol. For TCP/IP, this field is always set to AF_INET. The remaining 14 bytes (<I>sa_data</I>) of this structure are always protocol dependent. For TCP/IP, IP addresses and port numbers are placed in this field. To facilitate operating with these fields, a specific type of socket address structure is used instead of the one above.</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>struct sockaddr_in{</P>
+<P>short sin_family;</P>
+<P>unsigned short sin_port;</P>
+<P>struct in_addr sin_addr;</P>
+<P>char sin_zero[8];</P>
+<P>};</P>
+<P>&nbsp;</P></DIR></DIR></FONT><FONT size=2>
+<P>If it's not already apparent, these structures are compatible with each other. They both are 16 bytes in size. It is also readily seen that the first two bytes of each structure are the family field. Thus, a <I>struct sockaddr_in</I> can always be cast to a <I>struct sockaddr</I>.</P>
+<P>&nbsp;</P>
+<P>A sockaddr_in structure contains an in_addr structure as a member field. It has the following form</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>struct in_addr {</P>
+<P>unsigned long s_addr;</P>
+<P>};</P></FONT><FONT size=2>
+<P>&nbsp;</P></DIR></DIR>
+<P>Browsing the header file reveals that this really isn't the form of the structure. It's really a very complicated union designed to hold an IP address in a variety of ways. Regardless, the in_addr struct is exactly 4 bytes long, which is the same size as an IP address. In the <I>sockaddr_in</I> structure, the <I>sin_port</I> field is a 16-bit unsigned value used to represent a port number. It's important to remember that these fields always need to be set and interpreted in network byte order. For example:</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>struct sockaddr_in sin;</P>
+<P>sin.sin_family = AF_INET;</P>
+<P>sin.sin_port = htons(9999)</P>
+<P>sin.sin_addr.s_addr = inet_addr("128.227.224.3");</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>&nbsp;</P></DIR></DIR>
+<P>In the above code example, the structure sin, holds the IP address, 128.227.224.3, and references the port number 9999. Two utility functions are used to set these values. The function <I>htons</I> returns the integer argument passed into it in network byte order. The function <I>inet_addr</I> converts the string argument from a dotted-quad into a 32-bit integer. Its return value is also in network byte order.</P>
+<P>&nbsp;</P>
+<P>The structure above could be used to reference a host and application in which a datagram is to be delivered. The uses of the <I>sockaddr_in</I> structure will be covered in more detail below.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>socket</P></B>
+<P>The socket library call has the following prototype:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>int socket(int family, int type, int protocol);</P>
+<P>&nbsp;</P></FONT><FONT size=2>
+<P>In short, this function creates "an end point for communication". The return value from this function is a handle to a socket. This number is passed as a parameter to almost all of the other library calls.</P>
+<P>&nbsp;</P>
+<P>Since the focus of this document is on TCP/IP based sockets, the <I>family</I> parameter should be set to AF_INET. The type parameter can be either SOCK_STREAM (for TCP), or SOCK_DGRAM (for UDP). The protocol field is intended for specifying a specific protocol in case the network model support different types of stream and datagram models. However, TCP/IP only has one protocol for each, so this field should always be set to 0.</P>
+<P>&nbsp;</P>
+<P>Examples: </P>
+<P>To create a UDP socket:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>int s;</P>
+<P>s = socket(AF_INET, SOCK_DGRAM, 0);</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>To create a TCP socket:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>int s;</P>
+<P>s = socket(AF_INET, SOCK_STREAM, 0);</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>bind</P></B>
+<P>Before sending and receiving data with a socket, it must first be associated with a local source port and a network interface address. The mapping of a socket to a TCP/UDP source port and IP address is called a "binding".</P>
+<P>&nbsp;</P>
+<P>It may be the case where the socket is being used as a server, and thus must be able to listen for client requests on a specific port. It can also be the case that a client program doesn't need a specific source port, since all it's concerned about doing is sending and receiving messages with a specific port on the remote host.</P>
+<P>&nbsp;</P>
+<P>Further complications arise when there are more than one network devices on the host running the program. So the question of sending through "which network" must be answered as well. The <I>bind</I> function call is used to declare the mapping between the socket, the TCP/UDP source port, and the network interface device.</P>
+<P>&nbsp;</P>
+<P>The prototype for bind is as follows:</P></FONT><FONT face="Courier New" size=2>
+<P>bind(int socket, struct sockaddr *address, int address_length);</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>The first argument is a socket handle (the number returned from the <I>socket</I> function call). The second argument is a socket address structure. With TCP/IP, this is really a sockaddr_in structure. The sin_port field of the address argument is the local source port number associated with this socket. That is, for every "send" operation with this socket, the source port field in the TCP/UDP header gets set with this value. If specifying an exact source port is not required, setting this value to INADDR_ANY (0) allows the operating system to pick any available port number. The <I>sin_addr</I> field specifies which network interface device to use. Since most hosts only have one network interface and only one IP address, this field should be set with the host's own IP address. However, the socket library provides no immediate way of for a host to determine it's own IP address! However, specifying the value of INADDR_ANY (0) in this field tells the operating system to pick any available interface and address.</P>
+<P>&nbsp;</P>
+<P>The address of the <I>sockaddr_in</I> structure is passed into the <I>bind</I> call, so that the socket will now be ready to communicate with remote hosts. The third parameter passed to <I>bind</I> is the length of the <I>sockaddr_in</I> structure.</P>
+<P>&nbsp;</P>
+<P>Example:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>struct sockaddr_in sin;</P>
+<P>int s;</P>
+<P>&nbsp;</P>
+<P>s = socket(AF_INET, SOCK_DGRAM, 0);</P>
+<P>sin.sin_family = AF_INET;</P>
+<P>sin.sin_port = htons(9999);</P>
+<P>sin.sin_addr.s_addr = INADDR_ANY;</P>
+<P>&nbsp;</P>
+<P>bind(s, (struct sockaddr *)&amp;sin, sizeof(sin));</P>
+<P>&nbsp;</P>
+<P>/* s is now a usable UDP socket. Source port is 9999 */</P>
+<P>&nbsp;</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>It is recommended that the return from <I>bind</I> be checked. <I>Bind</I> will fail by returning -1 if the port that is being requested for use is already taken. When bind is called on a UDP socket, the socket is now ready to send and receive datagrams. For TCP sockets, the socket is now ready for the <I>connect</I> or <I>accept</I> calls.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>UDP Sockets</P></B>
+<P>Once a UDP socket has been created and bound to a local source port, it is now capable of being used for sending and receiving datagrams. The functions for sending and receiving datagrams are <I>sendto</I> and <I>recvfom</I>. <I>Sendto</I> has the following prototype:</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>int sendto(int socket, char *buffer, int length, int flags, struct sockaddr *destination_address, int address_size);</P></FONT><FONT size=2>
+<P>&nbsp;</P></DIR></DIR></DIR></DIR>
+<P>Where <I>socket</I> is a UDP socket that has been created and bound to a source port. <I>buffer</I> is a pointer to an array of bytes that are to be sent over the network. The <I>length</I> field specifies how long this array is. The <I>flags</I> field is normally 0. </P>
+<P>&nbsp;</P>
+<P>The destination address is also a sockaddr structure. A <I>sockaddr_in</I> structure can be casted into this field. Use the <I>sin_addr</I> field to specify the destination IP address and <I>sin_port</I> for the destination port.</P>
+<P>&nbsp;</P>
+<P>For example:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>struct sockaddr_in sin;</P>
+<P>sin.sin_family = AF_INET;</P>
+<P>sin.sin_port = htons(12345); // htons for network byte order</P>
+<P>sin.sin_addr.s_addr = inet_addr("128.227.22.43");</P>
+<P>char *msg = "Hello, World";</P>
+<P>&nbsp;</P>
+<P>sendto(s, msg, strlen(msg)+1, 0, (struct sockaddr *)sin, sizeof(sin));</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>In the above example, <I>s</I> is assumed to be a created UDP socket that has already bound to a local port. When <I>sendto</I> is called, a UDP datagram is sent to the host at 128.227.22.43. It's assumed there is a process with a socket bound to port 12345 waiting on a <I>recvfrom</I> call to receive the contents of the message being sent. The <I>sendto</I> function returns the number of bytes sent, or -1 if an error occurred. With UDP sockets, it's not usually necessary to check to see how many bytes were sent because this information is specified in the <I>length</I> field.</P><I>
+<P>Recvfrom</I> has the following prototype:</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>int recvfrom(int socket, char *buffer, int length, int flags, struct sockaddr *sender_address, int *address_size);</P></FONT><FONT size=2>
+<P>&nbsp;</P></DIR></DIR></DIR></DIR><I>
+<P>Recvfrom</I> is similar to <I>sendto</I>. <I>Buffer</I> is a pointer to a byte array that is to be filled with the contents of the datagram. The <I>length</I> argument specifies the maximum length to copy into buffer. This is to prevent buffer over-run errors in case the datagram is larger than expected. The <I>flags</I> field is normally 0. The <I>sender_address</I> argument is a pointer to a socket address structure that gets filled with a copy of the sender's IP address and source port. The <I>address_size</I> parameter must be initialized to the size of the sockaddr structure being used. On return it will hold the number of bytes that were copied into the <I>sender_address</I> structure.</P>
+<P>&nbsp;</P><I>
+<P>Recvfrom</I> returns the number of bytes copied into the byte array pointed to by buffer. If the buffer space specified in <I>length</I> is less than that of the original datagram, only <I>length</I> bytes will be copied into buffer, and the rest will be lost.</P>
+<P>&nbsp;</P>
+<P>For example:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>struct sockaddr_in sin;</P>
+<P>char msg[10000];</P>
+<P>int ret;</P>
+<P>int sin_length;</P>
+<P>&nbsp;</P>
+<P>sin_length = sizeof(sin);</P>
+<P>ret = recvfrom(s, msg, 10000, 0, (struct sockaddr *)sin, &amp;sin_length);</P>
+<P>&nbsp;</P>
+<P>printf("%d bytes received from %s (port %d)\n",</P>
+<P>ret, inet_ntoa(sin.sin_addr), sin.sin_port);</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>In the above example, <I>recvfrom</I> will wait until it receives a datagram on the local port associated with the socket <I>s</I>. The <I>printf</I> statement will list information regarding the size, source IP address, and source port of the datagram received.</P>
+<P>&nbsp;</P>
+<P>For any open socket that has been successfully binded to a port, the application may call <I>sendto</I> and <I>recvfrom</I> using that socket as many times as it needs to.</P>
+<P>&nbsp;</P>
+<P>Fragmentation is completely transparent to the applications that are sending and receiving datagrams.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>TCP Sockets</P>
+<P>&nbsp;</P>
+<P>&lt;TO BE ADDED SOMETIME LATER&gt;</P>
+<P>connect()</P>
+<P>listen() / accept()</P>
+<P>send()</P>
+<P>recv()</P>
+<P>&nbsp;</P></B>
+<P>&nbsp;</P><B>
+<P>close</P></B>
+<P>When the data transfer session is over, simply call close on the socket as you would a file:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>close(s); // s is a created socket</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>For UDP sockets, this will release the ownership on the local port that is bound to this socket. For TCP, this will initiate a two-way shutdown between both hosts before giving up port ownership.</P>
+<P>&nbsp;</P>
+<P>If a TCP socket calls <I>close</I>, any pending or subsequent <I>recv</I> calls by the remote host will result in <I>recv</I> returning 0 to indicate a connection shutdown on the other end has occurred. Attempting to call <I>send</I> on a socket that is connected to a host that has called close will result in <I>send</I> returning -1. Unless it's known a priori that the remote host has only called <I>shutdown</I>, it is recommended that the application call close on it's socket so that the TCP connection will be properly terminated on both sides.</P>
+<P>&nbsp;</P><B>
+<P>shutdown</P></B>
+<P>TCP sockets can also engage in a half-close operation using the shutdown function call. It's prototype is as follows:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>shutdown(int socket, int how);</P>
+<P>&nbsp;</P></FONT><FONT size=2>
+<P>If the <I>how</I> field is 0, this will disallow further reading (<I>recv</I>) from the socket. If the <I>how</I> field is 1, subsequent writes (send) will be disallowed. The socket will still need to be passed to <I>close</I>.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>Relationship Between Sockets and File Descriptors </P></B>
+<P>Socket handles are integer values. In UNIX, socket handles can be passed to most of the low-level POSIX I/O functions. For example:</P>
+<P>&nbsp;</P></FONT><FONT face="Courier New" size=2>
+<P>read(s, buffer, buffer_len);</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>In the above example, s could be either a socket or file handle. Calling <I>read</I> on an open socket is equivalent to <I>recv</I> and <I>recvfrom</I>. However, if the socket is UDP, then information about the sender of the datagram will not be returned. Similarly the <I>write</I> function call is equivalent to <I>send</I> and <I>sendto</I>. UDP sockets may call <I>connect</I> to use <I>send</I> and <I>write</I>. It's always recommended that the socket library functions be used instead of the file I/O equivalents.</P>
+<P>&nbsp;</P><B>
+<P>&nbsp;</P>
+<P>Utility Functions</P></B>
+<P>There are several library calls that are not actually part of the socket library family, but are nevertheless used in socket programming. Below is a brief description of each.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></FONT><B><FONT face="Courier New" size=2>
+<P>unsigned int inet_addr(char *str);</P></B></FONT><FONT size=2>
+<P>If the string contained in <I>str</I> represents an IP address it dotted-quad notation, <I>inet_addr</I> will return it's equivalent 32-bit value in network byte order. This value can be passed into the <I>sin_addr.s_addr</I> field of a <I>socketaddr_in</I> structure. If the string can not be interpreted as a dotted-quad, -1 is returned (casted as an unsigned integer).</P>
+<P>&nbsp;</P></FONT><B><FONT face="Courier New" size=2>
+<P>char *inet_ntoa(struct in_addr ip);</P></B></FONT><FONT size=2>
+<P>Converts the 32-bit value which is assumed to be in network byte order and contained in <I>ip</I> to a string. The pointer returned by <I>inet_ntoa</I> contains this string. However, subsequent calls to <I>inet_ntoa</I> will always return the same pointer, so copying the string to another buffer is recommended before calling again.</P>
+<P>&nbsp;</P></FONT><B><FONT face="Courier New" size=2>
+<P>int gethostname(char *name, int length);</P></B></FONT><FONT size=2>
+<P>Copies the name (up to <I>length</I> bytes) of the hostname of the local computer into the character array pointed to by <I>name</I>.</P>
+<P>&nbsp;</P></FONT><B><FONT face="Courier New" size=2>
+<P>struct hostent *gethostbyname(char *strHost);</P></B></FONT><FONT size=2>
+<P>If the string contained in <I>strHost</I> represents a host name (such as "rain" or "rain.cise.ufl.edu"), <I>gethostbyname</I> will return a pointer to a hostent structure containing additional information about the host including additional names and IP addresses associate with that host. <I>Gethostbyname</I> will does all the work of looking up address entries in local database files as well as making DNS queries. NULL is returned if the host name is unknown.</P>
+<P>&nbsp;</P>
+<P>The format for the hostent structure is as follows:</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>struct hostent {</P>
+<P>char * h_name; /* official name of host */</P>
+<P>char ** h_aliases; /* alias list */</P>
+<P>short h_addrtype; /* host address type */</P>
+<P>short h_length; /* length of address */</P>
+<P>char ** h_addr_list; /* list of addresses */</P>
+<P>#define h_addr h_addr_list[0] /* address, for backward compat */</P>
+<P>};</P>
+<P>&nbsp;</P></DIR></DIR></FONT><FONT size=2>
+<P>In short, the first IP address is contained within the first 4 bytes of the first entry in h_addr_list. h_addr can be used to reference this value. Using <I>gethostbyname</I> and <I>inet_addr</I>, a very good resolver function can be written to convert strings the user types as Internet addresses into equivalent 32-bit numbers for socket calls. </P>
+<P>&nbsp;</P>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>unsigned int resolve(char *ip_addr)</P>
+<P>{</P>
+<P>struct hostent *hp;</P>
+<P>unsigned int ip;</P>
+<P>&nbsp;</P>
+<P>hp = gethostbyname(ip_addr);</P>
+<P>if (!hp)</P>
+<P>{</P>
+<P>ip = inet_addr(ip_addr);</P>
+<P>if ((int)ip == -1)</P>
+<P>return -1;</P>
+<P>else return ip;</P>
+<P>}</P>
+<P>&nbsp;</P>
+<P>// hp-&gt;h_length should equal to 4</P>
+<P>memcpy(&amp;ip, hp-&gt;h_addr, 4);</P>
+<P>return ip;</P>
+<P>}</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></DIR></DIR><B>
+<P>unsigned long htonl(unsigned long ul);</P>
+<P>unsigned long ntohl(unsigned long ul);</P>
+<P>unsigned short ntohs(unsigned short us);</P>
+<P>unsigned short htons(unsigned short us);</P></B></FONT><FONT size=2>
+<P>These functions are very useful for converting integer values to and from network byte order. On big-endian machines such as Sun Sparcs and Motorola processors, these functions simply return the value passed as an argument. On little endian machines such as the Intel x86 and any system running Windows NT, these calls will perform byte swapping operations. On most machines, <I>htons</I> is equivalent to <I>ntohs</I>. This may not be true for future 64-bit systems or other architectures.</P>
+<P>&nbsp;</P></FONT><B><FONT face="Courier New" size=2>
+<P>int select (int nfds, fd_set *readfds, fd_set *writefds, fd_set *exceptfds,</P>
+<DIR>
+<DIR>
+<P>const struct timeval *timeout);</FONT><FONT face="Courier New"> </P></DIR></DIR></B></FONT><FONT size=2>
+<P>When an application calls <I>recv</I> or <I>recvfrom</I> it is blocked until data arrives for that socket. An application could be doing other useful processing while the incoming data stream is empty. Another potential problem situation is when an application receives data from multiple sockets. Calling <I>recv</I> or <I>recvfrom</I> on a socket that has no data in it's input queue prevents immediate reception of data from other sockets. The <I>select</I> function call solves this problem by allowing the program to poll all the socket handles to see if they are available for non-blocking reading and writing operations.</P>
+<P>&nbsp;</P>
+<P>A description of the arguments in <I>select</I> is as follows:</P><I>
+<P>nfds</I> - Some socket implementations ignore this argument. It's value should be equal to 1 + (the socket handle with the highest value.)</P>
+<P>&nbsp;</P><I>
+<P>readfds</I> - A pointer to a set of file and socket descriptors that are to be polled for non-blocking reading and writing operations. Can be NULL to indicate an empty set.</P>
+<P>&nbsp;</P><I>
+<P>writefds</I>, <I>exceptfds</I> - Same as <I>readfds</I>, except these sets contain the file/socket handles to poll for non-blocking writing operations and error detection. Can be NULL to indicate an empty set.</P>
+<P>&nbsp;</P><I>
+<P>timeout</I> - A pointer to a timeval struct that specifies how long the <I>select</I> call should poll the descriptors for an available I/O operation. If the timeout value is 0, then <I>select</I> will return immediately. If the <I>timeout</I> argument is NULL, then select will block until at least one file/socket handle is ready for an available I/O operation. Otherwise <I>select</I> will return after the amount of time in the timeout has elapsed OR when at least one file/socket descriptor is ready for an I/O operation.</P>
+<P>&nbsp;</P>
+<P>The return value from <I>select</I> is the number of handles specified in the file descriptor sets that are ready for I/O. If the time limit specified by the timeout field is reached, <I>select</I> return 0. The following macros exist for manipulating a file descriptor set:</P>
+<P>&nbsp;</P>
+<DIR>
+<DIR></FONT><FONT face="Courier New" size=2>
+<P>FD_CLR(s, *set)</FONT><FONT face="Courier New"> </FONT><FONT face="Courier New" size=2>Removes the descriptor s from set.</P>
+<P>FD_ISSET(s, *set)</FONT><FONT face="Courier New"> </FONT><FONT face="Courier New" size=2>Nonzero if s is a member of the set, zero otherwise.</P>
+<P>FD_SET(s, *set)</FONT><FONT face="Courier New"> </FONT><FONT face="Courier New" size=2>Adds descriptor s to set.</P>
+<P>FD_ZERO(*set)</FONT><FONT face="Courier New"> </FONT><FONT face="Courier New" size=2>Initializes the set to the NULL set.</P>
+<P>&nbsp;</P></DIR></DIR>
+<P>Example:</P>
+<P>fd_set fds;</P>
+<P>struct timeval tv;</P>
+<P>// sock is an intialized socket handle</P>
+<P>&nbsp;</P>
+<P>tv.tv_sec = 2;</P>
+<P>tv.tv_usec = 500000;</P>
+<P>// tv now represents 2.5 seconds</P>
+<P>&nbsp;</P>
+<P>FD_ZERO(&amp;fds);</P>
+<P>FD_SET(sock, &amp;fds); // adds sock to the file descriptor set</P>
+<P>&nbsp;</P>
+<P>/* wait 2.5 seconds for any data to be read from any single socket */</P>
+<P>select(sock+1, &amp;fds, NULL, NULL, &amp;tv);</P>
+<P>&nbsp;</P>
+<P>if (FD_ISSET(sock, &amp;fds))</P>
+<P>recvfrom(s, buffer, buffer_len, 0, &amp;sa, &amp;sa_len);</P>
+<P>else </P>
+<P>/* do something else */</P></FONT><FONT size=2>
+<P>&nbsp;</P>
+<P>&nbsp;</P><B>
+<P>Conclusions</P></B>
+<P>Developers who use the function calls described in this document should always check the return value for each. Consulting the UNIX on-line manual pages ("man") for a complete description of each function call is recommended as well.</P>
+<P>&nbsp;</P>
+<P>&nbsp;</P></FONT<SCRIPT language=Javascript><!--
+
+setonclickmethods();
+
+// --></SCRIPT>
+<CENTER>
+<DIV id=fclinkback style="VISIBILITY: visible">
+<P><FONT face="Verdana, Helvetica, Arial, sans-serif" size=1><A id=fcfootergif href="http://www.fortunecity.com/?sid=fcfootergif" target=_new><IMG src="http://www.fortunecity.com/images/fc_logo_white122x30.gif" border=0></A><BR><A id=fcfooterhosting href="http://www.fortunecity.com/?sid=fcfooterhosting" target=_new>web hosting</A> • <A id=fcfooterdomains href="http://www.fortunecity.com/?sid=fcfooterdomains" target=_new>domain names</A> • <A id=fcfootervideo href="http://www.myphotoalbum.com/video-sharing.shtml?sid=fcfootervideo" target=_new>video sharing</A><BR><A href="http://www.hotgames.com/" target=_new>online games</A> • <A id=fcfootermpa href="http://www.myphotoalbum.com/?sid=fcfootermpa" target=_new>photo sharing</A><BR><A id=fcfooterblog href="http://www.myblogsite.com/?sid=fcfooterblog" target=_new>free blog</A> • <A href="http://www.ampiramedia.com/" target=_new>advertising online</A><BR></FONT></P></DIV>
+<SCRIPT language=Javascript>
+<!--
+
+if(FCWindowWidth > 400) {                                                       
+
+        document.getElementById('fclinkback').style.visibility = "visible";  
+        document.getElementById('fcfootergif').search = '?sid=fcfootergif';
+        document.getElementById('fcfooterhosting').search = '?sid=fcfooterhosting';
+        document.getElementById('fcfooterdomains').search = '?sid=fcfooterdomains';
+        document.getElementById('fcfootervideo').search = '?sid=fcfootervideo';
+	document.getElementById('fcfootermpa').search = '?sid=fcfootermpa';
+	document.getElementById('fcfooterblog').search = '?sid=fcfooterblog';
+
+	google_ad_client = "pub-1479578193153787";
+	google_ad_type = "text_image";
+
+	if(fcadunit != 'adult') {
+
+		if(FCWindowWidth > 700) {
+
+			google_ad_channel = "4854466040";
+			google_ad_width = 728;
+			google_ad_height = 90;
+			google_ad_format = "728x90_as";
+		}
+			
+
+		else {
+			google_ad_channel = "6700073483";
+			google_ad_width = 468;
+			google_ad_height = 60;
+			google_ad_format = "468x60_as";
+		}
+
+		document.write('<center><script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js"></script></center>');
+
+		document.write('<center><script type="text/javascript" src="http://fortunecity.us.intellitxt.com/intellitxt/front.asp?ipid=10049"></script></center>');
+
+	}
+}
+
+// -->
+</SCRIPT>
+
+<CENTER>
+<SCRIPT src="http://pagead2.googlesyndication.com/pagead/show_ads.js" type=text/javascript></SCRIPT>
+</CENTER>
+<CENTER>
+<SCRIPT src="http://fortunecity.us.intellitxt.com/intellitxt/front.asp?ipid=10049" type=text/javascript></SCRIPT>
+</CENTER><IFRAME name=google_ads_frame marginWidth=0 marginHeight=0 src="http://pagead2.googlesyndication.com/pagead/ads?client=ca-pub-1479578193153787&amp;dt=1196336843562&amp;lmt=1196336843&amp;prev_fmts=728x15_0ads_al&amp;format=728x90_as&amp;output=html&amp;correlator=1196336843562&amp;channel=4854466040&amp;url=http%3A%2F%2Fwww.fortunecity.com%2Fskyscraper%2Farpanet%2F6%2Fcc.htm&amp;ad_type=text_image&amp;ref=http%3A%2F%2Fwww.newsmth.net%2Fbbstcon.php%3Fboard%3DLinuxApp%26gid%3D547682&amp;cc=5&amp;ga_vid=526882018.1196336819&amp;ga_sid=1196336819&amp;ga_hid=1630734476&amp;flash=7&amp;u_h=768&amp;u_w=1024&amp;u_ah=738&amp;u_aw=1024&amp;u_cd=32&amp;u_tz=480&amp;u_java=true" frameBorder=0 width=728 scrolling=no height=90 allowTransparency></IFRAME></CENTER></FONT>

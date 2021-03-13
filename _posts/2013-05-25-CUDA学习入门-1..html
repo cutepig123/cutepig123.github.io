@@ -1,0 +1,691 @@
+<p><strong>关于俺的显卡</strong></p>
+<p>NVidia NVS 4200M<br />support opencl, directx11, DirectCompute, OpenGL 2.1 <br />Memory Amount 1GB<br />CUDA compute capability 2.1</p>
+<p><strong>步骤</strong></p>
+<p>1. download cuda5 from https://developer.nvidia.com/thrust<br />2. install<br />中间有一步安装toolkit失败。。（为啥呀为啥？）</p>
+<p><img src="http://images.cnitblog.com/blog/23777/201305/25130911-f68c445ad80a40179d760e43789792c6.jpg" alt="" /><br />3. 编译例子程序成功，但是运行失败<br />F:\Documents and Settings\All Users\Application Data\NVIDIA Corporation\CUDA Sam<br />ples\v5.0\bin\win32\Debug&gt;vectorAdd.exe<br />[Vector addition of 50000 elements]<br />Failed to allocate device vector A (error code CUDA driver version is insufficient for CUDA runtime version)! （为啥呀为啥？）</p>
+<p>以下是例子程序</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('cade757d-158a-40f4-87c9-821c38ed62f9')"><img id="code_img_closed_cade757d-158a-40f4-87c9-821c38ed62f9" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_cade757d-158a-40f4-87c9-821c38ed62f9" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('cade757d-158a-40f4-87c9-821c38ed62f9',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_cade757d-158a-40f4-87c9-821c38ed62f9" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">*
+ * Copyright 1993-2012 NVIDIA Corporation.  All rights reserved.
+ *
+ * Please refer to the NVIDIA end user license agreement (EULA) associated
+ * with this source code for terms and conditions that govern your use of
+ * this software. Any use, reproduction, disclosure, or distribution of
+ * this software and related documentation outside the terms of the EULA
+ * is strictly prohibited.
+ *
+ </span><span style="color: #008000;">*/</span>
+
+<span style="color: #008000;">/*</span><span style="color: #008000;">*
+ * Vector addition: C = A + B.
+ *
+ * This sample is a very basic sample that implements element by element
+ * vector addition. It is the same as the sample illustrating Chapter 2
+ * of the programming guide with some additions like error checking.
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+#include </span>&lt;stdio.h&gt;
+
+<span style="color: #008000;">//</span><span style="color: #008000;"> For the CUDA runtime routines (prefixed with "cuda_")</span>
+#include &lt;cuda_runtime.h&gt;
+
+<span style="color: #008000;">/*</span><span style="color: #008000;">*
+ * CUDA Kernel Device code
+ *
+ * Computes the vector addition of A and B into C. The 3 vectors have the same
+ * number of elements numElements.
+ </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+__global__ </span><span style="color: #0000ff;">void</span><span style="color: #000000;">
+vectorAdd(</span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">float</span> *A, <span style="color: #0000ff;">const</span> <span style="color: #0000ff;">float</span> *B, <span style="color: #0000ff;">float</span> *C, <span style="color: #0000ff;">int</span><span style="color: #000000;"> numElements)
+{
+    </span><span style="color: #0000ff;">int</span> i = blockDim.x * blockIdx.x +<span style="color: #000000;"> threadIdx.x;
+
+    </span><span style="color: #0000ff;">if</span> (i &lt;<span style="color: #000000;"> numElements)
+    {
+        C[i] </span>= A[i] +<span style="color: #000000;"> B[i];
+    }
+}
+
+</span><span style="color: #008000;">/*</span><span style="color: #008000;">*
+ * Host main routine
+ </span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">int</span><span style="color: #000000;">
+main(</span><span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Error code to check return values for CUDA calls</span>
+    cudaError_t err =<span style="color: #000000;"> cudaSuccess;
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Print the vector length to be used, and compute its size</span>
+    <span style="color: #0000ff;">int</span> numElements = <span style="color: #800080;">50000</span><span style="color: #000000;">;
+    size_t size </span>= numElements * <span style="color: #0000ff;">sizeof</span>(<span style="color: #0000ff;">float</span><span style="color: #000000;">);
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">[Vector addition of %d elements]\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, numElements);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the host input vector A</span>
+    <span style="color: #0000ff;">float</span> *h_A = (<span style="color: #0000ff;">float</span> *<span style="color: #000000;">)malloc(size);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the host input vector B</span>
+    <span style="color: #0000ff;">float</span> *h_B = (<span style="color: #0000ff;">float</span> *<span style="color: #000000;">)malloc(size);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the host output vector C</span>
+    <span style="color: #0000ff;">float</span> *h_C = (<span style="color: #0000ff;">float</span> *<span style="color: #000000;">)malloc(size);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Verify that allocations succeeded</span>
+    <span style="color: #0000ff;">if</span> (h_A == NULL || h_B == NULL || h_C ==<span style="color: #000000;"> NULL)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to allocate host vectors!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Initialize the host input vectors</span>
+    <span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i &lt; numElements; ++<span style="color: #000000;">i)
+    {
+        h_A[i] </span>= rand()/(<span style="color: #0000ff;">float</span><span style="color: #000000;">)RAND_MAX;
+        h_B[i] </span>= rand()/(<span style="color: #0000ff;">float</span><span style="color: #000000;">)RAND_MAX;
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the device input vector A</span>
+    <span style="color: #0000ff;">float</span> *d_A =<span style="color: #000000;"> NULL;
+    err </span>= cudaMalloc((<span style="color: #0000ff;">void</span> **)&amp;<span style="color: #000000;">d_A, size);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to allocate device vector A (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the device input vector B</span>
+    <span style="color: #0000ff;">float</span> *d_B =<span style="color: #000000;"> NULL;
+    err </span>= cudaMalloc((<span style="color: #0000ff;">void</span> **)&amp;<span style="color: #000000;">d_B, size);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to allocate device vector B (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the device output vector C</span>
+    <span style="color: #0000ff;">float</span> *d_C =<span style="color: #000000;"> NULL;
+    err </span>= cudaMalloc((<span style="color: #0000ff;">void</span> **)&amp;<span style="color: #000000;">d_C, size);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to allocate device vector C (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Copy the host input vectors A and B in host memory to the device input vectors in
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> device memory</span>
+    printf(<span style="color: #800000;">"</span><span style="color: #800000;">Copy input data from the host memory to the CUDA device\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    err </span>=<span style="color: #000000;"> cudaMemcpy(d_A, h_A, size, cudaMemcpyHostToDevice);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to copy vector A from host to device (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    err </span>=<span style="color: #000000;"> cudaMemcpy(d_B, h_B, size, cudaMemcpyHostToDevice);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to copy vector B from host to device (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Launch the Vector Add CUDA Kernel</span>
+    <span style="color: #0000ff;">int</span> threadsPerBlock = <span style="color: #800080;">256</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">int</span> blocksPerGrid =(numElements + threadsPerBlock - <span style="color: #800080;">1</span>) /<span style="color: #000000;"> threadsPerBlock;
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">CUDA kernel launch with %d blocks of %d threads\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, blocksPerGrid, threadsPerBlock);
+    vectorAdd</span>&lt;&lt;&lt;blocksPerGrid, threadsPerBlock&gt;&gt;&gt;<span style="color: #000000;">(d_A, d_B, d_C, numElements);
+    err </span>=<span style="color: #000000;"> cudaGetLastError();
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to launch vectorAdd kernel (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Copy the device result vector in device memory to the host result vector
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> in host memory.</span>
+    printf(<span style="color: #800000;">"</span><span style="color: #800000;">Copy output data from the CUDA device to the host memory\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    err </span>=<span style="color: #000000;"> cudaMemcpy(h_C, d_C, size, cudaMemcpyDeviceToHost);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to copy vector C from device to host (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Verify that the result vector is correct</span>
+    <span style="color: #0000ff;">for</span> (<span style="color: #0000ff;">int</span> i = <span style="color: #800080;">0</span>; i &lt; numElements; ++<span style="color: #000000;">i)
+    {
+        </span><span style="color: #0000ff;">if</span> (fabs(h_A[i] + h_B[i] - h_C[i]) &gt; 1e-<span style="color: #800080;">5</span><span style="color: #000000;">)
+        {
+            fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Result verification failed at element %d!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, i);
+            exit(EXIT_FAILURE);
+        }
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Free device global memory</span>
+    err =<span style="color: #000000;"> cudaFree(d_A);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to free device vector A (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+    err </span>=<span style="color: #000000;"> cudaFree(d_B);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to free device vector B (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+    err </span>=<span style="color: #000000;"> cudaFree(d_C);
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to free device vector C (error code %s)!\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Free host memory</span>
+<span style="color: #000000;">    free(h_A);
+    free(h_B);
+    free(h_C);
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Reset the device and exit</span>
+    err =<span style="color: #000000;"> cudaDeviceReset();
+
+    </span><span style="color: #0000ff;">if</span> (err !=<span style="color: #000000;"> cudaSuccess)
+    {
+        fprintf(stderr, </span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to deinitialize the device! error=%s\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, cudaGetErrorString(err));
+        exit(EXIT_FAILURE);
+    }
+
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">Done\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>
+<p>&nbsp;4. 安装后，有个DeviceQuery.exe，运行失败</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('cf573eeb-ee59-4bc7-89df-fee75101a190')"><img id="code_img_closed_cf573eeb-ee59-4bc7-89df-fee75101a190" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_cf573eeb-ee59-4bc7-89df-fee75101a190" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('cf573eeb-ee59-4bc7-89df-fee75101a190',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_cf573eeb-ee59-4bc7-89df-fee75101a190" class="cnblogs_code_hide">
+<pre>F:\Documents and Settings\All Users\Application Data\NVIDIA Corporation\<span style="color: #000000;">NVIDIA G
+PU Computing SDK </span>4.0\C\bin\win32\Release&gt;deviceQuery.<span style="color: #000000;">exe
+[deviceQuery</span>.exe] starting...<span style="color: #000000;">
+deviceQuery</span>.exe Starting...<span style="color: #000000;">
+
+ CUDA </span><span style="color: #0000ff;">Device</span> Query (Runtime API) version (CUDART static linking)<span style="color: #000000;">
+
+cudaGetDeviceCount returned </span>35<span style="color: #000000;">
+-</span>&gt; CUDA driver version is insufficient <span style="color: #0000ff;">for</span><span style="color: #000000;"> CUDA runtime version
+[deviceQuery</span>.exe] test results...<span style="color: #000000;">
+FAILED</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>5. 俺看到还有个oclDeviceQuery.exe，这应该是opencl版本的测试程序。点了一下这个能运行，以下是输出信息。</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('0cbc5be3-9347-49be-82e5-ee8338919a53')"><img id="code_img_closed_0cbc5be3-9347-49be-82e5-ee8338919a53" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_0cbc5be3-9347-49be-82e5-ee8338919a53" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('0cbc5be3-9347-49be-82e5-ee8338919a53',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_0cbc5be3-9347-49be-82e5-ee8338919a53" class="cnblogs_code_hide">
+<pre>[oclDeviceQuery.exe] starting...<span style="color: #000000;">
+F:</span>\Documents and Settings\All Users\Application Data\NVIDIA Corporation\<span style="color: #000000;">NVIDIA G
+PU Computing SDK </span>4.0\OpenCL\Bin\Win32\release\oclDeviceQuery.exe Starting...<span style="color: #000000;">
+
+OpenCL SW Info:
+
+ CL_PLATFORM_NAME:      NVIDIA CUDA
+ CL_PLATFORM_VERSION:   OpenCL </span>1.0 CUDA 3.2.1<span style="color: #000000;">
+ OpenCL SDK Revision:   </span>7027912<span style="color: #000000;">
+
+
+OpenCL </span><span style="color: #0000ff;">Device</span><span style="color: #000000;"> Info:
+
+ </span>1<span style="color: #000000;"> devices found supporting OpenCL:
+
+ ---------------------------------
+ </span><span style="color: #0000ff;">Device</span><span style="color: #000000;"> NVS 4200M
+ ---------------------------------
+  CL_DEVICE_NAME:                       NVS 4200M
+  CL_DEVICE_VENDOR:                     NVIDIA Corporation
+  CL_DRIVER_VERSION:                    </span>268.24<span style="color: #000000;">
+  CL_DEVICE_VERSION:                    OpenCL </span>1.0<span style="color: #000000;"> CUDA
+  CL_DEVICE_TYPE:                       CL_DEVICE_TYPE_GPU
+  CL_DEVICE_MAX_COMPUTE_UNITS:          </span>1<span style="color: #000000;">
+  CL_DEVICE_MAX_WORK_ITEM_DIMENSIONS:   </span>3<span style="color: #000000;">
+  CL_DEVICE_MAX_WORK_ITEM_SIZES:        </span>1024 / 1024 / 64<span style="color: #000000;">
+  CL_DEVICE_MAX_WORK_GROUP_SIZE:        </span>1024<span style="color: #000000;">
+  CL_DEVICE_MAX_CLOCK_FREQUENCY:        </span>1620<span style="color: #000000;"> MHz
+  CL_DEVICE_ADDRESS_BITS:               </span>32<span style="color: #000000;">
+  CL_DEVICE_MAX_MEM_ALLOC_SIZE:         </span>255<span style="color: #000000;"> MByte
+  CL_DEVICE_GLOBAL_MEM_SIZE:            </span>1023<span style="color: #000000;"> MByte
+  CL_DEVICE_ERROR_CORRECTION_SUPPORT:   no
+  CL_DEVICE_LOCAL_MEM_TYPE:             local
+  CL_DEVICE_LOCAL_MEM_SIZE:             </span>48<span style="color: #000000;"> KByte
+  CL_DEVICE_MAX_CONSTANT_BUFFER_SIZE:   </span>64<span style="color: #000000;"> KByte
+  CL_DEVICE_QUEUE_PROPERTIES:           CL_QUEUE_OUT_OF_ORDER_EXEC_MODE_ENABLE
+  CL_DEVICE_QUEUE_PROPERTIES:           CL_QUEUE_PROFILING_ENABLE
+  CL_DEVICE_IMAGE_SUPPORT:              </span>1<span style="color: #000000;">
+  CL_DEVICE_MAX_READ_IMAGE_ARGS:        </span>128<span style="color: #000000;">
+  CL_DEVICE_MAX_WRITE_IMAGE_ARGS:       </span>8<span style="color: #000000;">
+  CL_DEVICE_SINGLE_FP_CONFIG:           denorms INF-quietNaNs round-to-nearest r
+ound-to-zero round-to-inf fma
+
+  CL_DEVICE_IMAGE </span>&lt;dim&gt;                 2D_MAX_WIDTH     4096<span style="color: #000000;">
+                                        2D_MAX_HEIGHT    </span>32768<span style="color: #000000;">
+                                        3D_MAX_WIDTH     </span>2048<span style="color: #000000;">
+                                        3D_MAX_HEIGHT    </span>2048<span style="color: #000000;">
+                                        3D_MAX_DEPTH     </span>2048<span style="color: #000000;">
+
+  CL_DEVICE_EXTENSIONS:                 cl_khr_byte_addressable_store
+                                        cl_khr_icd
+                                        cl_khr_gl_sharing
+                                        cl_nv_d3d9_sharing
+                                        cl_nv_compiler_options
+                                        cl_nv_device_attribute_query
+                                        cl_nv_pragma_unroll
+                                        cl_khr_global_int32_base_atomics
+                                        cl_khr_global_int32_extended_atomics
+                                        cl_khr_local_int32_base_atomics
+                                        cl_khr_local_int32_extended_atomics
+                                        cl_khr_fp64
+
+
+  CL_DEVICE_COMPUTE_CAPABILITY_NV:      </span>2.1<span style="color: #000000;">
+  NUMBER OF MULTIPROCESSORS:            </span>1<span style="color: #000000;">
+  NUMBER OF CUDA CORES:                 </span>48<span style="color: #000000;">
+  CL_DEVICE_REGISTERS_PER_BLOCK_NV:     </span>32768<span style="color: #000000;">
+  CL_DEVICE_WARP_SIZE_NV:               </span>32<span style="color: #000000;">
+  CL_DEVICE_GPU_OVERLAP_NV:             CL_TRUE
+  CL_DEVICE_KERNEL_EXEC_TIMEOUT_NV:     CL_TRUE
+  CL_DEVICE_INTEGRATED_MEMORY_NV:       CL_FALSE
+  CL_DEVICE_PREFERRED_VECTOR_WIDTH_</span>&lt;t&gt;  CHAR 1, SHORT 1, INT 1, LONG 1, FLOAT 1,<span style="color: #000000;">
+ DOUBLE </span>1<span style="color: #000000;">
+
+
+  ---------------------------------
+  2D Image Formats Supported </span>(71)<span style="color: #000000;">
+  ---------------------------------
+  </span>#     Channel Order   Channel <span style="color: #0000ff;">Type</span>
+
+  1<span style="color: #000000;">     CL_R            CL_FLOAT
+  </span>2<span style="color: #000000;">     CL_R            CL_HALF_FLOAT
+  </span>3<span style="color: #000000;">     CL_R            CL_UNORM_INT8
+  </span>4<span style="color: #000000;">     CL_R            CL_UNORM_INT16
+  </span>5<span style="color: #000000;">     CL_R            CL_SNORM_INT16
+  </span>6<span style="color: #000000;">     CL_R            CL_SIGNED_INT8
+  </span>7<span style="color: #000000;">     CL_R            CL_SIGNED_INT16
+  </span>8<span style="color: #000000;">     CL_R            CL_SIGNED_INT32
+  </span>9<span style="color: #000000;">     CL_R            CL_UNSIGNED_INT8
+  </span>10<span style="color: #000000;">    CL_R            CL_UNSIGNED_INT16
+  </span>11<span style="color: #000000;">    CL_R            CL_UNSIGNED_INT32
+  </span>12<span style="color: #000000;">    CL_A            CL_FLOAT
+  </span>13<span style="color: #000000;">    CL_A            CL_HALF_FLOAT
+  </span>14<span style="color: #000000;">    CL_A            CL_UNORM_INT8
+  </span>15<span style="color: #000000;">    CL_A            CL_UNORM_INT16
+  </span>16<span style="color: #000000;">    CL_A            CL_SNORM_INT16
+  </span>17<span style="color: #000000;">    CL_A            CL_SIGNED_INT8
+  </span>18<span style="color: #000000;">    CL_A            CL_SIGNED_INT16
+  </span>19<span style="color: #000000;">    CL_A            CL_SIGNED_INT32
+  </span>20<span style="color: #000000;">    CL_A            CL_UNSIGNED_INT8
+  </span>21<span style="color: #000000;">    CL_A            CL_UNSIGNED_INT16
+  </span>22<span style="color: #000000;">    CL_A            CL_UNSIGNED_INT32
+  </span>23<span style="color: #000000;">    CL_RG           CL_FLOAT
+  </span>24<span style="color: #000000;">    CL_RG           CL_HALF_FLOAT
+  </span>25<span style="color: #000000;">    CL_RG           CL_UNORM_INT8
+  </span>26<span style="color: #000000;">    CL_RG           CL_UNORM_INT16
+  </span>27<span style="color: #000000;">    CL_RG           CL_SNORM_INT16
+  </span>28<span style="color: #000000;">    CL_RG           CL_SIGNED_INT8
+  </span>29<span style="color: #000000;">    CL_RG           CL_SIGNED_INT16
+  </span>30<span style="color: #000000;">    CL_RG           CL_SIGNED_INT32
+  </span>31<span style="color: #000000;">    CL_RG           CL_UNSIGNED_INT8
+  </span>32<span style="color: #000000;">    CL_RG           CL_UNSIGNED_INT16
+  </span>33<span style="color: #000000;">    CL_RG           CL_UNSIGNED_INT32
+  </span>34<span style="color: #000000;">    CL_RA           CL_FLOAT
+  </span>35<span style="color: #000000;">    CL_RA           CL_HALF_FLOAT
+  </span>36<span style="color: #000000;">    CL_RA           CL_UNORM_INT8
+  </span>37<span style="color: #000000;">    CL_RA           CL_UNORM_INT16
+  </span>38<span style="color: #000000;">    CL_RA           CL_SNORM_INT16
+  </span>39<span style="color: #000000;">    CL_RA           CL_SIGNED_INT8
+  </span>40<span style="color: #000000;">    CL_RA           CL_SIGNED_INT16
+  </span>41<span style="color: #000000;">    CL_RA           CL_SIGNED_INT32
+  </span>42<span style="color: #000000;">    CL_RA           CL_UNSIGNED_INT8
+  </span>43<span style="color: #000000;">    CL_RA           CL_UNSIGNED_INT16
+  </span>44<span style="color: #000000;">    CL_RA           CL_UNSIGNED_INT32
+  </span>45<span style="color: #000000;">    CL_RGBA         CL_FLOAT
+  </span>46<span style="color: #000000;">    CL_RGBA         CL_HALF_FLOAT
+  </span>47<span style="color: #000000;">    CL_RGBA         CL_UNORM_INT8
+  </span>48<span style="color: #000000;">    CL_RGBA         CL_UNORM_INT16
+  </span>49<span style="color: #000000;">    CL_RGBA         CL_SNORM_INT16
+  </span>50<span style="color: #000000;">    CL_RGBA         CL_SIGNED_INT8
+  </span>51<span style="color: #000000;">    CL_RGBA         CL_SIGNED_INT16
+  </span>52<span style="color: #000000;">    CL_RGBA         CL_SIGNED_INT32
+  </span>53<span style="color: #000000;">    CL_RGBA         CL_UNSIGNED_INT8
+  </span>54<span style="color: #000000;">    CL_RGBA         CL_UNSIGNED_INT16
+  </span>55<span style="color: #000000;">    CL_RGBA         CL_UNSIGNED_INT32
+  </span>56<span style="color: #000000;">    CL_BGRA         CL_UNORM_INT8
+  </span>57<span style="color: #000000;">    CL_BGRA         CL_SIGNED_INT8
+  </span>58<span style="color: #000000;">    CL_BGRA         CL_UNSIGNED_INT8
+  </span>59<span style="color: #000000;">    CL_ARGB         CL_UNORM_INT8
+  </span>60<span style="color: #000000;">    CL_ARGB         CL_SIGNED_INT8
+  </span>61<span style="color: #000000;">    CL_ARGB         CL_UNSIGNED_INT8
+  </span>62<span style="color: #000000;">    CL_INTENSITY    CL_FLOAT
+  </span>63<span style="color: #000000;">    CL_INTENSITY    CL_HALF_FLOAT
+  </span>64<span style="color: #000000;">    CL_INTENSITY    CL_UNORM_INT8
+  </span>65<span style="color: #000000;">    CL_INTENSITY    CL_UNORM_INT16
+  </span>66<span style="color: #000000;">    CL_INTENSITY    CL_SNORM_INT16
+  </span>67<span style="color: #000000;">    CL_LUMINANCE    CL_FLOAT
+  </span>68<span style="color: #000000;">    CL_LUMINANCE    CL_HALF_FLOAT
+  </span>69<span style="color: #000000;">    CL_LUMINANCE    CL_UNORM_INT8
+  </span>70<span style="color: #000000;">    CL_LUMINANCE    CL_UNORM_INT16
+  </span>71<span style="color: #000000;">    CL_LUMINANCE    CL_SNORM_INT16
+
+  ---------------------------------
+  3D Image Formats Supported </span>(71)<span style="color: #000000;">
+  ---------------------------------
+  </span>#     Channel Order   Channel <span style="color: #0000ff;">Type</span>
+
+  1<span style="color: #000000;">     CL_R            CL_FLOAT
+  </span>2<span style="color: #000000;">     CL_R            CL_HALF_FLOAT
+  </span>3<span style="color: #000000;">     CL_R            CL_UNORM_INT8
+  </span>4<span style="color: #000000;">     CL_R            CL_UNORM_INT16
+  </span>5<span style="color: #000000;">     CL_R            CL_SNORM_INT16
+  </span>6<span style="color: #000000;">     CL_R            CL_SIGNED_INT8
+  </span>7<span style="color: #000000;">     CL_R            CL_SIGNED_INT16
+  </span>8<span style="color: #000000;">     CL_R            CL_SIGNED_INT32
+  </span>9<span style="color: #000000;">     CL_R            CL_UNSIGNED_INT8
+  </span>10<span style="color: #000000;">    CL_R            CL_UNSIGNED_INT16
+  </span>11<span style="color: #000000;">    CL_R            CL_UNSIGNED_INT32
+  </span>12<span style="color: #000000;">    CL_A            CL_FLOAT
+  </span>13<span style="color: #000000;">    CL_A            CL_HALF_FLOAT
+  </span>14<span style="color: #000000;">    CL_A            CL_UNORM_INT8
+  </span>15<span style="color: #000000;">    CL_A            CL_UNORM_INT16
+  </span>16<span style="color: #000000;">    CL_A            CL_SNORM_INT16
+  </span>17<span style="color: #000000;">    CL_A            CL_SIGNED_INT8
+  </span>18<span style="color: #000000;">    CL_A            CL_SIGNED_INT16
+  </span>19<span style="color: #000000;">    CL_A            CL_SIGNED_INT32
+  </span>20<span style="color: #000000;">    CL_A            CL_UNSIGNED_INT8
+  </span>21<span style="color: #000000;">    CL_A            CL_UNSIGNED_INT16
+  </span>22<span style="color: #000000;">    CL_A            CL_UNSIGNED_INT32
+  </span>23<span style="color: #000000;">    CL_RG           CL_FLOAT
+  </span>24<span style="color: #000000;">    CL_RG           CL_HALF_FLOAT
+  </span>25<span style="color: #000000;">    CL_RG           CL_UNORM_INT8
+  </span>26<span style="color: #000000;">    CL_RG           CL_UNORM_INT16
+  </span>27<span style="color: #000000;">    CL_RG           CL_SNORM_INT16
+  </span>28<span style="color: #000000;">    CL_RG           CL_SIGNED_INT8
+  </span>29<span style="color: #000000;">    CL_RG           CL_SIGNED_INT16
+  </span>30<span style="color: #000000;">    CL_RG           CL_SIGNED_INT32
+  </span>31<span style="color: #000000;">    CL_RG           CL_UNSIGNED_INT8
+  </span>32<span style="color: #000000;">    CL_RG           CL_UNSIGNED_INT16
+  </span>33<span style="color: #000000;">    CL_RG           CL_UNSIGNED_INT32
+  </span>34<span style="color: #000000;">    CL_RA           CL_FLOAT
+  </span>35<span style="color: #000000;">    CL_RA           CL_HALF_FLOAT
+  </span>36<span style="color: #000000;">    CL_RA           CL_UNORM_INT8
+  </span>37<span style="color: #000000;">    CL_RA           CL_UNORM_INT16
+  </span>38<span style="color: #000000;">    CL_RA           CL_SNORM_INT16
+  </span>39<span style="color: #000000;">    CL_RA           CL_SIGNED_INT8
+  </span>40<span style="color: #000000;">    CL_RA           CL_SIGNED_INT16
+  </span>41<span style="color: #000000;">    CL_RA           CL_SIGNED_INT32
+  </span>42<span style="color: #000000;">    CL_RA           CL_UNSIGNED_INT8
+  </span>43<span style="color: #000000;">    CL_RA           CL_UNSIGNED_INT16
+  </span>44<span style="color: #000000;">    CL_RA           CL_UNSIGNED_INT32
+  </span>45<span style="color: #000000;">    CL_RGBA         CL_FLOAT
+  </span>46<span style="color: #000000;">    CL_RGBA         CL_HALF_FLOAT
+  </span>47<span style="color: #000000;">    CL_RGBA         CL_UNORM_INT8
+  </span>48<span style="color: #000000;">    CL_RGBA         CL_UNORM_INT16
+  </span>49<span style="color: #000000;">    CL_RGBA         CL_SNORM_INT16
+  </span>50<span style="color: #000000;">    CL_RGBA         CL_SIGNED_INT8
+  </span>51<span style="color: #000000;">    CL_RGBA         CL_SIGNED_INT16
+  </span>52<span style="color: #000000;">    CL_RGBA         CL_SIGNED_INT32
+  </span>53<span style="color: #000000;">    CL_RGBA         CL_UNSIGNED_INT8
+  </span>54<span style="color: #000000;">    CL_RGBA         CL_UNSIGNED_INT16
+  </span>55<span style="color: #000000;">    CL_RGBA         CL_UNSIGNED_INT32
+  </span>56<span style="color: #000000;">    CL_BGRA         CL_UNORM_INT8
+  </span>57<span style="color: #000000;">    CL_BGRA         CL_SIGNED_INT8
+  </span>58<span style="color: #000000;">    CL_BGRA         CL_UNSIGNED_INT8
+  </span>59<span style="color: #000000;">    CL_ARGB         CL_UNORM_INT8
+  </span>60<span style="color: #000000;">    CL_ARGB         CL_SIGNED_INT8
+  </span>61<span style="color: #000000;">    CL_ARGB         CL_UNSIGNED_INT8
+  </span>62<span style="color: #000000;">    CL_INTENSITY    CL_FLOAT
+  </span>63<span style="color: #000000;">    CL_INTENSITY    CL_HALF_FLOAT
+  </span>64<span style="color: #000000;">    CL_INTENSITY    CL_UNORM_INT8
+  </span>65<span style="color: #000000;">    CL_INTENSITY    CL_UNORM_INT16
+  </span>66<span style="color: #000000;">    CL_INTENSITY    CL_SNORM_INT16
+  </span>67<span style="color: #000000;">    CL_LUMINANCE    CL_FLOAT
+  </span>68<span style="color: #000000;">    CL_LUMINANCE    CL_HALF_FLOAT
+  </span>69<span style="color: #000000;">    CL_LUMINANCE    CL_UNORM_INT8
+  </span>70<span style="color: #000000;">    CL_LUMINANCE    CL_UNORM_INT16
+  </span>71<span style="color: #000000;">    CL_LUMINANCE    CL_SNORM_INT16
+
+oclDeviceQuery</span>, Platform Name = NVIDIA CUDA, Platform Version = OpenCL 1.0<span style="color: #000000;"> CUDA
+</span>3.2.1, SDK Revision = 7027912, NumDevs = 1, <span style="color: #0000ff;">Device</span> =<span style="color: #000000;"> NVS 4200M
+
+System Info:
+
+ Local </span><span style="color: #0000ff;">Time</span>/<span style="color: #0000ff;">Date</span> = 13:19:53, 5/25/2013<span style="color: #000000;">
+ CPU Arch: </span>0<span style="color: #000000;">
+ CPU Level: </span>6
+ # of CPU processors: 4<span style="color: #000000;">
+ Windows Build: </span>2600<span style="color: #000000;">
+ Windows </span><span style="color: #0000ff;">Ver</span>: 5.1<span style="color: #000000;">
+
+
+[oclDeviceQuery</span>.exe] test results...<span style="color: #000000;">
+PASSED
+
+Press ENTER to </span><span style="color: #0000ff;">exit</span>...</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>6. opencl的带宽测试程序</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('695d992a-2f45-4f81-a502-5bf4af1a68d2')"><img id="code_img_closed_695d992a-2f45-4f81-a502-5bf4af1a68d2" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_695d992a-2f45-4f81-a502-5bf4af1a68d2" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('695d992a-2f45-4f81-a502-5bf4af1a68d2',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_695d992a-2f45-4f81-a502-5bf4af1a68d2" class="cnblogs_code_hide">
+<pre>PU Computing SDK 4.0\OpenCL\Bin\Win32\release\oclBandwidthTest.exe Starting...<span style="color: #000000;">
+
+Running </span><span style="color: #0000ff;">on</span>...<span style="color: #000000;">
+
+NVS 4200M
+
+Quick </span><span style="color: #0000ff;">Mode</span><span style="color: #000000;">
+
+Host to </span><span style="color: #0000ff;">Device</span> Bandwidth, 1 <span style="color: #0000ff;">Device</span>(s), Paged memory,<span style="color: #000000;"> direct access
+   Transfer Size </span>(Bytes)        Bandwidth(MB/s)
+   33554432                     4131.2
+
+<span style="color: #0000ff;">Device</span> to Host Bandwidth, 1 <span style="color: #0000ff;">Device</span>(s), Paged memory,<span style="color: #000000;"> direct access
+   Transfer Size </span>(Bytes)        Bandwidth(MB/s)
+   33554432                     3485.6
+
+<span style="color: #0000ff;">Device</span> to <span style="color: #0000ff;">Device</span> Bandwidth, 1 <span style="color: #0000ff;">Device</span>(s)<span style="color: #000000;">
+   Transfer Size </span>(Bytes)        Bandwidth(MB/s)
+   33554432                     8901.4<span style="color: #000000;">
+
+[oclBandwidthTest</span>.exe] test results...<span style="color: #000000;">
+PASSED</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>7 关于安装driver失败，在stackoverflow上有个人说</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('55156257-1190-44da-b401-c02b5798f542')"><img id="code_img_closed_55156257-1190-44da-b401-c02b5798f542" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_55156257-1190-44da-b401-c02b5798f542" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('55156257-1190-44da-b401-c02b5798f542',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_55156257-1190-44da-b401-c02b5798f542" class="cnblogs_code_hide">
+<pre>http://stackoverflow.com/questions/11913320/<span style="color: #000000;">installing-cuda-nvidia-graphic-driver-failed
+I have a VAIO too and I had the same problem</span>. Don't download notebook version, try Desktop version of Nvidia Driver. I also had to disable my another Graphic card (Intel). It worked <span style="color: #0000ff;">for</span> me.</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>不过也有人说要修改inf文件才行</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('951b9403-9677-436b-b505-6eda30f62a28')"><img id="code_img_closed_951b9403-9677-436b-b505-6eda30f62a28" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_951b9403-9677-436b-b505-6eda30f62a28" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('951b9403-9677-436b-b505-6eda30f62a28',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_951b9403-9677-436b-b505-6eda30f62a28" class="cnblogs_code_hide">
+<pre>Unfortunately, there are many NVIDIA GPUs <span style="color: #0000ff;">for</span> which the driver from the NVIDIA website will <span style="color: #0000ff;">not</span> install (especially <span style="color: #0000ff;">for</span> GPU versions that are specifically OEM'd <span style="color: #0000ff;">for</span> Sony, Lenovo, etc and the OEM wants to control the driver experience). This is most likely the case <span style="color: #0000ff;">for</span> you.<span style="color: #000000;">
+
+In those cases</span>, you can edit the .inf file to add your GPU into the list of GPUs <span style="color: #0000ff;">for</span> which the driver will install. However, it is a bit tricky and typically requires editing 3 different sections of the INF file. You can search around <span style="color: #0000ff;">for</span> details <span style="color: #0000ff;">on</span> how to mod NVIDIA inf <span style="color: #0000ff;">files</span>; there are a number of sites that <span style="color: #0000ff;">do</span> that.<span style="color: #000000;">
+
+Of course</span>, you have to have the appropriate CUDA driver before you can <span style="color: #0000ff;">run</span> CUDA stuff. So first things first... you've gotta get the driver installed.</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>这些俺暂时没有测试过是否有效</p>
+<p>8. 既然cuda用不了，而opencl貌似可以</p>
+<p>那俺还是转移到opencl上吧，首先测试一个例子 http://www.kimicat.com/opencl-1/opencl-jiao-xue-yi</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('906331c7-95a0-45c1-8a60-2d7a7deff025')"><img id="code_img_closed_906331c7-95a0-45c1-8a60-2d7a7deff025" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_906331c7-95a0-45c1-8a60-2d7a7deff025" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('906331c7-95a0-45c1-8a60-2d7a7deff025',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_906331c7-95a0-45c1-8a60-2d7a7deff025" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> OpenCL tutorial 1</span>
+<span style="color: #000000;">
+#include </span>&lt;iostream&gt;<span style="color: #000000;">
+#include </span>&lt;<span style="color: #0000ff;">string</span>&gt;<span style="color: #000000;">
+#include </span>&lt;vector&gt;<span style="color: #000000;">
+
+#ifdef __APPLE__
+#include </span>&lt;OpenCL/opencl.h&gt;
+<span style="color: #0000ff;">#else</span><span style="color: #000000;">
+#include </span>&lt;CL/cl.h&gt;
+<span style="color: #0000ff;">#endif</span>
+
+
+<span style="color: #0000ff;">int</span><span style="color: #000000;"> main()
+{
+
+    cl_int err;
+    cl_uint num;
+    err </span>= clGetPlatformIDs(<span style="color: #800080;">0</span>, <span style="color: #800080;">0</span>, &amp;<span style="color: #000000;">num);
+    </span><span style="color: #0000ff;">if</span>(err !=<span style="color: #000000;"> CL_SUCCESS) {
+
+        std::cerr </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Unable to get platforms\n</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    }
+
+    std::vector</span>&lt;cl_platform_id&gt;<span style="color: #000000;"> platforms(num);
+    err </span>= clGetPlatformIDs(num, &amp;platforms[<span style="color: #800080;">0</span>], &amp;<span style="color: #000000;">num);
+    </span><span style="color: #0000ff;">if</span>(err !=<span style="color: #000000;"> CL_SUCCESS) {
+
+        std::cerr </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Unable to get platform ID\n</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    }
+
+    cl_context_properties prop[] </span>= { CL_CONTEXT_PLATFORM, reinterpret_cast&lt;cl_context_properties&gt;(platforms[<span style="color: #800080;">0</span>]), <span style="color: #800080;">0</span><span style="color: #000000;"> };
+
+    cl_context context </span>=<span style="color: #000000;"> clCreateContextFromType(prop, CL_DEVICE_TYPE_DEFAULT, NULL, NULL, NULL);
+
+    </span><span style="color: #0000ff;">if</span>(context == <span style="color: #800080;">0</span><span style="color: #000000;">) {
+
+        std::cerr </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Can't create OpenCL context\n</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+    }
+
+
+    size_t cb;
+
+    clGetContextInfo(context, CL_CONTEXT_DEVICES, </span><span style="color: #800080;">0</span>, NULL, &amp;<span style="color: #000000;">cb);
+
+    std::vector</span>&lt;cl_device_id&gt; devices(cb / <span style="color: #0000ff;">sizeof</span><span style="color: #000000;">(cl_device_id));
+
+    clGetContextInfo(context, CL_CONTEXT_DEVICES, cb, </span>&amp;devices[<span style="color: #800080;">0</span>], <span style="color: #800080;">0</span><span style="color: #000000;">);
+
+
+    clGetDeviceInfo(devices[</span><span style="color: #800080;">0</span>], CL_DEVICE_NAME, <span style="color: #800080;">0</span>, NULL, &amp;<span style="color: #000000;">cb);
+
+    std::</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> devname;
+
+    devname.resize(cb);
+
+    clGetDeviceInfo(devices[</span><span style="color: #800080;">0</span>], CL_DEVICE_NAME, cb, &amp;devname[<span style="color: #800080;">0</span>], <span style="color: #800080;">0</span><span style="color: #000000;">);
+
+    std::cout </span>&lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">Device: </span><span style="color: #800000;">"</span> &lt;&lt; devname.c_str() &lt;&lt; <span style="color: #800000;">"</span><span style="color: #800000;">\n</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+
+
+    clReleaseContext(context);
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>注意设置好路径</p>
+<p>F:\Documents and Settings\All Users\Application Data\NVIDIA Corporation\NVIDIA GPU Computing SDK 4.0\OpenCL\common\inc</p>
+<p>F:\Documents and Settings\All Users\Application Data\NVIDIA Corporation\NVIDIA GPU Computing SDK 4.0\OpenCL\common\lib\Win32</p>
+<p>正常编译运行成功！</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('f65a80b7-9d1a-40a2-8064-d6212ff07fcd')"><img id="code_img_closed_f65a80b7-9d1a-40a2-8064-d6212ff07fcd" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_f65a80b7-9d1a-40a2-8064-d6212ff07fcd" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('f65a80b7-9d1a-40a2-8064-d6212ff07fcd',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_f65a80b7-9d1a-40a2-8064-d6212ff07fcd" class="cnblogs_code_hide">
+<pre><span style="color: #000000;">Device: NVS 4200M
+请按任意键继续. . .</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;9. 注： 后来俺在bios里面把intergrated GPU disable后，成功安装307.83-quadro-notebook-winxp-32bit-international-whql.exe<br />安装cuda_5.0.35_winxp_general_32-3.msi还是有错误<br />但是执行cuda程序貌似都正常了<br /><br />以下是bandwidthTest.exe测试结果，比opencl版本的快了很多</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('20148788-8662-4fb5-9cfe-08f96d36cc79')"><img id="code_img_closed_20148788-8662-4fb5-9cfe-08f96d36cc79" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_20148788-8662-4fb5-9cfe-08f96d36cc79" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('20148788-8662-4fb5-9cfe-08f96d36cc79',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_20148788-8662-4fb5-9cfe-08f96d36cc79" class="cnblogs_code_hide">
+<pre>[CUDA Bandwidth Test] -<span style="color: #000000;"> Starting...
+Running on...
+
+ Device </span><span style="color: #800080;">0</span><span style="color: #000000;">: NVS 4200M
+ Quick Mode
+
+ Host to Device Bandwidth, </span><span style="color: #800080;">1</span><span style="color: #000000;"> Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)        Bandwidth(MB</span>/<span style="color: #000000;">s)
+   </span><span style="color: #800080;">33554432</span>                     <span style="color: #800080;">6241.5</span><span style="color: #000000;">
+
+ Device to Host Bandwidth, </span><span style="color: #800080;">1</span><span style="color: #000000;"> Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)        Bandwidth(MB</span>/<span style="color: #000000;">s)
+   </span><span style="color: #800080;">33554432</span>                     <span style="color: #800080;">6302.9</span><span style="color: #000000;">
+
+ Device to Device Bandwidth, </span><span style="color: #800080;">1</span><span style="color: #000000;"> Device(s)
+ PINNED Memory Transfers
+   Transfer Size (Bytes)        Bandwidth(MB</span>/<span style="color: #000000;">s)
+   </span><span style="color: #800080;">33554432</span>                     <span style="color: #800080;">10330.3</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>devicequery结果</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('03a89232-5962-44b1-97b8-ef57ced1ca53')"><img id="code_img_closed_03a89232-5962-44b1-97b8-ef57ced1ca53" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_03a89232-5962-44b1-97b8-ef57ced1ca53" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('03a89232-5962-44b1-97b8-ef57ced1ca53',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_03a89232-5962-44b1-97b8-ef57ced1ca53" class="cnblogs_code_hide">
+<pre>ples\v5.<span style="color: #800080;">0</span><span style="color: #000000;">\bin\win32\Release\deviceQuery.exe Starting...
+
+ CUDA Device Query (Runtime API) version (CUDART </span><span style="color: #0000ff;">static</span><span style="color: #000000;"> linking)
+
+Detected </span><span style="color: #800080;">1</span><span style="color: #000000;"> CUDA Capable device(s)
+
+Device </span><span style="color: #800080;">0</span>: <span style="color: #800000;">"</span><span style="color: #800000;">NVS 4200M</span><span style="color: #800000;">"</span><span style="color: #000000;">
+  CUDA Driver Version </span>/ Runtime Version          <span style="color: #800080;">5.0</span> / <span style="color: #800080;">5.0</span><span style="color: #000000;">
+  CUDA Capability Major</span>/Minor version number:    <span style="color: #800080;">2.1</span><span style="color: #000000;">
+  Total amount of </span><span style="color: #0000ff;">global</span> memory:                 <span style="color: #800080;">1024</span> MBytes (<span style="color: #800080;">1073283072</span><span style="color: #000000;"> bytes)
+  ( </span><span style="color: #800080;">1</span>) Multiprocessors x ( <span style="color: #800080;">48</span>) CUDA Cores/MP:    <span style="color: #800080;">48</span><span style="color: #000000;"> CUDA Cores
+  GPU Clock rate:                                </span><span style="color: #800080;">1620</span> MHz (<span style="color: #800080;">1.62</span><span style="color: #000000;"> GHz)
+  Memory Clock rate:                             </span><span style="color: #800080;">800</span><span style="color: #000000;"> Mhz
+  Memory Bus Width:                              </span><span style="color: #800080;">64</span>-<span style="color: #000000;">bit
+  L2 Cache Size:                                 </span><span style="color: #800080;">65536</span><span style="color: #000000;"> bytes
+  Max Texture Dimension Size (x,y,z)             1D</span>=(<span style="color: #800080;">65536</span>), 2D=(<span style="color: #800080;">65536</span>,<span style="color: #800080;">65535</span>), <span style="color: #800080;">3</span><span style="color: #000000;">
+D</span>=(<span style="color: #800080;">2048</span>,<span style="color: #800080;">2048</span>,<span style="color: #800080;">2048</span><span style="color: #000000;">)
+  Max Layered Texture Size (dim) x layers        1D</span>=(<span style="color: #800080;">16384</span>) x <span style="color: #800080;">2048</span>, 2D=(<span style="color: #800080;">16384</span>,<span style="color: #800080;">16</span>
+<span style="color: #800080;">384</span>) x <span style="color: #800080;">2048</span><span style="color: #000000;">
+  Total amount of constant memory:               </span><span style="color: #800080;">65536</span><span style="color: #000000;"> bytes
+  Total amount of shared memory per block:       </span><span style="color: #800080;">49152</span><span style="color: #000000;"> bytes
+  Total number of registers available per block: </span><span style="color: #800080;">32768</span><span style="color: #000000;">
+  Warp size:                                     </span><span style="color: #800080;">32</span><span style="color: #000000;">
+  Maximum number of threads per multiprocessor:  </span><span style="color: #800080;">1536</span><span style="color: #000000;">
+  Maximum number of threads per block:           </span><span style="color: #800080;">1024</span><span style="color: #000000;">
+  Maximum sizes of each dimension of a block:    </span><span style="color: #800080;">1024</span> x <span style="color: #800080;">1024</span> x <span style="color: #800080;">64</span><span style="color: #000000;">
+  Maximum sizes of each dimension of a grid:     </span><span style="color: #800080;">65535</span> x <span style="color: #800080;">65535</span> x <span style="color: #800080;">65535</span><span style="color: #000000;">
+  Maximum memory pitch:                          </span><span style="color: #800080;">2147483647</span><span style="color: #000000;"> bytes
+  Texture alignment:                             </span><span style="color: #800080;">512</span><span style="color: #000000;"> bytes
+  Concurrent copy and kernel execution:          Yes with </span><span style="color: #800080;">1</span><span style="color: #000000;"> copy engine(s)
+  Run time limit on kernels:                     Yes
+  Integrated GPU sharing Host Memory:            No
+  Support host page</span>-<span style="color: #000000;">locked memory mapping:       Yes
+  Alignment requirement </span><span style="color: #0000ff;">for</span><span style="color: #000000;"> Surfaces:            Yes
+  Device has ECC support:                        Disabled
+  CUDA Device Driver Mode (TCC or WDDM):         WDDM (Windows Display Driver Mo
+del)
+  Device supports Unified Addressing (UVA):      No
+  Device PCI Bus ID </span>/ PCI location ID:           <span style="color: #800080;">1</span> / <span style="color: #800080;">0</span><span style="color: #000000;">
+  Compute Mode:
+     </span>&lt;<span style="color: #000000;"> Default (multiple host threads can use ::cudaSetDevice() with device simu
+ltaneously) </span>&gt;<span style="color: #000000;">
+
+deviceQuery, CUDA Driver </span>= CUDART, CUDA Driver Version = <span style="color: #800080;">5.0</span><span style="color: #000000;">, CUDA Runtime Versi
+on </span>= <span style="color: #800080;">5.0</span>, NumDevs = <span style="color: #800080;">1</span>, Device0 = NVS 4200M</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>

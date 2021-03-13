@@ -1,0 +1,10 @@
+<p>Create different SDI&nbsp;windows<br />1. BOOL CtestMDIApp::InitInstance()</p>
+<p>CMultiDocTemplate* pDocTemplate;<br />&nbsp;pDocTemplate = new CMultiDocTemplate(IDR_testMDITYPE,<br />&nbsp;&nbsp;RUNTIME_CLASS(CtestMDIDoc),<br />&nbsp;&nbsp;RUNTIME_CLASS(CChildFrame), // custom MDI child frame<br />&nbsp;&nbsp;RUNTIME_CLASS(CtestMDIView));<br />&nbsp;AddDocTemplate(pDocTemplate);</p>
+<p>&nbsp;pDocTemplate = new CMultiDocTemplate(IDR_testMDITYPE,&nbsp;//IDR_View1TYPE,<br />&nbsp;&nbsp;RUNTIME_CLASS(CtestMDIDoc),<br />&nbsp;&nbsp;RUNTIME_CLASS(CChildFrame), // custom MDI child frame<br />&nbsp;&nbsp;RUNTIME_CLASS(CView1));<br />&nbsp;AddDocTemplate(pDocTemplate);</p>
+<p>2. void CMainFrame::OnHelp1()</p>
+<p>static<br />void OnFileNew(CDocManager* mgr, UINT nIdx)<br />{<br />&nbsp;POSITION pos = mgr-&gt;GetFirstDocTemplatePosition();<br />&nbsp;CDocTemplate* pTemplate = 0;<br />&nbsp;for (UINT i=0; i&lt;=nIdx &amp;&amp; pos != NULL; i++)<br />&nbsp;{<br />&nbsp;&nbsp;pTemplate = mgr-&gt;GetNextDocTemplate(pos);<br />&nbsp;&nbsp;ASSERT_KINDOF(CDocTemplate, pTemplate);<br />&nbsp;}</p>
+<p>&nbsp;if(!pTemplate)<br />&nbsp;&nbsp;return;</p>
+<p>&nbsp;ASSERT(pTemplate != NULL);<br />&nbsp;ASSERT_KINDOF(CDocTemplate, pTemplate);</p>
+<p>&nbsp;pTemplate-&gt;OpenDocumentFile(NULL);<br />&nbsp;&nbsp;// if returns NULL, the user has already been alerted<br />}</p>
+<p>// CMainFrame message handlers</p>
+<p><br />void CMainFrame::OnHelp1()<br />{<br />&nbsp;OnFileNew(AfxGetApp()-&gt;m_pDocManager, 0);<br />}</p>

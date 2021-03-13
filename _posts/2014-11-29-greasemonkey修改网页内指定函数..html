@@ -1,0 +1,32 @@
+<div class="cnblogs_code" onclick="cnblogs_code_show('621212db-8a93-4dc8-ac13-87b974ebb16d')"><img id="code_img_closed_621212db-8a93-4dc8-ac13-87b974ebb16d" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_621212db-8a93-4dc8-ac13-87b974ebb16d" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('621212db-8a93-4dc8-ac13-87b974ebb16d',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_621212db-8a93-4dc8-ac13-87b974ebb16d" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">greasemonkey replace function?
+</span><span style="color: #008080;"> 2</span> 
+<span style="color: #008080;"> 3</span> <span style="color: #000000;">方法1：编写GM代码
+</span><span style="color: #008080;"> 4</span> 
+<span style="color: #008080;"> 5</span> 
+<span style="color: #008080;"> 6</span> <span style="color: #000000;">alert("hello2");
+</span><span style="color: #008080;"> 7</span> 
+<span style="color: #008080;"> 8</span> <span style="color: #000000;">var mydiv =document.getElementById("myDIV");
+</span><span style="color: #008080;"> 9</span> <span style="color: #000000;">mydiv.innerHTML="Replaced!!";
+</span><span style="color: #008080;">10</span> <span style="color: #000000;">window.func =null;
+</span><span style="color: #008080;">11</span> 
+<span style="color: #008080;">12</span> <span style="color: #000000;">方法二：编写inject代码
+</span><span style="color: #008080;">13</span> 
+<span style="color: #008080;">14</span> <span style="color: #000000;">alert("hello2");
+</span><span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span> <span style="color: #000000;">function embed() {
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">    window.func = null;
+</span><span style="color: #008080;">18</span>   
+<span style="color: #008080;">19</span> <span style="color: #000000;">    var mydiv =document.getElementById("myDIV");
+</span><span style="color: #008080;">20</span> <span style="color: #000000;">    mydiv.innerHTML="Replaced!!";
+</span><span style="color: #008080;">21</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">22</span> 
+<span style="color: #008080;">23</span> 
+<span style="color: #008080;">24</span> <span style="color: #000000;">var script = document.createElement('script'); 
+</span><span style="color: #008080;">25</span> <span style="color: #000000;">script.type = "text/javascript"; 
+</span><span style="color: #008080;">26</span> <span style="color: #000000;">script.innerHTML = "(" + embed + ")()";
+</span><span style="color: #008080;">27</span> document.getElementsByTagName('head')[0].appendChild(script);</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>

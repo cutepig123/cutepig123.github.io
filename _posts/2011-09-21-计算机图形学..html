@@ -1,0 +1,110 @@
+<p>图形学的光栅算法、三维观察、隐藏面消除、光照、纹理、绘制等算法和理论，并介绍可视感知、计算机动画、基于图像的绘制、可视化以及构建交互式图形应用等<br /><br />http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/<br />line generators, affine transformations, line and polygon clipping, splines, interactive techniques, perspective projection, solid modeling, hidden surface algorithms, lighting models, shading, and animation. Substantial programming experience is required. <br /><br />Course Overview<br /><br />&nbsp;&nbsp;&nbsp; Ray Tracing光线跟踪<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Course overview<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ray casting overview 眼睛的視野範圍內發出射線,射到物體就把他畫出來,沒射到的就不畫,可以把ray casting想做ray tracing的子集<br />ray casting是指用eye來射出ray,射到的物體的那個點,就是我們eye所看到的顏色<br />ray tracing是光線的ray射到物體上然後物體會反射或折射出另外一條ray到另一個物體上,就這樣一直無窮回圈下去,基本上要算ray tracing是一件很復雜的事情,<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ray casting - primitive intersections<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Transformation<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Hierarchy<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Local illumination and shading<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Recursive ray tracing<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Acceleration structures<br /><br />&nbsp;&nbsp;&nbsp;&nbsp; Animation, Modeling, and Image-based Rendering (IBR)<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Curves and surfaces<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Animation with keyframes<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Animation with physics and PDE's<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Image-based rendering<br />&nbsp;&nbsp;&nbsp; Pipeline<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Pipeline basics<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Perspective and transformations<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Line rasterization<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Polygon rasterization<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Clipping<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Visibility<br />&nbsp;&nbsp;&nbsp; Advanced Topics<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Rendering equation and Monte Carlo methods<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Radiosity<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Colors<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Antialiasing<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Texture mapping<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Procedural textures<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Shadows<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Graphics hardware<br /><br />http://www.cnblogs.com/fengyuheliu/archive/2011/08/28/2155627.html<br />3D数据场的可视化技术，可以分为面绘制（surface rendering）和体绘制（volume rendering）。<br /><br />面绘制，是先抽取出3D数据场里的某个等值面，这个等值面的表示形式，是一个元素为三角面片的数组。这样，接下来用OpenGL/D3D的API函数就可以画出结果了。面绘制常用的方法有MC、MT和dividing cubes等。所以，可以说，面绘制是从原始的3D模型中抽取出我们感兴趣的某个网格模型，而忽略了其他数据。<br /><br />体绘制，或者叫直接体绘制（DVR, Direct Volume Rendering），就是直接对原始的3D模型进行处理，利用了整个数据场信息。体绘制结果，不单单可以看到表面，还可以透过表面（赋予一定的透明度）看到里面。体绘制的自由度大得多，绘制结果也丰富得多，但是需要处理海量的体数据，不能直接使用图形学API，速度慢得多。其算法族有光线投射法（ray casting）、溅射法（splatting）、错切&mdash;变形法（shear-warp）、体元投射法（cell projection）和基于纹理映射（texture mapping）的方法。这样说，对于外行来说，可能还不够清楚，且看下文吧。<br /><br />体绘制的加速技术可以分为：软件加速和硬件加速。<br /><br />软件加速技术有提前光线终止（early ray termination）、空间跳跃（empty space leaping）和延迟渲染（deferred shading）等。这里，空间跳跃的实现，需要对三维数据场进行数据结构管理，如八叉树、二叉树和k-d树，类似于场景管理技术。<br />有书名为&ldquo;Real-Time Volume Graphics&rdquo;，可译为&ldquo;实时体图形学&rdquo;。这本书非常经典！记得年初我通过馆际互借从上海图书馆借来捧在手上时，如获至宝！&mdash;&mdash;寻书的过程，也使得我对&ldquo;诺大一个中国，却无书可读&rdquo;深有感触。我忘记了&ldquo;体图形学&rdquo;是自己的译法还是在哪里见过，我们姑且用这个名称吧。看书中第一章开头：<br /><br />&ldquo;This book covers two seemingly very different applications of volume graphics: on the one hand, &lsquo;special effects&rsquo; and realistic rendering of clouds, smoke, fire, and similar effects for computer games, movie production, and so forth; on the other hand, the scientific visualization of volumetric data.&rdquo;<br /><br />&ldquo;&hellip;both fields rely on the same underlying physical models and therefore use identical, or at least very similar, rendering techniques.&rdquo;<br /><br />&ldquo;Therefore, volume graphics targets the same goal as computer graphics in general: the simulation of light propagation in order to produce images as recorded by a virtual camera.&rdquo;<br /><br />到这里，你大概知道&ldquo;3D模型不一样，那么渲染技术也不一样吗？&rdquo;的答案了吧。如果还有疑问，又不想花太多时间，可以到&ldquo;Real-Time Volume Graphics&rdquo;这本书的主页上下载chapter 2的PPT看看。<br /><br />F#-inspired await/async 模型，异步编程变成了欢乐之旅。</p>
+<h1><span id="parent-fieldname-title">
+            Lecture Notes
+        </span></h1>
+<table class="tablewidth50" summary="Course Table Listing">
+<thead>
+<tr class="tableheader"><th id="col1" scope="col">LEC&nbsp;#</th><th id="col2" scope="col">TOPICS</th></tr>
+</thead>
+<tbody>
+<tr class="row">
+<td headers="col1">1</td>
+<td headers="col2">
+<p>Course Overview ( <a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/01_1_intro_print.pdf">PDF - 1.1MB</a>)</p>
+<p>C++ Tutorial (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/1_2_cpp_tutor.pdf">PDF</a>)</p>
+</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">2</td>
+<td headers="col2">Ray Casting 1: Generation and Intersection&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/02_raycast.pdf">PDF - 1.2 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">3</td>
+<td headers="col2">Ray Casting 2: More Intersection&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/3_ray_cast2.pdf">PDF -&nbsp;1.7 MB</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">4</td>
+<td headers="col2">Transformations&nbsp;1: Translation, Rotation and Scale&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/4_transform.pdf">PDF - 1.0 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">5</td>
+<td headers="col2">
+<p>Transformations&nbsp;2: In Modeling&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/5_1_trans_hier.pdf">PDF - 1.7 MB</a>)</p>
+<p>Linear Algebra Tutorial (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/5_2_lin_algebra.pdf">PDF</a>)</p>
+</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">6</td>
+<td headers="col2">Ray Tracing (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/06_raytrace.pdf">PDF - 2.4 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">7</td>
+<td headers="col2">Local Illumination (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/07_local_illum.pdf">PDF</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">8</td>
+<td headers="col2">Acceleration Data Structures (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/8_grid_acc.pdf">PDF -&nbsp;3.9 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">9</td>
+<td headers="col2">Curves and Surfaces (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/09_curve_surf.pdf">PDF - 3.2 MB</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">10</td>
+<td headers="col2">Animation&nbsp;1: Interpolation and Kinematics&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/10_keyfrm_ik_opt.pdf">PDF</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">11</td>
+<td headers="col2">Animation 2: Orientation and Quaternions (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/11_anim_ii_cov.pdf">PDF</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">12</td>
+<td headers="col2">Animation&nbsp;3: Dynamics&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/12_animation_ii.pdf">PDF - 1.7 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">13</td>
+<td headers="col2">Graphics Pipeline 1: Perspective Transformations<br /> (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/13_pipeline_proj.pdf">PDF - 1.1 MB</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">14</td>
+<td headers="col2">Graphics Pipeline 2: Line Clipping and Rasterization (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/14_ln_clp_raster.pdf">PDF</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">15</td>
+<td headers="col2">Graphics Pipeline 3: Polygon Rasterization (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/15_raster.pdf">PDF</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">16</td>
+<td headers="col2">Graphics Pipeline 4: Polygon Clipping<br /> (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/16_clipping.pdf">PDF - 3.1 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">17</td>
+<td headers="col2">Shadows (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/17_shadows.pdf">PDF -&nbsp;3.1 MB</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">18</td>
+<td headers="col2">Global Illumination: Radiosity (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/18_radiosity.pdf">PDF - 2.7 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">19</td>
+<td headers="col2">Monte Carlo Ray Tracing (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/19_montecarlo.pdf">PDF - 3.4 MB</a>)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">20</td>
+<td headers="col2">Color 1: Color Vision and Color Spaces (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/20_color.pdf">PDF - 2.3 MB</a>) (Courtesy of Victor Ostromoukhov. Used with permission.)</td>
+</tr>
+<tr class="row">
+<td headers="col1">21</td>
+<td headers="col2">Color&nbsp;2: Color Effects and Production&nbsp;(<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/21_color_ii.pdf">PDF -&nbsp;2.6 MB</a>) (Courtesy of Victor Ostromoukhov. Used with permission.)</td>
+</tr>
+<tr class="alt-row">
+<td headers="col1">22</td>
+<td headers="col2">Texture Mapping (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/22_texture.pdf">PDF -&nbsp;3.6 MB</a>)</td>
+</tr>
+<tr class="row">
+<td headers="col1">23</td>
+<td headers="col2">Sampling, Aliasing and MIP Mapping<br /> (<a href="http://ocw.mit.edu/courses/electrical-engineering-and-computer-science/6-837-computer-graphics-fall-2003/lecture-notes/23_aliasing.pdf">PDF - 2.0 MB</a>)</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;&nbsp;&nbsp; 1：顶点缓冲区和索引缓冲区<br />&nbsp;&nbsp;&nbsp; 2：像素点光源（每一个像素分别计算，而不是在顶点计算完插值）<br />&nbsp;&nbsp;&nbsp; 3：CubeMap+多层贴图混合<br />&nbsp;&nbsp;&nbsp; 4：渲染到贴图（动态生成CubeMap）<br /><br />pixel shading<br />graphics processing unit<br /><br />Vertex shaders describe the traits (position, texture coordinates, colors, etc.) of a vertex, while pixel shaders describe the traits (color, z-depth and alpha value) of a pixel.<br /><br />Fixed Function Pipeline (FFP)<br /><br />Shaders drive the programmable graphics pipeline, and define the final surface properties of an object.&nbsp; <br /><br />渲染管线，即pipeline<br /><br />shader有两种，<br />一种是顶点级的，称为 vertex shader（OpenGL称为vertex program），取代固定渲染管线中的变换和光照部分，程序员可以自己控制顶点变换、光照等。硬件中处理顶点shader的单元叫vertex shader processors（顶点处理单元）。例如，X1600芯片中之中有5个vertex shader processors。<br />一种是像素级的，称为pixel shader（OpenGL称为fragment program），取代固定渲染管线中的光栅化部分，程序员可以自己控制像素颜色和纹理采样等。硬件中处理像素shader的单元叫pixel shader processors（像素处理单元）。例如，X1600芯片中之中有12个vertex shader processors。<br /><br /><br mce_bogus="1" /></p>

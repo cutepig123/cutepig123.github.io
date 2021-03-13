@@ -1,0 +1,22 @@
+<p><span style="color: red">对象的自身引用（Self-Reference）</span></p>
+<p>class A {<br />
+int x;<br />
+static A &amp;a;</p>
+<p>public :<br />
+A():a(*this){}<br />
+A(int x, A&amp; aa):x(x),a(aa){}<br />
+};</p>
+<p><br />
+void main()<br />
+{</p>
+<p>A a1;<br />
+A a2(1, a1);</p>
+<p>}<br />
+类引用自身须是static方式，目的取消类的基类独立性，禁止派生类。<br />
+典型的设计有Time类。<br />
+非静态引用没有实际意义。</p>
+<p><span style="color: red">动态绑定（Dynamic Binding）<br />
+</span>就是多态性<br />
+http://blog.csdn.net/sy8111/archive/2007/05/09/1602384.aspx<br />
+http://blog.csdn.net/sy8111/MyArticles.aspx<br />
+</p>

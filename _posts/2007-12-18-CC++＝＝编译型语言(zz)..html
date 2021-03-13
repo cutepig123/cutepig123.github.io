@@ -1,0 +1,54 @@
+<DIV id=header>
+<H1 class=title><A href="http://blender.bokee.com/index.html">牡蛎的混沌世界</A></H1></DIV>
+<DIV id=category><A title=上一篇 href="http://blender.bokee.com/461791.html">●my feature request on Blender</A>- -| <A href="http://blender.bokee.com/index.html">回首页</A> | <A href="http://blender.bokee.com/catalog_2004.html">2004年索引</A> | - -<A title=下一篇 href="http://blender.bokee.com/471144.html">●论文之中的言外之意zz</A></DIV>
+<DIV class=entity>
+<H2 class=diaryTitle>●C/C++＝＝编译型语言？</H2>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+<P><FONT color=#ff0000><FONT color=#000000>和师弟争论"编译运行是否是标准C/C++的特性"，即"解释/编译运行能否做为判断语言种类的必要条件"的问题（后来问题被偷换为"是否可以写出/有C/C++的解释器"），师弟对最初的问题持"显然就是"的观点。而支持师弟的"毫无疑问"派的网友始终把语言本身和语言的处理程序混为一谈，回避商品</FONT><A href="http://www.softintegration.com/">Ch Language Environment</A><FONT color=#000000>存在的事实，且把解释执行难度大、效率低作为理由。&nbsp; </FONT></FONT><FONT color=#ff0000>
+<P><FONT color=#000000>另外，发现"毫无疑问"根本就是"请不要追问"的代名词</FONT></P></FONT><BR>
+<P><FONT color=#000000>下面的内容摘自原讨论，略做编辑。冒号开头、蓝色的是对方的观点</FONT></P>
+<P><FONT color=#000000>我觉得首先需要有个"编译"的共识。我的观点，"解释"、"编译"都是相对我们的计算机而言的。如果程序的语句都变成程序运行的硬件直接识别、支持的机器码然后执行，这个程序才叫"被编译"；如果程序是以任何一种p－code、二进制码运行在它的vm上，那么就是"被解释"。&nbsp;</FONT></P>
+<P><FONT color=#000000>有人可能说JAVA是"编译"的，因为书上都说"编译到字节码"。那么任何语言都可以说是"编译"的，因为源代码自身相对它的语言环境都是可以直接识别的native code、任何字节码相对它的VM都是native code。正如汉语对咱们个人而言都是native code，但是对大脑则不是，大脑最终承认并解释的只有生物电脉冲、化学物质之类的东西，什么，你说还有XYZ起作用，嘿，不要和我纠缠大脑识别语言的机理，如果我一清二楚地话，就不在这混了。</FONT></P>
+<P><FONT color=#000000>GCC的一个项目GCJ把JAVA程序变成（好的，我还是不用"编译"这个字眼）本地代码，如果承认JAVA是编译运行的，那么GCJ算什么？编译器、解释器，或者无事生非？ 如果不同意这点，没有辩论的必要了</FONT>&nbsp;</P>
+<P><FONT color=#0000ff>： 毫无疑问，C/C++都是需要编译器的</FONT>&nbsp;</P>
+<P><FONT color=#000000>"毫无疑问"的原因？你说的"C/C++"指代码还是什么？"需要"指"输出结果"还是别的什么？毫无疑问，饺子需要煮（蒸......）熟才能吃，但是生饺子就不是饺子，而是馒头了吗？很多年前，书都是需要眼睛看的，但是现在我们有了为人读书的机器，多了一个"需要"的可能，所以"书"就不是"书"了？&nbsp;</FONT></P>
+<P><FONT color=#000000>void main(){printf("Hello");};</FONT><BR><FONT color=#000000>这个程序不需要编译器（因为我知道它的结果，它在我的头脑中"解释"运行了，），那么它就不是一个C程序喽？&nbsp;</FONT> </P>
+<P><FONT color=#000000>符合C90标准"书写"（麻烦，每次都要加上不必要的修饰）的C源程序都可以在Ch中解释运行，输出结果，它们都不需要编译器，这算什么？&nbsp;</FONT></P>
+<P><A href="http://root.cern.ch/root/Cint.html">http://root.cern.ch/root/Cint.html</A><FONT color=#000000> 是支持了95% ANSI C、85% C++的另一个C/C++解释程序，有80000行ANSI C程序，它很强大，甚至可以解释自己的源程序。这是一个free software，你可以下载其源程序看看&nbsp;</FONT></P>
+<P><FONT color=#000000>喔，你要和我谈语法，类C的不算？这个，语法不是你一直强调的"编译"、"解释"的区别涉及的内容啊，恰恰想法，它支持我一直说的"看语言的类别就看表面"。而且，Ch、Cint可以解释的程序使用的都是C语言的语法，而不是"类似C的语法"&nbsp;</FONT></P>
+<P><FONT color=#0000ff>：&nbsp;Basic才是解释型的</FONT>&nbsp;</P>
+<P><FONT color=#000000>老黄历了，vb5及以后都可以编译成native code。而且<A href="http://www.freebasic.net/"><FONT color=#0000ff>freebasic</FONT></A>这个开源的BASIC语言编译器，不仅可以兼容QB的大部分语法，而且可以自举（早期是用VBDOS写的，现在完全可以自己编译自己的源代码），可以编译产生DOS、Windows、Linux下的真正的可执行文件。</FONT></P>
+<P><FONT color=#0000ff>： 还有一种半解释半编译的，忘记叫什么了</FONT>&nbsp;</P>
+<P><FONT color=#000000>开发过程中调试、试运行，VB源程序都是解释执行的；你编译的时候，可以选择p－code或者native code。也许可以称之为半解释半编译。 quickbasic/qbasic/VB在IDE中单步运行调试的时候，你可以更改还没有运行到的语句，继续单步执行（而不是从头开始单步运行），执行的是你修改之后的而不是之前的语句，这在编译运行的方式下不再次从头编译是不可能的&nbsp;</FONT></P>
+<P><FONT color=#000000>师弟说文档中， C的include、define被称作"预编译xyz"（我懒得去查了，谁有印刷的英文书，借我看看原文是啥东西），这种字面理解说明不了问题，只是一个代号，也许它的原意就是"预处理"（我记得就是这样）。Ch、CINT照样支持include、define，是不是要改称"预解释xyz"？&nbsp;</FONT></P>
+<P><FONT color=#000000>include是为了把大程序分解和利用已有的代码资源，define是为了提高程序的可读性、简化程序或者（从人的角度）偷懒 include在别的语言当中大量存在：quickbasic（不是dos622的qbasic）有'$INCLUDE: 'QB.BI'，python有import math，JAVA好像也是import，但是python是彻底的解释执行（当然，也使用了编译到字节码的方式）；就像VB，quickbasic可以解释执行，也可以编译（没研究过quickbasic编译的是p－code还是native code，但这个与话题没什么关系）；JAVA是解释执行的 define我倒是不清楚，也许JAVA支持它 不知道有没有人知道FORTH语言（比如</FONT><A href="http://www.xs4all.nl/~thebeez/4tH">4tH</A><FONT color=#000000>这个跨平台的实现）？这个语言的标准、各类书籍中频繁出现"编译"这个字眼，难道因为这个频频出现的字眼，就可以说FORTH是"编译"运行的吗？ 绝不！FORTH和我们熟知的语言不同，其系统通常被认为是一个操作系统、一个虚拟机， 文档中所谓的"解释"、"编译"都是相对这个系统，而不是我们的计算机而言的</FONT>&nbsp;</P>
+<P><FONT color=#000000>"切手"，初看是黑社会老大的命令：把小样的手剁了；但是在日本人看来，是"邮票"。中日两国人大脑处理的不同，不能否认"切手"是汉字的事实，"和字"是"日文汉字"，"汉字"......就是"汉字"。顺便说一句，和字是中国第57个民族——倭族语言的一大特色。&nbsp;</FONT></P>
+<P><FONT color=#000000>机器会不会有智能？一个有名的虚拟试验（现在还无法完成，但我相信会完成的）： 计算机和人分别在两个不同的房间里。你提问，由计算机和人分别做出回答。你通过电传打字机与机器和人联系（避免要求机器模拟人外貌和声音）。人在回答问题时尽可能表明他是一个"真正的"人，而计算机也将尽可能逼真的模仿人的思维方式和思维过程。如果你听取他们各自的答案后，分辨不清哪个是人回答的，哪个是机器回答的，则可以认为该计算机具有了智能。 这个试验可能会得到大部分人的认可，但是总会有一部分人以"只有人才有智能"为由拒绝承认。可以想象，会有人告诉我"C/C++就是编译执行的"这样的理由</FONT></P>
+<P><FONT color=#0000ff>： 诚然，编译型/解释型是针对语言翻译程序来说的，语言翻译程序可以大致上分为两大类编译型的、解释型的。但我们现在来讨论某一种语言是编译型或者解释型的时候，是 根据这个语言的主流翻译程序的类型来决定的。我们不能因为某一天C/C++偶尔做了一次 解释执行，来否定"C/C++是编译型语言"这个事实。&nbsp;</FONT></P>
+<P><FONT color=#000000>猜得不错喔，马上就有人说"只有人类才有智能了"。主流翻译程序的类型只说明这个翻译程序自己的类型，和它翻译的语言何干？就算二者等价，"主流"又怎么样，简体字是现在汉字书写形式的主流，就可以说汉字是简体字？</FONT>&nbsp;</P>
+<P><FONT color=#0000ff>： 从C/C++的语言特点来看，可以看出C/C++就是为了编译而设计的: ++、+=此类的运算符，结合了汇编语言的特征，使得目标代码更加高效，程序书写更为 简洁；还有指针的使用等等，这样的特征不胜枚举。如果让C/C++做解释执行，其难度的 复杂性、效率的低下可想而知。而正是因为这些特征使得C/C++成为一个编译型语言。&nbsp;</FONT></P>
+<P><FONT color=#000000>+=等运算符在现代的脚本语言（python等等）中也广泛使用，为什么？原因你已经说了：高效、简洁——不过这是表面现象，而且"高效"是针对"编译"产生的目标代码而言的概念，与源程序不相关；且一个好的编译器应该自动处理a=a+1,sth[2]。据说程序员考试可以选择CASL汇编语言，它是一种完全虚构的计算机的汇编语言，具有通常用的80x86汇编语言的特色，对那个虚拟的计算机肯定是高效的。但是这个汇编语言怎么运行呢？最初只有在头脑中运行，后来才出现了解释程序。这并没有否认CASL在PC机上是解释运行的事实。所以这些汇编语言的特点、指针的使用也不能作为C是编译运行的原因。C/C++的解释运行确实复杂，但是为何回避</FONT><A href="http://www.softintegration.com/">Ch Language Environment</A><FONT color=#000000>这个商品存在的事实？坐马车出行效率低下，但是无法否认马车是一种交通工具，是使"出行"成为可能的一种实现。所以应该说，为了高效，人们通常选择编译方式运行C/C++程序，而不是"C/C++就是为了编译而设计的"或者"这些特征使得C/C++成为一个编译型语言"。</FONT></P>
+<P><FONT color=#000000>结论，看一个语言究竟是C、BASIC还是别的啥，是看它的书写格式（语法），而不是看最终处理它的程序。语言和处理它的程序是2个不同的概念。</FONT></P>
+<P>
+<P>另：除了<A href="http://root.cern.ch/root/Cint.html">Cint</A>，还有下面2个不完全、开源、停滞开发的C/C++（不是类C/C++）解释程序<BR><A href="http://home.mweb.co.za/sd/sdonovan/underc.html">UnderC</A>：C++解释程序<BR><A href="http://eic.sourceforge.net/">EiC</A>：C解释程序</P>
+<P>2006年01月26日，添加VB是否真正编译的资料：</P>1。字面上，google之类搜索的结果，native code多数就是指machine code。当年微软宣传VB5的新特性，强调的一点就是除了传统的p-code编译方式，还支持编译到native code，如果我们认为ms没有玩文字游戏，那么VB5是可以编译到机器码的。 
+<P>2。不要把静态连接和程序运行方式（解释、编译）混淆。如果编译vc程序的时候，选择使用msvcr*.dll和mfc42.dll，那么是否说此时VC编译出来的程序是解释执行呢？<BR>dll存在与否，不能做为判断一个程序是以何种方式运行的依据。正像不能把可以产生一个exe文件都叫编译一样。<BR>dll的作用是啥？提供一大堆函数，允许外界程序调用。一来程序员不用总是写相同的函数，也不用在乎使用的语言，节省时间，也许也能提供质量保证；二来，如果大家都用这个dll，那么就不需要重复安装，这样可以节省硬盘空间（不过，我觉得dll、注册表以及flash都被现在的程序员滥用了）<BR><BR><A href="http://www.microsoft.com/china/msdn/archives/technic/faq/vbfaq.asp"><FONT color=#0000ff>Visual Basic 的常见问题</FONT></A>有这样一个问题<BR>问 : 在VB5中，将一个应用程序编译成"Native Code", 在发布该应用程序时，还需要MSVBVM50.DLL 吗？<BR>答 : 需要。所有用VB5生成的应用程序都需要MSVBVM50.DLL，不管是"Native Code" 还是"P-Code"。因为需要MSVBVM50.DLL实现（牡蛎注：为什么P-Code也要它呢？它既可以处理P-Code还可以处理Native Code？这是怎么样的一个dll？）Form、类模块、语言等许多功能。"Native Code"是指不需要运行时解释，直接就能在CPU上运行的代码，但并不意味着静态连接, VB5生成的应用程序需要到动态连接库（DLL）中调用库函数。</P>3。VB5是否真可以编译到机器码？<BR>这是http://www.pediy.com/bbshtml/bbs5/pediy50093.htm的例子<BR>怀疑的人自己验证一下喽<BR>Private Sub Command1_Click() <BR>Dim a, b As String <BR><BR>a = Text1.Text <BR>b = Mid(a, 2, 3) <BR><BR><BR>End Sub<BR><BR>将上述代码用vb6分别编译为native code和P-code <BR><BR>函数原型Mid(string, start[, length]) <BR><BR>（1）wdasm反汇编native code <BR><BR>:00401D62 C745A403000000 mov [ebp-5C], 00000003 <BR>:00401D69 C7459C02000000 mov [ebp-64], 00000002 <BR><BR><BR>* Reference To: MSVBVM60.rtcMidCharVar, Ord:0278h <BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | <BR>:00401D70 FF153C104000 Call dword ptr [0040103C] <BR><BR>（2） exdec反编译P-code <BR>401A63: 28 LitVarI2: ( local_00E4 ) 0x3 (3) <BR>401A68: f5 LitI4: 0x2 2 (....) <BR>401A6D: 04 FLdRfVar local_0094 <BR>401A70: 04 FLdRfVar local_00F4 <BR>401A73: 0a ImpAdCallFPR4: rtcMidCharVar <BR><BR>一些参考文献<BR>
+<OL>
+<LI><A href="http://www.microsoft.com/china/msdn/archives/technic/faq/vbfaq.asp"><FONT color=#0000ff>Visual Basic 的常见问题</FONT></A> 
+<P></P>
+<LI><A href="http://www.7880.com/Print.php?PID=9e8f6e40"><FONT color=#0000ff>关于VB的Native Code的传奇</FONT></A> 
+<P>
+<P></P>
+<LI><A href="http://www.xuevb.net/modules/news/article.php?storyid=764"><FONT color=#0000ff>VB进阶 : VB真是想不到系列之一：VB到底为我们做了什么？ </FONT></A>
+<P>
+<P></P>
+<LI><A href="http://www.pediy.com/bbshtml/bbs5/pediy50093.htm"><FONT color=#0000ff>visual basic &amp; P-code杂谈(一) </FONT></A></LI></OL>
+<P>
+<P>
+<P>
+<P>2006年7月22日<BR></P>
+<OL>
+<LI><A href="http://eic.sf.net/"><FONT color=#0000ff><STRIKE>EiC</STRIKE></FONT></A>的主页不存在了，在网上似乎也找不到<A href="http://eic.sf.net/"><FONT color=#0000ff><STRIKE>EiC</STRIKE></FONT></A>了 
+<P></P>
+<LI>发现<A href="http://home.mweb.co.za/sd/sdonovan/underc.html"><FONT color=#0000ff>UnderC</FONT></A>的作者的一篇文章<A href="http://www.informit.com/articles/article.asp?p=25942&amp;rl=1"><FONT color=#0000ff>Conversational C++</FONT></A>。目前看来，只有<A href="http://home.mweb.co.za/sd/sdonovan/underc.html"><FONT color=#0000ff>UnderC</FONT></A>支持交互模式下定义函数。 
+<P></P>
+<LI>对了，我居然忘了<A href="http://fabrice.bellard.free.fr/tcc/"><FONT color=#0000ff>TCC: Tiny C Compiler</FONT></A>。它有什么特色呢？它既可以编译C程序到native code（Linux和windows），也可以解释运行C程序。“UNLIMITED! Any C dynamic library can be used directly. TCC is heading torward full ISOC99 compliance. TCC can of course compile itself. ”</LI></OL></DIV>

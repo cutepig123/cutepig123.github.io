@@ -1,0 +1,23 @@
+<p><br /><strong>命令</strong><br />sudo dd if=/dev/mmcblk0 status=progress | gzip&gt;/media/usb/raspberry.gz</p>
+<p>&nbsp;</p>
+<p>-------------qa------------</p>
+<p>q: win32diskimager行不行？</p>
+<p>win32diskimager 不好用，因为树莓派有好几个分区，这个软件貌似只能备份一个分区</p>
+<p>&nbsp;</p>
+<p>q：如何获得系统if和of名称？<br />pi@raspberrypi:~ $ lsblk -o KNAME,TYPE,SIZE,MODEL<br />KNAME&nbsp;&nbsp;&nbsp;&nbsp; TYPE&nbsp; SIZE MODEL<br />sda&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; disk 28.9G STORAGE DEVICE&nbsp; <br />sda1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; part 28.9G <br />mmcblk0&nbsp;&nbsp; disk 28.9G <br />mmcblk0p1 part&nbsp; 1.8G <br />mmcblk0p2 part&nbsp;&nbsp;&nbsp; 1K <br />mmcblk0p5 part&nbsp;&nbsp; 32M <br />mmcblk0p6 part&nbsp;&nbsp; 66M <br />mmcblk0p7 part 15.3G <br />mmcblk0p8 part&nbsp; 512M <br />mmcblk0p9 part 11.3G </p>
+<p>q: linux 挂载时 mount: wrong fs type, bad option, bad superblock on /dev/sdb<br />原因：挂载时未格式化，使用的文件系统格式不对<br />解决方案：格式化<br />sudo mkfs -t ext4 /dev/sdb</p>
+<p>再挂载<br />sudo mount /dev/sdb /xxx/</p>
+<p>用df -h检查，发现已挂载<br />https://blog.csdn.net/u010867294/article/details/78107315</p>
+<p>&nbsp;</p>
+<p>q：还有没有别的招数？</p>
+<p>树莓派系统里，开始菜单-Accessories-SD Card Copier也可以做备份。</p>
+<p>但这个一定要被分到一个盘上，貌似不能被分成文件</p>
+<p>&nbsp;</p>
+<p>q：俺的备份放在哪里呢？</p>
+<p>google drive/raspbian</p>
+<p>&nbsp;</p>
+<p>参考</p>
+<p><a href="https://www.zhihu.com/question/55406328">https://www.zhihu.com/question/55406328</a></p>
+<p><a href="https://www.raspberrypi.org/documentation/linux/filesystem/backup.md">https://www.raspberrypi.org/documentation/linux/filesystem/backup.md</a></p>
+<p><a href="https://www.jianshu.com/p/b3ce0d945c7a">https://www.jianshu.com/p/b3ce0d945c7a</a></p>
+<p>&nbsp;</p>

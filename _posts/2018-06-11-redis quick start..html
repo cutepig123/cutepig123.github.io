@@ -1,0 +1,11 @@
+<p><strong>软件：</strong></p>
+<p>redis server https://github.com/MicrosoftArchive/redis/releases</p>
+<p>redis python client, install using pip</p>
+<p>&nbsp;</p>
+<p><strong>步骤：</strong></p>
+<p>编写如下测试程序1.py</p>
+<p>#https://pypi.org/project/redis/<br />#server https://github.com/MicrosoftArchive/redis/releases<br /><br />import redis<br />r = redis.StrictRedis(host='localhost', port=6379, db=0)<br />r.set('foo', 'bar')<br />print(r.get('foo'))<br />print(r.get('NA'))<br /><br /></p>
+<p>执行redis-server.exe</p>
+<p>执行python 1.py</p>
+<p>输出</p>
+<p>&nbsp;</p>

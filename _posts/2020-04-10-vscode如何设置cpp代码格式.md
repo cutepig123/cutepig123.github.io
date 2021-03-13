@@ -20,4 +20,3 @@ Microsoft A style complying with Microsoft’s style guide
 # Ref
 
 https://medium.com/@zamhuang/vscode-how-to-customize-c-s-coding-style-in-vscode-ad16d87e93bf
-

@@ -1,0 +1,527 @@
+<div class="post">
+		<div class="posthead">
+			<h2>
+				<a id="viewpost1_TitleUrl" class="singleposttitle" href="http://www.cppblog.com/nacci/archive/2006/05/15/7200.html">在编译时决定类型的可继承性</a>
+			</h2>
+ 			Posted on 2006-05-15 17:20 <a href="http://www.cppblog.com/nacci/">nacci</a> 阅读(478) <a href="http://www.cppblog.com/nacci/archive/2006/05/15/7200.html#Post">评论(0)</a> &nbsp;<a href="http://www.cppblog.com/nacci/admin/EditPosts.aspx?postid=7200">编辑</a>&nbsp;<a href="http://www.cppblog.com/nacci/AddToFavorite.aspx?id=7200">收藏</a> <a href="http://www.cppblog.com/nacci/services/trackbacks/7200.aspx">引用</a>  所属分类: <a href="http://www.cppblog.com/nacci/category/1784.html">C++漫谈</a> 
+			<img src="http://www.cppblog.com/nacci/aggbug/7200.html?webview=1" width="1" height="1">
+			
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.cppblog.com/nacci/archive/2006/05/15/7200.html"
+dc:identifier="http://www.cppblog.com/nacci/archive/2006/05/15/7200.html"
+dc:title="在编译时决定类型的可继承性"
+trackback:ping="http://www.cppblog.com/nacci/services/trackbacks/7200.aspx" />
+</rdf:RDF>
+-->
+
+		</div>
+		<div class="postbody">
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">一段C++的读书笔记<br><br><em>给定任意<span lang="EN-US">2</span>个类型<span lang="EN-US">U</span>和<span lang="EN-US">T</span>，你如何来确定<span lang="EN-US">U</span>是否继承于<span lang="EN-US">T</span>呢？在编译时发现两个类型的这种关系对于泛型库的优化是极为重要的。在泛型函数中，如果某个类实现了特定的接口，你可以根据这种关系为其利用特定的优化算法。另外，如果我们可以在编译期决定<span lang="EN-US">2</span>个类的关系，我们也可以远离<span lang="EN-US">dynamic_cast</span>，从而避免运行时的效率开销。<br><span lang="EN-US"><o:p></o:p></span></em></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">
+						<hr>
+						<br>在着手解决这个问题之前，我们先来考虑一个更为一般的问题。假设我们有<span lang="EN-US">2</span>个任意类型<span lang="EN-US">U</span>和<span lang="EN-US">T</span>，如何确定<span lang="EN-US">T</span>能否自动转换成<span lang="EN-US">U</span>呢？<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p>
+		</p>
+		<p>
+		</p>
+		<p>
+		</p>
+		<p>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">答案也许让你有些惊讶，我们可以利用sizeof来帮忙。你可以把<span lang="EN-US">sizeof</span>用在任何复杂的表达式上，<span lang="EN-US"> sizeof</span>可以返回这个表达式值的大小，而不会在运行时评估表达式的值。这也就意味着，你可以把函数重载、模版实例化、转换规则等等所有你可以在<span lang="EN-US">C++</span>表达式中使用的设施统统塞到<span lang="EN-US">sizeof</span>中来。实际上，<span lang="EN-US">sizeof</span>隐藏了一个可以演绎表达式类型的设施，最终，<span lang="EN-US">sizeof</span>会返回表达式结果的类型。<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">这样我们就可以通过<span lang="EN-US">sizeof</span>和重载函数来解决判断类型之间的可转换性的问题。思路很简单：我们提供<span lang="EN-US">2</span>个重载函数，一个函数的参数是我们要转换成的类型（我们用<span lang="EN-US">U</span>表示），而另一个则用来接收其他所有类型的参数。然后我们把要检测的类型（用<span lang="EN-US">T</span>表示）传递给重载函数。如果接受类型<span lang="EN-US">U</span>为参数的函数被调用了，我们就认为<span lang="EN-US">T</span>可以转换为<span lang="EN-US">U</span>，反之则不可以。如何确定哪个函数被调用了呢？我们利用<span lang="EN-US">sizeof</span>出马，我们只要让重载函数返回不同的类型，然后检查一下返回值就可以了。<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">实践一下：<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">首先，定义<span lang="EN-US">2</span>个不同的类型：<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 0);">typedef&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">char</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;Small;<br><img style="display: inline;" id="Codehighlighter1_30_47_Open_Image" onclick="this.style.display='none'; Codehighlighter1_30_47_Open_Text.style.display='none'; Codehighlighter1_30_47_Closed_Image.style.display='inline'; Codehighlighter1_30_47_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top"><img id="Codehighlighter1_30_47_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_30_47_Closed_Text.style.display='none'; Codehighlighter1_30_47_Open_Image.style.display='inline'; Codehighlighter1_30_47_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top"></span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;Big&nbsp;</span>
+				<span id="Codehighlighter1_30_47_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+						<img src="http://www.cppblog.com/Images/dot.gif">
+				</span>
+				<span style="display: inline;" id="Codehighlighter1_30_47_Open_Text">
+						<span style="color: rgb(0, 0, 0);">{&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">char</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;dummy[</span>
+						<span style="color: rgb(0, 0, 0);">2</span>
+						<span style="color: rgb(0, 0, 0);">];&nbsp;}</span>
+				</span>
+				<span style="color: rgb(0, 0, 0);">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span>
+		</div>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">默认情况下，</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">sizeof(Small)</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">1</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，而</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Big</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的大小则无关紧要，我们只要知道肯定不是</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">1</span>
+				<span style="font-size: 10pt; font-family: 宋体;">就好了。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">其次，定义</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">2</span>
+				<span style="font-size: 10pt; font-family: 宋体;">个重载函数，一个接收要转换成的类型：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Small Test(U);<o:p></o:p></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">另一个用来接收“其他的所有类型”，我们要保证在排除所有的转换之后才调用这个函数，</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">OK,</span>
+				<span style="font-size: 10pt; font-family: 宋体;">用省略号表示的参数列表真好满足需求</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Big Test(...);<o:p></o:p></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<i style="">
+						<span style="font-size: 10pt; font-family: 宋体;">尽管把一个</span>
+				</i>
+				<i style="">
+						<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C++</span>
+				</i>
+				<i style="">
+						<span style="font-size: 10pt; font-family: 宋体;">对象传递给</span>
+				</i>
+				<i style="">
+						<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">...</span>
+				</i>
+				<i style="">
+						<span style="font-size: 10pt; font-family: 宋体;">参数类型的函数，其结果未定义，但是实际上我们并没有调用这个函数。我们甚至可以不用实现它。</span>
+				</i>
+				<i style="">
+						<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+								<o:p>
+								</o:p>
+						</span>
+				</i>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-family: 宋体;">最后，我们用</span>
+				<span style="" lang="EN-US">sizeof</span>
+				<span style="font-family: 宋体;">判断一下就完成任务了：</span>
+				<span style="" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">bool</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;convExist&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">=</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">sizeof</span>
+				<span style="color: rgb(0, 0, 0);">(Test(T()))&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">==</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">sizeof</span>
+				<span style="color: rgb(0, 0, 0);">(Small);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span>
+		</div>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">你也许会说，就是它了！</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Test</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的调用会创建一个临时对象</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，之后可能的结果只能是</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">sizeof(Small)</span>
+				<span style="font-size: 10pt; font-family: 宋体;">或</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">sizeof(Big)</span>
+				<span style="font-size: 10pt; font-family: 宋体;">。兴奋之余，我们还要看到一个问题。如果</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的构造函数被设计成</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">private</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，我们就前功尽弃了。当然解决的方法也很简单，定义一个函数，让他返回类型为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的对象。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 0);">T&nbsp;MakeT();<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">bool</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;convExist&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">=</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">sizeof</span>
+				<span style="color: rgb(0, 0, 0);">(Test(MakeT()))&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">==</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">sizeof</span>
+				<span style="color: rgb(0, 0, 0);">(Small);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span>
+		</div>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt;">
+				<span style="font-size: 10pt; font-family: 宋体;">最后，把刚才的东西封装到一个类里：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 0);">template&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">&lt;</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;T,&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;U</span>
+				<span style="color: rgb(0, 0, 0);">&gt;</span>
+				<span style="color: rgb(0, 0, 0);">
+						<br>
+						<img id="Codehighlighter1_45_250_Open_Image" onclick="this.style.display='none'; Codehighlighter1_45_250_Open_Text.style.display='none'; Codehighlighter1_45_250_Closed_Image.style.display='inline'; Codehighlighter1_45_250_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top">
+						<img id="Codehighlighter1_45_250_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_45_250_Closed_Text.style.display='none'; Codehighlighter1_45_250_Open_Image.style.display='inline'; Codehighlighter1_45_250_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top">
+				</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;Conversion&nbsp;</span>
+				<span id="Codehighlighter1_45_250_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+						<img src="http://www.cppblog.com/Images/dot.gif">
+				</span>
+				<span id="Codehighlighter1_45_250_Open_Text">
+						<span style="color: rgb(0, 0, 0);">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;typedef&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">char</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;Small;<br><img id="Codehighlighter1_85_102_Open_Image" onclick="this.style.display='none'; Codehighlighter1_85_102_Open_Text.style.display='none'; Codehighlighter1_85_102_Closed_Image.style.display='inline'; Codehighlighter1_85_102_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_85_102_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_85_102_Closed_Text.style.display='none'; Codehighlighter1_85_102_Open_Image.style.display='inline'; Codehighlighter1_85_102_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">class</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;Big&nbsp;</span>
+						<span id="Codehighlighter1_85_102_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+								<img src="http://www.cppblog.com/Images/dot.gif">
+						</span>
+						<span id="Codehighlighter1_85_102_Open_Text">
+								<span style="color: rgb(0, 0, 0);">{&nbsp;</span>
+								<span style="color: rgb(0, 0, 255);">char</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;dummy[</span>
+								<span style="color: rgb(0, 0, 0);">2</span>
+								<span style="color: rgb(0, 0, 0);">];&nbsp;}</span>
+						</span>
+						<span style="color: rgb(0, 0, 0);">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">static</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;Small&nbsp;Test(U);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">static</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;Big&nbsp;Test(<img src="http://www.cppblog.com/Images/dot.gif">);<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">static</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;T&nbsp;MakeT();<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top"></span>
+						<span style="color: rgb(0, 0, 255);">public</span>
+						<span style="color: rgb(0, 0, 0);">:<br><img id="Codehighlighter1_198_247_Open_Image" onclick="this.style.display='none'; Codehighlighter1_198_247_Open_Text.style.display='none'; Codehighlighter1_198_247_Closed_Image.style.display='inline'; Codehighlighter1_198_247_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_198_247_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_198_247_Closed_Text.style.display='none'; Codehighlighter1_198_247_Open_Image.style.display='inline'; Codehighlighter1_198_247_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">enum</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+						<span id="Codehighlighter1_198_247_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+								<img src="http://www.cppblog.com/Images/dot.gif">
+						</span>
+						<span id="Codehighlighter1_198_247_Open_Text">
+								<span style="color: rgb(0, 0, 0);">{&nbsp;exist&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">=</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+								<span style="color: rgb(0, 0, 255);">sizeof</span>
+								<span style="color: rgb(0, 0, 0);">(Test(MakeT()))&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">==</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+								<span style="color: rgb(0, 0, 255);">sizeof</span>
+								<span style="color: rgb(0, 0, 0);">(Small)&nbsp;}</span>
+						</span>
+						<span style="color: rgb(0, 0, 0);">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span>
+				</span>
+				<span style="color: rgb(0, 0, 0);">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span>
+		</div>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">另外，我们还可以设置另外一个常量</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Conversion::SameType</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，如果</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">和</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">U</span>
+				<span style="font-size: 10pt; font-family: 宋体;">表示同一个类型，那么返回</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">true</span>
+				<span style="font-size: 10pt; font-family: 宋体;">：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 0);">template&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">&lt;</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;T,&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;U</span>
+				<span style="color: rgb(0, 0, 0);">&gt;</span>
+				<span style="color: rgb(0, 0, 0);">
+						<br>
+						<img id="Codehighlighter1_45_94_Open_Image" onclick="this.style.display='none'; Codehighlighter1_45_94_Open_Text.style.display='none'; Codehighlighter1_45_94_Closed_Image.style.display='inline'; Codehighlighter1_45_94_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top">
+						<img id="Codehighlighter1_45_94_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_45_94_Closed_Text.style.display='none'; Codehighlighter1_45_94_Open_Image.style.display='inline'; Codehighlighter1_45_94_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top">
+				</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;Conversion&nbsp;</span>
+				<span id="Codehighlighter1_45_94_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+						<img src="http://www.cppblog.com/Images/dot.gif">
+				</span>
+				<span id="Codehighlighter1_45_94_Open_Text">
+						<span style="color: rgb(0, 0, 0);">{<br><img src="http://www.cppblog.com/Images/OutliningIndicators/InBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;..&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">as</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;above..<br><img id="Codehighlighter1_74_92_Open_Image" onclick="this.style.display='none'; Codehighlighter1_74_92_Open_Text.style.display='none'; Codehighlighter1_74_92_Closed_Image.style.display='inline'; Codehighlighter1_74_92_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_74_92_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_74_92_Closed_Text.style.display='none'; Codehighlighter1_74_92_Open_Image.style.display='inline'; Codehighlighter1_74_92_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">enum</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+						<span id="Codehighlighter1_74_92_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+								<img src="http://www.cppblog.com/Images/dot.gif">
+						</span>
+						<span id="Codehighlighter1_74_92_Open_Text">
+								<span style="color: rgb(0, 0, 0);">{&nbsp;sameType&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">=</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+								<span style="color: rgb(0, 0, 255);">false</span>
+								<span style="color: rgb(0, 0, 0);">}</span>
+						</span>
+						<span style="color: rgb(0, 0, 0);">
+								<br>
+								<img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span>
+				</span>
+				<span style="color: rgb(0, 0, 0);">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"><br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top"></span>
+		</div>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">之后为同一个类型设计一个偏特化版本：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="FR">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 0);">template&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">&lt;</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;T</span>
+				<span style="color: rgb(0, 0, 0);">&gt;</span>
+				<span style="color: rgb(0, 0, 0);">
+						<br>
+						<img id="Codehighlighter1_42_83_Open_Image" onclick="this.style.display='none'; Codehighlighter1_42_83_Open_Text.style.display='none'; Codehighlighter1_42_83_Closed_Image.style.display='inline'; Codehighlighter1_42_83_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockStart.gif" align="top">
+						<img id="Codehighlighter1_42_83_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_42_83_Closed_Text.style.display='none'; Codehighlighter1_42_83_Open_Image.style.display='inline'; Codehighlighter1_42_83_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedBlock.gif" align="top">
+				</span>
+				<span style="color: rgb(0, 0, 255);">class</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;Conversion</span>
+				<span style="color: rgb(0, 0, 0);">&lt;</span>
+				<span style="color: rgb(0, 0, 0);">T,&nbsp;T</span>
+				<span style="color: rgb(0, 0, 0);">&gt;</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span id="Codehighlighter1_42_83_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+						<img src="http://www.cppblog.com/Images/dot.gif">
+				</span>
+				<span id="Codehighlighter1_42_83_Open_Text">
+						<span style="color: rgb(0, 0, 0);">{<br><img id="Codehighlighter1_53_80_Open_Image" onclick="this.style.display='none'; Codehighlighter1_53_80_Open_Text.style.display='none'; Codehighlighter1_53_80_Closed_Image.style.display='inline'; Codehighlighter1_53_80_Closed_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top"><img id="Codehighlighter1_53_80_Closed_Image" style="display: none;" onclick="this.style.display='none'; Codehighlighter1_53_80_Closed_Text.style.display='none'; Codehighlighter1_53_80_Open_Image.style.display='inline'; Codehighlighter1_53_80_Open_Text.style.display='inline';" src="http://www.cppblog.com/Images/OutliningIndicators/ContractedSubBlock.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+						<span style="color: rgb(0, 0, 255);">enum</span>
+						<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+						<span id="Codehighlighter1_53_80_Closed_Text" style="border: 1px solid rgb(128, 128, 128); display: none; background-color: rgb(255, 255, 255);">
+								<img src="http://www.cppblog.com/Images/dot.gif">
+						</span>
+						<span id="Codehighlighter1_53_80_Open_Text">
+								<span style="color: rgb(0, 0, 0);">{&nbsp;exists&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">=</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">1</span>
+								<span style="color: rgb(0, 0, 0);">,&nbsp;sameType&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">=</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+								<span style="color: rgb(0, 0, 0);">1</span>
+								<span style="color: rgb(0, 0, 0);">&nbsp;}</span>
+						</span>
+						<span style="color: rgb(0, 0, 0);">;<br><img src="http://www.cppblog.com/Images/OutliningIndicators/ExpandedBlockEnd.gif" align="top">}</span>
+				</span>
+				<span style="color: rgb(0, 0, 0);">;<br></span>
+		</div>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">最后，回到我们的主题，通过</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Conversion</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的帮助，我们可以来决定两个类型的继承性了。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; height: 66px; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 255);">#define</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;SUPERSUBCLASS(T,&nbsp;U)&nbsp;\</span>
+				<span style="color: rgb(0, 0, 0);">
+						<br>
+						<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;(Conversion</span>
+				<span style="color: rgb(0, 0, 0);">&lt;</span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;U</span>
+				<span style="color: rgb(0, 0, 0);">*</span>
+				<span style="color: rgb(0, 0, 0);">,&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;T</span>
+				<span style="color: rgb(0, 0, 0);">*</span>
+				<span style="color: rgb(0, 0, 0);">)::exists&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">&amp;&amp;</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;\<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">!</span>
+				<span style="color: rgb(0, 0, 0);">Conversion</span>
+				<span style="color: rgb(0, 0, 0);">&lt;</span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;T</span>
+				<span style="color: rgb(0, 0, 0);">*</span>
+				<span style="color: rgb(0, 0, 0);">,&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">void</span>
+				<span style="color: rgb(0, 0, 0);">*&gt;</span>
+				<span style="color: rgb(0, 0, 0);">::sameType)</span>
+		</div>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">当</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">U</span>
+				<span style="font-size: 10pt; font-family: 宋体;">继承于</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">或者</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">U</span>
+				<span style="font-size: 10pt; font-family: 宋体;">和</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是同一个类型的时候，</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">SUPERSUBCLASS</span>
+				<span style="font-size: 10pt; font-family: 宋体;">返回</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">true</span>
+				<span style="font-size: 10pt; font-family: 宋体;">。总结一下，只有下面这</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">3</span>
+				<span style="font-size: 10pt; font-family: 宋体;">种情形</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">const U*</span>
+				<span style="font-size: 10pt; font-family: 宋体;">可以隐式转换到</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">const T*</span>
+				<span style="font-size: 10pt; font-family: 宋体;">：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt 21pt; text-indent: -21pt;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="">1.<span style="font-family: 'Times New Roman'; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+				</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">和</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">U</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是同一个类型</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt 21pt; text-indent: -21pt;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="">2.<span style="font-family: 'Times New Roman'; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+				</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">U</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的任意一个基类</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt 21pt; text-indent: -21pt;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="">3.<span style="font-family: 'Times New Roman'; font-style: normal; font-variant: normal; font-weight: normal; font-size: 7pt; line-height: normal; font-size-adjust: none; font-stretch: normal;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span></span>
+				</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">T</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">void<o:p></o:p></span>
+		</p>
+		<p class="MsoNormal" style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">我们通过第</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">2</span>
+				<span style="font-size: 10pt; font-family: 宋体;">个测试屏蔽了最后一种情形。当然，如果你认为同一种类型也不算是继承关系的话，可以进一步严格其条件：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p class="MsoNormal" style="margin: 0cm 0cm 0pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">
+				</span>
+		</p>
+		<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);">
+				<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">
+				<span style="color: rgb(0, 0, 255);">#define</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;SUPERSUBCLASS_STRICT(T,&nbsp;U)&nbsp;\</span>
+				<span style="color: rgb(0, 0, 0);">
+						<br>
+						<img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;(SUPERSUBCLASS(T,&nbsp;U)&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">&amp;&amp;</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;\<br><img src="http://www.cppblog.com/Images/OutliningIndicators/None.gif" align="top">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+				<span style="color: rgb(0, 0, 0);">!</span>
+				<span style="color: rgb(0, 0, 0);">Conversion(</span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;T,&nbsp;</span>
+				<span style="color: rgb(0, 0, 255);">const</span>
+				<span style="color: rgb(0, 0, 0);">&nbsp;U)::sameType)</span>
+		</div>
+</div>
+	</div>

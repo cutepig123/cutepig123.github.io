@@ -1,0 +1,137 @@
+<p>2.4属性元素</p>
+<p>以下c#和xaml是一致的</p>
+<p><strong> Rectangle r = new Rectangle();</strong><br /><strong>            r.Width = 40;</strong><br /><strong>            r.Height = 40;</strong><br /><strong>            r.Fill = Brushes.Black;</strong><br /><strong>            button.Content = r;</strong></p>
+<p>&nbsp;</p>
+<p> &lt;Button x:Name="button" HorizontalAlignment="Left" Height="120" Margin="81,61,0,0" VerticalAlignment="Top" Width="346" Click="button_Click"&gt;<br />            <strong>&lt;Button.Content&gt;</strong><br /><strong>                &lt;Rectangle Height="40" Width="40" Fill="red"&gt;</strong><br /><strong>                &lt;/Rectangle&gt;</strong><br /><strong>            &lt;/Button.Content&gt;</strong><br />        &lt;/Button&gt;</p>
+<p>&nbsp;2.6属性扩展</p>
+<p>以下xaml</p>
+<p> &lt;Button x:Name="button" Click="button_Click" <strong>Background="{x:Null}" Height="{x:Static SystemParameters.IconHeight}" Content="{Binding Path=Height, RelativeSource={RelativeSource Self}}</strong>"&gt;<br />           </p>
+<p>和c#等价</p>
+<p> button.Background = null;<br />            button.Height = SystemParameters.IconHeight;<br />            System.Windows.Data.Binding binding = new Binding();<br />            binding.Path = new PropertyPath("Height");<br />            binding.RelativeSource = RelativeSource.Self;<br />            button.SetBinding(Button.ContentProperty, binding);</p>
+<p>&nbsp;</p>
+<p>content binding含义：显示在button上的字符串</p>
+<p>&nbsp;</p>
+<p>2.7.2 集合项</p>
+<p>&lt;ListBox x:Name="listBox" &gt;<br />            <strong>&lt;ListBox.Items&gt;</strong><br /><strong>                &lt;ListBoxItem Content="Item 1"&gt;&lt;/ListBoxItem&gt;</strong><br /><strong>                &lt;ListBoxItem Content="Item 2"&gt;&lt;/ListBoxItem&gt;</strong><br /><strong>            &lt;/ListBox.Items&gt;</strong><br />        &lt;/ListBox&gt;</p>
+<p>&nbsp;</p>
+<p>等价于</p>
+<p> System.Windows.Controls.ListBoxItem li1 = new System.Windows.Controls.ListBoxItem();<br />            li1.Content = "Item 1";<br />            listBox.Items.Add(li1);</p>
+<p>            System.Windows.Controls.ListBoxItem li2 = new System.Windows.Controls.ListBoxItem();<br />            li2.Content = "Item 2";<br />            listBox.Items.Add(li2);</p>
+<p>&nbsp;3.2逻辑树与可视树</p>
+<p>代码</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:csharp;gutter:true;">   public MainWindow()
+        {
+            InitializeComponent();
+            printLogicalTree(0, this);
+          
+        }
+
+        private void button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("A");
+        }
+
+        protected override void OnContentRendered(EventArgs e)
+        {
+            base.OnContentRendered(e);
+            printVisualTree(0, this);
+        }
+        void printLogicalTree(int depth, object obj)
+        {
+            Debug.WriteLine(new string(' ', depth) + obj);
+            if (!(obj is DependencyObject)) return;
+            foreach(object child in LogicalTreeHelper.GetChildren(obj as DependencyObject))
+            {
+                printLogicalTree(depth + 1, child);
+            }
+        }
+
+        void printVisualTree(int depth, DependencyObject obj)
+        {
+            Debug.WriteLine(new string(' ', depth) + obj);
+            if (!(obj is DependencyObject)) return;
+            for(int i=0; i&lt; VisualTreeHelper.GetChildrenCount(obj);i++)
+            {
+                printVisualTree(depth + 1, VisualTreeHelper.GetChild(obj,i));
+            }
+        }
+</pre>
+</div>
+<p>　　</p>
+<p>输出</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:csharp;gutter:true;">WpfApplication1.MainWindow
+ System.Windows.Controls.StackPanel
+  System.Windows.Controls.Label: eeeeeee
+   eeeeeee
+  System.Windows.Controls.Label: Label
+   Label
+  System.Windows.Controls.Label: Label
+   Label
+  System.Windows.Controls.ListBox Items.Count:0
+  System.Windows.Controls.StackPanel
+   System.Windows.Controls.Button: Button
+    Button
+   System.Windows.Controls.Button: Button
+    Button
+  System.Windows.Controls.Primitives.StatusBar Items.Count:1
+   xxx
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemXmlLinq\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemXmlLinq.dll&rdquo;。已跳过加载符号。模块进行了优化，并且调试器选项&ldquo;仅我的代码&rdquo;已启用。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\Microsoft.Net\assembly\GAC_MSIL\PresentationFramework-SystemXml\v4.0_4.0.0.0__b77a5c561934e089\PresentationFramework-SystemXml.dll&rdquo;。已跳过加载符号。模块进行了优化，并且调试器选项&ldquo;仅我的代码&rdquo;已启用。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\Microsoft.Net\assembly\GAC_MSIL\PresentationCore.resources\v4.0_4.0.0.0_zh-Hans_31bf3856ad364e35\PresentationCore.resources.dll&rdquo;。模块已生成，不包含符号。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\Users\cutepig\AppData\Local\Temp\VisualStudio.XamlDiagnostics.8476\WpfXamlDiagnosticsTap.dll&rdquo;。已跳过加载符号。模块进行了优化，并且调试器选项&ldquo;仅我的代码&rdquo;已启用。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\assembly\GAC\Microsoft.VisualStudio.OLE.Interop\7.1.40304.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.OLE.Interop.dll&rdquo;。模块已生成，不包含符号。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\Microsoft.Net\assembly\GAC_MSIL\UIAutomationTypes\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationTypes.dll&rdquo;。已跳过加载符号。模块进行了优化，并且调试器选项&ldquo;仅我的代码&rdquo;已启用。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\Microsoft.Net\assembly\GAC_MSIL\Accessibility\v4.0_4.0.0.0__b03f5f7f11d50a3a\Accessibility.dll&rdquo;。无法查找或打开 PDB 文件。
+&ldquo;WpfApplication1.vshost.exe&rdquo;(CLR v4.0.30319: WpfApplication1.vshost.exe): 已加载&ldquo;C:\windows\Microsoft.Net\assembly\GAC_MSIL\UIAutomationProvider\v4.0_4.0.0.0__31bf3856ad364e35\UIAutomationProvider.dll&rdquo;。已跳过加载符号。模块进行了优化，并且调试器选项&ldquo;仅我的代码&rdquo;已启用。
+WpfApplication1.MainWindow
+ System.Windows.Controls.Border
+  System.Windows.Documents.AdornerDecorator
+   System.Windows.Controls.ContentPresenter
+    System.Windows.Controls.StackPanel
+     System.Windows.Controls.Label: eeeeeee
+      System.Windows.Controls.Border
+       System.Windows.Controls.ContentPresenter
+        System.Windows.Controls.TextBlock
+     System.Windows.Controls.Label: Label
+      System.Windows.Controls.Border
+       System.Windows.Controls.ContentPresenter
+        System.Windows.Controls.TextBlock
+     System.Windows.Controls.Label: Label
+      System.Windows.Controls.Border
+       System.Windows.Controls.ContentPresenter
+        System.Windows.Controls.TextBlock
+     System.Windows.Controls.ListBox Items.Count:0
+      System.Windows.Controls.Border
+       System.Windows.Controls.ScrollViewer
+        System.Windows.Controls.Grid
+         System.Windows.Shapes.Rectangle
+         System.Windows.Controls.ScrollContentPresenter
+          System.Windows.Controls.ItemsPresenter
+           System.Windows.Controls.VirtualizingStackPanel
+          System.Windows.Documents.AdornerLayer
+         System.Windows.Controls.Primitives.ScrollBar 最小值:0 最大值:0 值:0
+         System.Windows.Controls.Primitives.ScrollBar 最小值:0 最大值:0 值:0
+     System.Windows.Controls.StackPanel
+      System.Windows.Controls.Button: Button
+       Microsoft.Windows.Themes.ButtonChrome
+        System.Windows.Controls.ContentPresenter
+         System.Windows.Controls.TextBlock
+      System.Windows.Controls.Button: Button
+       Microsoft.Windows.Themes.ButtonChrome
+        System.Windows.Controls.ContentPresenter
+         System.Windows.Controls.TextBlock
+     System.Windows.Controls.Primitives.StatusBar Items.Count:1
+      System.Windows.Controls.Border
+       System.Windows.Controls.ItemsPresenter
+        System.Windows.Controls.DockPanel
+         System.Windows.Controls.Primitives.StatusBarItem: xxx
+          System.Windows.Controls.Border
+           System.Windows.Controls.ContentPresenter
+            System.Windows.Controls.TextBlock
+   System.Windows.Documents.AdornerLayer
+线程 0xb10 已退出，返回值为 0 (0x0)。
+</pre>
+</div>
+<p>　　</p>

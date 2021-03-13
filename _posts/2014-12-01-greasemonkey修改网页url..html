@@ -1,0 +1,32 @@
+<div class="cnblogs_code" onclick="cnblogs_code_show('3e38246a-bb91-4506-94a3-e0b9d699a21f')"><img id="code_img_closed_3e38246a-bb91-4506-94a3-e0b9d699a21f" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_3e38246a-bb91-4506-94a3-e0b9d699a21f" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('3e38246a-bb91-4506-94a3-e0b9d699a21f',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_3e38246a-bb91-4506-94a3-e0b9d699a21f" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">// ==UserScript==
+</span><span style="color: #008080;"> 2</span> <span style="color: #000000;">// @name        JSHE_ModifyFunction
+</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">// @namespace   jshe
+</span><span style="color: #008080;"> 4</span> <span style="color: #000000;">// @include     http://localhost/*
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">// @version     1
+</span><span style="color: #008080;"> 6</span> <span style="color: #000000;">// @grant       none
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">// ==/UserScript==
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span> <span style="color: #000000;">alert("hello2");
+</span><span style="color: #008080;">10</span> 
+<span style="color: #008080;">11</span> <span style="color: #000000;">function embed() {
+</span><span style="color: #008080;">12</span> <span style="color: #000000;">    var cells =document.getElementsByTagName("a");
+</span><span style="color: #008080;">13</span>     for (var i = 0; i <span style="color: #0000ff;">&lt;</span><span style="color: #800000;"> cells</span><span style="color: #ff0000;">.length; i++) 
+</span><span style="color: #008080;">14</span> <span style="color: #ff0000;">    {
+</span><span style="color: #008080;">15</span> <span style="color: #ff0000;">        var href </span><span style="color: #0000ff;">= cells[i].getAttribute("href"); 
+</span><span style="color: #008080;">16</span>         <span style="color: #ff0000;">cells[i].setAttribute("href", href + "/dummy"); 
+</span><span style="color: #008080;">17</span> <span style="color: #ff0000;">    }
+</span><span style="color: #008080;">18</span> <span style="color: #ff0000;">}
+</span><span style="color: #008080;">19</span> 
+<span style="color: #008080;">20</span> 
+<span style="color: #008080;">21</span> <span style="color: #ff0000;">var script </span><span style="color: #0000ff;">= document.createElement('script'); 
+</span><span style="color: #008080;">22</span> <span style="color: #ff0000;">script.type </span><span style="color: #0000ff;">= "text/javascript"</span><span style="color: #ff0000;">; 
+</span><span style="color: #008080;">23</span> <span style="color: #ff0000;">//script.innerHTML </span><span style="color: #0000ff;">= "("</span><span style="color: #ff0000;"> + embed + ")()";
+</span><span style="color: #008080;">24</span> <span style="color: #ff0000;">script.innerHTML </span><span style="color: #0000ff;">= embed </span><span style="color: #ff0000;">+ "\nembed();";
+</span><span style="color: #008080;">25</span> <span style="color: #ff0000;">document.getElementsByTagName('body')[0].appendChild(script);
+</span><span style="color: #008080;">26</span> 
+<span style="color: #008080;">27</span> <span style="color: #ff0000;">alert("hello3");</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>

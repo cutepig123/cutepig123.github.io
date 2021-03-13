@@ -83,4 +83,3 @@ from tensorflow.python.keras.engine import training
 ```
 
 we find the definition of Model class from file:https://github.com/tensorflow/tensorflow/blob/master/tensorflow/python/keras/engine/training.py
-

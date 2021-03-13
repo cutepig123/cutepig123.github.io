@@ -1,0 +1,32 @@
+<p>目的：</p>
+<p>访问内网的shared folder</p>
+<p>内网可以无缝访问internet而不需要设置代理（因为有些软件没办法支持代理，比如rustup）</p>
+<p>&nbsp;</p>
+<p>解决方案：</p>
+<p>基本思路</p>
+<p>家里 设置chisel服务开放443端口，openvpn开通1194端口</p>
+<p>公司 设置chisel将本地11940映射到家里的1194</p>
+<p>&nbsp;</p>
+<p>用chisel打通内外网（我发现我这边openssh不行，怀疑是公司有检测vpn？），</p>
+<p>家里：chisel_windows_386 server -v -p 443 --socks5 --reverse</p>
+<p>公司：</p>
+<p><img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190406000840795-1155275439.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;vpn设施： 参考https://www.jianshu.com/p/e0ba68e2f357</p>
+<p>&nbsp;</p>
+<p>结果</p>
+<p>家里shisel</p>
+<p>公司chisel</p>
+<p>家里vpn</p>
+<p><img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190406001328067-1106930939.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>公司vpn</p>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190406001406724-2033794115.png" alt="" /></p>
+<p>公司路由表</p>
+<p>可见默认用的公司的路由，而对于10.8相关ip使用vpn路由</p>
+<p><img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190406001502255-362194552.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>家里访问公司share folder</p>
+<p><img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190406001154488-325545260.png" alt="" /></p>
+<p>&nbsp;</p>

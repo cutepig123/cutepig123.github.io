@@ -1,0 +1,42 @@
+<p>http://www.mitbbs.cn/article_t/Quant/25387519.html</p>
+<p>发信人: winterlover (夫妻双双把家还~~~~), 信区: Quant<br />
+标 题: 一道概率题<br />
+发信站: BBS 未名空间站 (Fri Aug 31 14:04:08 2007)</p>
+<p>100名乘客要上飞机，飞机上100个座位。第一个乘客不按号，随便乱坐，剩下的人都安<br />
+分守己，会对照自己的座位号（第二个去2号位，第三个去3号位，so on and so forth<br />
+），除非座位已经被占，他们才会随即挑一个，请问第100个乘客（最后一个）能坐自<br />
+己号的概率是多少？</p>
+<p>---------------------------------------------------<br />
+答案是0.5</p>
+<p>若有n个人，令第n个人能做到的概率为P(n)<br />
+除去第一个人选到一号和n-1号的两种情况（概率分别是1/n和1/n*0.5），剩下的情况<br />
+都和有{n-1...3}个人的情况等价。 即，1/n(P(n-1)+P(n-2）...P(3))。 而P3=0.5，<br />
+故可推知，所有Pn都是0.5。<br />
+---------------------------------------------------<br />
+in the case of everyone randomly picks seat, the chances are 1/100</p>
+<p>---------------------------------------------------<br />
+Set a random variable X describing the seat the first person chose. so <br />
+X could be 1,2,..., N with 1/N chance. <br />
+Set event A as the case the last guy has his right seat. <br />
+So conditional on X, total probability depending on N is <br />
+P_N(A) = 1/N [P(A|X=1) + P(A|X=2) + ... + P(A|X=N)] <br />
+and P(A|X=1)=1, P(A|X=N)=0, P(A|X=i) = P_{N-i+1}(A). <br />
+As a result, a recurrence equation is formed<br />
+P_N(A) = 1/N [ 1+P_2(A) + P_3(A) + ... + P_{N-1}(A) ]<br />
+then, after reforming the terms<br />
+P_N(A) = P_{N-1}(A) </p>
+<p>As we know P_2(A) = 1/2, <br />
+then P_100(A) = 1/2, and P_N(A)=1/2 for any N.</p>
+<p>---------------------------------------------------<br />
+如果第一个人坐在1号椅子, 那么概率为1.<br />
+如果第一个人坐在N号椅子,概率为0,<br />
+如果第一个人坐在任何其他椅子m,<br />
+把这个人连同他做的椅子m一块儿踢出去,<br />
+然后把m号的人re-label为1.那么此后的概率为n-1个人的概率.</p>
+<p>所以 p(n) = 1/n * 1 + 1/n * 0 + (n-2)/n * p(n-1),<br />
+p(1) = 1</p>
+<p>thus, p(n) = 1/2</p>
+<p><br />
+---------------------------------------------------</p>
+<p>---------------------------------------------------</p>
+<p>&nbsp;</p>

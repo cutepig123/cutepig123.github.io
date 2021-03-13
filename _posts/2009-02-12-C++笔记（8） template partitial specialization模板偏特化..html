@@ -1,0 +1,228 @@
+<div class="post">
+	<div class="postTitle">
+		<a id="viewpost1_TitleUrl" class="postTitle2" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.html">http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx</a><br><br>Note： The 2nd one compiles fail on VC2005.??<br><br><a id="viewpost1_TitleUrl" class="postTitle2" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.html">C++类模板的三种特化</a>
+	</div>
+	<p><span style="font-family: simsun;" lang="zh-CN"><span style="font-style: italic; font-family: Arial; text-decoration: underline;">By SmartPtr(</span><a href="http://www.cppblog.com/SmartPtr/" style="font-style: italic; font-family: arial; text-decoration: underline;" title="http://www.cppblog.com/SmartPtr/">http://www.cppblog.com/SmartPtr/)</a></span></p>
+<p>&nbsp; <br></p>
+<p>&nbsp; 说起C++的模板及模板特化， 相信很多人都很熟悉 ，但是说到模板特化的几种类型，相信了解的人就不是很多。我这里归纳了针对一个模板参数的类模板特化的几种类型， 一是特化为绝对类型； 二是特化为引用，指针类型；三是特化为另外一个类模板。<br>&nbsp;这里用一个简单的例子来说明这三种情况：</p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;general&nbsp;version</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare<br>{<br></span><span style="color: rgb(0, 0, 255);">public</span><span style="color: rgb(0, 0, 0);">:<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">static</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;IsEqual(</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;lh,&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;lh&nbsp;</span><span style="color: rgb(0, 0, 0);">==</span><span style="color: rgb(0, 0, 0);">&nbsp;rh;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>};</span></div>
+<p>这是一个用于比较的类模板，里面可以有多种用于比较的函数， 以IsEqual为例。<br>&nbsp;<br><strong>一、特化为绝对类型<br></strong>也就是说直接为某个特定类型做特化，这是我们最常见的一种特化方式， 如特化为float, double等</p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;float</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template</span><span style="color: rgb(0, 0, 0);">&lt;&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br>{<br></span><span style="color: rgb(0, 0, 255);">public</span><span style="color: rgb(0, 0, 0);">:<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">static</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;IsEqual(</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;lh,&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;abs(lh&nbsp;</span><span style="color: rgb(0, 0, 0);">-</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">&nbsp;10e</span><span style="color: rgb(0, 0, 0);">-</span><span style="color: rgb(0, 0, 0);">3</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>};<br><br></span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;double</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template</span><span style="color: rgb(0, 0, 0);">&lt;&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">double</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br>{<br></span><span style="color: rgb(0, 0, 255);">public</span><span style="color: rgb(0, 0, 0);">:<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">static</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;IsEqual(</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">double</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;lh,&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">double</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;abs(lh&nbsp;</span><span style="color: rgb(0, 0, 0);">-</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">&nbsp;10e</span><span style="color: rgb(0, 0, 0);">-</span><span style="color: rgb(0, 0, 0);">6</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>};<br><br></span></div>
+<p><br>&nbsp;<br><strong>二、特化为引用，指针类型<br></strong>这种特化我最初是在stl源码的的iterator_traits特化中发现的， 如下：</p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 0, 0);">template&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;_Iterator</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">struct</span><span style="color: rgb(0, 0, 0);">&nbsp;iterator_traits&nbsp;{<br>&nbsp;&nbsp;typedef&nbsp;typename&nbsp;_Iterator::iterator_category&nbsp;iterator_category;<br>&nbsp;&nbsp;typedef&nbsp;typename&nbsp;_Iterator::value_type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_type;<br>&nbsp;&nbsp;typedef&nbsp;typename&nbsp;_Iterator::difference_type&nbsp;&nbsp;&nbsp;difference_type;<br>&nbsp;&nbsp;typedef&nbsp;typename&nbsp;_Iterator::pointer&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer;<br>&nbsp;&nbsp;typedef&nbsp;typename&nbsp;_Iterator::reference&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference;<br>};<br><br></span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;_Tp*</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">struct</span><span style="color: rgb(0, 0, 0);">&nbsp;iterator_traits</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">_Tp</span><span style="color: rgb(0, 0, 0);">*&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;{<br>&nbsp;&nbsp;typedef&nbsp;random_access_iterator_tag&nbsp;iterator_category;<br>&nbsp;&nbsp;typedef&nbsp;_Tp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_type;<br>&nbsp;&nbsp;typedef&nbsp;ptrdiff_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;difference_type;<br>&nbsp;&nbsp;typedef&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer;<br>&nbsp;&nbsp;typedef&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference;<br>};<br><br></span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;const&nbsp;_Tp*</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">struct</span><span style="color: rgb(0, 0, 0);">&nbsp;iterator_traits</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">*&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;{<br>&nbsp;&nbsp;typedef&nbsp;random_access_iterator_tag&nbsp;iterator_category;<br>&nbsp;&nbsp;typedef&nbsp;_Tp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;value_type;<br>&nbsp;&nbsp;typedef&nbsp;ptrdiff_t&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;difference_type;<br>&nbsp;&nbsp;typedef&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;pointer;<br>&nbsp;&nbsp;typedef&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;_Tp</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;reference;<br>};<br><br></span></div>
+<p>&nbsp;</p>
+<p>&nbsp;当然，除了T*, 我们也可以将T特化为 const T*, T&amp;, const T&amp;等，以下还是以T*为例：</p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;T*</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">*&gt;</span><span style="color: rgb(0, 0, 0);"><br>{<br></span><span style="color: rgb(0, 0, 255);">public</span><span style="color: rgb(0, 0, 0);">:<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">static</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;IsEqual(</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">&nbsp;lh,&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">lh,&nbsp;</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">rh);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>};</span></div>
+<p>这种特化其实是就不是一种绝对的特化， 它只是对类型做了某些限定，但仍然保留了其一定的模板性，这种特化给我们提供了极大的方便， 如这里， 我们就不需要对int*, float*, double*等等类型分别做特化了。<br></p>
+<p><strong>三、特化为另外一个类模板</strong></p>
+<p>这其实是第二种方式的扩展，其实也是对类型做了某种限定，而不是绝对化为某个具体类型，如下：<br></p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;vector&lt;T&gt;</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">vector</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br>{<br></span><span style="color: rgb(0, 0, 255);">public</span><span style="color: rgb(0, 0, 0);">:<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">static</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;IsEqual(</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;vector</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;lh,&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;vector</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">if</span><span style="color: rgb(0, 0, 0);">(lh.size()&nbsp;</span><span style="color: rgb(0, 0, 0);">!=</span><span style="color: rgb(0, 0, 0);">&nbsp;rh.size())&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">false</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">else</span><span style="color: rgb(0, 0, 0);"><br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">for</span><span style="color: rgb(0, 0, 0);">(</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&nbsp;i&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">0</span><span style="color: rgb(0, 0, 0);">;&nbsp;i&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">&nbsp;lh.size();&nbsp;</span><span style="color: rgb(0, 0, 0);">++</span><span style="color: rgb(0, 0, 0);">i)<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">if</span><span style="color: rgb(0, 0, 0);">(lh[i]&nbsp;</span><span style="color: rgb(0, 0, 0);">!=</span><span style="color: rgb(0, 0, 0);">&nbsp;rh[i])&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">false</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;}<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">true</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>};<br></span></div>
+<p><br>这就把IsEqual的参数限定为一种vector类型， 但具体是vector&lt;int&gt;还是vector&lt;float&gt;， 我们可以不关心， 因为对于这两种类型，我们的处理方式是一样的，我们可以把这种方式称为“半特化”。</p>
+<p>当然， 我们可以将其“半特化”为任何我们自定义的模板类类型：</p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;specialize&nbsp;for&nbsp;any&nbsp;template&nbsp;class&nbsp;type</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">template&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;T1</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;<br></span><span style="color: rgb(0, 0, 255);">struct</span><span style="color: rgb(0, 0, 0);">&nbsp;SpecializedType<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;T1&nbsp;x1;<br>&nbsp;&nbsp;&nbsp;&nbsp;T1&nbsp;x2;<br>};<br>template&nbsp;</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br></span><span style="color: rgb(0, 0, 255);">class</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">SpecializedType</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);"><br>{<br></span><span style="color: rgb(0, 0, 255);">public</span><span style="color: rgb(0, 0, 0);">:<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">static</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;IsEqual(</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;SpecializedType</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;lh,&nbsp;</span><span style="color: rgb(0, 0, 255);">const</span><span style="color: rgb(0, 0, 0);">&nbsp;SpecializedType</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;&amp;</span><span style="color: rgb(0, 0, 0);">&nbsp;rh)<br>&nbsp;&nbsp;&nbsp;&nbsp;{<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">return</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">T</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(lh.x1&nbsp;</span><span style="color: rgb(0, 0, 0);">+</span><span style="color: rgb(0, 0, 0);">&nbsp;lh.x2,&nbsp;rh.x1&nbsp;</span><span style="color: rgb(0, 0, 0);">+</span><span style="color: rgb(0, 0, 0);">&nbsp;rh.x2);<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>};<br></span></div>
+<p><br>&nbsp;这就是三种类型的模板特化， 我们可以这么使用这个Compare类：</p>
+<div style="border: 1px solid rgb(204, 204, 204); padding: 4px 5px 4px 4px; font-size: 13px; width: 98%; background-color: rgb(238, 238, 238);"><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;int</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&nbsp;i1&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">10</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&nbsp;i2&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">10</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;r1&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(i1,&nbsp;i2);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;float</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&nbsp;f1&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">10</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&nbsp;f2&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">10</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;r2&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(f1,&nbsp;f2);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;double</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">double</span><span style="color: rgb(0, 0, 0);">&nbsp;d1&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">10</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">double</span><span style="color: rgb(0, 0, 0);">&nbsp;d2&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">10</span><span style="color: rgb(0, 0, 0);">;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;r3&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">double</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(d1,&nbsp;d2);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;pointer</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">&nbsp;p1&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">i1;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">*</span><span style="color: rgb(0, 0, 0);">&nbsp;p2&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">&amp;</span><span style="color: rgb(0, 0, 0);">i2;<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;r4&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">*&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(p1,&nbsp;p2);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;vector&lt;T&gt;</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;vector</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;v1;<br>&nbsp;&nbsp;&nbsp;&nbsp;v1.push_back(</span><span style="color: rgb(0, 0, 0);">1</span><span style="color: rgb(0, 0, 0);">);<br>&nbsp;&nbsp;&nbsp;&nbsp;v1.push_back(</span><span style="color: rgb(0, 0, 0);">2</span><span style="color: rgb(0, 0, 0);">);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;vector</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;v2;<br>&nbsp;&nbsp;&nbsp;&nbsp;v2.push_back(</span><span style="color: rgb(0, 0, 0);">1</span><span style="color: rgb(0, 0, 0);">);<br>&nbsp;&nbsp;&nbsp;&nbsp;v2.push_back(</span><span style="color: rgb(0, 0, 0);">2</span><span style="color: rgb(0, 0, 0);">);<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;r5&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">vector</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">int</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(v1,&nbsp;v2);<br><br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 128, 0);">//</span><span style="color: rgb(0, 128, 0);">&nbsp;custom&nbsp;template&nbsp;class&nbsp;</span><span style="color: rgb(0, 128, 0);"><br></span><span style="color: rgb(0, 0, 0);">&nbsp;&nbsp;&nbsp;&nbsp;SpecializedType</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;s1&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;{</span><span style="color: rgb(0, 0, 0);">10.1f</span><span style="color: rgb(0, 0, 0);">,</span><span style="color: rgb(0, 0, 0);">10.2f</span><span style="color: rgb(0, 0, 0);">};<br>&nbsp;&nbsp;&nbsp;&nbsp;SpecializedType</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;s2&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;{</span><span style="color: rgb(0, 0, 0);">10.3f</span><span style="color: rgb(0, 0, 0);">,</span><span style="color: rgb(0, 0, 0);">10.0f</span><span style="color: rgb(0, 0, 0);">};<br>&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: rgb(0, 0, 255);">bool</span><span style="color: rgb(0, 0, 0);">&nbsp;r6&nbsp;</span><span style="color: rgb(0, 0, 0);">=</span><span style="color: rgb(0, 0, 0);">&nbsp;Compare</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 0);">SpecializedType</span><span style="color: rgb(0, 0, 0);">&lt;</span><span style="color: rgb(0, 0, 255);">float</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">&nbsp;</span><span style="color: rgb(0, 0, 0);">&gt;</span><span style="color: rgb(0, 0, 0);">::IsEqual(s1,&nbsp;s2);<br></span></div>
+<br><br>注：感谢longshanks对于本文中"类模板"与"模板类"概念的澄清，已更正 (2007-7-16) 
+	<div class="postDesc">posted on 2007-07-04 21:40 <a href="http://www.cppblog.com/SmartPtr/">SmartPtr</a> 阅读(3022) <a href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#Post">评论(10)</a> &nbsp;<a href="http://www.cppblog.com/SmartPtr/admin/EditPosts.aspx?postid=27496">编辑</a>&nbsp;<a href="http://www.cppblog.com/SmartPtr/AddToFavorite.aspx?id=27496">收藏</a> <a href="http://www.cppblog.com/SmartPtr/services/trackbacks/27496.aspx">引用</a>  </div>
+</div>
+<img src="http://www.cppblog.com/SmartPtr/aggbug/27496.html?webview=1" width="1" height="1">
+
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.html"
+dc:identifier="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.html"
+dc:title="C++类模板的三种特化"
+trackback:ping="http://www.cppblog.com/SmartPtr/services/trackbacks/27496.aspx" />
+</rdf:RDF>
+-->
+
+<script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('AjaxHolder$scriptmanager1', document.getElementById('Form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tAjaxHolder$UpdatePanel1'], [], [], 90);
+//]]&gt;
+</script>
+
+
+	    
+    <a name="pagedcomment"></a>
+<!--done-->
+<br>
+<b>FeedBack:</b>
+
+	
+
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化[未登录]" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#27519">#</a>&nbsp;<a name="27519"></a>re: C++模板类的三种特化[未登录]</div>
+			<div class="feedbackListSubtitle">
+				2007-07-05 11:23 | <a id="AjaxHolder_Comments_CommentList_ctl00_NameLink" target="_blank">yong</a><br>
+				<div align="left">第二和第三种实际上就是template的"偏特化"或叫"部分特化"。这个概念不是什么新鲜的东东~ 呵呵&nbsp;&nbsp;<a onclick='return SetReplyAuhor("yong")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=yong" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#27521">#</a>&nbsp;<a name="27521"></a>re: C++模板类的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-05 11:53 | <a id="AjaxHolder_Comments_CommentList_ctl01_NameLink" href="http://www.cppblog.com/SmartPtr/" target="_blank">SmartPtr</a><br>
+				<div align="left">从广义上来讲， 我觉得可以把这种情形归入模板偏特化。
+<br>但是根据我们一般的理解，模板的偏特化是指需要根据模板的某些但不是全部的参数进行特化， 如下:
+<br>template&lt;class T1, class T2&gt;
+<br>class A
+<br>{
+<br>}
+<br>
+<br>template&lt;class T1&gt;
+<br>class A&lt;T1, int&gt;
+<br>{
+<br>}
+<br>
+<br>说实话， 我第一次发现第二和第三种用法时， 还是觉得挺新鲜的，这到底是属于全特化还是偏特化， 我也说不清楚， 但这也不重要，只要我们知道有这种用法，能应用它就行了&nbsp;&nbsp;<a onclick='return SetReplyAuhor("SmartPtr")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=SmartPtr" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#27532">#</a>&nbsp;<a name="27532"></a>re: C++模板类的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-05 15:57 | <a id="AjaxHolder_Comments_CommentList_ctl02_NameLink" href="http://www.cppblog.com/walkspeed/" target="_blank">walkspeed</a><br>
+				<div align="left">模板有两种特化，全特化和偏特化（局部特化）<br>模板函数只能全特化，没有偏特化（以后可能有）。<br>模板类是可以全特化和偏特化的。<br><br>全特化，就是模板中模板参数全被指定为确定的类型。<br>全特化也就是定义了一个全新的类型，全特化的类中的函数可以与模板类不一样。<br><br>偏特化，就是模板中的模板参数没有被全部确定，需要编译器在编译时进行确定。<br><br>在类型上加上const、&amp;、*（ cosnt int、int&amp;、int*、等等）并没有产生新的类型。只是类型被修饰了。模板在编译时，可以得到这些修饰信息。<br><br>以上的2、3就是偏特化。&nbsp;&nbsp;<a onclick='return SetReplyAuhor("walkspeed")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=walkspeed" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#27534">#</a>&nbsp;<a name="27534"></a>re: C++模板类的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-05 16:03 | <a id="AjaxHolder_Comments_CommentList_ctl03_NameLink" href="http://www.cppblog.com/walkspeed/" target="_blank">walkspeed</a><br>
+				<div align="left">模
+板的特化是非常有用的。它像一个在编译期的条件判断。当编译器在编译时找到了符合的特化实现，就会使用这个特化实现。这就叫编译器多态（或者叫静态多
+态）。这种东西对编写基础库是很有用的。这也就是为何c++的基础库大量使用了模板技术，而且大量使用了特化，特别是偏特化。<br><br>在泛型中，利用特化类得到类新的特性，以便找到最适合这种特性的实现。而这一切都是在编译时完成。&nbsp;&nbsp;<a onclick='return SetReplyAuhor("walkspeed")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=walkspeed" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#27546">#</a>&nbsp;<a name="27546"></a>re: C++模板类的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-05 17:30 | <a id="AjaxHolder_Comments_CommentList_ctl04_NameLink" href="http://www.cppblog.com/SmartPtr/" target="_blank">SmartPtr</a><br>
+				<div align="left">   谢谢walkspeed的回复， 我想对于全特化和偏特化这么理解应该是正确的， 就是全特化后确定了一个真正的类型， 而偏特化后其实还是一个原类型， 这样的话， 以上2， 3的确属于偏特化。
+<br>   模板的运用的确很广，无论模板元编程中的将计算提前到编译器，还是编译器多态（或者叫静态多态）， 都是非常漂亮聪明的应用， 在&lt;&lt;Modern C++ Design&gt;&gt;有着极好的体现。&nbsp;&nbsp;<a onclick='return SetReplyAuhor("SmartPtr")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=SmartPtr" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化[未登录]" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#28130">#</a>&nbsp;<a name="28130"></a>re: C++模板类的三种特化[未登录]</div>
+			<div class="feedbackListSubtitle">
+				2007-07-16 16:11 | <a id="AjaxHolder_Comments_CommentList_ctl05_NameLink" target="_blank">longshanks</a><br>
+				<div align="left">如果这样分的话，还应该有第四种特化：
+<br>template&lt;typename T1, typename T2&gt;
+<br>class X {...};
+<br>
+<br>template&lt;typename T&gt;
+<br>class X&lt;T, int&gt; {...};
+<br>以及2、3、4的混合
+<br>template&lt;typename T&gt;
+<br>class X&lt;T, T*&gt; {...}
+<br>template&lt;typename T&gt;
+<br>class X&lt;vector&lt;T&gt;, T&amp;&gt; {...};
+<br>...
+<br>更极端的，这样的特化是否该归为第5类呢：
+<br>template&lt;typename T&gt;
+<br>class Y;
+<br>template&lt;typename R, typename P1, typename P2&gt;
+<br>class Y&lt;R (P1, P2)&gt; {...};//针对带两个参数，有返回值的函数类型特化
+<br>
+<br>实际上，3仅仅是局部特化结合template-template parameter的一个应用。算不上一“种”特化。
+<br>总的来说，还是C++标准中的分类更加清晰。
+<br>
+<br>另外，根据C++标准术语，应该是“类模板”（class template），而不是“模板类”。一般认为，“模板类”是模板实例化（特化）后的类：
+<br>vector&lt;int&gt;&nbsp;&nbsp;<a onclick='return SetReplyAuhor("longshanks")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=longshanks" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++模板类的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#28150">#</a>&nbsp;<a name="28150"></a>re: C++模板类的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-16 21:26 | <a id="AjaxHolder_Comments_CommentList_ctl06_NameLink" href="http://www.cppblog.com/SmartPtr/" target="_blank">SmartPtr</a><br>
+				<div align="left">to longshanks
+<br>
+<br>本文的目的其实并不是试图对C++的模板特化做一下全面的分类， 而是针对自己所遇到的，觉得比较有意思的，对于一个模板参数所能够做到的特化，并不想对C++中的全特化，偏特化有所混淆。当然，之间也得到了大家不少有价值的看法。尤其对于您所举的这个例子：
+<br>template&lt;typename T&gt; 
+<br>class Y; 
+<br>template&lt;typename R, typename P1, typename P2&gt; 
+<br>class Y&lt;R (P1, P2)&gt; {...};//针对带两个参数，有返回值的函数类型特化
+<br>
+<br>是我之前所没有想到的，我只考虑了数据类型并没有考虑到函数类型，但是我想参考针对数据类型所做的分类，可以得到函数类型对应平行的分类。比如对于这个例子，应该可以理解为第三种：特化为另外一个类（函数）模板。
+<br>
+<br>PS：
+<br>谢谢关于模板类，类模板概念的澄清，原文已修改&nbsp;&nbsp;<a onclick='return SetReplyAuhor("SmartPtr")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=SmartPtr" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++类模板的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#28351">#</a>&nbsp;<a name="28351"></a>re: C++类模板的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-19 14:11 | <a id="AjaxHolder_Comments_CommentList_ctl07_NameLink" target="_blank">shen126</a><br>
+				<div align="left">template&lt;class T&gt;
+<br>class Compare&lt;T*&gt;
+<br>{
+<br>public:
+<br>	static bool IsEqual(const T* lh, const T* rh)
+<br>	{
+<br>		return Compare&lt;T&gt;::IsEqual(*lh, *rh);
+<br>	}
+<br>};
+<br>
+<br>int _tmain(int argc, _TCHAR* argv[])
+<br>{
+<br>
+<br>	system("pause");
+<br>	return 0;
+<br>}
+<br>-----
+<br>为什么这段代码在VS2005里编译出错了呢，难道不支持，还是需要打开什么特殊开关符吗？
+<br>&nbsp;&nbsp;<a onclick='return SetReplyAuhor("shen126")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=shen126" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		<div class="feedbackItem">
+			<div class="feedbackListTitle"><a title="permalink: re: C++类模板的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#28352">#</a>&nbsp;<a name="28352"></a>re: C++类模板的三种特化</div>
+			<div class="feedbackListSubtitle">
+				2007-07-19 14:12 | <a id="AjaxHolder_Comments_CommentList_ctl08_NameLink" target="_blank">shen126</a><br>
+				<div align="left">Error	1	error C2143: syntax error : missing ';' before '&lt;'	e:\vs_projects\stltest1\stltest1\stltest1.cpp	7	
+<br>&nbsp;&nbsp;<a onclick='return SetReplyAuhor("shen126")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=shen126" target="_blank">更多评论</a><br>&nbsp;&nbsp;</div>
+			</div>
+			
+			
+		</div>
+	
+		
+			<div class="feedbackListTitle"><a title="permalink: re: C++类模板的三种特化" href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#28393">#</a>&nbsp;<a name="28393"></a>re: C++类模板的三种特化<a name="Post"></a></div>
+			
+				2007-07-20 01:03 | <a id="AjaxHolder_Comments_CommentList_ctl09_NameLink" href="http://www.cppblog.com/SmartPtr/" target="_blank">SmartPtr</a><br>
+				template&lt;class T&gt; 
+<br>class Compare&lt;T*&gt; 
+<br>{ 
+<br>public: 
+<br>static bool IsEqual(const T* lh, const T* rh) 
+<br>{ 
+<br>return Compare&lt;T&gt;::IsEqual(*lh, *rh); 
+<br>} 
+<br>};
+<br>是模板特化， 你当然需要在之前定义其泛化版本&nbsp;&nbsp;<a onclick='return SetReplyAuhor("SmartPtr")' href="http://www.cppblog.com/SmartPtr/archive/2007/07/04/27496.aspx#post">回复</a>&nbsp;&nbsp;<a title="查看该作者发表过的评论" href="http://www.cppblog.com/comment?author=SmartPtr" target="_blank">更多评论</a><br>&nbsp; <br>

@@ -1,0 +1,28 @@
+<p>编写了一下cmakelists.txt文件</p>
+<p>&nbsp;</p>
+<p>根目录</p>
+<p>cmake_minimum_required(VERSION 2.8)<br />project (Test)</p>
+<p>add_definitions( "/W3 /D_CRT_SECURE_NO_WARNINGS /wd4819 /MTd" )</p>
+<p>if( CMAKE_SIZEOF_VOID_P EQUAL 8 )<br />    MESSAGE( "64 bits compiler detected" )<br />    SET( EX_PLATFORM 64 )<br />    SET( EX_PLATFORM_NAME "x64" )<br />else( ) <br />    MESSAGE( "32 bits compiler detected" )<br />    SET( EX_PLATFORM 32 )<br />    SET( EX_PLATFORM_NAME "x86" )<br />endif(  )</p>
+<p>IF( EX_PLATFORM EQUAL 64 )<br />	MESSAGE( "Outputting to lib64 and bin64" )</p>
+<p>	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib64)<br />	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib64)<br />	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin64) <br />ELSE( )<br />	set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)<br />	set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)<br />	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin) <br />ENDIF(  )</p>
+<p>include_directories ("${PROJECT_SOURCE_DIR}")<br />include_directories ("E:/_codes/boost_1_55_0/boost_1_55_0")<br />include_directories ("E:/Program Files/Lua/5.1/include")</p>
+<p>IF( EX_PLATFORM EQUAL 64 )<br />ELSE(  )<br />	link_directories ("E:/Program Files/Lua/5.1/lib")<br />ENDIF(  )</p>
+<p>set(CMAKE_MSVCIDE_RUN_PATH "E:/Program Files/Lua/5.1/lib"<br />)</p>
+<p>set (EXTRA_LIBS ${EXTRA_LIBS} lua51.lib<br />)</p>
+<p>if(MSVC)<br />	SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /wd4819")<br />endif()</p>
+<p>macro(copy_dll depdir dllname)<br />    foreach(configuration ${CMAKE_CONFIGURATION_TYPES})<br />        # 对应于不同的构建版本<br />        set(dllpath "${depdir}/bin/${configuration}/${dllname}")<br />        if(EXISTS ${dllpath})<br />            configure_file(${dllpath} ${CMAKE_BINARY_DIR}/bin/${configuration}/${dllname} COPYONLY)<br />        endif()<br />    endforeach()<br />endmacro()</p>
+<p>macro (create_test target)<br />  add_test (NAME ${target} COMMAND $&lt;TARGET_FILE:${target}&gt;)<br />  #set_tests_properties(${target} PROPERTIES ENVIRONMENT "PATH=${PATH};${PATH_ENV}")<br />  #add_custom_command(OUTPUT "${CMAKE_CURRENT_BINARY_DIR}/Table.h"<br />   #                COMMAND set "PATH=${PATH_ENV};%PATH%"<br />    #               COMMAND $&lt;TARGET_FILE:${target}&gt; "${CMAKE_CURRENT_BINARY_DIR}/Table.h"<br />     #              DEPENDS $&lt;TARGET_FILE:${target}&gt;)<br />endmacro (create_test)</p>
+<p>ENABLE_TESTING()</p>
+<p>add_subdirectory (src)<br />add_subdirectory (test)</p>
+<p>&nbsp;</p>
+<p>srfcMulu&nbsp;</p>
+<p>cmake_minimum_required(VERSION 2.8)</p>
+<p>#include_directories ("${CMAKE_CURRENT_LIST_DIR}/include")</p>
+<p>add_library(luabind SHARED <br />	class.cpp<br />	class_info.cpp<br />	class_registry.cpp<br />	class_rep.cpp<br />	create_class.cpp<br />	error.cpp<br />	exception_handler.cpp<br />	function.cpp<br />	inheritance.cpp<br />	link_compatibility.cpp<br />	object_rep.cpp<br />	open.cpp<br />	pcall.cpp<br />	scope.cpp<br />	stack_content_by_name.cpp<br />	weak_ref.cpp<br />	wrapper_base.cpp<br />)<br />target_compile_definitions(luabind PRIVATE LUABIND_DYNAMIC_LINK LUABIND_BUILDING)<br />target_link_libraries (luabind  ${EXTRA_LIBS})</p>
+<p>test目录</p>
+<p>cmake_minimum_required(VERSION 2.8)</p>
+<p>#include_directories ("${CMAKE_CURRENT_LIST_DIR}/include")</p>
+<p><br />add_executable(testHello 	<br />	#benchmark.cpp<br />	main.cpp<br />	test_abstract_base.cpp<br />	<br />)<br />target_compile_definitions(testHello PRIVATE LUABIND_DYNAMIC_LINK)<br />create_test(testHello)<br />target_link_libraries (testHello luabind  ${EXTRA_LIBS})</p>
+<p>file(GLOB_RECURSE SRC_CORE test*.cpp)<br />foreach(the_file ${SRC_CORE})<br />   get_filename_component (NAME ${the_file} NAME_WE)<br />   MESSAGE( "NAME " ${NAME} )<br />   <br />    add_executable(${NAME} 	main.cpp	${the_file}	)<br />	target_compile_definitions(${NAME} PRIVATE LUABIND_DYNAMIC_LINK)<br />	create_test(${NAME})<br />	target_link_libraries (${NAME} luabind  ${EXTRA_LIBS})<br />endforeach(the_file)</p>
+<p>&nbsp;</p>

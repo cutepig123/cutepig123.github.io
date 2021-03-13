@@ -222,6 +222,3 @@ A:refer following callstack
  	testGapi.exe!main(int argc, char * * argv) Line 33	C++
 
 ```
-
-
-

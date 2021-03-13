@@ -1,0 +1,22 @@
+<p>关于串口发送短信</p>
+<p>可以用超级终端调试<br />
+推荐串口监视软件 Serial Monitor<br />
+<span style="color: red">例子程序</span>：<br />
+http://www.vckbase.com/code/downcode.asp?id=2411<br />
+&#8220;通过串口收发短消息&#8221;的Q&amp;A汇编：<br />
+http://www.vckbase.com/document/viewdoc/?id=1131<br />
+<span style="color: red">指令</span>：<br />
+"AT+CSCA?"指令<span style="color: red">查询服务中心号</span>码<br />
+"AT+CSCA=xxxxxxxx"指令设置服务中心号码</p>
+<p>at+cmgs<span style="color: red">发送短消息</span><br />
+at+cmgs=30<br />
+&gt; 0891683108100005F011000D91683118405057F000000006C8329BFD0E01 <br />
+回车后还需要输入数据。此处是"CR",不是"CRLF"，<br />
+长度不是随便写的，你的例子中，长度应为21。除去SMSC段（0891683108100005F0），从"11"开始算（即"11000D91683118405057F000000006C8329BFD0E01"），除以2即得。<br />
+<span style="color: red">自动接收短信：</span><br />
+当有新的短消息到来时，产生提示，使用&#8220;AT+CNMI&#8221;。该指令的用法：<br />
+AT+CNMI=1 <br />
+如果有新的短消息来到，则手机自动返回下列提示： <br />
++CMTI: &#8220;SM&#8221;, &lt;index&gt; <br />
+此时读出&lt;index&gt;，然后用&#8220;AT+CMGR=&lt;index&gt;&#8221;指令即可读出短消息内容。</p>
+<p>&nbsp;</p>

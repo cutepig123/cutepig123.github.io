@@ -1,0 +1,75 @@
+http://www.nada.kth.se/~tony/cern-review/cern-html/node12.html<br><strong>On the localization performance measure and optimal edge detection</strong><br>
+            Tagare, H.D.; de Figueiredo, R.J.P.<br>
+            Multidimensional Signal Processing Workshop, 1989., Sixth<br>
+            Volume , Issue , 6-8 Sep 1989 Page(s):114 - <br>
+            Digital Object Identifier &nbsp; 10.1109/MDSP.1989.97065<br>
+            <strong>Summary:</strong>Summary form only given, as follows. Two measures have been
+suggested in the literature to characterize the localization performance
+of an edge detector. The first one was proposed by Abdou and Pratt
+(1979) and the second one by Canny (1986). The limitations of these
+localization measures are shown. The former is heuristic, while Canny's
+measure has not been formulated correctly. The problem of localization
+of an edge detector has been formulated with the help of the theory of
+zero-crossings of stochastic processes. The measure of localization of
+the edge detector proposed is the extent to which it causes the density
+of maxima to be reduced as we get farther away from the true edge. It is
+possible to show that with this localization measure and a constraint of
+the width of the filter, the optimal linear filter for edge detection is
+the derivative of a Gaussian<br>
+ <a name="tex2html169" href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node13.html"><img alt="next" src="http://www.nada.kth.se/icons/latex2html/next_motif.gif" align="bottom" width="37" height="24"></a> <a name="tex2html167" href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node11.html"><img alt="up" src="http://www.nada.kth.se/icons/latex2html/up_motif.gif" align="bottom" width="26" height="24"></a> <a name="tex2html161" href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node11.html"><img alt="previous" src="http://www.nada.kth.se/icons/latex2html/previous_motif.gif" align="bottom" width="63" height="24"></a>   <br>
+<b> Next:</b> <a name="tex2html170" href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node13.html">Ridge detection.</a>
+<b>Up:</b> <a name="tex2html168" href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node11.html">Feature detectors expressed in </a>
+<b> Previous:</b> <a name="tex2html162" href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node11.html">Feature detectors expressed in </a>
+<br> <p>
+</p><h4><a name="SECTION00041010000000000000">Edge detection.</a></h4>
+<p>
+A notion of <em>gauge coordinates</em> which has been adopted in the
+computer vision community is to express image descriptors 
+in terms of local directional derivatives defined from
+certain preferred coordinate systems.
+At any image point, introduce a local (<i>u</i>, <i>v</i>)-system
+such that the <i>v</i>-direction is parallel to the gradient
+direction <img alt="tex2html_wrap_inline947" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img29.gif" align="middle" width="244" height="37">,
+and introduce directional derivative operators
+along these directions by
+<br><img alt="equation187" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img30.gif" align="bottom" width="500" height="18"><br>
+Then, we can define an edge point as a point for which
+the gradient assumes a local maximum in the gradient direction,
+and restate this edge definition as
+<br><img alt="equation191" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img31.gif" align="bottom" width="500" height="38"><br>
+where <img alt="tex2html_wrap_inline949" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img32.gif" align="middle" width="22" height="23"> and <img alt="tex2html_wrap_inline951" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img33.gif" align="middle" width="29" height="23"> denote second- and third-order
+directional derivatives in the <i>v</i>-direction.
+After expansion to Cartesian coordinates and simplification,
+this edge definition assumes the form
+<br><a name="eqcondedgedirderintens">&nbsp;</a><img alt="equation200" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img34.gif" align="bottom" width="537" height="62"><br>
+Interpolating for zero-crossings of <img alt="tex2html_wrap_inline955" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img35.gif" align="middle" width="22" height="31"> within
+the sign-constraints of <img alt="tex2html_wrap_inline957" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img36.gif" align="middle" width="29" height="31"> gives a
+straightforward method for sub-pixel edge detection.
+Figure&nbsp;<a href="http://www.nada.kth.se/%7Etony/cern-review/cern-html/node12.html#figedgeridgedetect">5</a>(a) shows the result of applying 
+this edge detector to an image of an arm at scale levels
+<i>t</i> = 1.0, 16.0 and 256.0.
+Observe how qualitatively different types of edge curves are extracted 
+at the different scales.
+A characteristic behaviour is that most of the sharp edge structures
+corresponding to object boundaries
+give rise to edge curves at both fine and coarse scales.
+Moreover, the number of spurious edges due to noise is 
+much larger at fine scales,
+whereas the localization of the edges can be poor at coarse scales.
+Notably, the shadow of the arm can only be extracted as
+a connected curve at a coarse scale.
+This example constitutes one illustration of the <em>need</em> for including
+image operators at coarse scales when extracting general classes of
+image structures from real-world data.
+</p><p>
+</p><p><a name="231">&nbsp;</a><a name="figedgeridgedetect">&nbsp;</a><img alt="figure227" src="http://www.nada.kth.se/%7Etony/cern-review/cern-html/img37.gif" align="bottom" width="494" height="356"><br>
+<strong>Figure 5:</strong> Edges and bright ridges detected at scale levels <i>t</i> = 1.0, 16.0
+            and 256.0, respectively.<br>
+</p><p>
+</p><p>
+<br> </p><hr>
+<address>
+<i>Tony Lindeberg <br>
+Tue Jul  1 14:57:47 MET DST 1997</i>
+</address>
+<br>

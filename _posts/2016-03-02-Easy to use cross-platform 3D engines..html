@@ -1,0 +1,64 @@
+<p>C++</p>
+<p>http://gamedev.stackexchange.com/questions/21/easy-to-use-cross-platform-3d-engines-for-c-game-development</p>
+<p>My Opinion (only for open source 3D engines):</p>
+<ul>
+<li><a href="http://irrlicht.sourceforge.net/" rel="nofollow">Irrlicht</a>:
+<ul>
+<li>Light 3D engine</li>
+<li>Clean C++ without dependencies and no STL.</li>
+<li>Not very well documented but there are good tutorials.</li>
+<li>Very small so you can customize it easily.</li>
+<li>No OpenGL 3.X driver, Direct X 10.X or 11.X available in the official SDK.</li>
+<li>Very good for mobile development;</li>
+<li>Good community</li>
+<li>Few extensions available</li>
+</ul>
+</li>
+<li><a href="http://www.ogre3d.org/" rel="nofollow">Ogre3D</a>:
+<ul>
+<li>Big 3D engine</li>
+<li>It uses modern C++ such as STL, exceptions and RTTI</li>
+<li>Good documentation (There are published books).</li>
+<li>Many renderers (OpenGL, DirectX and OpenGL ES...).</li>
+<li>Ogre3D have many extensions as CEGUI or Bullet integration, Tree nodes...</li>
+<li>But more difficult to extend Ogre3D if you want something specifics.</li>
+<li>Big community</li>
+<li>Many extensions</li>
+</ul>
+</li>
+<li><a href="http://www.crystalspace3d.org/" rel="nofollow">Crystal space</a>: An old design and difficult to use. After few days, I stopped using this engine.</li>
+<li><a href="http://www.horde3d.org/" rel="nofollow">Horde3D</a>
+<ul>
+<li>Small engine</li>
+<li>Modern design</li>
+<li>Light community</li>
+<li>No extensions</li>
+</ul>
+</li>
+<li><a href="https://github.com/jesterKing/BlendELF" rel="nofollow">Blendelf</a>
+<ul>
+<li>Small engine with some dependencies</li>
+<li>Modern design with moderns effects as DOF or HDR ...</li>
+<li>OpenGL only</li>
+<li>Light community</li>
+<li>Bullet integration for physics</li>
+<li>You use lua to pilot this engine3D</li>
+</ul>
+</li>
+</ul>
+<p><strong>TL;DR:</strong></p>
+<ul>
+<li>For a desktop game (or future commercial game): Ogre3D</li>
+<li>For a first game: Irrlicht</li>
+<li>For mobile development: irrlicht (Ogre3D is too big)</li>
+<li>For sexy effects: Blendelf</li>
+</ul>
+<p><a href="http://www.openscenegraph.org/projects/osg">Open Scene Graph</a>&nbsp;is a pretty good, very well designed cross-platform 3D engine. Contrary to Ogre3D, for example, it does not provide "game engine" features, and concentrates on being a very nice abstraction on top of OpenGL.</p>
+<ul>
+<li>It is quite lightweight, and does not force a framework on you: you can use as little or as much of it as you want, and use it through SDL, SFML, wxWidgets, QT...</li>
+<li>It is a great learning experience: as you learn the library, you understand more and more about the underlying OpenGL and the way it has been designed</li>
+<li>Pretty much ready to use: it has loaders for mainstream 3D formats</li>
+<li>Shaders friendly</li>
+</ul>
+<p>Have a look at the&nbsp;<a href="http://www.openscenegraph.org/projects/osg/browser/OpenSceneGraph/trunk/examples">extensive list of samples</a>.</p>
+<p>&nbsp;</p>

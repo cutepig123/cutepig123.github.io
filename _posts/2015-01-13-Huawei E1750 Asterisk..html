@@ -1,0 +1,158 @@
+<p>http://wiki.e1550.mobi/doku.php?id=installation</p>
+<p>https://wiki.asterisk.org/wiki/display/AST/Mobile+Channel+Requirements</p>
+<p>&nbsp;https://www.google.com.hk/search?lr=lang_zh-CN|lang_zh-TW&amp;newwindow=1&amp;safe=off&amp;client=ubuntu&amp;hs=BLR&amp;channel=fs&amp;biw=1024&amp;bih=601&amp;tbs=lr%3Alang_1zh-CN|lang_1zh-TW&amp;q=Asterisk+%E5%85%A5%E9%97%A8&amp;oq=Asterisk+%E5%85%A5%E9%97%A8&amp;gs_l=serp.3..0i30l2.10364.13197.0.13493.8.6.2.0.0.0.78.349.6.6.0.msedr...0...1c.1.60.serp..2.6.259.EPlQlQS8Ix4</p>
+<p>&nbsp;</p>
+<h3 class="r"><a href="http://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=7&amp;ved=0CDYQFjAG&amp;url=http%3A%2F%2Fzh.wikibooks.org%2Fzh-hant%2FAsterisk%25E6%259D%2583%25E5%25A8%2581%25E6%258C%2587%25E5%258D%2597&amp;ei=Pk61VIPYM4aj8AX8jIDwBg&amp;usg=AFQjCNH8J43zkclS_6QYwaCeQszpK0LFIw" target="_blank" data-cthref="http://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=7&amp;ved=0CDYQFjAG&amp;url=http%3A%2F%2Fzh.wikibooks.org%2Fzh-hant%2FAsterisk%25E6%259D%2583%25E5%25A8%2581%25E6%258C%2587%25E5%258D%2597&amp;ei=Pk61VIPYM4aj8AX8jIDwBg&amp;usg=AFQjCNH8J43zkclS_6QYwaCeQszpK0LFIw">Asterisk權威指南- 維基教科書，自由的</a></h3>
+<h3 class="r"><a href="http://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CB0QFjAA&amp;url=http%3A%2F%2Fblog.vic.mh4u.org%2F2011%2F133&amp;ei=TE61VMnoM4Xn8gXKhIG4Bw&amp;usg=AFQjCNEvmz7wakunL59BIYRc2JOIw4Yb2w" target="_blank" data-cthref="http://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CB0QFjAA&amp;url=http%3A%2F%2Fblog.vic.mh4u.org%2F2011%2F133&amp;ei=TE61VMnoM4Xn8gXKhIG4Bw&amp;usg=AFQjCNEvmz7wakunL59BIYRc2JOIw4Yb2w">asterisk入門| 在水一方</a></h3>
+<h3 class="r"><a href="http://wenku.baidu.com/view/c17bc9efaeaad1f346933fac.html" target="_blank">Asterisk 入门教程_百度文库</a></h3>
+<h3 class="r"><a href="http://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0CCwQFjAC&amp;url=http%3A%2F%2Flinux.chinaunix.net%2Ftechdoc%2Fbeginner%2F2008%2F04%2F10%2F991254.shtml&amp;ei=TE61VMnoM4Xn8gXKhIG4Bw&amp;usg=AFQjCNH7dmjtrwSC2oPF9Ark001idlqZDw" target="_blank" data-cthref="http://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=3&amp;ved=0CCwQFjAC&amp;url=http%3A%2F%2Flinux.chinaunix.net%2Ftechdoc%2Fbeginner%2F2008%2F04%2F10%2F991254.shtml&amp;ei=TE61VMnoM4Xn8gXKhIG4Bw&amp;usg=AFQjCNH7dmjtrwSC2oPF9Ark001idlqZDw">Asterisk新手经常问及的问题(zz) - 技术文</a></h3>
+<p>&nbsp;</p>
+<p>/usr/sbin/asterisk -vvvgc</p>
+<pre class="code">CLI&gt;module load chan_dongle.so
+CLI&gt;module unload chan_dongle.so
+CLI&gt;module reload chan_dongle.so<br /><br /><br />Hello world example http://www.informit.com/articles/article.aspx?p=1439183&amp;seqNum=2</pre>
+<p>Using your favorite console text editor<sup> <a href="http://www.cnblogs.com/">2</a></sup> enter the following text into <tt>/etc/asterisk/extensions.conf:</tt></p>
+<pre>[default]
+exten =&gt; 1001,1,Answer()
+exten =&gt; 1001,2,Playback(hello-world)
+exten =&gt; 1001,3,Hangup()
+</pre>
+<pre>*CLI&gt; <strong>console dial 1001</strong>
+*CLI&gt;  &lt;&lt; Console call has been answered &gt;&gt;
+ &lt;&lt; Hangup on console &gt;&gt;
+
+*CLI&gt;<br /><br /></pre>
+<pre><br />客户端<br />F:\eyeBeam\eyeBeam<br /><br />vmware 桥接 上网<br /><br /></pre>
+<h3 class="r"><a href="https://www.google.com.hk/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CC0QFjAA&amp;url=https%3A%2F%2Fwiki.asterisk.org%2Fwiki%2Fdisplay%2FAST%2FSetting%2Bup%2Bthe%2BAsterisk%2BHTTP%2Bserver&amp;ei=NdW3VIfvOtbt8AW0roD4DQ&amp;usg=AFQjCNFfauxQshXcAqlxlRGZ4rP-eYHFpQ" data-cthref="/url?sa=t&amp;rct=j&amp;q=&amp;esrc=s&amp;source=web&amp;cd=1&amp;ved=0CC0QFjAA&amp;url=https%3A%2F%2Fwiki.asterisk.org%2Fwiki%2Fdisplay%2FAST%2FSetting%2Bup%2Bthe%2BAsterisk%2BHTTP%2Bserver&amp;ei=NdW3VIfvOtbt8AW0roD4DQ&amp;usg=AFQjCNFfauxQshXcAqlxlRGZ4rP-eYHFpQ">Setting up the Asterisk HTTP server - Asterisk Project Wiki</a></h3>
+<p>&nbsp;</p>
+<p>俺的设置</p>
+<p>&nbsp;</p>
+<p>extensions.conf定义接收电话规则（以9开头的通过dongle打出去外线，其余的）</p>
+<p>[default]<br />exten =&gt; 1001,1,Answer()<br />exten =&gt; 1001,n,Playback(hello-world)<br />exten =&gt; 1001,n,SayDigits(${EXTEN:1})<br />exten =&gt; 1001,n,Playback(hello-world)<br />exten =&gt; 1001,n,SayDigits(${num})<br />exten =&gt; 1001,n,Hangup()<br /><br />exten =&gt; 2000,1,Dial(SIP/2000,20)<br />exten =&gt; 2000,2,VoiceMail(2000,u)<br /><br />exten =&gt; 2001,1,Dial(SIP/2001,20)<br />exten =&gt; 2001,2,VoiceMail(2001,u)<br /><br />exten =&gt; 2999,1,VoiceMailMain(${CALLERID(num)},s)<br /><br />exten =&gt; _9X.,1,Dial(Dongle/dongle0/${EXTEN:1})<br /><br /></p>
+<p>sip.conf定义sip账号</p>
+<p>[general]<br />port=5060<br />bindaddr=0.0.0.0<br /><br />[2000]<br />type=friend<br />secret=1234<br />host=dynamic<br /><br />[2001]<br />type=friend<br />secret=1234<br />host=dynamic</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="114">
+<p>要做什么？</p>
+</td>
+<td valign="top" width="632">
+<p>指引</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>下载固件</p>
+</td>
+<td valign="top" width="632">
+<p><a href="http://downloads.openwrt.org/barrier_breaker/14.07/ramips/mt7620a/openwrt-ramips-mt7620a-Lenovo-y1-squashfs-sysupgrade.bin" target="_blank">http://downloads.openwrt.org/barrier_breaker/14.07/ramips/mt7620a/openwrt-ramips-mt7620a-Lenovo-y1-squashfs-sysupgrade.bin</a></p>
+<p>F:\newifi\openwrt-ramips-mt7620a-Lenovo-y1-squashfs-sysupgrade.bin</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>设置openwrt的vlan</p>
+</td>
+<td valign="top" width="632">
+<p>参考上一节</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>上传固件</p>
+</td>
+<td valign="top" width="632">
+<p>进入恢复模式 （参考http://bbs.zuk.cn/yinghuo/t3244/）</p>
+<p>1，修改本地IP地址为192.168.1.x</p>
+<p>2，拔掉路由器WAN口网线和电源线，按住reset，然后插上电源，通电后保持按住reset键不大约3秒不放，此时如果USB灯和2.4G灯同时闪烁，证明当前已进入恢复模式</p>
+<p>3，打开浏览器，输入192.168.1.1进入固件恢复页面</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>安装设置</p>
+<p>asterisk</p>
+</td>
+<td valign="top" width="632">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>安装设置</p>
+<p>chandongle</p>
+</td>
+<td valign="top" width="632">
+<p>1，使用系统--》软件包进入安装界面，可以搜索安装</p>
+<p>2，安装之后，使用ssh连接</p>
+<p>3，输入命令&ldquo;module show&rdquo;查看已安装的模块，没有找到，为啥呢？</p>
+<p>4，尝试使用&ldquo;module load chan_dongle.so&rdquo;自己加载，结果报错</p>
+<p>WARNING[2566]: loader.c:835 inspect_module: Module 'chan_dongle.so' was not compiled with the same compile-time options as this version of Asterisk</p>
+<p>&nbsp;</p>
+<p>相关连接</p>
+<p>1，https://lists.openwrt.org/pipermail/openwrt-devel/2011-October/012603.html</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>Ssh设置</p>
+</td>
+<td valign="top" width="632">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>编译openwrt</p>
+</td>
+<td valign="top" width="632">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>设置华为e1750 dongle</p>
+<p>为modem模式</p>
+</td>
+<td valign="top" width="632">
+<p>？？</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>如何连接到已经运行的asterisk service</p>
+</td>
+<td valign="top" width="632">
+<p>/usr/sbin/asterisk -rvvvgc</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>Chan_dongle常见用法</p>
+</td>
+<td valign="top" width="632">
+<p>dongle show devices</p>
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="114">
+<p>How can get user inputs from called party after dial</p>
+</td>
+<td valign="top" width="632">
+<p>Link： http://lists.digium.com/pipermail/asterisk-users/2010-July/250899.html</p>
+<p>&nbsp;</p>
+<p>1， exten =&gt; s,n,Read(numb,,10)</p>
+<p>&nbsp;</p>
+<p>exten =&gt; s,n,NoOp(${numb})</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p><input type="button" value="GreaseMonkey Button" /></p>

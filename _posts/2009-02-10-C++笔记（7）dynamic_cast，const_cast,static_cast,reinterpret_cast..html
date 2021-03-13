@@ -1,0 +1,66 @@
+dynamic_cast: &nbsp; 通常在基类和派生类之间转换时使用,run-time &nbsp; cast &nbsp; <br> &nbsp;  &nbsp; <br> &nbsp; const_cast: &nbsp; 主要针对const和volatile的转换. &nbsp; <br> &nbsp;  &nbsp; <br> &nbsp; static_cast: &nbsp; 一般的转换，no &nbsp; run-time &nbsp; check.通常，如果你不知道该用哪个，就用这个。 &nbsp; <br> &nbsp;  &nbsp; <br> &nbsp; reinterpret_cast: &nbsp; 用于进行没有任何关联之间的转换，比如一个字符指针转换为一个整形数。<br><br><br>http://blog.csdn.net/goodluckyxl/archive/2005/01/19/259851.aspx<br><br><p>强制转化四种类型可能很多人都常常忽略就象我一样，但是有时还是比较有用的。不了解的建议看看，一些机制我也不是十分了解，只是将一些用法写出来让大家看看。<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 2004-11-27 9:00</p>
+<p>强制转化无论从语法还是语意上看，都是c++中最难看的特征之一。但是基于c风格的转化的语义的不明确性及其一些潜在问题。强制类型转化最终还是被c++接受了。<br>1.static_cast运算符号<br>static_cast&lt;T&gt;(e),stroustrup让我们可以把它看成隐含转换的显示的逆运算。这个是有一定道理的，基于隐式转化的对象类型我们可以使用static_cast转化运算符号。它是静态的检测，无法运行时检测类型，在继承中尤为突出。<br>使用范围<br>&lt;1&gt;用于所有系统类型之间转化，不能用于系统类型指针类型转化<br>&nbsp; double t_d = 0;<br>int t_i= static_cast&lt;int&gt;(t_d); //是合法的转化<br>而企图将double*-&gt;int*是不允许的<br>&lt;2&gt;用于继承类之间的转化（含指针），不能用于其他没有隐式转化的对象类型之间的转化<br>继承举例:<br>class x<br>{<br>};<br>class y: public x<br>{<br>};<br>使用:x t_o_x;<br>y t_o_y = static_cast&lt;y&gt;(t_o_x); //x* y*转化也可以进行因为x,y继承关<br>//系，类型可以自动隐式转化使用<br>&nbsp;&nbsp; 隐式转化举例:<br>class x<br>{<br>};<br>class y<br>{</p>
+<p>public:<br>&nbsp;&nbsp;&nbsp;&nbsp;y( x i_x ) {}<br>};<br>&nbsp;&nbsp;&nbsp;&nbsp;x t_o_x;<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;y t_o_y = static_cast&lt;y&gt;(t_o_x); //大家看到y构造函数可以对于x类型隐式转化<br>//所以可以将x-&gt;y，如果企图将y-&gt;x会报错<br>2.reinterpret_cast 运算<br>主
+要用于对于类型指针类型的强制转化，some_type* -&gt;
+special_type*这样转化，类型信息可以是不完全的。它允许将任意指针转化到其他类型指针，也允许任意整数类型到任意指针类型转化(BT)。这
+样导致的结果是极其不安全的，不能安全的应用于其他目的，除非转化到原来类型。<br>&lt;1&gt; 使用所有整形可以转化为任意类型的指针(指针是4字节的long的东东，那么机器就认为同类型就是可以转化)<br>int c;<br>x* p = reinterpret_cast&lt;x*&gt;(c); //x是自定义的任意类型，当然包括系统类型<br>&lt;2&gt; 可以对于任意类型指针之间转化<br>y* c;<br>x* p = reinterpret_cast&lt;x*&gt;(c);//x,y代表所有自定义或系统类型<br>大家可以看到reinterpret_cast的转化是极度的不负责任的，他只管转化不检测是否可以转化。<br>&lt;3&gt; const_cast运算符号<br>这个很简单从名字大家可以看出来，仅仅为了去掉或着加上const修饰符号。但是对于本身定义时为const的类型，即使你去掉const性，在你操作这片内容时候也要小心，只能r不能w操作，否则还是会出错。<br>const char* p = "123";<br>char* c = const_cast&lt;char*&gt;(p);<br>c[0] = 1;&nbsp; //表面上通过编译去掉了const性，但是操作其地址时系统依然不允许这<br>//么做。这是一个漏洞吧<br>&lt;4&gt; dynamic_cast运算符号<br>Scott Mayers将其描述为用来执行继承体系中：安全的向下转型或者跨系转型动作。也就是说你可以，用dynamic_cast将 指向base class的指针或引用转型为 指向子类的对象的指针或引用。<br>class B {};&nbsp; //polymorphic类型含virtual才能dynamic_cast<br>class D: public B {}<br>void f( B* pb )<br>{<br>&nbsp;&nbsp;&nbsp;&nbsp;D* pd1 = dynamic_cast&lt;D*&gt;(pb);//如果pb为d类型正确返回，如果不是返回0<br>&nbsp;&nbsp;&nbsp;&nbsp;D* pd2 = static_cast&lt;D*&gt;(pb); //不管怎么样都返回指针有可能指向不合适的对<br>//象，因为static仅仅静态检测，不能得到运<br>//行时对象的信息是否真正为D类型<br>}</p>
+反正大家在使用知道怎么用就ok了，c++强制转化在模板中还是非常有用的，其他时候本人也喜欢用c的转化方便。^_^&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br><br>http://www.vckbase.com/document/viewdoc/?id=1651<br><p align="center"><b>static_cast&lt;&gt;揭密<br>
+        </b><br>
+        <br>
+        作者：Sam NG </p>
+      <p align="center">译者：<a href="mailto:zhaotide@vckbase.com">小刀人</a></p>
+
+        
+      <p><br>
+        原文链接：<a href="http://www.codeproject.com/cpp/static_cast.asp">What static_cast&lt;&gt; 
+        is actually doing</a><br>
+        <br>
+        本文讨论static_cast&lt;&gt; 和 reinterpret_cast&lt;&gt;。
+      </p><p> <strong>介绍</strong><br>
+大多程序员在学C++前都学过C，并且习惯于C风格（类型）转换。当写C++（程序）时，有时候我们在使用static_cast&lt;&gt;和
+reinterpret_cast&lt;&gt;时可能会有点模糊。在本文中，我将说明static_cast&lt;&gt;实际上做了什么，并且指
+出一些将会导致错误的情况。<br>
+        <br>
+        <strong>泛型（Generic Types）</strong><br><br>
+        
+      </p><pre>        float f = 12.3;<br><br>        float* pf = &amp;f;<br>      <p>// static cast&lt;&gt;<br><br>        // 成功编译, n = 12<br><br>        int n = static_cast&lt;int&gt;(f);<br><br>        // 错误,指向的类型是无关的（译注：即指针变量pf是float类型，现在要被转换为int类型）<br>        //int* pn = static_cast&lt;int*&gt;(pf);<br><br>        //成功编译<br><br>        void* pv = static_cast&lt;void*&gt;(pf);<br><br>        //成功编译, 但是 *pn2是无意义的内存（rubbish）<br><br>        int* pn2 = static_cast&lt;int*&gt;(pv);</p><br>      <p>// reinterpret_cast&lt;&gt;<br><br>        //错误,编译器知道你应该调用static_cast&lt;&gt;<br><br>        //int i = reinterpret_cast&lt;int&gt;(f);<br><br>        //成功编译, 但是 *pn 实际上是无意义的内存,和 *pn2一样<br><br>        int* pi = reinterpret_cast&lt;int*&gt;(pf);</p></pre>
+      简而言之，static_cast&lt;&gt; 将尝试转换，举例来说，如float-到-integer，而reinterpret_cast&lt;&gt;简单改变编译器的意图重新考虑那个对象作为另一类型。<br>
+      <br>
+      <strong>指针类型（Pointer Types）</strong><br>
+      <br>指针转换有点复杂，我们将在本文的剩余部分使用下面的类：<br>
+      <pre>class CBaseX<br><br>      {<br><br>      public:<br><br>      int x;<br><br>      CBaseX() { x = 10; }<br><br>      void foo() { printf("CBaseX::foo() x=%d\n", x); }<br><br>      };<br>      <p>class CBaseY<br><br>        {<br><br>        public:<br><br>        int y;<br><br>        int* py;<br><br>        CBaseY() { y = 20; py = &amp;y; }<br><br>        void bar() { printf("CBaseY::bar() y=%d, *py=%d\n", y, *py); <br>        }<br><br>        };</p><br>      <p>class CDerived : public CBaseX, public CBaseY<br><br>        {<br><br>        public:<br><br>        int z;<br><br>        };</p></pre>
+      <strong>情况1：两个无关的类之间的转换 </strong><strong> </strong><br>
+        <br><pre>      // Convert between CBaseX* and CBaseY*<br><br>      // CBaseX* 和 CBaseY*之间的转换<br><br>      CBaseX* pX = new CBaseX();<br><br>      // Error, types pointed to are unrelated<br><br>      // 错误， 类型指向是无关的<br><br>      // CBaseY* pY1 = static_cast&lt;CBaseY*&gt;(pX);<br><br>      // Compile OK, but pY2 is not CBaseX<br><br>      // 成功编译, 但是 pY2 不是CBaseX<br><br>      CBaseY* pY2 = reinterpret_cast&lt;CBaseY*&gt;(pX);<br><br>      // System crash!!<br><br>      // 系统崩溃!!<br><br>      // pY2-&gt;bar();</pre>
+      正如我们在泛型例子中所认识到的，如果你尝试转换一个对象到另一个无关的类static_cast&lt;&gt;将失败，而reinterpret_cast&lt;&gt;就总是成功“欺骗”编译器：那个对象就是那个无关类。<br><br>
+      <strong>情况2：转换到相关的类</strong><br>   <pre>      1. CDerived* pD = new CDerived();<br><br>      2. printf("CDerived* pD = %x\n", (int)pD);<br><br>      3. <br><br>      4. // static_cast&lt;&gt; CDerived* -&gt; CBaseY* -&gt; CDerived*<br><br>      //成功编译，隐式static_cast&lt;&gt;转换<br><br>      5. CBaseY* pY1 = pD;<br><br>      6. printf("CBaseY* pY1 = %x\n", (int)pY1);<br><br>      // 成功编译, 现在 pD1 = pD<br><br>      7. CDerived* pD1 = static_cast&lt;CDerived*&gt;(pY1);<br><br>      8. printf("CDerived* pD1 = %x\n", (int)pD1);<br><br>      9. <br><br>      10. // reinterpret_cast<br><br>      // 成功编译, 但是 pY2 不是 CBaseY*<br><br>      11. CBaseY* pY2 = reinterpret_cast&lt;CBaseY*&gt;(pD);<br><br>      12. printf("CBaseY* pY2 = %x\n", (int)pY2);<br><br>      13. <br><br>      14. // 无关的 static_cast&lt;&gt;<br><br>      15. CBaseY* pY3 = new CBaseY();<br><br>      16. printf("CBaseY* pY3 = %x\n", (int)pY3);<br><br>      // 成功编译,尽管 pY3 只是一个 "新 CBaseY()"<br><br>      17. CDerived* pD3 = static_cast&lt;CDerived*&gt;(pY3);<br><br>      18. printf("CDerived* pD3 = %x\n", (int)pD3);<br></pre><pre>      ---------------------- 输出 ---------------------------<br><br>      CDerived* pD = 392fb8<br><br>      CBaseY* pY1 = 392fbc<br><br>      CDerived* pD1 = 392fb8<br><br>      CBaseY* pY2 = 392fb8<br><br>      CBaseY* pY3 = 390ff0<br><br>      CDerived* pD3 = 390fec<br><br>      <br></pre>
+      <p>注意：在将CDerived*用隐式 static_cast&lt;&gt;转换到CBaseY*（第5行）时，结果是（指向）CDerived*（的指针向后） 
+        偏移了4（个字节）（译注：4为int类型在内存中所占字节数）。为了知道static_cast&lt;&gt; 实际如何，我们不得不要来看一下CDerived的内存布局。</p>
+      <p align="left"><strong>CDerived的内存布局（Memory Layout）</strong><br>
+        <br>
+        <img src="http://www.vckbase.com/document/journal/vckbase48/images/static_cast_layout.gif" width="355" height="224"> 
+        <br>
+        <br>
+        如图所示，CDerived的内存布局包括两个对象，CBaseX 和 CBaseY，编译器也知道这一点。因此，当你将CDerived* 转换到 
+        CBaseY*时，它给指针添加4个字节，同时当你将CBaseY*转换到CDerived*时，它给指针减去4。然而，甚至它即便不是一个CDerived你也可以这样做。<br>
+        当然，这个问题只在如果你做了多继承时发生。在你将CDerived转换 到 CBaseX时static_cast&lt;&gt; 和 reinterpret_cast&lt;&gt;是没有区别的。<br>
+        <br>
+        <strong>情况3：void*之间的向前和向后转换</strong><br>
+        <br>
+        因为任何指针可以被转换到void*，而void*可以被向后转换到任何指针（对于static_cast&lt;&gt; 和 reinterpret_cast&lt;&gt;转换都可以这样做），如果没有小心处理的话错误可能发生。<br>
+        <br>
+      </p><pre>    CDerived* pD = new CDerived();<br><br>        printf("CDerived* pD = %x\n", (int)pD);<br>      <p>    CBaseY* pY = pD; // 成功编译, pY = pD + 4<br><br>        printf("CBaseY* pY = %x\n", (int)pY);</p><br>      <p>      void* pV1 = pY; //成功编译, pV1 = pY<br><br>        printf("void* pV1 = %x\n", (int)pV1);</p><br>      <p>         // pD2 = pY, 但是我们预期 pD2 = pY - 4<br><br>        CDerived* pD2 = static_cast&lt;CDerived*&gt;(pV1);<br><br>        printf("CDerived* pD2 = %x\n", (int)pD2);<br><br>        // 系统崩溃<br><br>        // pD2-&gt;bar();<br></p></pre><pre>        ---------------------- 输出 ---------------------------<br><br>        CDerived* pD = 392fb8<br><br>        CBaseY* pY = 392fbc<br><br>        void* pV1 = 392fbc<br><br>        CDerived* pD2 = 392fbc<br><br>     </pre>
+        <p>一旦我们已经转换指针为void*，我们就不能轻易将其转换回原类。在上面的例子中，从一个void* 返回CDerived*的唯一方法是将其转换为CBaseY*然后再转换为CDerived*。 
+          <br>
+          但是如果我们不能确定它是CBaseY* 还是 CDerived*，这时我们不得不用dynamic_cast&lt;&gt; 或typeid[2]。<br>
+          <br>
+          <strong>注释：</strong><br>
+          1. dynamic_cast&lt;&gt;，从另一方面来说，可以防止一个泛型CBaseY* 被转换到CDerived*。<br>
+          2. dynamic_cast&lt;&gt;需要类成为多态，即包括“虚”函数，并因此而不能成为void*。<br>
+          <strong>参考：</strong> <br>
+      1. [MSDN] C++ Language Reference -- Casting <br>
+      2. Nishant Sivakumar, Casting Basics - Use C++ casts in your VC++.NET programs 
+      <br>
+      3. Juan Soulie, C++ Language Tutorial: Type Casting<br>
+      <strong>推荐链接：</strong><a href="http://www.vckbase.com/document/viewdoc.asp?id=653">如何在运行时确定对象类型（RTTI）</a><br>
+      </p>
+        <br>

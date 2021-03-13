@@ -1,0 +1,328 @@
+<p>工作原理</p>
+<p>由于lua只能单线程运行，该lib要求所有lua代码在单线程，而多线程部分只能为c代码</p>
+<p>具体用法上要求多线程部分必须用c实现</p>
+<p>&nbsp;</p>
+<p>相关模块</p>
+<p>线程池</p>
+<p>异步函数实现框架</p>
+<p>&nbsp;</p>
+<p>Now only a sleep function is provided</p>
+<p>&nbsp;</p>
+<p>Usage:</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> test2_threadpool()
+    </span><span style="color: #0000ff;">local</span> tp =<span style="color: #000000;"> Dll.MyTHdPool()
+    </span><span style="color: #0000ff;">local</span> n =<span style="color: #800080;">1</span>
+    <span style="color: #0000ff;">local</span> <span style="color: #0000ff;">function</span><span style="color: #000000;"> f()
+        n </span>= n+<span style="color: #800080;">1</span>
+        <span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">f </span><span style="color: #800000;">'</span><span style="color: #000000;"> .. n)
+        </span><span style="color: #0000ff;">if</span>(n==<span style="color: #800080;">50</span>) <span style="color: #0000ff;">then</span> <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">end</span><span style="color: #000000;">
+        tp:sleep1(</span><span style="color: #800080;">0</span><span style="color: #000000;">, f)
+    </span><span style="color: #0000ff;">end</span><span style="color: #000000;">
+    
+    f()
+    tp:join()
+</span><span style="color: #0000ff;">end</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>C codes:</p>
+<div class="cnblogs_code">
+<pre>#include <span style="color: #800000;">"</span><span style="color: #800000;">stdafx.h</span><span style="color: #800000;">"</span>
+#include &lt;luabind.hpp&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;boost/thread.hpp&gt;<span style="color: #000000;">
+
+using namespace luabind;
+
+</span>#include <span style="color: #800000;">"</span><span style="color: #800000;">stdafx.h</span><span style="color: #800000;">"</span>
+
+#include &lt;boost/asio.hpp&gt;
+#include &lt;boost/bind.hpp&gt;
+#include &lt;boost/thread/thread.hpp&gt;
+
+#include &lt;deque&gt;<span style="color: #000000;">
+
+class ThreadPool
+{
+    boost::asio::io_service ioService;
+    boost::thread_group threadpool;
+    boost::asio::io_service::work work;
+public:
+    ThreadPool() :work(ioService)
+    {
+        </span>/*
+        *<span style="color: #000000;"> This will start the ioService processing loop. All tasks
+        </span>*<span style="color: #000000;"> assigned with ioService.post() will start executing.
+        </span>*/
+        //<span style="color: #000000;">boost::asio::io_service::work work(ioService);
+
+        </span>/*
+        * This will add <span style="color: #800080;">2</span> threads to the thread pool. (You could just put it <span style="color: #0000ff;">in</span> a <span style="color: #0000ff;">for</span><span style="color: #000000;"> loop)
+        </span>*/<span style="color: #000000;">
+        threadpool.create_thread(
+            boost::bind(&amp;boost::asio::io_service::run, &amp;ioService)
+            );
+        threadpool.create_thread(
+            boost::bind(&amp;boost::asio::io_service::run, &amp;ioService)
+            );
+
+    }
+    ~ThreadPool()
+    {
+
+    }
+
+    void post(boost::</span><span style="color: #0000ff;">function</span>&lt;void()&gt;<span style="color: #000000;"> f)
+    {
+        ioService.post(f);
+    }
+
+    void join()
+    {
+        threadpool.join_all();
+    }
+private:
+
+};
+
+namespace bamthread
+{
+    typedef std::unique_ptr</span>&lt;boost::asio::io_service::work&gt;<span style="color: #000000;"> asio_worker;
+
+    struct ThreadPool {
+        ThreadPool(size_t threads) :service(), working(new asio_worker::element_type(service)) {
+            </span><span style="color: #0000ff;">while</span> (threads<span style="color: #008000;">--</span><span style="color: #008000;">)</span>
+<span style="color: #000000;">            {
+                auto worker </span>= boost::bind(&amp;boost::asio::io_service::run, &amp;(this-&gt;<span style="color: #000000;">service));
+                g.add_thread(new boost::thread(worker));
+            }
+        }
+
+        template</span>&lt;class F&gt;<span style="color: #000000;">
+        void post(F f){
+            service.post(f);
+        }
+
+        ~ThreadPool() {
+            working.reset(); </span>//<span style="color: #000000;">allow run() to exit
+            g.join_all();
+            service.stop();
+        }
+
+    private:
+        boost::asio::io_service service; </span>//&lt;<span style="color: #000000;"> the io_service we are wrapping
+        asio_worker working;
+        boost::thread_group g; </span>//&lt;<span style="color: #000000;"> need to keep track of threads so we can join them
+    };
+}
+
+void my_task()
+{
+    Sleep(</span><span style="color: #800080;">1000</span><span style="color: #000000;">);
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">mytask</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+}
+
+void test1()
+{
+    bamthread::ThreadPool tp(</span><span style="color: #800080;">3</span><span style="color: #000000;">);
+    tp.post(boost::bind(my_task));
+    </span>//<span style="color: #000000;">tp.join();
+}
+
+void test()
+{
+    </span>/*
+    * Create an asio::io_service <span style="color: #0000ff;">and</span> a thread_group (through pool <span style="color: #0000ff;">in</span><span style="color: #000000;"> essence)
+    </span>*/<span style="color: #000000;">
+    boost::asio::io_service ioService;
+    boost::thread_group threadpool;
+
+
+    </span>/*
+    *<span style="color: #000000;"> This will start the ioService processing loop. All tasks
+    </span>*<span style="color: #000000;"> assigned with ioService.post() will start executing.
+    </span>*/<span style="color: #000000;">
+    boost::asio::io_service::work work(ioService);
+
+    </span>/*
+    * This will add <span style="color: #800080;">2</span> threads to the thread pool. (You could just put it <span style="color: #0000ff;">in</span> a <span style="color: #0000ff;">for</span><span style="color: #000000;"> loop)
+    </span>*/<span style="color: #000000;">
+    threadpool.create_thread(
+        boost::bind(&amp;boost::asio::io_service::run, &amp;ioService)
+        );
+    threadpool.create_thread(
+        boost::bind(&amp;boost::asio::io_service::run, &amp;ioService)
+        );
+
+    </span>/*
+    *<span style="color: #000000;"> This will assign tasks to the thread pool.
+    </span>* More about boost::bind: <span style="color: #800000;">"</span><span style="color: #800000;">http://www.boost.org/doc/libs/1_54_0/libs/bind/bind.html#with_functions</span><span style="color: #800000;">"</span>
+    */<span style="color: #000000;">
+    ioService.post(boost::bind(my_task));
+
+    </span>/*
+    *<span style="color: #000000;"> This will stop the ioService processing loop. Any tasks
+    </span>* you add behind this point will <span style="color: #0000ff;">not</span><span style="color: #000000;"> execute.
+    </span>*/<span style="color: #000000;">
+    ioService.stop();
+
+    </span>/*
+    * Will wait till all the threads <span style="color: #0000ff;">in</span><span style="color: #000000;"> the thread pool are finished with
+    </span>* their assigned tasks <span style="color: #0000ff;">and</span> <span style="color: #800000;">'</span><span style="color: #800000;">join</span><span style="color: #800000;">'</span><span style="color: #000000;"> them. Just assume the threads inside
+    </span>*<span style="color: #000000;"> the threadpool will be destroyed by this method.
+    </span>*/<span style="color: #000000;">
+    threadpool.join_all();
+}
+
+
+template </span>&lt;typename T&gt;<span style="color: #000000;">
+class queue
+{
+private:
+    boost::mutex              d_mutex;
+    boost::condition_variable d_condition;
+    std::deque</span>&lt;T&gt;<span style="color: #000000;">           d_queue;
+public:
+    void push(T const&amp; value) {
+        {
+            boost::unique_lock</span>&lt;boost::mutex&gt; lock(this-&gt;<span style="color: #000000;">d_mutex);
+            d_queue.push_front(value);
+        }
+        this</span>-&gt;<span style="color: #000000;">d_condition.notify_one();
+    }
+    T pop() {
+        boost::unique_lock</span>&lt;boost::mutex&gt; lock(this-&gt;<span style="color: #000000;">d_mutex);
+        this</span>-&gt;d_condition.wait(lock, [=]{ <span style="color: #0000ff;">return</span> !this-&gt;<span style="color: #000000;">d_queue.empty(); });
+        T rc(std::move(this</span>-&gt;<span style="color: #000000;">d_queue.back()));
+        this</span>-&gt;<span style="color: #000000;">d_queue.pop_back();
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> rc;
+    }
+};
+
+class MyTHdPool
+{
+    bamthread::ThreadPool tp;
+
+    boost::mutex m;
+    std::map</span>&lt;int, boost::<span style="color: #0000ff;">function</span>&lt;void()&gt; &gt; f2s;    //<span style="color: #000000;"> key: taskid, value: post processing
+    
+    </span>//<span style="color: #000000;">boost::thread t_;
+
+    queue</span>&lt;int&gt;<span style="color: #000000;"> q_;
+    int taskid_;
+
+public:
+    MyTHdPool() :tp(</span><span style="color: #800080;">3</span>), taskid_(<span style="color: #800080;">0</span><span style="color: #000000;">){}
+
+    ~MyTHdPool(){
+        join();
+    }
+
+    void Call(boost::</span><span style="color: #0000ff;">function</span>&lt;void()&gt; f1, boost::<span style="color: #0000ff;">function</span>&lt;void()&gt;<span style="color: #000000;"> f2)
+    {
+        int taskid </span>= taskid_++<span style="color: #000000;">;
+
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">begin call task %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, taskid);
+
+        boost::</span><span style="color: #0000ff;">function</span>&lt;void()&gt; f = [=<span style="color: #000000;">]() mutable {
+            f1();
+
+            q_.push(taskid);
+            printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">done task %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, taskid);
+        };
+
+        {
+            boost::lock_guard</span>&lt;boost::mutex&gt;<span style="color: #000000;"> lock(m);
+            f2s[taskid] </span>=<span style="color: #000000;"> (f2);
+        }
+
+        tp.post(f);
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">end post task %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, taskid);
+    }
+
+    void join()
+    {
+        </span><span style="color: #0000ff;">while</span> (<span style="color: #0000ff;">true</span><span style="color: #000000;">)
+        {
+            boost::</span><span style="color: #0000ff;">function</span>&lt;void()&gt;<span style="color: #000000;"> f2;
+            int taskid </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+            {
+                {
+                    boost::lock_guard</span>&lt;boost::mutex&gt;<span style="color: #000000;"> lock(m);
+                    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (f2s.empty())
+                        </span><span style="color: #0000ff;">return</span><span style="color: #000000;">;
+                }
+
+                printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">start pop a task from queue\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+                int taskid </span>=<span style="color: #000000;"> q_.pop();
+                printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">got a task %d from queue\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, taskid);
+
+                {
+                    boost::lock_guard</span>&lt;boost::mutex&gt;<span style="color: #000000;"> lock(m);
+                    auto it </span>=<span style="color: #000000;"> f2s.find(taskid);
+                    </span><span style="color: #ff00ff;">assert</span>(it != f2s.<span style="color: #0000ff;">end</span><span style="color: #000000;">());
+                    f2 </span>= it-&gt;<span style="color: #000000;">second;
+                    f2s.erase(it);
+                }
+            }
+
+            printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">exec task post ftn %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, taskid);
+            f2();
+        }
+    }
+
+    void sleep1(double n, object f2)
+    {
+        Call([n](){Sleep(n </span>* <span style="color: #800080;">1000</span><span style="color: #000000;">); }, [f2, this]() mutable {
+            f2(); 
+        });
+    }
+
+    void sleep2(double n)
+    {
+        Call([n](){Sleep(n </span>* <span style="color: #800080;">1000</span><span style="color: #000000;">); }, [](){});
+    }
+private:
+
+};
+
+void callback(object o)
+{
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">before callback\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    o();
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">after callback\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+}
+
+int luaopen_Dll(lua_State</span>*<span style="color: #000000;"> L)
+{
+    
+    luaL_openlibs(L);
+    open(L);
+
+    </span>// define a <span style="color: #ff00ff;">module</span> <span style="color: #0000ff;">in</span> <span style="color: #008080;">_G</span>[<span style="color: #800000;">"</span><span style="color: #800000;">t</span><span style="color: #800000;">"</span><span style="color: #000000;">]
+    </span><span style="color: #ff00ff;">module</span>(L, <span style="color: #800000;">"</span><span style="color: #800000;">Dll</span><span style="color: #800000;">"</span><span style="color: #000000;">)[
+        
+
+        class_</span>&lt;MyTHdPool&gt;(<span style="color: #800000;">"</span><span style="color: #800000;">MyTHdPool</span><span style="color: #800000;">"</span><span style="color: #000000;">)
+        .def(constructor</span>&lt;&gt;<span style="color: #000000;">())
+        .def(</span><span style="color: #800000;">"</span><span style="color: #800000;">sleep1</span><span style="color: #800000;">"</span><span style="color: #000000;">, &amp;MyTHdPool::sleep1)
+        .def(</span><span style="color: #800000;">"</span><span style="color: #800000;">sleep2</span><span style="color: #800000;">"</span><span style="color: #000000;">, &amp;MyTHdPool::sleep2)
+        .def(</span><span style="color: #800000;">"</span><span style="color: #800000;">join</span><span style="color: #800000;">"</span><span style="color: #000000;">, &amp;MyTHdPool::join),
+
+        def(</span><span style="color: #800000;">"</span><span style="color: #800000;">test1</span><span style="color: #800000;">"</span><span style="color: #000000;">, &amp;test1),
+
+        def(</span><span style="color: #800000;">"</span><span style="color: #800000;">callback</span><span style="color: #800000;">"</span><span style="color: #000000;">, &amp;callback)
+    ];
+
+    </span>// push <span style="color: #008080;">_G</span>[<span style="color: #800000;">"</span><span style="color: #800000;">t</span><span style="color: #800000;">"</span><span style="color: #000000;">] to stack
+    lua_getglobal(L, </span><span style="color: #800000;">"</span><span style="color: #800000;">Dll</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span>// set <span style="color: #008080;">_G</span>[<span style="color: #800000;">"</span><span style="color: #800000;">t</span><span style="color: #800000;">"</span>]=<span style="color: #0000ff;">nil</span><span style="color: #000000;">
+    lua_pushnil(L);
+    lua_setglobal(L, </span><span style="color: #800000;">"</span><span style="color: #800000;">Dll</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<p>&nbsp;</p>

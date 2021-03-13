@@ -1,0 +1,7 @@
+<p>from twisted.internet import protocol, reactor<br /><br />class Echo(protocol.Protocol):<br />&nbsp;&nbsp;&nbsp; def dataReceived(self, data):<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; self.transport.write(data)<br /><br />class EchoFactory(protocol.Factory):<br />&nbsp;&nbsp;&nbsp; def buildProtocol(self, addr):<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return Echo()<br /><br />reactor.listenTCP(1234, EchoFactory())<br />reactor.run()</p>
+<p>&nbsp;</p>
+<p>run server:</p>
+<p>python testTwisted.py</p>
+<p>&nbsp;</p>
+<p>run client:</p>
+<p>telnet localhost 1234</p>

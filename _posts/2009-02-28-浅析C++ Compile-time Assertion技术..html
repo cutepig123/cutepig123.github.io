@@ -1,0 +1,922 @@
+<div class="post">
+		<div class="posthead">
+			<h2>
+				<a id="viewpost1_TitleUrl" class="singleposttitle" href="http://www.cppblog.com/nacci/archive/2005/11/07/969.html">浅析C++ Compile-time Assertion技术</a></h2>http://www.cppblog.com/nacci/archive/2005/11/07/969.aspx<br><br>
+ 			Posted on 2005-11-07 23:10 <a href="http://www.cppblog.com/nacci/">nacci</a> 阅读(1354) <a href="http://www.cppblog.com/nacci/archive/2005/11/07/969.aspx#Post">评论(3)</a> &nbsp;<a href="http://www.cppblog.com/nacci/admin/EditPosts.aspx?postid=969">编辑</a>&nbsp;<a href="http://www.cppblog.com/nacci/AddToFavorite.aspx?id=969">收藏</a> <a href="http://www.cppblog.com/nacci/services/trackbacks/969.aspx">引用</a>  所属分类: <a href="http://www.cppblog.com/nacci/category/1784.html">C++漫谈</a> 
+			<img src="http://www.cppblog.com/nacci/aggbug/969.html?webview=1" width="1" height="1">
+			
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.cppblog.com/nacci/archive/2005/11/07/969.html"
+dc:identifier="http://www.cppblog.com/nacci/archive/2005/11/07/969.html"
+dc:title="浅析C++ Compile-time Assertion技术"
+trackback:ping="http://www.cppblog.com/nacci/services/trackbacks/969.aspx" />
+</rdf:RDF>
+-->
+
+		</div>
+		<div class="postbody">
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">你可能经常需要利用运行时断言技术，它可以方便地测试前提条件。但是，随着<font face="新宋体"><span lang="EN-US">Metaprogramming</span>概念的出现，编译时断言技术也已经和<span lang="EN-US">runtime assertion</span>一样的普遍了。如何在编译时进行断言呢？其实，方法只有一个，就是让编译器生成一条错误信息，但是编译器生成的错误信息信息性往往有又理想。并且，即使你在一种编译上设计了一种方案，你也很难把它移植到其他的编译器上。我们通过其实现方法的改进和一个<span lang="EN-US">Boost</span>中的例子，来看看如何更好的实现这种技术。<span lang="EN-US"><o:p></o:p></span></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">例如，你需要一个安全的类型转换机制，它只允许你把个头小的类型转换为个头大的类型。此时，就可以利用<font face="新宋体"><span lang="EN-US">Compile-time Assertion</span>解决这个问题。<span lang="EN-US"><o:p></o:p></span></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">typename</span> To, <span style="color: blue;">typename</span> From&gt;<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">To safe_reinterpret_cast(From from) {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>assert(<span style="color: blue;">sizeof</span>(To) &gt;= <span style="color: blue;">sizeof</span>(From));<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">return</span>
+								<span style="color: blue;">reinterrupt_cast</span>
+								<to>(from);<o:p></o:p></to>
+						</font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">而后，就像你使用同样的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C++</span>
+				<span style="font-size: 10pt; font-family: 宋体;">类型转换一样来使用这个</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">safe_reinterpret_cast</span>
+				<span style="font-size: 10pt; font-family: 宋体;">：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">long</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">l = 255;<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">short</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">s = safe_reinterpret_cast&lt;<font face="Lucida Console"><span style="color: blue;">short</span>&gt;(l);<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">这样一来，你就可以确保只有在小</span>
+				<span style="font-size: 10pt; font-family: Wingdings;" lang="EN-US">
+						<span style="">
+								<font face="Wingdings">à</font>
+						</span>
+				</span>
+				<span style="font-size: 10pt; font-family: 宋体;">大的转换才是正确的，如果进行非法的转换，就会在运行时发生断言。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">显然，如果能够在编译时给用户指出代码中的问题更为合适一些。如果这个转换只在程序很少被执行到的一个分支上被执行，那么当你把它移植到一个新的编译器上或平台上的时候，你就有可能忘记程序中所有不可移植的部分，例如上面提到的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">reinterrupt_cast</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，从而给你的程序带来不必要的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">bug</span>
+				<span style="font-size: 10pt; font-family: 宋体;">。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">其实，上面我们被评估的表达式是一个编译器常量，也就是说你完全有可以让编译器取代运行时代码来进行检查。解决的思路是在表达式为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">true</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的时候给编译器传递正确的代码，而在表达式为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">false</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的时候给编译器提供一个语法错误的代码，这样，当被评估的表达式为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">0</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的时候，编译器就会发出一个错误信号。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">最简单的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">compile-time assertion</span>
+				<span style="font-size: 10pt; font-family: 宋体;">解决方案是</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Van Horn</span>
+				<span style="font-size: 10pt; font-family: 宋体;">在</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">1997</span>
+				<span style="font-size: 10pt; font-family: 宋体;">年提出的，它可以在</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C</span>
+				<span style="font-size: 10pt; font-family: 宋体;">和</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C++</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的代码中工作，依赖的条件很简单，数组的长度不能为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">0</span>
+				<span style="font-size: 10pt; font-family: 宋体;">。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt;">
+				<span style="background: rgb(217, 217, 217) none repeat scroll 0% 0%; font-size: 10pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; color: blue; font-family: 'Lucida Console';" lang="EN-US">#define</span>
+				<span style="background: rgb(217, 217, 217) none repeat scroll 0% 0%; font-size: 10pt; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; font-family: 'Lucida Console';" lang="EN-US">STATIC_CHECK(expr) { <font face="Lucida Console"><span style="color: blue;">char</span> unnamed[(expr ? 1 : 0)]; }</font></span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">现在，如果你写下下面的代码：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">typename</span> To, <span style="color: blue;">typename</span> From&gt;<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">To safe_reinterpret_cast(From from) {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>STATIC_CHECK(<span style="color: blue;">sizeof</span>(To) &gt;= <span style="color: blue;">sizeof</span>(From));<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">return</span>
+								<span style="color: blue;">reinterpret_cast</span>
+								<to>(from);<o:p></o:p></to>
+						</font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">… …<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">void</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">* somePointer = 0;<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">char</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">c = safe_reinterpret_cast&lt;<font face="Lucida Console"><span style="color: blue;">char</span>&gt;(somePointer);<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">如果</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">void*</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的长度小于</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">char(</span>
+				<span style="font-size: 10pt; font-family: 宋体;">这个并没有在目前的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C++</span>
+				<span style="font-size: 10pt; font-family: 宋体;">标准的规定</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">)</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，编译器就会告诉你创建了一个长度为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">0</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的数组。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">问题是这个方法提供的错误信息并不是很说明问题。“不能创建长度为<font face="新宋体"><span lang="EN-US">0</span>的数组”并不能表示“<span lang="EN-US">char</span>类型放不下一个指针”。这种方法很难想用户提供<span lang="EN-US">customized message</span>。错误信息的来源并不是因为代码违法了程序设计的意图，而是因为破坏了某些语法规则。<span lang="EN-US"><o:p></o:p></span></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">更好的解决方案是依赖一个模板提供一个具有说明性的名字，这样，编译器就会在错误信息中包含这个名字了。<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">bool</span>&gt; <span style="color: blue;">struct</span> CompileTimeError;<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;&gt; <font face="Lucida Console"><span style="color: blue;">struct</span> CompileTimeError&lt;<span style="color: blue;">true</span>&gt; {};<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#define</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">STATIC_CHECK1(expr1) { (CompileTimeError&lt;(expr1) != 0&gt;()); }<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">CompileTimeError</span>
+				<span style="font-size: 10pt; font-family: 宋体;">带有一个非类型参数，并且只有</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">true</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的特化版本，这样，当被评估的表达式不满足条件时，编译器就会抱怨没有</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">CompileTimeError<false></false></span>
+				<span style="font-size: 10pt; font-family: 宋体;">的特化版本，这个比刚才的错误多多少少要好一些。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">当然，这个设计仍然有很大的扩展空间。因为我们还是没有办法来订制错误消息。一个简单的办法就是在</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">STATIC_CHECK</span>
+				<span style="font-size: 10pt; font-family: 宋体;">中加入一个消息参数，然后让这个消息参数在错误信息中显示。这个方法也有自己的缺点，就是你必须要保证传递给</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C++</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的这个错误消息参数一定是合法的。于是我们可以对于上面的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">CompileTimeError</span>
+				<span style="font-size: 10pt; font-family: 宋体;">做以下的改进：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">bool</span>&gt; <span style="color: blue;">struct</span> CompileTimeChecker {<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>CompileTimeChecker(...) {};<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;&gt; <font face="Lucida Console"><span style="color: blue;">struct</span> CompileTimeChecker&lt;<span style="color: blue;">false</span>&gt; { };<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>&nbsp;</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#define</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">STATIC_CHECK2(expr2, msg) {\<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">class</span> ERROR_<span style="color: blue;">#</span>#msg {}; \<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">sizeof</span>((CompileTimeChecker&lt;(expr2!=0)&gt;((ERROR_<span style="color: blue;">#</span>#msg()))));\<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">typename</span> To, <span style="color: blue;">typename</span> From&gt;<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">To safe_reinterpret_cast(From from) {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>STATIC_CHECK2((<span style="color: blue;">sizeof</span>(To) &gt;= <span style="color: blue;">sizeof</span>(From)), <o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-indent: 120pt; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">Destination_Type_To_Narrow);<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">return</span>
+								<span style="color: blue;">reinterpret_cast</span>
+								<to>(from);<o:p></o:p></to>
+						</font>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">这样，当你仍旧使用刚才的代码时：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">void</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">* somePointer = 0;<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">char</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">c = safe_reinterpret_cast&lt;<font face="Lucida Console"><span style="color: blue;">char</span>&gt;(somePointer);<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">由于</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">CompileTimeChecker<true></true></span>
+				<span style="font-size: 10pt; font-family: 宋体;">可以接受任意参数，而特化的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">CompileTimeChecker<false></false></span>
+				<span style="font-size: 10pt; font-family: 宋体;">并没有这样的构造函数，这样，当被评估的表达式为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">0</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的时候，就会出现编译时错误</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">cannot convert <o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">from <o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">'safe_reinterpret_cast::ERROR_Destination_Type_To_Narrow' <o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">to <o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">'CompileTimeChecker<false>'<o:p></o:p></false></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">这次的错误信息变的比较有提示性了。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<b style="">
+						<span style="font-family: 新宋体;">
+								<font size="3">现实中的应用——<span lang="EN-US"><font face="新宋体">BOOST_STATIC_ASSERT &amp; boost::checked_delete<t><o:p></o:p></t></font></span></font>
+						</span>
+				</b>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<b style="">
+						<span style="font-family: 新宋体;" lang="EN-US">
+								<font size="3">BOOST_STATIC_ASSERT<o:p></o:p></font>
+						</span>
+				</b>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">在<font face="新宋体"><span lang="EN-US">boost/static_assert.hpp</span>中定义了一个宏<span lang="EN-US">BOOST_STATIC_ASSERT</span>，用于完成编译时静态检查。其实现方式了我们的第<span lang="EN-US">2</span>种方式很类似，利用了模板的特化技术<span lang="EN-US"><o:p></o:p></span></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#define</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">BOOST_STATIC_ASSERT( B ) \<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp; </span>
+								<span style="color: blue;">typedef</span> ::boost::static_assert_test&lt;\<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">sizeof</span>(::boost::STATIC_ASSERTION_FAILURE&lt; (<span style="color: blue;">bool</span>)( B ) &gt;)&gt;\<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>BOOST_JOIN(boost_static_assert_typedef_, __COUNTER__)<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">其中：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">int</span> x&gt; <span style="color: blue;">struct</span> static_assert_test{};<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#define</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">BOOST_JOIN( X, Y ) X<font face="Lucida Console"><span style="color: blue;">#</span>#Y<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">bool</span> x&gt; <span style="color: blue;">struct</span> STATIC_ASSERTION_FAILURE;<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;&gt; <font face="Lucida Console"><span style="color: blue;">struct</span> STATIC_ASSERTION_FAILURE&lt;<span style="color: blue;">true</span>&gt; { <span style="color: blue;">enum</span> { value = 1 }; };<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">这里，只为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">true</span>
+				<span style="font-size: 10pt; font-family: 宋体;">类型进行了特化，这样，当我们尝试声明一个</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">STATIC_ASSERTION_FAILURE&lt;<font face="Lucida Console"><span style="color: blue;">false</span>&gt;</font></span>
+				<span style="font-size: 10pt; font-family: 宋体;">的时候就会引发编译时错误。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">这样，整个宏的含义就是做了一个</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">typedef:<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">typedef</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">::boost::static_assert_test&lt;<i style="">evaluate condition</i>&gt; boost_static_assert_typedef___COUNTER__<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">而只有当<font face="新宋体"><span lang="EN-US">evaluate condition</span>为<span lang="EN-US">true</span>的时候，这样的<span lang="EN-US">typedef</span>才是正确的，从而实现了编译时断言（上面的代码只是<span lang="EN-US">msvc</span>的实现，对不同的编译器实现略有不同，但是思想是类似的）。<span lang="EN-US"><o:p></o:p></span></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 新宋体;">例子：确保一个模板参数的类型只能是整数<span lang="EN-US"><o:p></o:p></span></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">typename</span> T&gt; <span style="color: blue;">class</span> only_compatible_with_integral_types {<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>BOOST_STATIC_ASSERT(boost::is_integral<t>::value);<o:p></o:p></t></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">之后，如果你使用下面的定义：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">only_compatible_with_integral_types&lt;<font face="Lucida Console"><span style="color: blue;">double</span>&gt; test2;<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">就会引发编译错误：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<i style="">
+						<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">use of undefined type 'boost::STATIC_ASSERTION_FAILURE<x><o:p></o:p></x></span>
+				</i>
+		</p>
+		<p style="margin: 0cm 0cm 0pt;">
+				<b style="">
+						<span style="font-family: 新宋体;" lang="EN-US">
+								<font size="3">boost::checked_delete<t><o:p></o:p></t></font>
+						</span>
+				</b>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">当我们利用指针删除一个对象的时候，对象类型是否完整决定了对象是否能够被正确删除。但是，如果你用</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">delete</span>
+				<span style="font-size: 10pt; font-family: 宋体;">去删除一个类型并不完整的对象的指针，编译器并不会给你提供任何错误信息，但是这样做的结果却是对象的析构函数根本就没有被调用。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">checked-delete<t></t></span>
+				<span style="font-size: 10pt; font-family: 宋体;">定义在</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">boost/checkd_delete.hpp</span>
+				<span style="font-size: 10pt; font-family: 宋体;">中，它可以保证在你摧毁一个对象的时候，必须对该对象的类型有完全的了解。先来看个例子：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">
+										<boost checked_delete.hpp="">
+												<o:p>
+												</o:p>
+										</boost>
+								</font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">class</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">some_class;<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">some_class* create() {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp; </span>
+								<span style="color: blue;">return</span> (some_class*)0;<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">int</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">main() {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp; </span>some_class* p=create();<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp; </span>boost::checked_delete(p2);<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm;">
+				<span style="font-size: 10pt; font-family: 宋体;">编译器就会抱怨</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">some_calss</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是一个不完整的类型。在我们进一步去了解解决方案之前，我们先来看一个由于不完整类型带来的</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">memory leak</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的例子：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">// in deleter.h<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">class</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">to_be_deleted;<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">class</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">deleter {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">public</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">:<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">void</span> delete_it(to_be_deleted* p);<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">// in deleter.cpp<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">"deleter.h"<o:p></o:p></font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: maroon; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>&nbsp;</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">void</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">deleter::delete_it(to_be_deleted* p) {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">delete</span> p; <span style="color: green;">// !!!memory leak here<o:p></o:p></span></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">// in to_be_deleted.h<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">
+										<iostream>
+												<o:p>
+												</o:p>
+										</iostream>
+								</font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: maroon; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>&nbsp;</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">class</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">to_be_deleted {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">class</span> test {<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">public</span>:<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>test() {};<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>~test() { std::cout&lt;&lt;<span style="color: maroon;">"I'm destructed correctly!"</span>&lt;<std::endl; }=""><o:p=""></o:p=""></std::endl;></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>};<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>test* p;<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">public</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">:<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>to_be_deleted() { p = <span style="color: blue;">new</span> test(); };<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>~to_be_deleted() {<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">delete</span> p;<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>std::cout&lt;&lt;<span style="color: maroon;">"I've important things to say!"</span>&lt;<std::endl;><o:p></o:p></std::endl;></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>}<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">};<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">之后用下面的测试代码：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">"deleter.h"<o:p></o:p></font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">"to_be_deleted.h"<o:p></o:p></font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">int</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">main() {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>to_be_deleted* p = <span style="color: blue;">new</span> to_be_deleted();<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>deleter d;<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>d.delete_it(p);<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">return</span> 0;<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">你会发现，</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">to_be_deleted</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的析构函数并没有被调用，原因在于</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">deleter.cpp</span>
+				<span style="font-size: 10pt; font-family: 宋体;">中，并没有包含</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">to_be_deleted.h</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，这样，</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">delete</span>
+				<span style="font-size: 10pt; font-family: 宋体;">对于齐要删除的指针一无所知，导致了析构函数并没有真正被调用。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 7.8pt 0cm; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">解决的方法也很简单，利用</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">boost::checked_delete</span>
+				<span style="font-size: 10pt; font-family: 宋体;">进行删除。</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">
+										<boost checked_delete.hpp="">
+												<o:p>
+												</o:p>
+										</boost>
+								</font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">#include</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<span style="color: maroon;">
+								<font face="Lucida Console">"deleter.h"<o:p></o:p></font>
+						</span>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">void</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">deleter::delete_it(to_be_deleted* p) {<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: green;">//delete p; // memory leak here<o:p></o:p></span>
+						</font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>boost::checked_delete(p);<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}<o:p></o:p></span>
+		</p>
+		<p style="margin: 7.8pt 0cm; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 宋体;">这时，编译器便会抱怨说</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">to_be_deleted</span>
+				<span style="font-size: 10pt; font-family: 宋体;">是未知的类型。其实</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">,checked_delete</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的实现原理是非常简单的，只是说对于未知类型，使用</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">sizeof</span>
+				<span style="font-size: 10pt; font-family: 宋体;">运算符会返回</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">0</span>
+				<span style="font-size: 10pt; font-family: 宋体;">，而</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">C++</span>
+				<span style="font-size: 10pt; font-family: 宋体;">并不允许创建长度为</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">0</span>
+				<span style="font-size: 10pt; font-family: 宋体;">的数组。如下所示：</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; color: blue; font-family: 'Lucida Console';" lang="EN-US">template</span>
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">&lt;<font face="Lucida Console"><span style="color: blue;">class</span> T&gt; <span style="color: blue;">inline</span><span style="color: blue;">void</span> checked_delete(T * x)<o:p></o:p></font></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">{<o:p></o:p></span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: green;">// intentionally complex - simplification causes regressions<o:p></o:p></span>
+						</font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">typedef</span>
+								<span style="color: blue;">char</span> type_must_be_complete[ <span style="color: blue;">sizeof</span>(T)? 1: -1 ];<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>(<span style="color: blue;">void</span>) <span style="color: blue;">sizeof</span>(type_must_be_complete);<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">
+						<font face="Lucida Console">
+								<span style="">&nbsp;&nbsp;&nbsp; </span>
+								<span style="color: blue;">delete</span> x;<o:p></o:p></font>
+				</span>
+		</p>
+		<p style="margin: 0cm 0cm 0pt; background: rgb(217, 217, 217) none repeat scroll 0% 0%; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial; text-align: left;" align="left">
+				<span style="font-size: 10pt; font-family: 'Lucida Console';" lang="EN-US">}</span>
+				<span style="" lang="EN-US">
+						<o:p>
+						</o:p>
+				</span>
+		</p>/std::endl;&gt;</div>
+	</div><script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('AjaxHolder$scriptmanager1', document.getElementById('Form1'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tAjaxHolder$UpdatePanel1'], [], [], 90);
+//]]&gt;
+</script>
+
+
+	    
+    <a name="pagedcomment"></a>
+<h3>Feedback</h3>

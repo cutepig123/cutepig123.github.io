@@ -1,0 +1,34 @@
+<h1 class="entry-title"><a title="Permalink to Windows 10安装教程：硬盘安装Win10 系统步骤（适合32位和64位）" href="http://blog.itful.com/articles/2015/5443_windows-10-hard-disk.html" rel="bookmark">Windows 10安装教程：硬盘安装Win10 系统步骤（适合32位和64位）</a></h1>
+<div class="heatmapthemead-header-entry-meta entry-meta"><span class="heatmapthemead-post-details">Posted on&nbsp;<a title="12:55" href="http://blog.itful.com/articles/2015/5443_windows-10-hard-disk.html" rel="bookmark">2015年01月28日</a><span class="byline">&nbsp;by&nbsp;<span class="author vcard"><a class="url fn n" title="View all posts by 虾虾" href="http://blog.itful.com/articles/author/admin" rel="author">虾虾</a> <span class="comments-link"><a href="http://blog.itful.com/articles/2015/5443_windows-10-hard-disk.html#comments">22 Comments</a></span></span></span></span></div>
+<div class="entry-content">
+<div class="quads-location">&nbsp;</div>
+<p>最新的<a href="http://blog.itful.com/articles/2015/5502_windows-10-msdn-download.html" target="_blank">Windows 10 MSDN官方正式版</a>发布后，很多朋友想要尝试下体验最新的Windows 10 系统，根据我的体验，Windows 10 足够出色，十分值得推荐，建议还没有安装过Windows 10 的朋友在Windows 7 或者Windows 8 系统中进行升级安装，这样可以直接激活你的Windows 10，你也可以使用下面所附的方法全新安装Windows 10（一般升级安装后没有问题也无需全新安装），但<span style="color: #ff0000;">建议前提是升级安装过Windows 10</span>，这样才能保证你的Windows 10 系统完美的激活，详见此文《<a href="http://blog.itful.com/articles/2015/5486_win10-install-download.html">Windows 10 正式版下载安装和激活教程</a>》，</p>
+<p><strong>首先建议下载当前最新的</strong><a href="http://blog.itful.com/articles/2015/5456_windows-10-rtm-download.html" target="_blank"><strong>Windows 10</strong></a><strong>&nbsp;系统：</strong></p>
+<p>&nbsp;</p>
+<p>请《<a href="http://blog.itful.com/articles/2015/5502_windows-10-msdn-download.html" target="_blank">阅读此文</a>》进行Windows 10 的下载</p>
+<h3>Win10硬盘安装教程：</h3>
+<p>其实通过硬盘安装的方法有很多，这儿介绍的是我最为推崇的两个方法，因为这两种方法操作最为简单：</p>
+<h5>1，通过NT6 HDD Installer 进行安装</h5>
+<p>这个方法在<a href="http://blog.itful.com/articles/2009/371_win7-hard.html" target="_blank">Windows 7 硬盘安装教程</a>中就有介绍过，十分简单，适合在<a href="http://blog.itful.com/articles/2009/4_xp-sp3.html" target="_blank">XP</a>, Vista, Win PE, Windows 8等众多系统中进行硬盘安装，其核心既是将系统ISO文件解压到某磁盘分区的根目录（系统分区除外） ，具体步骤，详见<a href="http://blog.itful.com/articles/2009/371_win7-hard.html" target="_blank">Windows 7 硬盘安装教程</a>&nbsp;内附NT6 HDD Installer 下载。</p>
+<p><img src="http://hm0heg.bay.livefilestore.com/y1pcQw3vWIP2ROUWsc2X7yAckwGVH5FF1DoX1R2amv0lekhDnVomcG5qBsEuUceeyQA6JqlrTt96m7ZeOAwVw0YwQ/hdd.jpg" alt="" width="640" height="427" /></p>
+<h5>2，通过DOS命令进行安装 （适合从<a href="http://blog.itful.com/articles/2009/361_win7-msdn.html" target="_blank">Windows 7</a>&nbsp;中安装）</h5>
+<p>1, 将Windows 10 系统ISO镜像解压（可使用Winrar, 7-zip, UltraISO）到系统分区以外的分区，与上面不同的是，无需在根目录中，例如解压到E:\Win8</p>
+<p>2, 解压完毕后，重启电脑，在没进入系统之前按，F8&mdash;修复计算机&mdash;选择最后一项命令提示符&mdash;在命令框输入E:\win8\sources\setup.exe。（其中的E:\Win8 需更换为自己所解压的路径。）</p>
+<p>3，而后既可以看到安装界面，进行安装即可。</p>
+<p>注意：此方法仅适合于Windows 7，如果想在XP，Vista 中使用此方法，需要Vista或者XP系统安装盘，<a href="http://blog.itful.com/articles/2009/290_bios_guangqu.html" target="_blank">设置从光驱启动</a>，后在进行步骤2.</p>
+<h5>3, XP系统中硬盘安装Windows 10</h5>
+<p>1, 将Windows 10 系统ISO镜像解压（可使用Winrar, 7-zip, UltraISO）到系统分区以外的分区，例如解压到E:\Win8</p>
+<p>2，将Windows 10 系统文件里的bootmgr 和boot 文件夹复制到C盘根目录下，在C盘根目录里建立sources文件下，将Windows 10 系统文件sources里的boot.win 复制到C盘的sources文件夹。</p>
+<p>3，以管理员权限运行命令提示符CMD（右键以<a href="http://blog.itful.com/articles/2011/3430_win7-administrators.html" target="_blank">管理员权限</a>运行），输入命令 C:\boot\bootsect.exe /nt60 c: 而后重启电脑</p>
+<p>4，重启后既可以看到在启动安装程序，这一步耗时比较长，需要耐心等待。</p>
+<p>5，安装程序启动后，<span style="color: #ff0000;">即可看到安装界面，此处要注意的是，不要点击&ldquo;现在安装&rdquo;，而应当点击&ldquo;修复计算机</span>&rdquo;</p>
+<p>6，进入&ldquo;&rdquo;系统恢复选项后，选择命令提示符进入DOS差un港口进入&ldquo;系统恢复选项&rdquo;，选择最后一项&ldquo;命令提示符&rdquo;(command prompt)，进入DOS窗口。&nbsp;<br />7，输入E:\win8\sources\setup.exe（其中的E:\Win8 需更换为自己所解压的路径），运行<br />8，剩下的步骤就很简单了，在出现的选项中，进行语言时区和键盘等的相关设置、格式化C盘，或者格式化你想安装到的磁盘分区，即可进行安装了。</p>
+<p>这三种方法都比较简单，个人更偏爱方法一，最简单，适合多种系统，你喜欢什么方式安装系统呢，欢迎留言交流！</p>
+<p>&nbsp;</p>
+<p>4.用大白菜PE系统安装iso</p>
+<p>貌似俺用的是这种方式</p>
+<p>汗</p>
+
+
+
+</div>

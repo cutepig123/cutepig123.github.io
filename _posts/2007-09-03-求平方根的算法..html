@@ -1,0 +1,81 @@
+<p>from <a href="http://blog.csdn.net/redleaves/archive/2003/06/06/6449.aspx">http://blog.csdn.net/redleaves/archive/2003/06/06/6449.aspx</a><br />
+<br />
+1.b=a/2;<br />
+while (abs(b*b-a)&gt;e)&nbsp; // e为一个很小的数，指明了算法的精度<br />
+&nbsp;b=(b+a/b)/2;</p>
+<p>2.<br />
+条件：N(N+2*Q*R) &lt;=Y<br />
+n进制时，Q=n；R为上一次的结果；N为要试的满足条件的最大的值；Y为计算到这时的余数<br />
+（注意：补位时要看进制，如果为10进制，则应补100，即10*10；二进制时应补4，即2*2）</p>
+<p>例1：10开方根（10进制）<br />
+sqrt(10)=3.1622776601683793319988935444327</p>
+<p>&nbsp; 3. 1&nbsp; 6&nbsp; 2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+)10<br />
+&nbsp; 9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=N(N+2*Q*R)=3*(3+2*10*0)=9&lt;10 上 3<br />
+&nbsp; 1 00<br />
+&nbsp;&nbsp;&nbsp; 61&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=N(N+2*Q*R)=1*(1+2*10*3)=61&lt;100 上 1<br />
+&nbsp;&nbsp;&nbsp; 39 00<br />
+&nbsp;&nbsp;&nbsp; 37 56&nbsp;&nbsp;&nbsp;&nbsp; &lt;=N(N+2*Q*R)=6*(6+2*10*31)=3756&lt;3900 上 6<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 1 44 00<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 1 26 44&nbsp; &lt;=N(N+2*Q*R)=2*(2+2*10*316)=12644&lt;14400 上 2<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 17 56<br />
+&nbsp;&nbsp; ....<br />
+&nbsp;&nbsp; ....</p>
+<p>例2：10开方根（2进制）<br />
+N(N+2*Q*R)<br />
+由于：<br />
+&nbsp;N=0或1<br />
+&nbsp;Q=2<br />
+&nbsp;R=未知<br />
+所以：<br />
+&nbsp;N(N+2*Q*R) &lt;=&gt; R&lt;&lt;2+1</p>
+<p>(10)D=(1010)B<br />
+sqrt(10)=(3.1622776601683793319988935444327)D=(0011.0010 1001 1000)B<br />
+&nbsp; 1&nbsp; 1. 0&nbsp; 0&nbsp; 1&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+)10 10<br />
+&nbsp; 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=R&lt;&lt;2+1=0&lt;&lt;2+1=0+1=1&lt;10 上 1<br />
+&nbsp; 1 10<br />
+&nbsp; 1 01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=R&lt;&lt;2+1=1&lt;&lt;2+1=100+1=101&lt;110 上 1<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 1 00<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=R&lt;&lt;2+1=11&lt;&lt;2+1=1100+1=1101&gt;100 上 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 1 00 00<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=R&lt;&lt;2+1=110&lt;&lt;2+1=11000+1=11001&gt;10000 上 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp; 1 00 00 00<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11 00 01&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;=R&lt;&lt;2+1=1100&lt;&lt;2+1=110000+1=110001&lt;1000000 上 1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11 11<br />
+&nbsp;&nbsp; ......</p>
+<p>&nbsp;附matlab test code：</p>
+<p>&nbsp;</p>
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /><span style="color: #0000ff">if</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">0</span><span style="color: #000000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000000">%</span><span style="color: #008000">//</span><span style="color: #008000">算法1</span><span style="color: #008000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;a</span><span style="color: #000000">=</span><span style="color: #000000">1000000</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;b</span><span style="color: #000000">=</span><span style="color: #000000">a</span><span style="color: #000000">/</span><span style="color: #000000">2</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;i</span><span style="color: #000000">=</span><span style="color: #000000">0</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">while</span><span style="color: #000000">&nbsp;(abs(b</span><span style="color: #000000">*</span><span style="color: #000000">b</span><span style="color: #000000">-</span><span style="color: #000000">a)</span><span style="color: #000000">&gt;</span><span style="color: #000000">1e</span><span style="color: #000000">-</span><span style="color: #000000">5</span><span style="color: #000000">)&nbsp;&nbsp;</span><span style="color: #000000">%</span><span style="color: #008000">//</span><span style="color: #008000">&nbsp;e为一个很小的数，指明了算法的精度</span><span style="color: #008000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;b</span><span style="color: #000000">=</span><span style="color: #000000">(b</span><span style="color: #000000">+</span><span style="color: #000000">a</span><span style="color: #000000">/</span><span style="color: #000000">b)</span><span style="color: #000000">/</span><span style="color: #000000">2</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i</span><span style="color: #000000">=</span><span style="color: #000000">i</span><span style="color: #000000">+</span><span style="color: #000000">1</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;end<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;a</span><span style="color: #000000">^</span><span style="color: #000000">.</span><span style="color: #000000">5</span><span style="color: #000000">-</span><span style="color: #000000">b<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;i<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /></span><span style="color: #0000ff">else</span><span style="color: #000000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #000000">%</span><span style="color: #008000">//</span><span style="color: #008000">算法2</span><span style="color: #008000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;Y</span><span style="color: #000000">=</span><span style="color: #000000">20</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;R</span><span style="color: #000000">=</span><span style="color: #000000">0</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;Q</span><span style="color: #000000">=</span><span style="color: #000000">10</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;Bei</span><span style="color: #000000">=</span><span style="color: #000000">1</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">for</span><span style="color: #000000">&nbsp;i</span><span style="color: #000000">=</span><span style="color: #000000">1</span><span style="color: #000000">:</span><span style="color: #000000">10</span><span style="color: #000000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N</span><span style="color: #000000">=</span><span style="color: #000000">0</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">while</span><span style="color: #000000">&nbsp;N</span><span style="color: #000000">*</span><span style="color: #000000">(N</span><span style="color: #000000">+</span><span style="color: #000000">2</span><span style="color: #000000">*</span><span style="color: #000000">Q</span><span style="color: #000000">*</span><span style="color: #000000">R)</span><span style="color: #000000">&lt;=</span><span style="color: #000000">Y&nbsp;</span><span style="color: #000000">&amp;</span><span style="color: #000000">&nbsp;N</span><span style="color: #000000">&lt;</span><span style="color: #000000">10</span><span style="color: #000000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N</span><span style="color: #000000">=</span><span style="color: #000000">N</span><span style="color: #000000">+</span><span style="color: #000000">1</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;end<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;N</span><span style="color: #000000">=</span><span style="color: #000000">N</span><span style="color: #000000">-</span><span style="color: #000000">1</span><span style="color: #000000">;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">if</span><span style="color: #000000">&nbsp;N</span><span style="color: #000000">&lt;</span><span style="color: #000000">0</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">|</span><span style="color: #000000">&nbsp;N</span><span style="color: #000000">&gt;</span><span style="color: #000000">9</span><span style="color: #000000">,N,error;end<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;i<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Y</span><span style="color: #000000">=</span><span style="color: #000000">(Y</span><span style="color: #000000">-</span><span style="color: #000000">N</span><span style="color: #000000">*</span><span style="color: #000000">(N</span><span style="color: #000000">+</span><span style="color: #000000">2</span><span style="color: #000000">*</span><span style="color: #000000">Q</span><span style="color: #000000">*</span><span style="color: #000000">R))</span><span style="color: #000000">*</span><span style="color: #000000">100</span><span style="color: #000000">&nbsp;</span><span style="color: #000000">%</span><span style="color: #008000">//</span><span style="color: #008000">余数</span><span style="color: #008000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;R</span><span style="color: #000000">=</span><span style="color: #000000">R</span><span style="color: #000000">*</span><span style="color: #000000">10</span><span style="color: #000000">+</span><span style="color: #000000">N&nbsp;</span><span style="color: #000000">%</span><span style="color: #008000">//</span><span style="color: #008000">平方根</span><span style="color: #008000"><br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Bei</span><span style="color: #000000">=</span><span style="color: #000000">10</span><span style="color: #000000">^</span><span style="color: #000000">(i</span><span style="color: #000000">-</span><span style="color: #000000">1</span><span style="color: #000000">)<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />&nbsp;&nbsp;&nbsp;end<br />
+<img src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top"  alt="" />end</span></div>
+<p><br />
+&nbsp;</p>

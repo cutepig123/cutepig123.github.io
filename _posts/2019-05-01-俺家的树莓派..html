@@ -1,0 +1,45 @@
+<p>已安装功能：</p>
+<p>ssh服务</p>
+<p>vnc服务</p>
+<p>softether vpn服务</p>
+<p>ssr服务</p>
+<p>chisel服务</p>
+<p>&nbsp;</p>
+<p>所有服务自动启动</p>
+<p>&nbsp;</p>
+<p>常见用法：</p>
+<p>手机通过ssr上网</p>
+<p>公司通过vpn上网</p>
+<p>公司通过chisel上网</p>
+<p>手机vnc树莓派</p>
+<p>家里通过mstsc连接到公司pc</p>
+<p>家里通过firefox看公司邮件</p>
+<p>手机通过ssr全局代理＋firefox＋公司jsoacks看公司邮件</p>
+<p>手机通过ssr全局代理＋rd client＋树莓派chisel端口映射远程桌面访问公司pc</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>设置参考</p>
+<p>vpn server<br />https://curlybrac.es/2016/11/22/set-up-vpn-server-on-raspberry-pi/</p>
+<p>&nbsp;</p>
+<p><br />go<br />https://studygolang.com/articles/692<br />https://golang.org/doc/install/source<br />GOOS=linux GOARCH=arm ./bootstrap.bash</p>
+<p>https://studygolang.com/articles/10701</p>
+<p>&nbsp;</p>
+<p>安装chisel<br />https://github.com/jpillora/chisel<br />curl https://i.jpillora.com/chisel! | bash</p>
+<p>&nbsp;</p>
+<p><br />设置为自启动<br />https://raspberrypi.stackexchange.com/questions/8734/execute-script-on-start-up</p>
+<p>&nbsp;</p>
+<p>举例</p>
+<p>如何在家里浏览公司邮件<br />软件 jsocks，chisel，firefox+foxyproxy，chrome+proxy switch omega</p>
+<p>在家里搭建chisel服务端<br />在公司用chisel客户端连接服务端，设置远程端口映射10800<br />在公司打开jsocks，服务于端口10800<br />在家里打开firefox设置用10800 socks代理<br />上网<br />成功！</p>
+<p>&nbsp;</p>
+<p>-----</p>
+<p>系统参数</p>
+<p>&nbsp;</p>
+<p>pi@raspberrypi:~ $ cat /proc/device-tree/model<br /><strong>Raspberry Pi 3 Model B Plus Rev 1.3</strong></p>
+<p>pi@raspberrypi:~ $ <br />pi@raspberrypi:~ $ <br />pi@raspberrypi:~ $ getconf LONG_BIT<br />32<br />pi@raspberrypi:~ $ <br />pi@raspberrypi:~ $ file /bin/ls<br />/bin/ls: <strong>ELF 32-bit LSB executable</strong>, ARM, EABI5 version 1 (SYSV), dynamically linked, interpreter /lib/ld-linux-armhf.so.3, for GNU/Linux 3.2.0, BuildID[sha1]=c24d547f9d1a35be487f168d83c3cbfcebeaa39c, stripped<br />pi@raspberrypi:~ $ lsb_release -a<br />No LSB modules are available.<br />Distributor ID:&nbsp;Raspbian<br />Description:&nbsp;Raspbian GNU/Linux 9.8 (stretch)<br />Release:&nbsp;9.8<br />Codename:&nbsp;stretch<br />pi@raspberrypi:~ $ arch<br />armv7l<br />pi@raspberrypi:~ $ uname -a<br />Linux raspberrypi 4.14.98-v7+ #1200 SMP Tue Feb 12 20:27:48 GMT 2019 armv7l GNU/Linux<br />pi@raspberrypi:~ $ vcgencmd measure_temp<br /><strong>temp=62.3'C</strong><br />pi@raspberrypi:~ $ cat /proc/cpuinfo<br />processor&nbsp;: 0<br />model name&nbsp;: ARMv7 Processor rev 4 (v7l)<br />BogoMIPS&nbsp;: 38.40<br />Features&nbsp;: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm crc32 <br />CPU implementer&nbsp;: 0x41<br />CPU architecture: 7<br />CPU variant&nbsp;: 0x0<br />CPU part&nbsp;: 0xd03<br />CPU revision&nbsp;: 4</p>
+<p>processor&nbsp;: 1<br />model name&nbsp;: ARMv7 Processor rev 4 (v7l)<br />BogoMIPS&nbsp;: 38.40<br />Features&nbsp;: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm crc32 <br />CPU implementer&nbsp;: 0x41<br />CPU architecture: 7<br />CPU variant&nbsp;: 0x0<br />CPU part&nbsp;: 0xd03<br />CPU revision&nbsp;: 4</p>
+<p>processor&nbsp;: 2<br />model name&nbsp;: ARMv7 Processor rev 4 (v7l)<br />BogoMIPS&nbsp;: 38.40<br />Features&nbsp;: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm crc32 <br />CPU implementer&nbsp;: 0x41<br />CPU architecture: 7<br />CPU variant&nbsp;: 0x0<br />CPU part&nbsp;: 0xd03<br />CPU revision&nbsp;: 4</p>
+<p>processor&nbsp;: 3<br />model name&nbsp;: ARMv7 Processor rev 4 (v7l)<br />BogoMIPS&nbsp;: 38.40<br />Features&nbsp;: half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm crc32 <br />CPU implementer&nbsp;: 0x41<br />CPU architecture: 7<br />CPU variant&nbsp;: 0x0<br />CPU part&nbsp;: 0xd03<br />CPU revision&nbsp;: 4</p>
+<p>Hardware&nbsp;: BCM2835<br />Revision&nbsp;: a020d3<br />Serial&nbsp;&nbsp;: 0000000076a81312<br />pi@raspberrypi:~ $ <br />pi@raspberrypi:~ $ lscpu<br /><strong>Architecture:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; armv7l</strong><br /><strong>Byte Order:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Little Endian</strong><br /><strong>CPU(s):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4</strong><br />On-line CPU(s) list:&nbsp;&nbsp; 0-3<br />Thread(s) per core:&nbsp;&nbsp;&nbsp; 1<br />Core(s) per socket:&nbsp;&nbsp;&nbsp; 4<br />Socket(s):&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1<br />Model:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 4<br />Model name:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ARMv7 Processor rev 4 (v7l)<br /><strong>CPU max MHz:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1400.0000</strong><br />CPU min MHz:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 600.0000<br />BogoMIPS:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 38.40<br />Flags:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; half thumb fastmult vfp edsp neon vfpv3 tls vfpv4 idiva idivt vfpd32 lpae evtstrm crc32<br />pi@raspberrypi:~ $ vcgencmd get_config arm_freq<br />arm_freq=1400<br />pi@raspberrypi:~ $ <br />pi@raspberrypi:~ $ cat /sys/devices/system/cpu/cpu0/cpufreq/scaling_cur_freq<br />1400000<br />pi@raspberrypi:~ $ free -h<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; total&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; used&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; free&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; shared&nbsp; buff/cache&nbsp;&nbsp; available<br /><strong>Mem:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 927M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong> 112M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 607M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 207M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 750M<br />Swap:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 99M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0B&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 99M<br />pi@raspberrypi:~ $ lsblk<br />NAME&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MAJ:MIN RM&nbsp; SIZE RO TYPE MOUNTPOINT<br /><strong>mmcblk0&nbsp;&nbsp;&nbsp;&nbsp; 179:0&nbsp;&nbsp;&nbsp; 0 28.9G&nbsp; 0 disk</strong> <br />├─mmcblk0p1 179:1&nbsp;&nbsp;&nbsp; 0&nbsp; 1.8G&nbsp; 0 part <br />├─mmcblk0p2 179:2&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp;&nbsp; 1K&nbsp; 0 part <br />├─mmcblk0p5 179:5&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp; 32M&nbsp; 0 part /media/pi/SETTINGS<br />├─mmcblk0p6 179:6&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp; 66M&nbsp; 0 part /boot<br />├─mmcblk0p7 179:7&nbsp;&nbsp;&nbsp; 0 15.3G&nbsp; 0 part /<br />├─mmcblk0p8 179:8&nbsp;&nbsp;&nbsp; 0&nbsp; 512M&nbsp; 0 part /media/pi/System<br />└─mmcblk0p9 179:9&nbsp;&nbsp;&nbsp; 0 11.3G&nbsp; 0 part /media/pi/Storage<br />pi@raspberrypi:~ $ <br />pi@raspberrypi:~ $ df -hT<br />Filesystem&nbsp;&nbsp;&nbsp;&nbsp; Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Size&nbsp; Used Avail Use% Mounted on<br />/dev/root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ext4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 15G&nbsp; 5.7G&nbsp; 8.6G&nbsp; 40% /<br />devtmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; devtmpfs&nbsp; 460M&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp; 460M&nbsp;&nbsp; 0% /dev<br />tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tmpfs&nbsp;&nbsp;&nbsp;&nbsp; 464M&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp; 464M&nbsp;&nbsp; 0% /dev/shm<br />tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tmpfs&nbsp;&nbsp;&nbsp;&nbsp; 464M&nbsp;&nbsp; 13M&nbsp; 452M&nbsp;&nbsp; 3% /run<br />tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tmpfs&nbsp;&nbsp;&nbsp;&nbsp; 5.0M&nbsp; 4.0K&nbsp; 5.0M&nbsp;&nbsp; 1% /run/lock<br />tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tmpfs&nbsp;&nbsp;&nbsp;&nbsp; 464M&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp; 464M&nbsp;&nbsp; 0% /sys/fs/cgroup<br />/dev/mmcblk0p6 vfat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 65M&nbsp;&nbsp; 22M&nbsp;&nbsp; 44M&nbsp; 34% /boot<br />tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tmpfs&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 93M&nbsp;&nbsp;&nbsp;&nbsp; 0&nbsp;&nbsp; 93M&nbsp;&nbsp; 0% /run/user/1000<br />/dev/mmcblk0p9 ext4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 11G&nbsp;&nbsp; 29M&nbsp;&nbsp; 11G&nbsp;&nbsp; 1% /media/pi/Storage<br />/dev/mmcblk0p8 vfat&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 512M&nbsp; 139M&nbsp; 374M&nbsp; 28% /media/pi/System<br />/dev/mmcblk0p5 ext4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 30M&nbsp; 457K&nbsp;&nbsp; 28M&nbsp;&nbsp; 2% /media/pi/SETTINGS<br />pi@raspberrypi:~ $ </p>
+<p><br />ref：http://111.230.31.157/post/32.html</p>
+<p>&nbsp;</p>

@@ -1,0 +1,104 @@
+<DIV class=postTitle>
+<SCRIPT src="http://wz.csdn.net/javascripts/vote.js"></SCRIPT>
+<IFRAME style="MARGIN-TOP: 0px; FLOAT: left" border=0 marginWidth=0 frameSpacing=0 marginHeight=0 src="http://wz.csdn.net/vote.aspx?t=%u4F7F%u7528SWIG%u5B9E%u73B0C/C++%u4E0E%u5176%u4ED6%u8BED%u8A00%u95F4%u7684%u4E92%u76F8%u8C03%u7528%20-%20%u6D6E%u751F%u4E09%u7B11%20%u4E09%u7B11%u6D6E%u751F%20-%20CSDNBlog&amp;u=http%3A//blog.csdn.net/lyskyly/archive/2007/07/29/1714946.aspx" frameBorder=0 noResize width=54 scrolling=no height=75></IFRAME><A href="http://blog.csdn.net/lyskyly/archive/2007/07/29/1714946.aspx"><IMG height=13 src="http://blog.csdn.net/images/authorship.gif" width=15 border=0>&nbsp;使用SWIG实现C/C++与其他语言间的互相调用</A>&nbsp;&nbsp;
+<SCRIPT src="http://blog.csdn.net/count.aspx?ID=1714946&amp;Type=Rank"></SCRIPT>
+ <SPAN title=文章指数:41><IMG src="http://blog.csdn.net/images/star.gif" border=0><IMG src="http://blog.csdn.net/images/star.gif" border=0><IMG src="http://blog.csdn.net/images/star_half.gif" border=0></SPAN>&nbsp;&nbsp;<IMG title="CSDN Blog推出文章指数概念，文章指数是对Blog文章综合评分后推算出的，综合评分项分别是该文章的点击量，回复次数，被网摘收录数量，文章长度和文章类型；满分100，每月更新一次。" alt="CSDN Blog推出文章指数概念，文章指数是对Blog文章综合评分后推算出的，综合评分项分别是该文章的点击量，回复次数，被网摘收录数量，文章长度和文章类型；满分100，每月更新一次。" src="http://blog.csdn.net/images/ask.gif" border=0> </DIV>
+<DIV class=postText>&nbsp; 
+<DIV>为了运行速度，java, C#, ruby等语言可能会调用C/C++写的函数或者类，但直接写很麻烦，必须遵循各种语言订立的规范，以jni为例要导出一个函数给java用，你必须在函数定义前写上<SPAN style="FONT-SIZE: 9pt">JNIEXPORT</SPAN>，对于那些早已存在的代码，这样就麻烦了，而且相同的代码如果要给ruby用，又得按照扩展Ruby的规定去重新定义这些函数。并且不能将C++定义的类直接拿来用</DIV>
+<DIV>但SWIG能很方便，很自然的将C/C++代码转换给这些语言用。</DIV>
+<DIV>要使用swig需要到<A href="http://www.swig.org/">www.swig.org</A>去下载这个工具。</DIV>
+<DIV>以ruby为例，讲讲用法。</DIV>
+<DIV>首先下载ruby, 我的是1.8.5, 运行configure.bat生成Makefile文件，再用nmake命令生成config.h文件和需要的静态库</DIV>
+<DIV>用vs2005新建一个动态库工程</DIV>
+<DIV>//Test.h</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">class</SPAN><SPAN style="FONT-SIZE: 9pt"> TestRuby</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">public</SPAN><SPAN style="FONT-SIZE: 9pt">:</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp; TestRuby();</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">void</SPAN> print();</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">};</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt; COLOR: blue">void</SPAN><SPAN style="FONT-SIZE: 9pt"> testFun();</SPAN></DIV>
+<DIV>&nbsp;</DIV>
+<DIV>//Test.cpp</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">#include</SPAN><SPAN style="FONT-SIZE: 9pt"> <SPAN style="COLOR: maroon">"test.h"</SPAN></SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">#include</SPAN><SPAN style="FONT-SIZE: 9pt; COLOR: maroon">&lt;iostream&gt;</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">using</SPAN><SPAN style="FONT-SIZE: 9pt"> <SPAN style="COLOR: blue">namespace</SPAN> std;</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">TestRuby::TestRuby()</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; cout&lt;&lt;<SPAN style="COLOR: maroon">"Test::Test\n"</SPAN>;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">}</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">void</SPAN><SPAN style="FONT-SIZE: 9pt"> TestRuby::print()</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; cout&lt;&lt;<SPAN style="COLOR: maroon">"hello swig\n"</SPAN>;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">}</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">void</SPAN><SPAN style="FONT-SIZE: 9pt"> testFun()</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; cout&lt;&lt;<SPAN style="COLOR: maroon">"testFun\n"</SPAN>;</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">}</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">//Test.i</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">%module test</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">%{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; #include "test.h"</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">%}</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">%include "test.h"</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">注意include前的是%,昨天看成#，害得白忙了半天，汗</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">建立一个空白文件test_wrap.cxx</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">设置好环境变量，运行</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">swig </SPAN><SPAN style="FONT-SIZE: 9pt">–</SPAN><SPAN style="FONT-SIZE: 9pt">c++ -ruby test.i</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">（也可以在项目属性中的自定义生成步骤中定义这些命令,具体见MSDN）</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">这时会更新test_wrap.cxx文件</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">自动生成ruby调用C函数需要的一些东东</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">如：</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">SWIGEXPORT <SPAN style="COLOR: blue">void</SPAN> Init_test(<SPAN style="COLOR: blue">void</SPAN>) {</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;size_t i;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt"></SPAN>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;SWIG_InitRuntime();</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;mTest = rb_define_module(<SPAN style="COLOR: maroon">"Test"</SPAN>);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt"></SPAN>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;SWIG_InitializeModule(0);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;<SPAN style="COLOR: blue">for</SPAN> (i = 0; i &lt; swig_module.size; i++) {</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; SWIG_define_class(swig_module.types[i]);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;}</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt"></SPAN>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;SWIG_RubyInitializeTrackings();</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt"></SPAN>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;cTestRuby.klass = rb_define_class_under(mTest, <SPAN style="COLOR: maroon">"TestRuby"</SPAN>, rb_cObject);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;SWIG_TypeClientData(SWIGTYPE_p_TestRuby, (<SPAN style="COLOR: blue">void</SPAN> *) &amp;cTestRuby);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;rb_define_alloc_func(cTestRuby.klass, _wrap_TestRuby_allocate);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;rb_define_method(cTestRuby.klass, <SPAN style="COLOR: maroon">"initialize"</SPAN>, VALUEFUNC(_wrap_new_TestRuby), -1);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;rb_define_method(cTestRuby.klass, <SPAN style="COLOR: maroon">"print"</SPAN>, VALUEFUNC(_wrap_TestRuby_print), -1);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;cTestRuby.mark = 0;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;cTestRuby.destroy = (<SPAN style="COLOR: blue">void</SPAN> (*)(<SPAN style="COLOR: blue">void</SPAN> *)) free_TestRuby;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;cTestRuby.trackObjects = 0;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;rb_define_module_function(mTest, <SPAN style="COLOR: maroon">"testFun"</SPAN>, VALUEFUNC(_wrap_testFun), -1);</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">}</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">在附加包含目录中引入ruby.h所在的那个路径</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">在链接器中把需要的库附加进去，我这里链接的是msvcrt-ruby18.lib</SPAN></DIV>
+<DIV><SPAN style="FONT-SIZE: 9pt">编译，生成dll</SPAN></DIV>
+<DIV>&nbsp;</DIV>
+<DIV>写个ruby文件测试</DIV>
+<DIV>require 'test'</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>t = Test::TestRuby.new()</DIV>
+<DIV>t.print</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>Test.testFun</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>正确输出</DIV>
+<DIV>Test::Test</DIV>
+<DIV>Hello swig</DIV>
+<DIV>testFun</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>如果要把这个代码给java,或C#用只要改变一下swig的命令参数，然后再编译一次就行了，异常方便</DIV>
+<DIV>Swig不支持C++所以特性，但常用的特性都支持，不太影响使用。</DIV>
+<DIV>Swig支持C#, java, Lua, Ruby, Perl, Python, Tcl等多种语言</DIV>&nbsp;<BR><BR>
+<P id=TBPingURL>Trackback: http://tb.blog.csdn.net/TrackBack.aspx?PostId=1714946</P></DIV>

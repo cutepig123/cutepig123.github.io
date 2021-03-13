@@ -1,0 +1,132 @@
+<p>1.以下代码</p>
+<p>a） &lt;/head&gt;&lt;/script&gt;顺序写反了，导致不能认识到有script</p>
+<p>b）但还是执行不正常，为啥呢？</p>
+<p>A:这里创建了东西，但是没有添加进去！</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('6f05977c-063e-4cda-bb36-b2b68412b399')"><img id="code_img_closed_6f05977c-063e-4cda-bb36-b2b68412b399" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_6f05977c-063e-4cda-bb36-b2b68412b399" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('6f05977c-063e-4cda-bb36-b2b68412b399',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_6f05977c-063e-4cda-bb36-b2b68412b399" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">head</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">script </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="text/javascript"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 3</span> 
+<span style="color: #008080;"> 4</span> <span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;"> f()
+</span><span style="color: #008080;"> 5</span> <span style="background-color: #f5f5f5; color: #000000;">{
+</span><span style="color: #008080;"> 6</span>  <span style="background-color: #f5f5f5; color: #0000ff;">var</span><span style="background-color: #f5f5f5; color: #000000;"> c</span><span style="background-color: #f5f5f5; color: #000000;">=</span><span style="background-color: #f5f5f5; color: #000000;">document.createElement(</span><span style="background-color: #f5f5f5; color: #000000;">'</span><span style="background-color: #f5f5f5; color: #000000;">a</span><span style="background-color: #f5f5f5; color: #000000;">'</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;"> 7</span> <span style="background-color: #f5f5f5; color: #000000;">  c.setAttribute(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">href</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">d[2].value</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;"> 8</span> <span style="background-color: #f5f5f5; color: #000000;">  c.setAttribute(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">name</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">a1</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;"> 9</span> <span style="background-color: #f5f5f5; color: #000000;">  c.setAttribute(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">class</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">b</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;">10</span> <span style="background-color: #f5f5f5; color: #000000;">  c.innerHTML </span><span style="background-color: #f5f5f5; color: #000000;">=</span> <span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">d[1].value</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">;
+</span><span style="color: #008080;">11</span> <span style="background-color: #f5f5f5; color: #000000;">}
+</span><span style="color: #008080;">12</span> <span style="background-color: #f5f5f5; color: #000000;">&lt;</span><span style="background-color: #f5f5f5; color: #000000;">/</span><span style="background-color: #f5f5f5; color: #000000;">head&gt;</span>
+<span style="color: #008080;">13</span> 
+<span style="color: #008080;">14</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">script</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">body </span><span style="color: #ff0000;">onload</span><span style="color: #0000ff;">="f()"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">17</span> 
+<span style="color: #008080;">18</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">body</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>
+<p>2. 发现以下代码img src="http://www.w3schools.com/jsref/w3javascript.gif" 里面的图片地址无效的话就会不能执行</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('e32d2baf-c739-407d-b896-1ec94f56148e')"><img id="code_img_closed_e32d2baf-c739-407d-b896-1ec94f56148e" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_e32d2baf-c739-407d-b896-1ec94f56148e" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('e32d2baf-c739-407d-b896-1ec94f56148e',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_e32d2baf-c739-407d-b896-1ec94f56148e" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff;">&lt;!</span><span style="color: #ff00ff;">DOCTYPE html</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">html</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">body </span><span style="color: #ff0000;">onload</span><span style="color: #0000ff;">="loadImage()"</span> <span style="color: #0000ff;">&gt;</span>
+
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">img </span><span style="color: #ff0000;">src</span><span style="color: #0000ff;">="http://www.w3schools.com/jsref/w3javascript.gif"</span><span style="color: #ff0000;"> onload</span><span style="color: #0000ff;">="loadImage()"</span><span style="color: #ff0000;"> width</span><span style="color: #0000ff;">="100"</span><span style="color: #ff0000;"> height</span><span style="color: #0000ff;">="132"</span><span style="color: #0000ff;">&gt;</span>
+
+<span style="color: #0000ff;">&lt;</span><span style="color: #800000;">script</span><span style="color: #0000ff;">&gt;</span>
+<span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;"> loadImage() {
+    alert(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">Image is loaded</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+}
+</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">script</span><span style="color: #0000ff;">&gt;</span>
+
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">body</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">html</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>
+<p>3. 以下代码能执行，但是如果把document.getElementById("myDIV").appendChild(c);改成document.appendChild(c);就会出错！</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('e9decc0f-b175-48f6-9ff4-77dcc04dc84e')"><img id="code_img_closed_e9decc0f-b175-48f6-9ff4-77dcc04dc84e" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_e9decc0f-b175-48f6-9ff4-77dcc04dc84e" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('e9decc0f-b175-48f6-9ff4-77dcc04dc84e',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_e9decc0f-b175-48f6-9ff4-77dcc04dc84e" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">head</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">script </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="text/javascript"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 3</span> 
+<span style="color: #008080;"> 4</span> <span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;"> f()
+</span><span style="color: #008080;"> 5</span> <span style="background-color: #f5f5f5; color: #000000;">{
+</span><span style="color: #008080;"> 6</span>  <span style="background-color: #f5f5f5; color: #0000ff;">var</span><span style="background-color: #f5f5f5; color: #000000;"> c</span><span style="background-color: #f5f5f5; color: #000000;">=</span><span style="background-color: #f5f5f5; color: #000000;">document.createElement(</span><span style="background-color: #f5f5f5; color: #000000;">'</span><span style="background-color: #f5f5f5; color: #000000;">a</span><span style="background-color: #f5f5f5; color: #000000;">'</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;"> 7</span> <span style="background-color: #f5f5f5; color: #000000;">  c.setAttribute(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">href</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">http://www.qq.com</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;"> 8</span> <span style="background-color: #f5f5f5; color: #000000;">  c.setAttribute(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">name</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">a1</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;"> 9</span> <span style="background-color: #f5f5f5; color: #000000;">  c.setAttribute(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">class</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">,</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">b</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;">10</span> <span style="background-color: #f5f5f5; color: #000000;">  c.innerHTML </span><span style="background-color: #f5f5f5; color: #000000;">=</span> <span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">http://www.qq.com</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">;
+</span><span style="color: #008080;">11</span>   
+<span style="color: #008080;">12</span> <span style="background-color: #f5f5f5; color: #000000;">  document.getElementById(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">myDIV</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">).appendChild(c);
+</span><span style="color: #008080;">13</span> <span style="background-color: #f5f5f5; color: #000000;">}
+</span><span style="color: #008080;">14</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">script</span><span style="color: #0000ff;">&gt;</span>  
+<span style="color: #008080;">15</span> 
+<span style="color: #008080;">16</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">head</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">17</span> 
+<span style="color: #008080;">18</span> 
+<span style="color: #008080;">19</span> 
+<span style="color: #008080;">20</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">body </span><span style="color: #ff0000;">onload</span><span style="color: #0000ff;">="f()"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;">21</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="myDIV"</span><span style="color: #0000ff;">/&gt;</span>
+<span style="color: #008080;">22</span> <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">body</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>
+<p>4.以下GM代码</p>
+<p>1）直接执行，能够跳出两个对话框，并且能执行oldfunc，说明这段代码的确覆盖到了原有的代码执行了 （怎样执行的呢？会比onload还早？）<br />用firebug看到html代码为</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('c30f1369-ad18-4e57-a1a4-b04b4e7918a5')"><img id="code_img_closed_c30f1369-ad18-4e57-a1a4-b04b4e7918a5" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_c30f1369-ad18-4e57-a1a4-b04b4e7918a5" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('c30f1369-ad18-4e57-a1a4-b04b4e7918a5',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_c30f1369-ad18-4e57-a1a4-b04b4e7918a5" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">body </span><span style="color: #ff0000;">onload</span><span style="color: #0000ff;">="func()"</span><span style="color: #ff0000;"> ryt14371</span><span style="color: #0000ff;">="1"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 2</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">div </span><span style="color: #ff0000;">id</span><span style="color: #0000ff;">="myDIV"</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 3</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">a </span><span style="color: #ff0000;">href</span><span style="color: #0000ff;">="http://www.qq.com"</span><span style="color: #ff0000;"> name</span><span style="color: #0000ff;">="a1"</span><span style="color: #0000ff;">&gt;</span>http://www.qq.com<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">a</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">div</span><span style="color: #0000ff;">&gt;</span>
+<span style="color: #008080;"> 4</span> <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">script </span><span style="color: #ff0000;">type</span><span style="color: #0000ff;">="text/javascript"</span><span style="color: #0000ff;">&gt;</span><span style="background-color: #f5f5f5; color: #000000;">(</span><span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;"> embed() {
+</span><span style="color: #008080;"> 5</span>    <span style="background-color: #f5f5f5; color: #0000ff;">var</span><span style="background-color: #f5f5f5; color: #000000;"> oldFunc </span><span style="background-color: #f5f5f5; color: #000000;">=</span><span style="background-color: #f5f5f5; color: #000000;"> window.func;
+</span><span style="color: #008080;"> 6</span> 
+<span style="color: #008080;"> 7</span> <span style="background-color: #f5f5f5; color: #000000;">    window.func </span><span style="background-color: #f5f5f5; color: #000000;">=</span> <span style="background-color: #f5f5f5; color: #0000ff;">function</span><span style="background-color: #f5f5f5; color: #000000;">() {
+</span><span style="color: #008080;"> 8</span> <span style="background-color: #f5f5f5; color: #000000;">        oldFunc();              </span><span style="background-color: #f5f5f5; color: #008000;">//</span><span style="background-color: #f5f5f5; color: #008000;"> 1</span>
+<span style="color: #008080;"> 9</span> 
+<span style="color: #008080;">10</span>         <span style="background-color: #f5f5f5; color: #008000;">//</span><span style="background-color: #f5f5f5; color: #008000;"> other stuff</span>
+<span style="color: #008080;">11</span> <span style="background-color: #f5f5f5; color: #000000;">       alert(</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">hello3</span><span style="background-color: #f5f5f5; color: #000000;">"</span><span style="background-color: #f5f5f5; color: #000000;">);
+</span><span style="color: #008080;">12</span> <span style="background-color: #f5f5f5; color: #000000;">    };
+</span><span style="color: #008080;">13</span> <span style="background-color: #f5f5f5; color: #000000;">})()</span><span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">script</span><span style="color: #0000ff;">&gt;&lt;/</span><span style="color: #800000;">body</span><span style="color: #0000ff;">&gt;</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>也就是说，对于body的script，除了原有的onload外，还增加了一段embed的代码</p>
+<p>这两个那个首先执行呢？</p>
+<p>现在看貌似是embed先跑的</p>
+<p>2）把代码中的//2这一行的注释去掉，执行时就看不到hello3对话框了，这又是为什么呢？</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('2f0b892a-45bd-4229-8f6a-33e550b1538b')"><img id="code_img_closed_2f0b892a-45bd-4229-8f6a-33e550b1538b" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_2f0b892a-45bd-4229-8f6a-33e550b1538b" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('2f0b892a-45bd-4229-8f6a-33e550b1538b',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_2f0b892a-45bd-4229-8f6a-33e550b1538b" class="cnblogs_code_hide">
+<pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">// ==UserScript==
+</span><span style="color: #008080;"> 2</span> <span style="color: #000000;">// @name        JSHE_ModifyFunction
+</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">// @namespace   jshe
+</span><span style="color: #008080;"> 4</span> <span style="color: #000000;">// @include     http://localhost/*
+</span><span style="color: #008080;"> 5</span> <span style="color: #000000;">// @version     1
+</span><span style="color: #008080;"> 6</span> <span style="color: #000000;">// @grant       none
+</span><span style="color: #008080;"> 7</span> <span style="color: #000000;">// ==/UserScript==
+</span><span style="color: #008080;"> 8</span> 
+<span style="color: #008080;"> 9</span> <span style="color: #000000;">alert("hello2");
+</span><span style="color: #008080;">10</span> 
+<span style="color: #008080;">11</span> <span style="color: #000000;">function embed() {
+</span><span style="color: #008080;">12</span> <span style="color: #000000;">   var oldFunc = window.func;
+</span><span style="color: #008080;">13</span> 
+<span style="color: #008080;">14</span> <span style="color: #000000;">    window.func = function() {
+</span><span style="color: #008080;">15</span> <span style="color: #000000;">        oldFunc();              // 1
+</span><span style="color: #008080;">16</span> 
+<span style="color: #008080;">17</span> <span style="color: #000000;">        // other stuff
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">       alert("hello3");
+</span><span style="color: #008080;">19</span> <span style="color: #000000;">    };
+</span><span style="color: #008080;">20</span> <span style="color: #000000;">}
+</span><span style="color: #008080;">21</span> 
+<span style="color: #008080;">22</span> <span style="color: #000000;">var inject = document.createElement("script");
+</span><span style="color: #008080;">23</span> 
+<span style="color: #008080;">24</span> <span style="color: #000000;">inject.setAttribute("type", "text/javascript");
+</span><span style="color: #008080;">25</span> <span style="color: #000000;">inject.appendChild(document.createTextNode("(" + embed + ")()"));
+</span><span style="color: #008080;">26</span> 
+<span style="color: #008080;">27</span> <span style="color: #000000;">document.body.appendChild(inject);
+</span><span style="color: #008080;">28</span> //document.body.onload="embed()"; //2</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code</span></div>
+<p>&nbsp;</p>

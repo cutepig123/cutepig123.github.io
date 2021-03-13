@@ -1,0 +1,127 @@
+<p>问题：</p>
+<p>如果某个第三方库的某个函数需要接收用户传过来的回调函数，该回掉函数通常可能需要获取用户自己的某些参数。</p>
+<p>一般做法是第三方库提供这样的回掉方式</p>
+<p>void LibRegisterFtn(void(*f)(void *), void *param)</p>
+<p>用户通过void指针来传入自己感兴趣的参数</p>
+<p>比如例子</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">class</span><span style="color: #000000;"> UserClass
+
+{
+
+    UserClass()
+    {
+
+     LibRegisterFtn(
+    }
+
+    </span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span> callback(<span style="color: #0000ff;">void</span> *<span style="color: #000000;">p)
+    {
+        UserClass </span>*pThis = (UserClass*<span style="color: #000000;">)p;
+        pThis</span>-&gt;<span style="color: #000000;">xxxx();
+    }
+
+};</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>但如果该第三方库写的比较恶心，没有提供这个二外的参数怎么办呢？</p>
+<p>比如这个</p>
+<p>void LibRegisterFtn(void(*f)())</p>
+<p>针对这种情况，大家常见的做法是定义一个全局变量，通过这个全局变量将参数传入到回掉函数里面</p>
+<div class="cnblogs_code">
+<pre><span style="color: #000000;">UserClass g_me;
+
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> callback()
+{
+    g_me.xxxx();
+}</span></pre>
+</div>
+<p>这种做法的恶心之处在于多了一个全局变量，如果在多线程情况下，每个线程注册不同的参数到回掉函数就需要定义多个全局变量。每个线程接受相应的变量</p>
+<p>大家都知道，全局变量很不鼓励的一种做法</p>
+<p>&nbsp;</p>
+<p>现在，俺介绍一种新的方法，可以把任意局部变量作为参数传入到该回掉函数。其实这种做法是参考了wtl窗口消息会掉的做法。具体来说就是动态生成一段回掉函数，从而该回掉函数可以通过offset一个固定的偏移来获取到需要的参数</p>
+<p>废话不多说，代码如下</p>
+<div class="cnblogs_code">
+<pre>#include &lt;stdio.h&gt;<span style="color: #000000;">
+#include </span>&lt;windows.h&gt;<span style="color: #000000;">
+#include </span>&lt;assert.h&gt;<span style="color: #000000;">
+#include </span>&lt;functional&gt;<span style="color: #000000;">
+
+typedef </span><span style="color: #0000ff;">void</span>(*<span style="color: #000000;">F)();
+
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> LibFtn(F callback)
+{
+    callback();
+}
+
+</span><span style="color: #0000ff;">class</span><span style="color: #000000;"> MyStruct
+{
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">void</span> init(std::function&lt;<span style="color: #0000ff;">void</span>()&gt;<span style="color: #000000;">    f)
+    {
+        f_ </span>=<span style="color: #000000;"> f;
+        init(</span><span style="color: #0000ff;">this</span><span style="color: #000000;">, callback);
+    }
+
+    F </span><span style="color: #0000ff;">get</span><span style="color: #000000;">()
+    {
+        F f </span>= (F)(dummy + <span style="color: #800080;">8</span><span style="color: #000000;">);
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> f;
+    }
+
+</span><span style="color: #0000ff;">private</span><span style="color: #000000;">:
+    </span><span style="color: #0000ff;">char</span> dummy[<span style="color: #800080;">0x20</span><span style="color: #000000;">];
+    std::function</span>&lt;<span style="color: #0000ff;">void</span>()&gt;<span style="color: #000000;">    f_;
+
+    typedef  </span><span style="color: #0000ff;">void</span>(_stdcall *_myCallbackSpecial)(<span style="color: #0000ff;">void</span> *<span style="color: #000000;">n);
+
+    
+
+    </span><span style="color: #0000ff;">static</span> <span style="color: #0000ff;">void</span> _stdcall callback(<span style="color: #0000ff;">void</span> *<span style="color: #000000;">n)
+    {
+        MyStruct </span>*pThis = (MyStruct*<span style="color: #000000;">)n;
+        pThis</span>-&gt;<span style="color: #000000;">f_();
+    }
+
+    </span><span style="color: #0000ff;">void</span> init(<span style="color: #0000ff;">void</span> *<span style="color: #000000;">p, _myCallbackSpecial fCallback)
+    {
+        </span><span style="color: #0000ff;">char</span> dummy2[<span style="color: #800080;">0x20</span>] = { <span style="color: #800080;">0x90</span>, <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0x90</span> , <span style="color: #800080;">0xe8</span> , <span style="color: #800080;">0x00</span> , <span style="color: #800080;">0x00</span> , <span style="color: #800080;">0x00</span> , <span style="color: #800080;">0x00</span> , <span style="color: #800080;">0x58</span> , <span style="color: #800080;">0x83</span> , <span style="color: #800080;">0xe8</span><span style="color: #000000;">
+            , </span><span style="color: #800080;">0x0d</span>, <span style="color: #800080;">0x50</span>, <span style="color: #800080;">0x83</span>, <span style="color: #800080;">0xc0</span>, <span style="color: #800080;">0x04</span>, <span style="color: #800080;">0x8b</span>, <span style="color: #800080;">0x00</span>, <span style="color: #800080;">0xff</span>, <span style="color: #800080;">0xd0</span>, <span style="color: #800080;">0xc3</span>, <span style="color: #800080;">0x83</span>, <span style="color: #800080;">0xc4</span>, <span style="color: #800080;">0x04</span>, <span style="color: #800080;">0x3b</span>, <span style="color: #800080;">0xec</span>, <span style="color: #800080;">0xe8</span><span style="color: #000000;"> };
+        memcpy(dummy, dummy2, </span><span style="color: #0000ff;">sizeof</span><span style="color: #000000;">(dummy2));
+
+        DWORD lOldProtect;
+        BOOL bRet </span>= VirtualProtect(dummy, <span style="color: #0000ff;">sizeof</span>(dummy), PAGE_EXECUTE_READWRITE, &amp;<span style="color: #000000;">lOldProtect);
+        assert(bRet);
+        FlushInstructionCache(GetCurrentProcess(), dummy, </span><span style="color: #0000ff;">sizeof</span><span style="color: #000000;">(dummy));
+
+        memcpy(dummy, p, </span><span style="color: #800080;">4</span><span style="color: #000000;">);
+        memcpy(dummy </span>+ <span style="color: #800080;">4</span>, &amp;fCallback, <span style="color: #800080;">4</span><span style="color: #000000;">);
+    }
+};
+
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> main()
+{
+    MyStruct ms;
+
+    </span><span style="color: #0000ff;">int</span> i = <span style="color: #800080;">10</span><span style="color: #000000;">;
+    ms.init([</span>=<span style="color: #000000;">]() {
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">Hello %d\n</span><span style="color: #800000;">"</span><span style="color: #000000;">, i);
+    });
+
+    LibFtn(ms.</span><span style="color: #0000ff;">get</span><span style="color: #000000;">());
+}</span></pre>
+</div>
+<p>该u代码关键就是那堆字符串，其assembly对应的代码如下</p>
+<div class="cnblogs_code">&nbsp;</div>
+<div class="cnblogs_code">
+<pre><span style="color: #008080;">1</span> <span style="color: #800080;">005EF99C</span>  <span style="color: #0000ff;">call</span>        <span style="color: #800080;">005EF9A1</span>  
+<span style="color: #008080;">2</span> <span style="color: #800080;">005EF9A1</span>  <span style="color: #0000ff;">pop</span><span style="color: #000000;">         eax  
+</span><span style="color: #008080;">3</span> <span style="color: #800080;">005EF9A2</span>  <span style="color: #0000ff;">sub</span><span style="color: #000000;">         eax,0Dh  
+</span><span style="color: #008080;">4</span> <span style="color: #800080;">005EF9A5</span>  <span style="color: #0000ff;">push</span><span style="color: #000000;">        eax  
+</span><span style="color: #008080;">5</span> <span style="color: #800080;">005EF9A6</span>  <span style="color: #0000ff;">add</span>         eax,<span style="color: #800080;">4</span>  
+<span style="color: #008080;">6</span> <span style="color: #800080;">005EF9A9</span>  <span style="color: #0000ff;">mov</span><span style="color: #000000;">         eax,dword ptr [eax]  
+</span><span style="color: #008080;">7</span> <span style="color: #800080;">005EF9AB</span>  <span style="color: #0000ff;">call</span><span style="color: #000000;">        eax  
+</span><span style="color: #008080;">8</span> <span style="color: #800080;">005EF9AD</span>  <span style="color: #0000ff;">ret</span>  </pre>
+</div>
+<p>第一，2行用来获取eip地址，第3，4行将参数push进堆栈，第5，6行调用用户指定的回掉函数</p>
+<p>&nbsp;</p>

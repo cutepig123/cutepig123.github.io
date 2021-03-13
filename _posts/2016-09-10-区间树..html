@@ -1,0 +1,30 @@
+<p>概念：</p>
+<p>&nbsp;</p>
+<p>区间树是在红黑树基础上进行扩展得到的支持以区间为元素的动态集合的操作，</p>
+<p>每个节点的关键值是区间的左端点。通过建立这种特定的结构，可是使区间的元素的查找和插入都可以在O(lgn)的时间内完成。 &nbsp;&nbsp;&nbsp;</p>
+<p>相比于基础的数据结构，增加了一个max[x]，即以x为根的子树中所有区间的断点的最大值</p>
+<p>&nbsp;</p>
+<p>区间树如下图所示：</p>
+<p><img src="http://hi.csdn.net/attachment/201106/8/0_1307539138Jw8e.gif" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>区间查找</strong></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 实现INTERVAL-SEARCH(T, i)，返回一个和区间i重叠的区间，若无，则返回nil[T]。基本思想是我们通过左子树的max进行划分：如果左子树的max值小于low[i]，则左 子树不存在这样的区间和i重叠，转到右子树；否则，转到右子树，因为左子树的端点小于右子树，若左子树无可能，右子树也必然不可能。</p>
+<p>&nbsp;&nbsp; &nbsp; &nbsp;INTERVAL-SEARCH(T, i)整个过程如下：</p>
+<div class="dp-highlighter bg_cpp">
+<div class="bar">
+<div class="tools"><strong>[cpp]</strong> <a class="ViewSource" title="view plain" href="http://blog.csdn.net/zhanglei8893/article/details/6534848#">view plain</a><span data-mod="popu_168"> <a class="CopyToClipboard" title="copy" href="http://blog.csdn.net/zhanglei8893/article/details/6534848#">copy</a></span></div>
+</div>
+<ol class="dp-cpp" start="1">
+<li class="alt">INTERVAL-SEARCH(T,&nbsp;i)&nbsp;&nbsp;</li>
+<li>x&nbsp;&larr;&nbsp;root[T]&nbsp;&nbsp;</li>
+<li class="alt"><span class="keyword">while&nbsp;x&ne;nil[T]&nbsp;and&nbsp;i&nbsp;does&nbsp;not&nbsp;overlap&nbsp;x&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //当要查找的区域和当前节点没有重叠<br /></span></li>
+<li>&nbsp;&nbsp;&nbsp;<span class="keyword">do&nbsp;<span class="keyword">if&nbsp;left[x]&ne;nil[T]&nbsp;and&nbsp;max[left[x]]&ge;low[i]&nbsp;&nbsp; //如果当前节点左子树的max大于查抄区域的下限<br /></span></span></li>
+<li class="alt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;then&nbsp;x&nbsp;&larr;&nbsp;left[x]&nbsp;&nbsp; //则从左子树查找</li>
+<li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="keyword">else&nbsp;x&nbsp;&larr;&nbsp;right[x]&nbsp; //否则从右子树查找</span></li>
+<li class="alt"><span class="keyword">return&nbsp;x&nbsp;&nbsp;</span></li>
+</ol></div>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;每次调用，必定会下降一层，故INTERVAL-SEARCH的时间复杂度为O(lgn)<span style="word-spacing: 0px; font: medium Simsun; text-transform: none; color: #000000; text-indent: 0px; white-space: normal; letter-spacing: normal; border-collapse: separate; orphans: 2; widows: 2;"><span style="font-size: 14px; line-height: 21px; font-family: verdana,sans-serif; text-align: left;"><span style="font-size: 10px;">。 </span></span></span></p>
+<p>&nbsp;</p>
+<p>参考文献：</p>
+<p>http://blog.csdn.net/zhanglei8893/article/details/6534848</p>

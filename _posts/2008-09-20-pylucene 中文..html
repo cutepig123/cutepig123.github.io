@@ -1,0 +1,294 @@
+<h3 class="post-title">
+	 
+	 在pyLucene中使用中文分词器（在pyLucene中引用Jar包）
+	 
+    </h3>
+    
+
+	         <div class="post-body">
+	<div>
+      <span class="fixed_width" style="font-family: Courier,Monospaced;">（刚刚解决的一个问题，在中文里面没有搜索到相关内容（英文里其实也没搜到...），发一篇在这里备人索引，关键字：pyLucene, JCC,<br>Lucene, Importing JAR）<br></span><p><span class="fixed_width" style="font-family: Courier,Monospaced;">在Lucene里面引用别人写好的中文分词器很简单，加个CLASSPATH就好。但是在pyLucene（JCC版）里，由于python所能够引用<br>到的Jar包都是用JCC这个编译器（姑且认为是个编译器吧）预先编译了python调用接口的。（反过来说，就是没有经JCC编译的Jar包是休想在<br>python里面直接访问的）<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">所以，在pyLucene中使用Jar包形式的中文分词器不得不重新编译。分隔线以下是OSFoundation某热心人关于如何修改Makefile<br>让Jar包可以和pyLucene打包到一起的回复。<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">-------------------------------------热心人回复的分隔<br>线-------------------------------------<br>Andi Vajda:<br>To access your class(es) by name from Python, you must have JCC<br>generate wrappers for it (them). This is what is done line 177 and on<br>in PyLucene's Makefile. The easiest way for you to add your own Java<br>classes to PyLucene is to create another jar file with your own<br>analyzer classes and code and add it to the JCC invocation there.<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">For example, the Makefile snippet in question currently says:<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">GENERATE=$(JCC) $(foreach jar,$(JARS),--jar $(jar)) \<br>          --package java.lang java.lang.System \<br>                              java.lang.Runtime \<br>          --package java.util \<br>                    java.text.SimpleDateFormat \<br>          --package java.io java.io.StringReader \<br>                            java.io.InputStreamReader \<br>                            java.io.FileInputStream \<br>          --exclude org.apache.lucene.queryParser.Token \<br>          --exclude org.apache.lucene.queryParser.TokenMgrError \<br>          --exclude<br>org.apache.lucene.queryParser.QueryParserTokenManager \<br>          --exclude org.apache.lucene.queryParser.ParseException \<br>          --python lucene \<br>          --mapping org.apache.lucene.document.Document 'get:(Ljava/<br>lang/String;)Ljava/lang/String;' \<br>          --mapping java.util.Properties 'getProperty:(Ljava/lang/<br>String;)Ljava/lang/String;' \<br>          --sequence org.apache.lucene.search.Hits 'length:()I' 'doc:<br>(I)Lorg/apache/lucene/document/Document;' \<br>          --version $(LUCENE_VER) \<br>          --files $(NUM_FILES)<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">change the first line to say:<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">GENERATE=$(JCC) $(foreach jar,$(JARS),--jar $(jar)) --jar myjar.jar \<br>  ...<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">and rebuild PyLucene. That should be all you need to do. Your jar file<br>is going to be installed along with lucene's in the lucene egg and it<br>is going to be put on lucene.CLASSPATH which you use with<br>lucene.initVM().<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">Your classes can be declared in any Java package you want. Just make<br>sure that their names don't clash with other Lucene class names that<br>you also need to use as the class namespace is flattened in PyLucene.<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">For more information about JCC and its command line args see JCC's<br>README file at [1].<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">Andi..<br></span></p><p><span class="fixed_width" style="font-family: Courier,Monospaced;">[1] <a target="_blank" rel="nofollow" href="http://svn.osafoundation.org/pylucene/trunk/jcc/jcc/README">http://svn.osafoundation.org/pylucene/trunk/jcc/jcc/README</a><br>_______________________________________________<br>pylucene-dev mailing list<br>pylucene-<a target="_parent" href="http://groups.google.com.pe/groups/unlock?msg=3533504b9aa009e7&amp;_done=/group/python-cn/browse_thread/thread/0f085de0eab6f039">...</a>@osafoundation.org<br><a target="_blank" rel="nofollow" href="http://lists.osafoundation.org/mailman/listinfo/pylucene-dev">http://lists.osafoundation.org/mailman/listinfo/pylucene-dev</a></span></p><p><br></p><p><a href="http://groups.google.com.pe/group/python-cn/browse_thread/thread/0f085de0eab6f039">http://groups.google.com.pe/group/python-cn/browse_thread/thread/0f085de0eab6f039</a><br>  </p><p class="blogger-labels">标签： <a rel="tag" href="http://www.oulan.com/com/labels/Lucene.html">Lucene</a>, <a rel="tag" href="http://www.oulan.com/com/labels/Python.html">Python</a>, <a rel="tag" href="http://www.oulan.com/com/labels/5Lit5paH5YiG6K+N.html">中文分词</a></p>
+    </div>
+    </div>
+    
+    <p class="post-footer">
+      <em>发表者欧兰辉 时间 
+    <a class="post-footer-link" href="http://www.oulan.com/com/2008/06/pylucenepylucenejar.html" title="permanent link"> 10:47 上午 </a></em>
+        
+    </p>
+  
+  
+  <!-- End .post -->
+  
+  
+  
+  <!-- Begin #comments -->
+ 
+  <div id="comments">
+
+	<a name="comments"></a>
+        <h4>0 条评论:</h4>
+        
+		<p class="comment-timestamp">
+
+    <a class="comment-link" href="http://www.blogger.com/comment.g?blogID=7509904&amp;postID=5836328585018852021">发表评论</a>
+    </p>
+    
+    	    
+    
+
+
+		<p class="comment-timestamp">
+	<a href="http://www.oulan.com/com/">&lt;&lt; 主页</a>
+    </p>
+    </div>
+
+
+
+  <!-- End #comments -->
+<!-- End #main -->
+
+
+
+
+
+
+
+
+
+
+<!-- Begin #sidebar -->
+<div id="sidebar"><div id="sidebar2">
+  
+  
+  <!-- Begin #profile-container -->
+
+   <div id="profile-container"><h2 class="sidebar-title">我的简介</h2>
+<dl class="profile-datablock"><dt class="profile-img"><a href="http://www.blogger.com/profile/11754634575148302888"><img src="http://bbs.chinaunix.net/customavatars/38903.jpg" alt="我的照片" height="79" width="80"></a></dt><dd class="profile-data"><strong>姓名：</strong> 欧兰辉 </dd><dd class="profile-data"><strong>位置：</strong> 大连, 辽宁, China </dd></dl>
+<p class="profile-textblock">Linux,FreeBSD,wxWidgets,
+Code::Blocks,DevCPP,GCC,
+雅奇MIS,
+MSSQL, Oracle, MySQL, PostgreSQL, SQLite,
+Delphi,PHP,ASP,Python</p>
+<p class="profile-link"><a href="http://www.blogger.com/profile/11754634575148302888">查看我的完整个人资料</a></p></div>
+   
+  <!-- End #profile -->
+    
+        
+  <div id="labels">
+  <h2 class="sidebar-title">分类
+  </h2>
+  <ul><li><a href="http://www.oulan.com/com/labels/Python.html">Python</a></li><li><a href="http://www.oulan.com/com/labels/wxWidgets.html">wxWidgets</a></li><li><a href="http://www.oulan.com/com/labels/C__C++.html">C/C++</a></li><li><a href="http://www.oulan.com/com/labels/Linux.html">Linux</a></li><li><a href="http://www.oulan.com/com/labels/Ubuntu.html">Ubuntu</a></li><li><a href="http://www.oulan.com/com/labels/6ZqP56yU.html">随笔</a></li></ul>
+  </div>
+  
+  <h2 class="sidebar-title">先前文章</h2>
+    <ul id="recently"><li><a href="http://www.oulan.com/com/2008/06/java5-cglib.html">Java下的框架编程(5)--cglib的应用</a></li><li><a href="http://www.oulan.com/com/2008/06/python.html">《发布一个python的分词模块》的相关内容</a></li><li><a href="http://www.oulan.com/com/2008/06/lucene-thesaurusanalyzer.html">自己写的一个基于词库的lucene分词程序--ThesaurusAnalyzer</a></li><li><a href="http://www.oulan.com/com/2008/06/blog-post.html">介绍：最新的一种中文分词方式——由字构词</a></li><li><a href="http://www.oulan.com/com/2008/06/lucene_03.html">Lucene中文分词 “庖丁解牛”</a></li><li><a href="http://www.oulan.com/com/2008/06/lucene.html">Lucene倒排索引原理</a></li><li><a href="http://www.oulan.com/com/2008/06/pythonlucenepylucene.html">Python下的Lucene，PyLucene</a></li><li><a href="http://www.oulan.com/com/2008/05/blog-post_28.html">最感人的诗篇</a></li><li><a href="http://www.oulan.com/com/2008/05/blog-post_27.html">无题</a></li><li><a href="http://www.oulan.com/com/2008/05/blog-post_26.html">无题</a></li></ul>
+    
+
+        <p id="blogfeeds">订阅<br>帖子 [<a target="_blank" href="http://www.fairybean.com/com/atom.xml" type="application/atom+xml">Atom</a>]</p>
+  
+  <!--
+  <p>This is a paragraph of text that could go in the sidebar.</p>
+  -->
+<div style="background-image: url(http://www.linuxidc.com/system/rotator.php); background-position: right top; background-repeat: no-repeat;">
+
+<script type="text/javascript"><!--
+google_ad_client = "pub-7254385357689423";
+google_ad_output = "textlink";
+google_ad_format = "ref_text";
+google_cpa_choice = "CAAQqcu1_wEaCF2H5Hv651t_KOm84YcB";
+google_ad_channel = "";
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><script> window.google_render_ad(); </script><script language="JavaScript1.1" src="http://pagead2.googlesyndication.com/cpa/ads?client=ca-pub-7254385357689423&amp;cpa_choice=CAAQqcu1_wEaCF2H5Hv651t_KOm84YcB&amp;oe=UTF-8&amp;dt=1221875855484&amp;lmt=1216214563&amp;format=ref_text&amp;output=textlink&amp;correlator=1221875855359&amp;url=http%3A%2F%2Fwww.oulan.com%2Fcom%2F2008%2F06%2Fpylucenepylucenejar.html&amp;region=_google_cpa_region_&amp;ref=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Dzh-CN%26client%3Dfirefox-a%26rls%3Dorg.mozilla%253Azh-CN%253Aofficial%26q%3DpyLucene%2B%25E4%25B8%25AD%25E6%2596%2587%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26lr%3D&amp;frm=0&amp;cc=100&amp;ga_vid=924742130.1221875855&amp;ga_sid=1221875855&amp;ga_hid=2082457044&amp;flash=9.0.124&amp;u_h=768&amp;u_w=1024&amp;u_ah=708&amp;u_aw=1024&amp;u_cd=32&amp;u_tz=480&amp;u_his=1&amp;u_java=true&amp;u_nplug=9&amp;u_nmime=28"></script>
+  
+<script type="text/javascript"><!--
+google_ad_client = "pub-7254385357689423";
+google_ad_width = 120;
+google_ad_height = 240;
+google_ad_format = "120x240_as";
+google_ad_type = "text_image";
+google_ad_channel = "";
+google_color_border = "000000";
+google_color_bg = "000000";
+google_color_link = "FFFFFF";
+google_color_text = "CCCCCC";
+google_color_url = "999999";
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><script> window.google_render_ad(); </script><iframe name="google_ads_frame" src="http://pagead2.googlesyndication.com/pagead/ads?client=ca-pub-7254385357689423&amp;dt=1221875856718&amp;lmt=1216214563&amp;prev_fmts=234x60_as&amp;slot=3&amp;format=120x240_as&amp;output=html&amp;correlator=1221875855359&amp;url=http%3A%2F%2Fwww.oulan.com%2Fcom%2F2008%2F06%2Fpylucenepylucenejar.html&amp;color_bg=000000&amp;color_text=CCCCCC&amp;color_link=FFFFFF&amp;color_url=999999&amp;color_border=000000&amp;ad_type=text_image&amp;ref=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Dzh-CN%26client%3Dfirefox-a%26rls%3Dorg.mozilla%253Azh-CN%253Aofficial%26q%3DpyLucene%2B%25E4%25B8%25AD%25E6%2596%2587%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26lr%3D&amp;frm=0&amp;cc=100&amp;ga_vid=924742130.1221875855&amp;ga_sid=1221875855&amp;ga_hid=2082457044&amp;flash=9.0.124&amp;u_h=768&amp;u_w=1024&amp;u_ah=708&amp;u_aw=1024&amp;u_cd=32&amp;u_tz=480&amp;u_his=1&amp;u_java=true&amp;u_nplug=9&amp;u_nmime=28" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="240" scrolling="no" width="120"></iframe>
+</div>
+</div>
+<!-- End #sidebar -->
+
+
+</div>
+<!-- End #content -->
+
+
+
+<!-- Begin #footer -->
+<hr>
+  <br><h2>pyLucene的自定义Analyzer — 中文分词</h2>
+
+			
+				<div style="float: left;">
+<script type="text/javascript"><!--
+google_ad_client = "pub-0904030489544605";
+//250x250
+google_ad_slot = "7211326462";
+google_ad_width = 250;
+google_ad_height = 250;
+//--></script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><script> window.google_render_ad(); </script><iframe name="google_ads_frame" src="http://pagead2.googlesyndication.com/pagead/ads?client=ca-pub-0904030489544605&amp;dt=1221875866234&amp;lmt=1221875861&amp;output=html&amp;slotname=7211326462&amp;correlator=1221875866234&amp;url=http%3A%2F%2Frocbot.com%2Fblog%2F2008%2F05%2Fpylucene%25E7%259A%2584%25E8%2587%25AA%25E5%25AE%259A%25E4%25B9%2589analyzer-%25E4%25B8%25AD%25E6%2596%2587%25E5%2588%2586%25E8%25AF%258D%2F&amp;ref=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Dzh-CN%26client%3Dfirefox-a%26rls%3Dorg.mozilla%253Azh-CN%253Aofficial%26q%3DpyLucene%2B%25E4%25B8%25AD%25E6%2596%2587%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26lr%3D&amp;frm=0&amp;cc=100&amp;ga_vid=4254764138827880000.1221875866&amp;ga_sid=1221875866&amp;ga_hid=339238385&amp;ga_fc=true&amp;flash=9.0.124&amp;u_h=768&amp;u_w=1024&amp;u_ah=708&amp;u_aw=1024&amp;u_cd=32&amp;u_tz=480&amp;u_his=1&amp;u_java=true&amp;u_nplug=9&amp;u_nmime=28" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="250" scrolling="no" width="250"></iframe>
+</div>昨天决定使用PyLucene做indexer, 主要考虑效率的问题,还有和其他robot配合的问题, 所以放弃了用Zend
+Framework中的Lucene做indexer. 大概在网上search了一下.
+没有发现具体关于PyLucene的的中文Analyzer的一些资料, 不过还好在PyLucene的Readme.txt中,
+对如何做customer analyzer进行描述. 其实很简单 ,
+<p><span style="color: rgb(51, 51, 153);">只要在你自定义的Anaylzer中实现一个
+tokenStream的方法, 而tokenStream的方法返回的你定义的_tokenStream的object.
+然后需要在_tokenStream实现next()方法, next()方法返回的是Token.这样,
+你的Analyzer就可以被indexer使用, 并通过next()方法,得到不同Token().</span></p>
+<p>今天抽空把逆向最大匹配的中文分词算法做到一个自定Analyzer里面试一下, 字典先用sogou的.</p>
+<p><script type="text/javascript"><!--
+google_ad_client = "pub-0904030489544605";
+/* 468x15, link */
+google_ad_slot = "4409818659";
+google_ad_width = 468;
+google_ad_height = 15;
+//-->
+</script>
+<script type="text/javascript" src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script><script> window.google_render_ad(); </script><iframe name="google_ads_frame" src="http://pagead2.googlesyndication.com/pagead/ads?client=ca-pub-0904030489544605&amp;dt=1221875866312&amp;lmt=1221875861&amp;prev_slotnames=7211326462&amp;output=html&amp;slotname=4409818659&amp;correlator=1221875866234&amp;url=http%3A%2F%2Frocbot.com%2Fblog%2F2008%2F05%2Fpylucene%25E7%259A%2584%25E8%2587%25AA%25E5%25AE%259A%25E4%25B9%2589analyzer-%25E4%25B8%25AD%25E6%2596%2587%25E5%2588%2586%25E8%25AF%258D%2F&amp;ref=http%3A%2F%2Fwww.google.com%2Fsearch%3Fhl%3Dzh-CN%26client%3Dfirefox-a%26rls%3Dorg.mozilla%253Azh-CN%253Aofficial%26q%3DpyLucene%2B%25E4%25B8%25AD%25E6%2596%2587%26btnG%3DGoogle%2B%25E6%2590%259C%25E7%25B4%25A2%26lr%3D&amp;frm=0&amp;cc=100&amp;ga_vid=4254764138827880000.1221875866&amp;ga_sid=1221875866&amp;ga_hid=339238385&amp;ga_fc=true&amp;flash=9.0.124&amp;u_h=768&amp;u_w=1024&amp;u_ah=708&amp;u_aw=1024&amp;u_cd=32&amp;u_tz=480&amp;u_his=1&amp;u_java=true&amp;u_nplug=9&amp;u_nmime=28" marginwidth="0" marginheight="0" vspace="0" hspace="0" allowtransparency="true" frameborder="0" height="15" scrolling="no" width="468"></iframe></p>
+<p>原文如下:</p>
+<p>Technically, the PyLucene programmer is not providing an ‘extension’<br>
+but a Python implementation of a set of methods encapsulated by a<br>
+Python class whose instances are wrapped by the Java proxies provided<br>
+by PyLucene.</p>
+<p>For example, the code below, extracted from a PyLucene unit test,<br>
+defines a custom analyzer using a custom token stream that returns the<br>
+tokens ‘1′, ‘2′, ‘3′, ‘4′, ‘5′ for any document it is called on.</p>
+<p><span style="color: rgb(255, 0, 0);">All that is needed in order to provide a custom analyzer in Python is<br>
+defining a class that implements a method called ‘tokenStream’. The<br>
+presence of the ‘tokenStream’ method is detected by the corresponding<br>
+SWIG type handler and the python instance passed in is wrapped by a new<br>
+Java PythonAnalyzer instance that extends Lucene’s abstract Analyzer<br>
+class.</span></p>
+<p>In other words, SWIG in reverse.</p>
+<p><code><br>
+class _analyzer(object):<br>
+def tokenStream(self, fieldName, reader):<br>
+class _tokenStream(object):<br>
+def __init__(self):<br>
+self.tokens = ['1', '2', '3', '4', '5']<br>
+self.increments = [1, 2, 1, 0, 1]<br>
+self.i = 0<br>
+def next(self):<br>
+if self.i == len(self.tokens):<br>
+return None<br>
+t = Token(self.tokens[self.i], self.i, self.i)<br>
+t.setPositionIncrement(self.increments[self.i])<br>
+self.i += 1<br>
+return t<br>
+return _tokenStream()</code></p>
+<p>analyzer = _analyzer()</p>
+<p>store = RAMDirectory()<br>
+writer = IndexWriter(store, analyzer, True)</p>
+<p>d = Document()<br>
+d.add(Field.Text(”field”, “bogus”))<br>
+writer.addDocument(d)<br>
+writer.optimize()<br>
+writer.close()</p>
+
+								<p>Tags: <a href="http://rocbot.com/blog/tag/analyzer/" rel="tag">Analyzer</a>, <a href="http://rocbot.com/blog/tag/%e8%87%aa%e5%ae%9a%e4%b9%89/" rel="tag">自定义</a>, <a href="http://rocbot.com/blog/tag/lucene/" rel="tag">Lucene</a>, <a href="http://rocbot.com/blog/tag/pylucence/" rel="tag">PyLucence</a>, <a href="http://rocbot.com/blog/tag/python/" rel="tag">python</a>, <a href="http://rocbot.com/blog/tag/%e4%b8%ad%e6%96%87%e5%88%86%e8%af%8d/" rel="tag">中文分词</a></p><br><div class="post">
+		<div class="posthead">
+			<h2>
+				<a id="AjaxHolder_ctl01_TitleUrl" class="singleposttitle" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html">Python下的Lucene，PyLucene</a>
+			</h2>
+ 			Posted on 2006-10-25 21:55 <a href="http://www.cnblogs.com/unfish/">Jason Cui</a> 阅读(1003) <a href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#Post">评论(3)</a> &nbsp;<a href="http://www.cnblogs.com/unfish/admin/EditPosts.aspx?postid=539956">编辑</a> <a href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#" onclick="PutInWz();return false;">收藏</a>  所属分类: <a href="http://www.cnblogs.com/unfish/category/68941.html">编程经验</a> 
+			<img src="http://www.cnblogs.com/unfish/aggbug/539956.html?type=1&amp;webview=1" height="1" width="1">
+			
+<!--
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+xmlns:dc="http://purl.org/dc/elements/1.1/"
+xmlns:trackback="http://madskills.com/public/xml/rss/module/trackback/">
+<rdf:Description
+rdf:about="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html"
+dc:identifier="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html"
+dc:title="Python下的Lucene，PyLucene"
+trackback:ping="http://www.cnblogs.com/unfish/services/trackbacks/539956.aspx" />
+</rdf:RDF>
+-->
+
+		</div>
+		<div class="postbody"><p>下
+一个项目准备用Python+Django来完成，先做些技术准备。数据库方面用Django已经试验的差不多了，但是似乎性能很差。自己编译了
+Mysql，用虚拟机测试，生成1000个用户，1000篇文章用时80秒，这种并发性能恐怕没有办法让人满意。（每篇文章需要单独生成Tag和文章与
+Tag的对应关系，涉及8次数据库操作。）花了一天时间试验InnoDB和MyIsam的区别，但是似乎没有影响，开不开Transaction都一样。
+先不管它了，也许和我的机器硬件有关系，硬件的sync关不掉。看官方的说法，SlashDot用Django可以实现每秒800条数据的插入速度。</p> <p>网站肯定要用到全文检索，目前唯一的全文检索解决方案就是Lucene了，.Net上也有Lucene.Net可以选。搜索了一下，发现了PyLucene，这个Python上的Lucene实现。似乎是使用Python对Lucene进行了一次重新包装。</p> <p>下
+载了它的Windows版本，安装比较简单，直接把几个库文件复制到对应的Lib目录就行了。运行了一下Sample目录下的测试文件，先是用
+IndexFiles和SearchFiles试了一下，SearchFiles是接收参数来搜索的，但是我没有办法输入中文，会出现错误提示。后来把要
+搜索的词直接放到文件里面去，不报错了，但是搜索不出来。本以为PyLucene不支持中文，正在纳闷豆瓣的搜索是怎么做的，突然发现了一个好东西。</p> <p>看
+了一下sample目录下的LuceneInAction目录，里面居然有个ChineseTest文件。它调用的是另一个目录下的测试文件，测试一个汉
+字的搜索，运行了一下，居然是成功的。再看了一下IndexFiles，里面读文件用的编码是英文编码，改成GB2312，OK，可以搜索到了。但是只能
+搜索单字，不能按词搜索。只要输入两个字就出错。再比较一下Test文件，Query的生成方法不一样，TermQuery似乎是单元搜索，不支持词搜
+索，换成了QueryParser，成功了。但是还有一个小问题，比如搜索“中华”，在文章里，在中和华中间随便加多少空格和回车都没有关系，照样可以搜
+索到。但是加入其它字或者英文字母以后就搜索不到了。这个影响不大，毕竟人们常用的搜索都是自然词。</p> <p>有了PyLucene这个好东西，心头一块大石头算是落地了。没想到，等到要在开发服务器的Linux上安装这个东西的时候，可费了功夫了。</p> <p>官
+方的下载包做的很奇怪，ubuntu, debian,
+gentoo都有对应的二进制包可用，但是Redhat就没有，只能用源码包编译，而它的编译方式又做的极其简陋，没有configure文件，只有
+Makefile。按照说明，需要自己编辑Makefile，去掉你需要的注释行，修改参数，然后直接Make。但是里面有一个对DB的引用，检查了一
+下，BerkeleyDB似乎在CentOS4里面没有，只好自己去官方网站下载了4.4.20的源码，先编译安装它。虽然最新版是4.5.20，但是怕
+不兼容，所以还是用它配置文件里推荐的这个。编译这个东西也挺奇怪，不过还好，毕竟有官方文档一步步的说明，解压后需要进入build_unix目录，然
+后调用../dist/configure来配置，然后make &amp;&amp; make
+install。指定prefix失败。装完了这个东西，再改PyLucene的配置文件，根据生成的错误消息猜了好几次才终于可以编译了。最终需要改的
+地方为：</p> <p>1、取消Linux那一段的注释。</p> <p>2、PREFIX_PYTHON是你的Python的目录。因为我的Python是自己编译安装的，所以这里需要改一下。</p> <p>3、DB＝这个我指向了BerkeleyDB的源码目录才通过编译的（还好没删）。</p> <p>其
+它的不用改。编译到一半报错，有一个libgcj.a文件找不到，到/usr/lib下找了一下没有这个文件，但是有个差不多的.so，于是做了个ln
+-s，居然就通过编译了。然后make
+install的时候又有问题，提示libgcc_s.so.1找不到，这个是Makefile里面的LIB_INSTALL参数指定的，我不知道它的意
+义在哪里，最后我也没找到这个文件，但是直接进入Sample目录运行了一下测试文件，居然就成功了。真TMD。这就是Linux吗？</p> <p>终于可以安心的研究Django了。似乎Ruby On Rails还没有支持中文全文检索的模块吧？</p></div>
+	</div>
+
+	    
+    <a name="pagedcomment"></a>
+<h3>Feedback</h3>
+	
+			<div class="post">
+				<div class="posthead">
+					<h2>
+						<a title="permalink: re: Python下的Lucene，PyLucene" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#599838">#1楼</a>&nbsp;<a name="599838"></a>58.37.222.*
+						&nbsp;&nbsp;<a onclick='return SetReplyAuhor("vik")' href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#post">回复</a>&nbsp;&nbsp;<a onclick="GetQuote(599838);return false" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#post">引用</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</h2>
+					2006-12-21 23:21 by <a id="AjaxHolder_Comments_CommentList_ctl00_NameLink" target="_blank">vik [未注册用户]</a>
+				</div>
+				<div class="postbody">呵呵，我也正打算做类似的东西。<br>django+pylucene。<br>这总非纯python的东西跨起平台来还是有些麻烦。<br>lupy是纯python的lucene，moinmon用的就是这东东。<br>如果pylucene搞不定就用这个。</div>
+			</div>
+		
+			<div class="post">
+				<div class="posthead">
+					<h2>
+						<a title="permalink: re: Python下的Lucene，PyLucene[未登录]" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#654649">#2楼</a>&nbsp;<a name="654649"></a>221.217.208.*
+						&nbsp;&nbsp;<a onclick='return SetReplyAuhor("ant")' href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#post">回复</a>&nbsp;&nbsp;<a onclick="GetQuote(654649);return false" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#post">引用</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</h2>
+					2007-02-23 22:46 by <a id="AjaxHolder_Comments_CommentList_ctl01_NameLink" target="_blank">ant [未注册用户]</a>
+				</div>
+				<div class="postbody"><br>我也遇到了这个问题，不过改了chinesetest.py和indexfiles的编码仍然出错，<br>提示：InvalidArgsError: (&lt;type 'PyLucene.Term'&gt;, '__init__', ('contents', '\xb5\xc0'))<br>你能把代码贴上来吗？非常感谢了！<br>----------------------------------<br>看
+了一下sample目录下的LuceneInAction目录，里面居然有个ChineseTest文件。它调用的是另一个目录下的测试文件，测试一个汉
+字的搜索，运行了一下，居然是成功的。再看了一下IndexFiles，里面读文件用的编码是英文编码，改成GB2312，OK，可以搜索到了。但是只能
+搜索单字，不能按词搜索。只要输入两个字就出错。再比较一下Test文件，Query的生成方法不一样，TermQuery似乎是单元搜索，不支持词搜
+索，换成了QueryParser，成功了。但是还有一个小问题，比如搜索“中华”，在文章里，在中和华中间随便加多少空格和回车都没有关系，照样可以搜
+索到。但是加入其它字或者英文字母以后就搜索不到了。这个影响不大，毕竟人们常用的搜索都是自然词。</div>
+			</div>
+		
+			<div class="post">
+				<div class="posthead">
+					<h2>
+						<a title="permalink: 奇怪的问题" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#1158981">#3楼</a>&nbsp;<a name="1158981"></a>125.122.86.*<a name="Post"></a>
+						&nbsp;&nbsp;<a onclick='return SetReplyAuhor("ajkoo")' href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#post">回复</a>&nbsp;&nbsp;<a onclick="GetQuote(1158981);return false" href="http://www.cnblogs.com/unfish/archive/2006/10/25/539956.html#post">引用</a>&nbsp;&nbsp;&nbsp;&nbsp;
+					</h2>
+					2008-04-17 23:39 by <a id="AjaxHolder_Comments_CommentList_ctl02_NameLink" target="_blank">ajkoo [未注册用户]</a>
+				</div>
+				<div class="postbody">  我遇到一个很奇怪的问题，我用gcj安装的PyLucene，系统是redhat ，我在命令行下 import PyLucene 就没有任何问题，但是应用到django的项目中就有问题了，显示500..<br>  具体问题查看日志只有Premature end of script headers: dispatch.fcgi <br><br>  不知道是虾米问题。。。</div>
+			</div><!--This is an optional footer. If you want text here, place it inside these tags, and remove this comment. -->

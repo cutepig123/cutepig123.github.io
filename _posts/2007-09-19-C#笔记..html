@@ -1,0 +1,113 @@
+<p>C#笔记<br />
+<span style="color: red">读取网页</span>：<br />
+</p>
+<div style="border-right: #cccccc 1px solid; padding-right: 5px; border-top: #cccccc 1px solid; padding-left: 4px; font-size: 13px; padding-bottom: 4px; border-left: #cccccc 1px solid; width: 98%; word-break: break-all; padding-top: 4px; border-bottom: #cccccc 1px solid; background-color: #eeeeee"><img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System.Net;<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System.Text;<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System.Web;<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">using</span><span style="color: #000000">&nbsp;System.IO&nbsp;;<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /></span><span style="color: #0000ff">public</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">void</span><span style="color: #000000">&nbsp;getPageContent(String&nbsp;url)<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" />&nbsp;&nbsp;<br />
+<img id="Codehighlighter1_117_997_Open_Image" onclick="this.style.display='none'; Codehighlighter1_117_997_Open_Text.style.display='none'; Codehighlighter1_117_997_Closed_Image.style.display='inline'; Codehighlighter1_117_997_Closed_Text.style.display='inline';" alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ExpandedBlockStart.gif" align="top" /><img id="Codehighlighter1_117_997_Closed_Image" style="display: none" onclick="this.style.display='none'; Codehighlighter1_117_997_Closed_Text.style.display='none'; Codehighlighter1_117_997_Open_Image.style.display='inline'; Codehighlighter1_117_997_Open_Text.style.display='inline';" alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ContractedBlock.gif" align="top" />&nbsp;&nbsp;</span><span id="Codehighlighter1_117_997_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_117_997_Open_Text"><span style="color: #000000">{<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;WebRequest&nbsp;request&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;WebRequest.Create(url);<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">try</span><span style="color: #000000"><br />
+<img id="Codehighlighter1_180_935_Open_Image" onclick="this.style.display='none'; Codehighlighter1_180_935_Open_Text.style.display='none'; Codehighlighter1_180_935_Closed_Image.style.display='inline'; Codehighlighter1_180_935_Closed_Text.style.display='inline';" alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_180_935_Closed_Image" style="display: none" onclick="this.style.display='none'; Codehighlighter1_180_935_Closed_Text.style.display='none'; Codehighlighter1_180_935_Open_Image.style.display='inline'; Codehighlighter1_180_935_Open_Text.style.display='inline';" alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ContractedSubBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span><span id="Codehighlighter1_180_935_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_180_935_Open_Text"><span style="color: #000000">{<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">请求服务</span><span style="color: #008000"><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;WebResponse&nbsp;response&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;request.GetResponse();<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #008000">//</span><span style="color: #008000">返回信息</span><span style="color: #008000"><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;&nbsp;Stream&nbsp;resStream&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;response.GetResponseStream();&nbsp;<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;StreamReader&nbsp;sr&nbsp;</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;</span><span style="color: #0000ff">new</span><span style="color: #000000">&nbsp;StreamReader(resStream,&nbsp;System.Text.Encoding.Default);<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">string</span><span style="color: #000000">&nbsp;tempCode</span><span style="color: #000000">=</span><span style="color: #000000">&nbsp;sr.ReadToEnd();<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;resStream.Close();&nbsp;<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;sr.Close();<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" /><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;textBox1.Text</span><span style="color: #000000">=</span><span style="color: #000000">(tempCode);<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;</span><span style="color: #008000"><img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" /></span><span style="color: #000000">&nbsp;&nbsp;&nbsp;}</span></span><span style="color: #000000"><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;</span><span style="color: #0000ff">catch</span><span style="color: #000000"><br />
+<img id="Codehighlighter1_949_993_Open_Image" onclick="this.style.display='none'; Codehighlighter1_949_993_Open_Text.style.display='none'; Codehighlighter1_949_993_Closed_Image.style.display='inline'; Codehighlighter1_949_993_Closed_Text.style.display='inline';" alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ExpandedSubBlockStart.gif" align="top" /><img id="Codehighlighter1_949_993_Closed_Image" style="display: none" onclick="this.style.display='none'; Codehighlighter1_949_993_Closed_Text.style.display='none'; Codehighlighter1_949_993_Open_Image.style.display='inline'; Codehighlighter1_949_993_Open_Text.style.display='inline';" alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ContractedSubBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;</span><span id="Codehighlighter1_949_993_Closed_Text" style="border-right: #808080 1px solid; border-top: #808080 1px solid; display: none; border-left: #808080 1px solid; border-bottom: #808080 1px solid; background-color: #ffffff"><img alt="" src="http://www.cnblogs.com/Images/dot.gif" /></span><span id="Codehighlighter1_949_993_Open_Text"><span style="color: #000000">{<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/InBlock.gif" align="top" />&nbsp;&nbsp;&nbsp;&nbsp;MessageBox.Show(</span><span style="color: #000000">"</span><span style="color: #000000">出错了，请检查网络是否连通;</span><span style="color: #000000">"</span><span style="color: #000000">);<br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ExpandedSubBlockEnd.gif" align="top" />&nbsp;&nbsp;&nbsp;}</span></span><span style="color: #000000"><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/ExpandedBlockEnd.gif" align="top" />&nbsp;&nbsp;}</span></span><span style="color: #000000"><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /><br />
+<img alt="" src="https://www.cnblogs.com/images/OutliningIndicators/None.gif" align="top" /></span></div>
+<p>http://www.xgdown.com/article/32/ArticleList32_1.htm<br />
+</p>
+<p>##托管C++ 环境设置<br />
+&nbsp; <br />
+创<span style="color: red">建托管C++应用程</span>序 <br />
+&nbsp; <br />
+可以使用3种方法创建托管的C++的应用程序和组件: <br />
+&nbsp; <br />
+从草稿创建一个托管的C++应用程序. <br />
+可将一个现存的C++应用程序转化为一个托管的C++应用程序. <br />
+要创建一个托管的C++应用程序或组件,可以将现存的组件包装在托管的C++外壳中.<br />
+&nbsp; <br />
+实例: <br />
+&nbsp; <br />
+创建一MFC应用程序, 然后将他传给CLR.需要改变一些项目的编译选项; <br />
+打开MFC项目. <br />
+Solutious Explorer -&gt;Properties. <br />
+可在项目属性对话框上端的配置组合框中选择All Configurations. <br />
+在左侧选择C/C++ General. <br />
+Complie As Managed -&gt;Assembly Support(/clr) <br />
+Debug Information Format-&gt;Program Database(/Zi)<br />
+在左侧选择C/C++ Code Generation <br />
+Enable Minimal Rebuild-&gt;No <br />
+Basic Runtime Checks-&gt;Default<br />
+点击OK.<br />
+&nbsp; <br />
+注:有时需要处理预编译指令,取消预编译指令. <br />
+C/C++ Precomplied Headers-&gt;Create/Use Precompiled Header-&gt;Not Using Precompiled Headers <br />
+&nbsp; <br />
+这样可以有效的将该项目转化为CLR进行编译. <br />
+&nbsp; <br />
+将.Net基础类库添加到MFC应用程序中时,还要注意一个细节 <br />
+&nbsp; <br />
+MFC的调试版本重新定义了new操作符,以便能跟踪已经被分配的内存,并能识别应用程序中的内存泄漏.但这与.NET对象不兼容.因此每当创建.NET对象的实例或任何其他托管对象(包括自定义的任何垃圾收集类和结构)时,都需要使用#pragma push_macro, pop_macro 以及#undef指令来重新定义new操作符,以便使用托管对象. <br />
+&nbsp; <br />
+#ifdef _DEBUG <br />
+#pragma push_macro("new") <br />
+#undef new <br />
+#endif <br />
+&nbsp; <br />
+String *S; <br />
+S = new String("This is a managed string for test."); <br />
+&nbsp; <br />
+#ifdef _DEBUG <br />
+#pragma pop_macro("new") <br />
+#endif</p>
+<p>#在<span style="color: red">C#中如何调用自己写的dll文件？</span><br />
+&nbsp;悬赏分：10 - 解决时间：2007-1-11 15:51<br />
+自己写了一个dll文件，如何在程序中调用 </p>
+<p>新建一项目，在项目&#8220;引用&#8221;上右击，&#8220;添加引用&#8221;，浏览到你的dll文件上，然后就可以用了~</p>
+<p>###<span style="color: red">怎么调用c++写的dll</span><br />
+我知道在c#中掉用c++写的函数很方便&nbsp;&nbsp; <br />
+using&nbsp;&nbsp; System.Runtime.InteropServices;</p>
+<p>&nbsp; [DllImport("user32.dll")]&nbsp;&nbsp; <br />
+&nbsp; public&nbsp;&nbsp; static&nbsp;&nbsp; extern&nbsp;&nbsp; int&nbsp;&nbsp; ActivateKeyboardLayout&nbsp;&nbsp; (&nbsp;&nbsp; <br />
+&nbsp; int&nbsp;&nbsp; HKL,&nbsp;&nbsp; <br />
+&nbsp; int&nbsp;&nbsp; flags&nbsp;&nbsp; <br />
+&nbsp; );&nbsp;&nbsp; <br />
+##<span style="color: red">c#调用COM组件</span><br />
+直接添加引用就行吧。</p>
+<p><br />
+##如果是在窗体上画的话，如下&nbsp;&nbsp; <br />
+&nbsp; Image&nbsp;&nbsp; imgPic&nbsp;&nbsp; =&nbsp;&nbsp; Image.FromFile(&nbsp;&nbsp; yourImageFile&nbsp;&nbsp; );&nbsp;&nbsp; <br />
+&nbsp; Graphics&nbsp;&nbsp; g&nbsp;&nbsp; =&nbsp;&nbsp; this.CreateGraphics();&nbsp;&nbsp; <br />
+&nbsp; g.DrawImage(imgPic,&nbsp;&nbsp; yourStartX,&nbsp;&nbsp; yourStartY,&nbsp;&nbsp; ImageWidth,&nbsp;&nbsp; ImageHeight&nbsp;&nbsp; );&nbsp;&nbsp; <br />
+&nbsp; g.Dispose();</p>
+<p>/////////////////<br />
+先将byte[]转为System.IO.Stream&nbsp;&nbsp; stream;&nbsp;&nbsp; <br />
+&nbsp; 然后：&nbsp;&nbsp; <br />
+&nbsp; Bitmap&nbsp;&nbsp; bmp&nbsp;&nbsp; =&nbsp;&nbsp; new&nbsp;&nbsp; Bitmap(stream);&nbsp;&nbsp; <br />
+&nbsp; g.DrawImage(bmp,&nbsp;&nbsp; 0,&nbsp;&nbsp; 0);&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; <br />
+&nbsp; 比如：&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; byte[]&nbsp;&nbsp; imgByteArray&nbsp;&nbsp; =&nbsp;&nbsp; GetImage("2");&nbsp;&nbsp; //这是你的byte数组&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; MemoryStream&nbsp;&nbsp; stream&nbsp;&nbsp; =&nbsp;&nbsp; new&nbsp;&nbsp; MemoryStream();&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stream.Write(imgByteArray,&nbsp;&nbsp; 0,&nbsp;&nbsp; imgByteArray.Length);&nbsp;&nbsp; <br />
+&nbsp; //显示图片&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Image&nbsp;&nbsp; m_Bitmap&nbsp;&nbsp; =&nbsp;&nbsp; Image.FromStream(stream);&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; this.CreateGraphics().DrawImage(m_Bitmap,&nbsp;&nbsp; 0,&nbsp;&nbsp; 0);&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stream.Close();&nbsp;&nbsp; </p>
+<p>##</p>
+<p>rtsp://219.223.252.38:554/movie2/zoujinkexue15/01.rmvb</p>

@@ -1,0 +1,10 @@
+<p>先安装基本的库，用aptget可以自动安装依赖<br /><strong>sudo apt-get install libfltk1.1-dev libfltk1.1</strong></p>
+<p>下载一个最新的源代码，编译</p>
+<p>t<strong>ar avzf fltkxxx</strong><br /><strong>cd fltkxxx</strong><br /><strong>./configure</strong><br /><strong>make </strong><br /><strong>sudo make install</strong><br /><br />cutepig@ubuntu:~/Downloads/fltk-1.3.0$ sudo make install<br />=== installing FL ===<br />Installing include files in /usr/local/include...<br />=== installing jpeg ===<br />Installing ../lib/libfltk_jpeg.a in /usr/local/lib...<br />Installing jpeg headers in /usr/local/include/FL/images...<br />=== installing zlib ===<br />Installing libfltk_z.a in /usr/local/lib...<br />Installing zlib headers in /usr/local/include/FL/images...<br />=== installing png ===<br />Installing libfltk_png.a in /usr/local/lib...<br />Installing png headers in /usr/local/include/FL/images...<br />=== installing src ===<br />Installing libraries in /usr/local/lib...<br />=== installing fluid ===<br />Installing FLUID in /usr/local/bin...<br />=== installing test ===<br />Installing example programs to /usr/local/share/doc/fltk/examples...<br />=== installing documentation ===<br />Installing documentation files in /usr/local/share/doc/fltk ...<br />Installing man pages in /usr/local/share/man ...<br />cutepig@ubuntu:~/Downloads/fltk-1.3.0$ <br /><br /><strong>写一个例子程序</strong><br />#include &lt;FL/Fl.H&gt;<br />#include &lt;FL/Fl_Window.H&gt;<br />#include &lt;FL/Fl_Button.H&gt;<br />&nbsp;<br />int main(int argc, char *argv[]) {<br />&nbsp;&nbsp; Fl_Window* w = new Fl_Window(330, 190);<br />&nbsp;&nbsp; new Fl_Button(110, 130, 100, 35, "Okay");<br />&nbsp;&nbsp; w-&gt;end();<br />&nbsp;&nbsp; w-&gt;show(argc, argv);<br />&nbsp;&nbsp; return Fl::run();<br />}<br /><br /><strong>编译运行</strong></p>
+<p>g++ test.cpp -lfltk&nbsp; -lX11 -lm</p>
+<p></p>
+<p>参考网址</p>
+<p>下载源代码</p>
+<p>http://www.fltk.org/</p>
+<p>入门文档</p>
+<p>http://www.fltk.org/documentation.php/doc-1.1/basics.html#basics</p>

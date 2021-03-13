@@ -1,0 +1,1 @@
+<div>http://stackoverflow.com/questions/374046/destructor-not-called-when-type-casted-void-pointer-to-object</div>

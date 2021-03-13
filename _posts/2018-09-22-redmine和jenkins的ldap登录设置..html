@@ -1,0 +1,25 @@
+<p>工具：</p>
+<p>softeera LDAP browser</p>
+<p>&nbsp;</p>
+<p>流程：</p>
+<h2><a href="http://192.168.1.116/auth_sources">Authentication modes</a>&nbsp;&raquo; test</h2>
+<form id="auth_source_form" class="edit_auth_source" action="http://192.168.1.116/auth_sources/1" method="post" accept-charset="UTF-8">
+<div class="box tabular">
+<p><label for="auth_source_name">Name<span class="required">&nbsp;*</span></label><input id="auth_source_name" type="text" name="auth_source[name]" value="test" /></p>
+<p><label for="auth_source_host">Host<span class="required">&nbsp;*</span></label><input id="auth_source_host" type="text" name="auth_source[host]" value="ldap.forumsys.com" /></p>
+<p><label for="auth_source_port">Port<span class="required">&nbsp;*</span></label><input id="auth_source_port" type="text" name="auth_source[port]" value="389" size="6" />&nbsp;<input id="auth_source_tls" type="checkbox" name="auth_source[tls]" value="1" />&nbsp;LDAPS</p>
+<p><label for="auth_source_account">Account</label><input id="auth_source_account" type="text" name="auth_source[account]" value="" /></p>
+<p><label for="auth_source_account_password">Password</label><input id="auth_source_account_password" type="password" name="dummy_password" value="" /></p>
+<p><label for="auth_source_base_dn">Base DN<span class="required">&nbsp;*</span></label><input id="auth_source_base_dn" type="text" name="auth_source[base_dn]" value="dc=example,dc=com" size="60" /></p>
+<p><label for="auth_source_filter">LDAP filter</label><textarea id="auth_source_filter" name="auth_source[filter]"></textarea></p>
+<p><label for="auth_source_timeout">Timeout (in seconds)</label><input id="auth_source_timeout" type="text" name="auth_source[timeout]" size="4" /></p>
+<p><label for="auth_source_onthefly_register">On-the-fly user creation</label><input id="auth_source_onthefly_register" type="checkbox" name="auth_source[onthefly_register]" value="1" checked="checked" /></p>
+</div>
+<fieldset class="box tabular"><legend>Attributes</legend>
+<p><label for="auth_source_attr_login">Login attribute<span class="required">&nbsp;*</span></label><input id="auth_source_attr_login" type="text" name="auth_source[attr_login]" value="uid" size="20" /></p>
+<p><label for="auth_source_attr_firstname">Firstname attribute</label><input id="auth_source_attr_firstname" type="text" name="auth_source[attr_firstname]" value="sn" size="20" /></p>
+<p><label for="auth_source_attr_lastname">Lastname attribute</label><input id="auth_source_attr_lastname" type="text" name="auth_source[attr_lastname]" value="cn" size="20" /></p>
+<p><label for="auth_source_attr_mail">Email attribute</label><input id="auth_source_attr_mail" type="text" name="auth_source[attr_mail]" value="mail" size="20" /></p>
+<p>&nbsp;</p>
+</fieldset></form>
+<p>&nbsp;</p>
