@@ -4,6 +4,7 @@
     <div class="main">
         <h2> {{ page.title }} </h2>
         {{ content }}
+		{% include toc.html html=content %}
         {% if page.categories %}
         <div class="post_footer">
           <p>Published on {{ page.date | date: "%b %d, %Y" }} in categories 
