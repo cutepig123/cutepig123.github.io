@@ -54,8 +54,6 @@ gems:
     - jekyll-sitemap
     - jekyll-feed
     - jemoji
-    - jekyll-toc
-
 collections:
     wiki:
         output: true
@@ -88,8 +86,3 @@ gitalk:
 # 在使用其它评论组件时可点击显示 Disqus
 lazy_load_disqus : false
 
-defaults:
-  - scope:
-      path: ""
-    values:
-      toc: true
