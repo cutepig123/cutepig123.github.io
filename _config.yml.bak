@@ -18,6 +18,11 @@ github_username:  cutepig123
 #permalink: /posts/:year-:month-:day-:title.html
 #permalink: /:categories/:year/:month/:day/:title:output_ext
 #exclude: [images]
+
+# Build settings
+theme: minima
+plugins:
+  - jekyll-feed
  
 
         
