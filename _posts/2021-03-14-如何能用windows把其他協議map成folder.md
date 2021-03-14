@@ -40,3 +40,25 @@ windows本身支持map成drive的协议有
 测试ok
 
 `python -m pywebdav.server.server -D g:\  -n`
+
+## ftplib
+
+功能：实现一个ftp client。这个是标准库
+
+测试ok
+
+```python
+from ftplib import FTP
+ftp = FTP('localhost', user='user',passwd='')
+t = ftp.dir()
+print(f)
+ftp.quit()
+
+def ftp_write_file(local_file, ftp, remote_file)：
+    with open(local_file, 'wb') as fp:
+        ftp.retrbinary('RETR %s'%remote_file, fp.write)
+```
+
+# TODO
+
+修改pywebdav内部handler，把请求转发给ftp
