@@ -3,7 +3,7 @@
     {% include navigation.html %}
     <div class="main">
         <h2> {{ page.title }} </h2>
-        {% include toc.html %}
+        <div id="toc"></div>
         {{ content }}
 		{% if page.categories %}
         <div class="post_footer">

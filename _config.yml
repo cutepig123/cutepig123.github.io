@@ -49,7 +49,7 @@ kramdown:
     input: GFM
 paginate: 30
 #permalink: /:year/:month/:day/:title/
-gems:
+plugins:
     - jekyll-paginate
     - jekyll-sitemap
     - jekyll-feed
@@ -86,3 +86,9 @@ gitalk:
 # 在使用其它评论组件时可点击显示 Disqus
 lazy_load_disqus : false
 
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "post"
