@@ -47,7 +47,7 @@ github_username:  cutepig123
 markdown: kramdown
 kramdown:
     input: GFM
-paginate: 9
+paginate: 30
 permalink: /:year/:month/:day/:title/
 gems:
     - jekyll-paginate
