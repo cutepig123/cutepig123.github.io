@@ -1,4 +1,6 @@
-[TOC]
+---
+toc: true
+---
 
 使用msvc2019的AddressSanitizer
 

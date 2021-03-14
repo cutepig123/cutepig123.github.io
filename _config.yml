@@ -54,6 +54,7 @@ gems:
     - jekyll-sitemap
     - jekyll-feed
     - jemoji
+    - jekyll-toc
 collections:
     wiki:
         output: true
