@@ -15,7 +15,7 @@ url: "https://cutepig123.github.io/" # the base hostname & protocol for your sit
 twitter_username: NA
 github_username:  cutepig123
 
-#permalink: /posts/:year-:month-:day-:title.html
+permalink: /posts/:year-:month-:day-:title.html
 #permalink: /:categories/:year/:month/:day/:title:output_ext
 #exclude: [images]
  
@@ -48,7 +48,7 @@ markdown: kramdown
 kramdown:
     input: GFM
 paginate: 30
-permalink: /:year/:month/:day/:title/
+#permalink: /:year/:month/:day/:title/
 gems:
     - jekyll-paginate
     - jekyll-sitemap
