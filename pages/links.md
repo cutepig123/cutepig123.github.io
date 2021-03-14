@@ -7,5 +7,6 @@ permalink: /links/
 ---
 
 <ul>
+<li><a href="http://cutepig.cnblogs.com/">cutepig's cnblog</a></li>
 <li><a href="http://mazhuang.org/">码志</a></li>
 </ul>
