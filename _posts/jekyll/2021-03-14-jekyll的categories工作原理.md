@@ -1,3 +1,6 @@
+---
+categories: jekyll
+---
 jekyll的categories工作原理
 
 # 目的
