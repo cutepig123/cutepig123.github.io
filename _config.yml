@@ -69,14 +69,14 @@ comments_provider: gitalk
 # https://disqus.com
 
 disqus:
-    username: mzlogin
+    username: cutepig123
 # https://imsun.net/posts/gitment-introduction/
 gitment:
-    owner: mzlogin
-    repo: jekyll-theme-solid
+    owner: cutepig123
+    repo: cutepig123.github.io
     oauth:
-        client_id: d2e1cbbd298958076462
-        client_secret: b42a4178e5fd4a7cf63189ef4b1453b05c375709
+        client_id: bfff3360008ed43da40e
+        client_secret: 74aba0e8140d66b51b4301d39893ba143833ab94
 # https://github.com/gitalk/gitalk#install
 gitalk:
     owner: cutepig123
