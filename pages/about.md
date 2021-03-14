@@ -1,28 +1,22 @@
 ---
 layout: page
-title: Zhuang Ma
-description: Zhuang Ma的个人简介。
-keywords: Zhuang Ma, 马壮
+title: About
 permalink: /about/
 ---
 
-**Software Engineer at [Sogou, Inc.](http://www.sogou.com)**
+title: cutepig's blog
 
-Beijing City, China \| Computer Software
-  
-*Education:* Wuhan Institute of Technology
+专注于计算机视觉，和C++
 
-scholar, CS/IT
+CP程序员在香港。
 
-*Contact:* `print '%s@%s' % ('ChumpMa', 'gmail.com')  #via Python`
+内容介绍：软件开发，软件工具的用法等视频教程
 
-*Social:*  [github](http://github.com/mzlogin) \| [linkedin](http://www.linkedin.com/in/mazhuang) \| [weibo](http://weibo.com/mzlogin) \| [douban](http://www.douban.com/people/freedim/) \| [blog](http://mazhuang.org)
-    
-```c++
-#include <iostream>
-int main()
-{
-	std::cout << "Hello, friends!" << std::endl;
-	return 0;
-}
-```
+youtube频道 https://www.youtube.com/channel/UCpAl4ajgAWBepDA1UjMC8CA
+
+blog http://cutepig.cnblogs.com/
+
+blog https://cutepig123.github.io/
+
+github https://github.com/cutepig123
+
