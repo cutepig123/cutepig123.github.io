@@ -1,5 +1,5 @@
 ---
-toc: true
+categories: sw-design
 ---
 
 Composition over inheritance

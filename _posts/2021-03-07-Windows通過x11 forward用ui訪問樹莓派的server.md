@@ -1,3 +1,6 @@
+---
+categories: networking tool 樹莓派
+---
 Windows通過x11 forward用ui訪問linux樹莓派的server
 
 # 背景

@@ -1,3 +1,6 @@
+---
+categories: networking
+---
 用几种语言实现socks server
 
 # 总结
