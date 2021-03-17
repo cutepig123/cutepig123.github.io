@@ -70,7 +70,6 @@ pre code {
 }
 
 a {
-  text-decoration: none;
   padding: 1px;
   color: #204A87;
   word-wrap: break-word;
@@ -78,7 +77,7 @@ a {
 }
 
 a:hover {
-  text-decoration: underline;
+  
 }
 
 div.tag_cloud a {
@@ -87,7 +86,7 @@ div.tag_cloud a {
 }
 
 div.nav a {
-  text-decoration: none;
+  
   color: #555;
 }
 
