@@ -39,7 +39,7 @@ windows本身支持map成drive的协议有
 
 测试ok
 
-`python -m pywebdav.server.server -D g:\  -n`
+`python -m pywebdav.server.server -D g:\  -n -v -l info`
 
 ## ftplib
 
