@@ -111,5 +111,5 @@ def add_categories():
     dir_recur('.', '', callback)
 
 add_prefix()
-#add_categories()
+add_categories()
 #dir_recur('.', '',lambda x,y:print(x,y))
