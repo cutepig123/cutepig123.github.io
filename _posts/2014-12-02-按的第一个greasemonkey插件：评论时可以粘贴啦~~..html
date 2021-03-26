@@ -9,7 +9,7 @@
 <div id="cnblogs_code_open_3617cbe1-350f-4cb4-9a4a-7b0d5e9e2c79" class="cnblogs_code_hide">
 <pre><span style="color: #008080;"> 1</span> <span style="color: #000000;">// ==UserScript==
 </span><span style="color: #008080;"> 2</span> <span style="color: #000000;">// @name        tmall_vote
-</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">// @namespace   jshe
+</span><span style="color: #008080;"> 3</span> <span style="color: #000000;">// @namespace   test
 </span><span style="color: #008080;"> 4</span> <span style="color: #000000;">// @include     http://ratewrite.tmall.com/*
 </span><span style="color: #008080;"> 5</span> <span style="color: #000000;">// @version     1
 </span><span style="color: #008080;"> 6</span> <span style="color: #000000;">// @grant       none
@@ -19,18 +19,18 @@
 </span><span style="color: #008080;">10</span> <span style="color: #000000;">  var getElementByXpath = function (path) {
 </span><span style="color: #008080;">11</span> <span style="color: #000000;">    return document.evaluate(path, document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
 </span><span style="color: #008080;">12</span> <span style="color: #000000;">  };
-</span><span style="color: #008080;">13</span> <span style="color: #000000;">  var jshe_setTextarea = function () {
-</span><span style="color: #008080;">14</span> <span style="color: #000000;">    jshe_cell.value = jshe_textarea.value;
+</span><span style="color: #008080;">13</span> <span style="color: #000000;">  var test_setTextarea = function () {
+</span><span style="color: #008080;">14</span> <span style="color: #000000;">    test_cell.value = test_textarea.value;
 </span><span style="color: #008080;">15</span> <span style="color: #000000;">  };
-</span><span style="color: #008080;">16</span> <span style="color: #000000;">  jshe_cell = document.getElementsByClassName('rate-quanlity-content') [0];
-</span><span style="color: #008080;">17</span> <span style="color: #000000;">  jshe_textarea = document.createElement('textarea');
-</span><span style="color: #008080;">18</span> <span style="color: #000000;">  jshe_textarea.value = 'Hello';
-</span><span style="color: #008080;">19</span> <span style="color: #000000;">  jshe_textarea.name = 'jshe_textarea';
-</span><span style="color: #008080;">20</span> <span style="color: #000000;">  jshe_cell.parentNode.parentNode.appendChild(jshe_textarea);
+</span><span style="color: #008080;">16</span> <span style="color: #000000;">  test_cell = document.getElementsByClassName('rate-quanlity-content') [0];
+</span><span style="color: #008080;">17</span> <span style="color: #000000;">  test_textarea = document.createElement('textarea');
+</span><span style="color: #008080;">18</span> <span style="color: #000000;">  test_textarea.value = 'Hello';
+</span><span style="color: #008080;">19</span> <span style="color: #000000;">  test_textarea.name = 'test_textarea';
+</span><span style="color: #008080;">20</span> <span style="color: #000000;">  test_cell.parentNode.parentNode.appendChild(test_textarea);
 </span><span style="color: #008080;">21</span> <span style="color: #000000;">  var button = document.createElement('button');
 </span><span style="color: #008080;">22</span> <span style="color: #000000;">  button.innerHTML = 'ClickMe';
-</span><span style="color: #008080;">23</span> <span style="color: #000000;">  button.onclick = jshe_setTextarea;
-</span><span style="color: #008080;">24</span> <span style="color: #000000;">  jshe_cell.parentNode.parentNode.appendChild(button);
+</span><span style="color: #008080;">23</span> <span style="color: #000000;">  button.onclick = test_setTextarea;
+</span><span style="color: #008080;">24</span> <span style="color: #000000;">  test_cell.parentNode.parentNode.appendChild(button);
 </span><span style="color: #008080;">25</span> <span style="color: #000000;">}
 </span><span style="color: #008080;">26</span> <span style="color: #000000;">var script = document.createElement('script');
 </span><span style="color: #008080;">27</span> <span style="color: #000000;">script.type = 'text/javascript';

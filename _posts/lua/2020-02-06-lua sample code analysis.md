@@ -11,7 +11,7 @@ categories: lua
 ## Appl
 ```cpp
 DUMP_STACK(L);
-/*{ "foo", "C:\\jshe\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
+/*{ "foo", "C:\\test\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
 dll" }*/	
 	//1. 创建元表，并将该元表指定给newArray函数新创建的userdata。在Lua中userdata也是以table的身份表现的。
 	//这样在调用对象函数时，可以通过验证其metatable的名称来确定参数userdata是否合法。
@@ -22,7 +22,7 @@ dll" }*/
 top=4
 4/-1: type=table{__name='myarray', }
 3/-2: type=table{__name='myarray', }	-->name it mt
-2/-3: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-3: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-4: type=string'foo'
 
 	*/
@@ -35,7 +35,7 @@ top=4
 	/*
 top=3
 3/-1: type=table{__index={__index={__index={__index={__index=, __name=, }, __name='myarray', }, __name='myarray', }, __name='myarray', }, __name='myarray', }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'*/
 	
 	//将这些成员函数注册给元表，以保证Lua在寻找方法时可以定位。NULL参数表示将用栈顶的table代替第二个参数。
@@ -45,7 +45,7 @@ top=3
 	luaL_register(L,"testuserdata",arraylib_f);
 
 	DUMP_STACK(L);
-/*{ "foo", "C:\\jshe\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
+/*{ "foo", "C:\\test\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
 dll", <1>{
     __gc = <function 1>,
     __index = <table 1>,
@@ -61,7 +61,7 @@ dll", <1>{
 	luaL_register(L,"testuserdatafm",arraylib_f_and_m);
 
 	DUMP_STACK(L);
-/*{ "foo", "C:\\jshe\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
+/*{ "foo", "C:\\test\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
 dll", <1>{
     __gc = <function 1>,
     __index = <table 1>,
@@ -80,7 +80,7 @@ dll", <1>{
     tostring = <function 2>
   } }*/
 	luaopen_packet(L);
-/*{ "foo", "C:\\jshe\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
+/*{ "foo", "C:\\test\\codes\\mylualib\\test\\../build/v100+x64+Debug/foo_vc100_64.
 dll", <1>{
     __gc = <function 1>,
     __index = <table 1>,
@@ -112,36 +112,36 @@ LUALIB_API int luaL_newmetatable (lua_State *L, const char *tname) {
     return 0;  /* leave previous value on top, but return 0 */
 	/*top=3
 3/-1: type=nil
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'
 */
   lua_pop(L, 1);	// =0
   lua_createtable(L, 0, 2);  /* create metatable */ // =1
 /*top=3
 3/-1: type=table{}
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'*/  
   lua_pushstring(L, tname);	// =2
  /*top=4
 4/-1: type=string'myarray'
 3/-2: type=table{}
-2/-3: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-3: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-4: type=string'foo'*/ 
   lua_setfield(L, -2, "__name");  /* metatable.__name = tname */	// =1
   /*top=3
 3/-1: type=table{'myarray', }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'*/
   lua_pushvalue(L, -1);	// =2
     /*top=4
 4/-1: type=table{__name='myarray', }
 3/-2: type=table{__name='myarray', }
-2/-3: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-3: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-4: type=string'foo'*/
   lua_setfield(L, LUA_REGISTRYINDEX, tname);  /* registry.name = metatable */
 /*top=3
 3/-1: type=table{__name='myarray', }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'*/  
   return 1;
 }
@@ -155,7 +155,7 @@ void EnumTableItem(lua_State *L, int index, int nDepth)
 /*top=4
 4/-1: type=table{C:000007FEEF9610EB, }
 3/-2: type=table{'myarray', {, , , , , , , }, C:000007FEEF961131, C:000007FEEF9611A9, C:000007FEEF961163, C:000007FEEF961113, C:000007FEEF96103C, }
-2/-3: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-3: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-4: type=string'foo'
 */
 	int top = lua_gettop(L);
@@ -170,7 +170,7 @@ top=6
 5/-2: type=table{C:000007FEEF9610EB, }
 4/-3: type=table{C:000007FEEF9610EB, }
 3/-4: type=table{'myarray', {, , , , , , , }, C:000007FEEF961131, C:000007FEEF9611A9, C:000007FEEF961163, C:000007FEEF961113, C:000007FEEF96103C, }
-2/-5: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-5: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-6: type=string'foo'
 */
 	// 2
@@ -182,7 +182,7 @@ top=6
 5/-3: type=table{C:000007FEEF9610EB, }
 4/-4: type=table{C:000007FEEF9610EB, }
 3/-5: type=table{'myarray', {, , , , , , , }, C:000007FEEF961131, C:000007FEEF9611A9, C:000007FEEF961163, C:000007FEEF961113, C:000007FEEF96103C, }
-2/-6: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-6: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-7: type=string'foo'
 */	
 		DumpItemEx(L, -1, nDepth+1);
@@ -204,7 +204,7 @@ LUALIB_API void luaL_openlib (lua_State *L, const char *libname,
                                const luaL_Reg *l, int nup) {
 /*top=3
 3/-1: type=table{__index={__index={__index={__index={__index=, __name=, }, __name='myarray', }, __name='myarray', }, __name='myarray', }, __name='myarray', }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'
 */							   
   luaL_checkversion(L);
@@ -228,7 +228,7 @@ LUALIB_API void luaL_openlib (lua_State *L, const char *libname,
 LUALIB_API void luaL_setfuncs (lua_State *L, const luaL_Reg *l, int nup) {
 /*top=3
 3/-1: type=table{__index={__index={__index={__index={__index=, __name=, }, __name='myarray', }, __name='myarray', }, __name='myarray', }, __name='myarray', }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'
 */
   luaL_checkstack(L, nup, "too many upvalues");
@@ -240,13 +240,13 @@ LUALIB_API void luaL_setfuncs (lua_State *L, const luaL_Reg *l, int nup) {
 /*top=4
 4/-1: type=functionC:000007FED9A21131
 3/-2: type=table{__index={__index={__index={__index={__index=, __name=, }, __name='myarray', }, __name='myarray', }, __name='myarray', }, __name='myarray', }
-2/-3: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-3: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-4: type=string'foo'
 */	
     lua_setfield(L, -(nup + 2), l->name);
 /*top=3
 3/-1: type=table{__index={__index={__index={__index={__index=, __name=, set=, }, __name='myarray', set=C:000007FED9A21131, }, __name='myarray', set=C:000007FED9A21131, }, __name='myarray', set=C:000007FED9A21131, }, __name='myarray', set=C:000007FED9A21131, }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'
 */	
   }
@@ -254,7 +254,7 @@ LUALIB_API void luaL_setfuncs (lua_State *L, const luaL_Reg *l, int nup) {
   
 /*top=3
 3/-1: type=table{__index={__index={__index={__index={__index=, set=, __gc=, __tostring=, get=, size=, __name=, }, set=C:000007FED9A21131, __gc=C:000007FED9A21163, __tostring=C:000007FED9A211A9, get=C:000007FED9A2103C, size=C:000007FED9A21113, __name='myarray', }, set=C:000007FED9A21131, __gc=C:000007FED9A21163, __tostring=C:000007FED9A211A9, get=C:000007FED9A2103C, size=C:000007FED9A21113, __name='myarray', }, set=C:000007FED9A21131, __gc=C:000007FED9A21163, __tostring=C:000007FED9A211A9, get=C:000007FED9A2103C, size=C:000007FED9A21113, __name='myarray', }, set=C:000007FED9A21131, __gc=C:000007FED9A21163, __tostring=C:000007FED9A211A9, get=C:000007FED9A2103C, size=C:000007FED9A21113, __name='myarray', }
-2/-2: type=string'C:\jshe\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
+2/-2: type=string'C:\test\codes\mylualib\test\../build/v100+x64+Debug/foo_vc100_64.dll'
 1/-3: type=string'foo'
 */  
 }

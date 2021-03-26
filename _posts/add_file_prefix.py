@@ -5,26 +5,46 @@ def MySystem(cmd):
     os.system(cmd)
 
 def MyRename(src, des):
-    MySystem('rename "%s" "%s"'%(src, des))
+    MySystem('move "%s" "%s"'%(src, des))
+
+
+def dir_recur(root_path, sub_path, callback):
+    full_path = os.path.join(root_path, sub_path)
+    for item in os.listdir(full_path):
+        if len(item)==item.count('.'): continue
+        full_path2 = os.path.join(full_path, item)
+        if os.path.isdir(full_path2):
+            dir_recur(root_path, os.path.join(sub_path, item), callback)
+        else:
+            callback(root_path, sub_path, item)
 
 def add_prefix():
     pattern = re.compile("^\d\d\d\d-.*")
-    for fname in os.listdir('.'):
-        if not os.path.isfile(fname) or not fname.lower().endswith('.md'): continue
+
+    def callback(root_path, sub_path, fname):
+        fpath = os.path.join(root_path, sub_path, fname)
+        if not os.path.isfile(fpath) or not fpath.lower().endswith('.md'): return
+        if not pattern.match(fname):
+            print(fname)
         if not pattern.match(fname):
             print(fname)
             
-            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fname)))
+            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fpath)))
             des_fname = mtimestr + fname
+            des_fpath = os.path.join(root_path, sub_path, des_fname)
             #print(des_fname)
-            MyRename(fname, des_fname)
+            MyRename(fpath, des_fpath)
         elif False:
-            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fname)))
+            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fpath)))
             fname_no_prefix = fname[len('2020-01-01-'):]
             des_fname = mtimestr + fname_no_prefix
+            des_fpath = os.path.join(root_path, sub_path, des_fname)
             #print(des_fname)
             #MyRename(fname, des_fname)
-            MyRename(fname, des_fname)
+            MyRename(fpath, des_fpath)
+            
+    dir_recur('.', '', callback)
+    
 
 def split_header_content(lines):
     state = 0   #Find start of head
@@ -51,29 +71,45 @@ def split_header_content(lines):
             data.append(line)
     return [head, data]
 
+def add_categorie_to_file(fpath, categories):
+    lines = open(fpath, 'r', encoding='utf-8').readlines()
+    [head, data] = split_header_content(lines)
+    print(head)
+    
+    categories_str = ' '.join(categories)
+    if len(categories_str.strip())==0: return
+
+    if not 'categories' in head:
+        head['categories'] = categories_str
+    elif head['categories'].find(categories_str)<0:
+        head['categories'] += categories_str
+    else:
+        return
+
+    fw = open(fpath, 'w', encoding='utf-8')
+
+    fw.write('---\n')
+    for k in head:
+        fw.write('%s: %s\n'%(k, head[k]))
+    fw.write('---\n')
+
+    fw.writelines(data)
+
+    fw.close()
+
 def add_categories():
-    for folder in os.listdir('.'):
-        if not os.path.isdir(folder): continue
-        for fname in os.listdir(folder):
-            fpath = '%s\\%s'%(folder, fname)
-            if not os.path.isfile(fpath) or not fname.lower().endswith('.md'): continue
-            print(fpath)
-            lines = open(fpath, 'r', encoding='utf-8').readlines()
-            [head, data] = split_header_content(lines)
-            print(head)
-            if not 'categories' in head:
-                head['categories'] = folder
-            elif head['categories'].find(folder)<0:
-                head['categories'] += ' ' + folder
-            fw = open(fpath, 'w', encoding='utf-8')
+    def callback(root_path, sub_path, item):
+        fpath = os.path.join(root_path, sub_path, item)
+        
+        if not os.path.isfile(fpath) or not fpath.lower().endswith('.md'): return
+        
+        categories = sub_path.split('\\')[:-1]
+        categories = [x for x in categories if len(x)>0]
+        print(fpath, categories)
+        add_categorie_to_file(fpath, categories)
 
-            fw.write('---\n')
-            for k in head:
-                fw.write('%s: %s\n'%(k, head[k]))
-            fw.write('---\n')
+    dir_recur('.', '', callback)
 
-            fw.writelines(data)
-
-            fw.close()
 add_prefix()
-add_categories()
+#add_categories()
+#dir_recur('.', '',lambda x,y:print(x,y))

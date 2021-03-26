@@ -6,7 +6,7 @@ categories: links
 [ 粒子群最佳化 - 維基百科，自由的百科全書 ]( https://zh.wikipedia.org/wiki/%E7%B2%92%E5%AD%90%E7%BE%A4%E4%BC%98%E5%8C%96 ) 2020-07-13 14:56:47.686000
 [ Wafer dicing - Wikipedia ]( https://en.wikipedia.org/wiki/Wafer_dicing#Stealth_dicing ) 2020-07-13 14:56:47.686000
 [ Zipkin Community · OpenZipkin ]( https://zipkin.io/pages/community.html ) 2020-07-13 14:56:47.686000
-[ WebEX Meeting ]( http://atsnts82.atsex.asmpt.com/webex/Booking.aspx ) 2020-07-13 14:56:47.686000
+[ WebEX Meeting ]( http://atsnts82.atstest.com/webex/Booking.aspx ) 2020-07-13 14:56:47.686000
 [ Wafer dicing - Wikipedia ]( https://en.wikipedia.org/wiki/Wafer_dicing ) 2020-07-13 14:56:47.686000
 [ Tracing Polyglot Systems: an OpenTracing Tutorial · Yuri Shkuro ]( https://www.shkuro.com/talks/2018-10-01-tracing-polyglot-systems-an-opentracing-tutorial/ ) 2020-07-13 14:56:47.686000
 [ Talks · Yuri Shkuro ]( https://www.shkuro.com/talks/ ) 2020-07-13 14:56:47.686000
@@ -16,7 +16,7 @@ categories: links
 [ Linq · PyPI ]( https://pypi.org/project/Linq/ ) 2020-07-13 14:56:47.686000
 [ Kiru，Kezuru，Migaku话题| 隐形切丁应用-DISCO Corporation ]( https://www.disco.co.jp/eg/solution/library/stealth.html ) 2020-07-13 14:56:47.686000
 [ In.D Solution - Innovative Dynamic Solutions ]( http://www.in-ds.com/ ) 2020-07-13 14:56:47.686000
-[ None ]( https://ias.asmpt.com/BodyTempLog/ ) 2020-07-13 14:56:47.686000
+[ None ]( https://ias.test.com/BodyTempLog/ ) 2020-07-13 14:56:47.686000
 [ Halide (programming language) - Wikipedia ]( https://en.wikipedia.org/wiki/Halide_(programming_language) ) 2020-07-13 14:56:47.686000
 [ GitHub - z3APA3A/3proxy: 3proxy - tiny free proxy server ]( https://github.com/z3APA3A/3proxy ) 2020-07-13 14:56:47.686000
 [ Gang scheduling - Wikipedia ]( https://en.wikipedia.org/wiki/Gang_scheduling ) 2020-07-13 14:56:47.686000
@@ -55,7 +55,7 @@ categories: links
 [ Evolutionary algorithm - Wikipedia ]( https://en.wikipedia.org/wiki/Evolutionary_algorithm ) 2020-07-17 12:07:47.227996
 [ 数学优化-维基百科 ]( https://en.wikipedia.org/wiki/Mathematical_optimization#Multi-objective_optimization ) 2020-07-17 12:07:38.239443
 [ Albert C. S. Chung's homepage ]( https://www.cse.ust.hk/~achung/ ) 2020-07-16 08:15:45.932706
-[ #3167 - [20200630-20200714] Vision Tools committee follow up - Panel Issue Follow Up - Visionmine ]( http://visionapp03.ahkex.asmpt.com/redmine/issues/3167 ) 2020-07-16 08:02:59.019188
+[ #3167 - [20200630-20200714] Vision Tools committee follow up - Panel Issue Follow Up - Visionmine ]( http://visionapp03.test.test.com/redmine/issues/3167 ) 2020-07-16 08:02:59.019188
 [ 优化 | 浅谈旅行商问题（TSP）的启发式算法 - 知乎 ]( https://zhuanlan.zhihu.com/p/102709464 ) 2020-07-15 03:06:01.958711
 [ 哈密頓圖 - 維基百科，自由的百科全書 ]( https://zh.wikipedia.org/wiki/%E5%93%88%E5%AF%86%E9%A1%BF%E5%9B%BE ) 2020-07-15 02:57:03.523919
 [ 旅行推銷員問題 - 維基百科，自由的百科全書 ]( https://zh.wikipedia.org/wiki/%E6%97%85%E8%A1%8C%E6%8E%A8%E9%94%80%E5%91%98%E9%97%AE%E9%A2%98 ) 2020-07-15 02:55:52.965394

@@ -1,7 +1,10 @@
+---
+categories: 
+---
 # How cpgf decuce function works
 
 ```cpp
-//c:\Users\aeejshe\Downloads\cpgf-last-pre-c-11-version\cpgf-last-pre-c-11-version\include\cpgf\private\gcallback_p.h
+//c:\Users\test\Downloads\cpgf-last-pre-c-11-version\cpgf-last-pre-c-11-version\include\cpgf\private\gcallback_p.h
     
 #ifndef CPGF_GCALLBACK_P_H
 #define CPGF_GCALLBACK_P_H

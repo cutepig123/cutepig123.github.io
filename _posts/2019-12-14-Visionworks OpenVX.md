@@ -1,3 +1,6 @@
+---
+categories: 
+---
 [TOC]
 
 Visionworks OpenVX
@@ -214,22 +217,22 @@ Build this project to generate AMD OpenVX library and RunVX executable.
 
 ## Test
 
-Download to C:\Users\aeejshe\Downloads
+Download to C:\Users\test\Downloads
 
-- C:\Users\aeejshe\Downloads\amdovx-core-0.9-beta2
-- C:\Users\aeejshe\Downloads\opencv
+- C:\Users\test\Downloads\amdovx-core-0.9-beta2
+- C:\Users\test\Downloads\opencv
 
 Build SW according to guidelines, especially
 
 - set ENABLE_OPENCL=0
-- modify lib to C:\Users\aeejshe\Downloads\opencv\build\x64\vc12\lib\opencv_world310d.lib
+- modify lib to C:\Users\test\Downloads\opencv\build\x64\vc12\lib\opencv_world310d.lib
 
 
 
 Demo
 
 ```bash
-C:\Users\aeejshe\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx exa
+C:\Users\test\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx exa
 mples\gdf\canny.gdf
 
 ***** VIDEOINPUT LIBRARY - 0.1995 - TFW07 *****
@@ -292,7 +295,7 @@ merged --> |canny_edge_detector| output
 usage
 
 ```python
-C:\Users\aeejshe\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx
+C:\Users\test\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx
 
 ***** VIDEOINPUT LIBRARY - 0.1995 - TFW07 *****
 
@@ -335,7 +338,7 @@ d
 dump profile
 
 ```python
-C:\Users\aeejshe\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx -du
+C:\Users\test\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx -du
 mp-profile examples\gdf\canny.gdf
 
 ***** VIDEOINPUT LIBRARY - 0.1995 - TFW07 *****
@@ -398,7 +401,7 @@ node org.khronos.openvx.canny_edge_detector luma2 hyst gradient_size !NORM_L1 ou
 Output
 
 ```python
-C:\Users\aeejshe\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx -du
+C:\Users\test\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2>runvx -du
 mp-profile examples\gdf\canny.gdf
 
 ***** VIDEOINPUT LIBRARY - 0.1995 - TFW07 *****
@@ -459,7 +462,7 @@ VX_API_ENTRY vx_node VX_API_CALL vxColorConvertNode(vx_graph graph, vx_image inp
 
 ## Intro
 
-[G-API Intro](file:///C:/Users/aeejshe/Downloads/2018-12-24-GAPI_Overview.pdf)
+[G-API Intro](file:///C:/Users/test/Downloads/2018-12-24-GAPI_Overview.pdf)
 
 Features
 
@@ -511,7 +514,7 @@ Study if OpenVINO or OpenCV supports
 | OpenVINO     | x    | x                                                            |
 | AMDOVX       | x    | x                                                            |
 | OpenCV G-API | x    | x                                                            |
-| Intel TBB    | x    | v<br />behavior: the ready nodes are called then exit<br />Code: C:\jshe\codes\lua\src\tbbtest\test_tbb_behavior.cpp |
+| Intel TBB    | x    | v<br />behavior: the ready nodes are called then exit<br />Code: C:\test\codes\lua\src\tbbtest\test_tbb_behavior.cpp |
 | Tensorflow   | v    |                                                              |
 
 
@@ -540,8 +543,8 @@ OpenVX讀書筆記
 | tbb   | strong typed<br />make_edge(tbb::flow::output_port<1>(gpu_slm_split_n), tbb::flow::input_port<1>(gpu_slm_mat_mult_n))<br />tbb::flow::function_node< validation_args_type > mat_validation_n(g, tbb::flow::unlimited, [](const validation_args_type& result) {<br/>        // Get references to matrixes<br/>        const tbb::flow::gfx_buffer<float>& GPU_SLM_MAT   = std::get<0>(result);<br/>        const tbb::flow::gfx_buffer<float>& CPU_SLM_MAT   = std::get<1>(result);<br/>        const tbb::flow::gfx_buffer<float>& CPU_NAIVE_MAT = std::get<2>(result);<br/><br/>        // Verify results<br/>        // Check that slm algorithm produces correct results on CPU:<br/>        validate_mat("matrix multiply: 'SLM' CPU vs. CPU", SIZE_Y, SIZE_X, CPU_SLM_MAT.data(), CPU_NAIVE_MAT.data());<br/>        // Verify Gen results:<br/>        validate_mat("matrix multiply: SLM Gen vs. CPU", SIZE_Y, SIZE_X, GPU_SLM_MAT.data(), CPU_NAIVE_MAT.data());<br/>    }); | Not sure                                                     |
 | G-API | strong typed                                                 | TODO                                                         |
 
-// ovx: \\vis_bep_12\C\Users\aeejshe\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2
-// tbb: C:\Users\aeejshe\Downloads\tbb2017_20170604oss_win\tbb2017_20170604oss
+// ovx: \\vis_bep_12\C\Users\test\Downloads\amdovx-core-0.9-beta2\amdovx-core-0.9-beta2
+// tbb: C:\Users\test\Downloads\tbb2017_20170604oss_win\tbb2017_20170604oss
 
 # How to register Kernel
 
