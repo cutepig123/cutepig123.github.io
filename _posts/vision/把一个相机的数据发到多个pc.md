@@ -1,0 +1,44 @@
+看到一些比较好玩的产品，居然可以把一个相机的数据发送给多台pc
+
+比如这个
+
+## Phrontier PHANTA
+
+CameraLink multiplexer
+
+[PHRONTIER PHANTA-D2B4](https://www.stemmer-imaging.com/en/products/phrontier-phanta-d2b4/)
+
+Camera Link base splitter
+
+- 2 camera to 2 groups of 4 frame grabbers
+- Up to 85 MHz
+- Dimension 19" rack ...
+
+[PHRONTIER PHANTA-S1F4](https://www.stemmer-imaging.com/en/products/phrontier-phanta-s1f4/)
+
+Camera Link Full, Medium, Base splitter
+
+- 1 camera Full / Medium to 4 frame grabbers
+- Up to 85 MHz
+- Dimension 19 ...
+
+https://www.stemmer-imaging.com/en/products/series/phrontier-phanta/
+
+| File | Topics                                                       | Size        |      |
+| ---- | ------------------------------------------------------------ | ----------- | ---- |
+|      | [Phontier Phanta Camera Link Splitter/Repeater Full/Medium/Base](https://www.stemmer-imaging.com/media/uploads/cabling/phrontier/65/65600-Phontier-Phanta-Camera-Link-Splitter-Repeater-Full-Medium-Base.pdf) | Data sheets |      |
+
+The **PHANTA multiplexers are compatible with every CameraLink configuration** and are capable of connecting any CameraLink to a maximum of **8 frame grabbers**. PHANTA is ideal when **captured images need to be distributed to multiple frame grabbers** synchronously. Applications include **intensive parallel image processing, image monitoring, and real-time image analysis**. All PHANTA models support a maximum pixel clock rate of **85 MHz**, and all image data is transmitted to the relevant frame grabbers synchronously and identically.
+
+Independently control image data path, control signal path, and SerCom path for maximum signal routing flexibility with the ability to independently shut off unused output ports to avoid signal glitch to framegrabbers.
+
+### Specifications
+
+- Configurations: CameraLink Base, Medium and Full; user-selected master frame grabber
+- Data rate: between 20 MHz and 85 MHz
+- Output: reconditioned, synchronised output
+- Power: optional DC output power for cameras
+- Integration: seamlessly compatible with our Phox, Phire and Phast fibre extenders for extra distance
+- Housing: standard 1U 19" chassis for easy mounting
+
+![img](https://www.stemmer-imaging.com/media/cache/sp_gallery_large/uploads/cabling/phrontier/Ph/Phrontier-PHANTA-Setup_eMbuV9G.jpg)
