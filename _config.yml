@@ -17,7 +17,7 @@ github_username:  cutepig123
 
 permalink: /posts/:year-:month-:day-:title.html
 #permalink: /:categories/:year/:month/:day/:title:output_ext
-#exclude: [images]
+exclude: [images]
  
 
         
@@ -47,7 +47,7 @@ permalink: /posts/:year-:month-:day-:title.html
 markdown: kramdown
 kramdown:
     input: GFM
-paginate: 30
+paginate: 3000
 #permalink: /:year/:month/:day/:title/
 plugins:
     - jekyll-paginate
