@@ -1,1 +1,0 @@
-<p>http://sites.google.com/site/chromeoslinux/</p><p>其实说白了就是linux+chrome,操作系统都是现成的, 不知道跟标准linux 有啥不一样<br /></p>

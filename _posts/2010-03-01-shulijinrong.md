@@ -1,1 +1,0 @@
-<a href="http://www.douban.com/subject/discussion/1077453/" target="_blank">http://www.douban.com/subject/discussion/1077453/</a>
