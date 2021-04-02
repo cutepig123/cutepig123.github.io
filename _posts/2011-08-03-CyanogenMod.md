@@ -1,1 +1,0 @@
-<p>CyanogenMod是一個基於開源Android系統，供某些手機使用的二级市场固件。它提供一些在官方Android系統或手機廠商沒有提供的功能，例如：支援Free Lossless Audio Codec ...<br /><br />What is CyanogenMod?<br />CyanogenMod is an aftermarket firmware for a number of cell phones based on the open-source Android operating system. It offers features not found in the official Android based firmwares of vendors of these cell phones.</p>
