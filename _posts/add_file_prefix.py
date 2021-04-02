@@ -103,7 +103,7 @@ def add_categories():
         
         if not os.path.isfile(fpath) or not fpath.lower().endswith('.md'): return
         
-        categories = sub_path.split('\\')[:-1]
+        categories = sub_path.split('\\')
         categories = [x for x in categories if len(x)>0]
         print(fpath, categories)
         add_categorie_to_file(fpath, categories)

@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 Prometheus
 
 # 系统架构

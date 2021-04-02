@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 <p>发信人: icestonesy (无忧), 信区: Quant<br />
 标&nbsp; 题: 投行的码工怎么样？<br />
 发信站: BBS 未名空间站 (Sat May 16 23:25:00 2015, 美东)<br />

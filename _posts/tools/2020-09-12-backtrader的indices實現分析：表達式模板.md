@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 backtrader的indices實現分析：表達式模板
 
 # 如何理解如下策略中的self.sma1，self.crossover之類的變量？他們是如何求值的？

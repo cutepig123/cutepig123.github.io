@@ -1,3 +1,6 @@
+---
+categories: tool-written-by-me
+---
 ```python
 import os, sys, json
 import sqlite3

@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 <p>xhan/qqbot试用<br /><br />啥是qqbot？<br />基于WebQQ协议的QQ机器人。命令行工具，Hubot支持！<br /><br />怎样安装？<br />首先要安装CoffeeScript</p>
 <p>&nbsp;</p>
 <p>windows：<br />安装nodejs：主页上就有下载<br />C:\Users\cutepig&gt;npm install -g coffee-script<br />C:\Users\cutepig&gt;notepad test1.coffee<br />C:\Users\cutepig&gt;coffee test1.coffee<br />Hello 0<br />Hello 1<br />Hello 2<br />Hello 3<br />Hello 4<br />Hello 5<br />C:\Users\cutepig&gt;coffee -v<br />CoffeeScript version 1.9.1<br />C:\Users\cutepig&gt;type test1.coffee<br />for i in [0..5]<br />&nbsp;&nbsp;&nbsp; console.log "Hello #{i}"<br /><br />ubuntu：<br />CoffeeScript 安裝篇<br />&nbsp;&nbsp; &nbsp;安装nodejs<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;http://nodejs.org/<br />&nbsp;&nbsp; &nbsp;安裝npm<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;官網：http://npmjs.org/<br />&nbsp;&nbsp; &nbsp;安裝CoffeeScript<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;npm install coffee-script<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />todo：<br />webqq协议<br />nodejs学习<br />coffeescript学习<br />windows安装<br />ubuntu安装<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;<br />链接<br />https://github.com/xhan/qqbot<br /><br />&nbsp;&nbsp;&nbsp; WebQQ协议 https://github.com/xhan/qqbot/blob/master/protocol.md<br />&nbsp;&nbsp;&nbsp; Java版的另一个 http://webqq-core.googlecode.com/<br />&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; </p>

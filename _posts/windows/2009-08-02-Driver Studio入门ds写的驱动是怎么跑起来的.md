@@ -1,1 +1,4 @@
+---
+categories: windows
+---
 kdriver.h定义了driverEntry, 该函数会调用<br />&nbsp; __create_driver_class_instance();<br />&nbsp; Status = KDriver::DriverInit(DriverObject, RegistryPath);<br />第一句话是在我们的驱动里面定义的,会创建一个我们的kdriver类对象<br />#define DECLARE_DRIVER_CLASS(class_name, driver_class_string) \<br />&nbsp;&nbsp; &nbsp;void __create_driver_class_instance(void) \<br />&nbsp;&nbsp; &nbsp;{ new (NonPagedPool) class_name ;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;\<br />&nbsp;&nbsp; &nbsp;&nbsp; RtlInitUnicodeString(&amp;KDriver::m_DriverClass, driver_class_string);\<br />&nbsp;&nbsp;&nbsp; }<br />这样整个程序就开始跑起来了<br />.....下略.....<br /> -------------------------<br />另:发现vs2008编译不了driverStudio里面的代码, 而我下载的winddk又不支持vc6,哎 , 郁闷

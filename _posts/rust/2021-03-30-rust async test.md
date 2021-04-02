@@ -1,3 +1,6 @@
+---
+categories: rust
+---
 代码试了几个东西
 
 - async函数的参数能否为future？能

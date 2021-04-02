@@ -1,5 +1,5 @@
 ---
-categories: networking tool Prometheus
+categories: networking tool Prometheustools
 ---
 Prometheus
 

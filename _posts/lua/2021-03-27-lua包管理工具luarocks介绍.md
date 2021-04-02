@@ -1,3 +1,6 @@
+---
+categories: lua
+---
 lua包管理工具luarocks介绍
 
 # 安装

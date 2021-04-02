@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 <p>當 enJoy 卡 客 戶 憑 enJoy 卡 於 enJoy 卡 「 特 約 商 戶 」 簽 賬 消 費 ， 累 積 之 enJoy Dollars 及 Cash Dollars 可 在 同 一 交 易 當 現 金 使 用<br />
 <br />
 可以睇呢度:<br />

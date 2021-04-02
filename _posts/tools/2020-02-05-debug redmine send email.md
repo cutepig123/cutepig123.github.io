@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 # debug redmine send email
 
 ## procedure

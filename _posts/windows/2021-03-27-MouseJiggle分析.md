@@ -1,3 +1,6 @@
+---
+categories: windows
+---
 MouseJiggle分析
 
 MouseJiggle是一个windows下的工具，通过模拟鼠标移动来防止电脑进入屏保

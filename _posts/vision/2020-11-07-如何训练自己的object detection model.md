@@ -1,3 +1,6 @@
+---
+categories: vision
+---
 如何训练自己的object detection model
 
 # 目的

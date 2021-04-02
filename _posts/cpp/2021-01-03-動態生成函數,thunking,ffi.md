@@ -1,3 +1,6 @@
+---
+categories: cpp
+---
 動態生成函數,thunking,ffi
 
 

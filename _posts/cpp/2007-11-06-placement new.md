@@ -1,1 +1,4 @@
+---
+categories: cpp
+---
 发信人: xgYao (小哥), 信区: CPlusPlus<BR>标 &nbsp;题: 请教个腾讯的考题<BR>发信站: 水木社区 (Mon Nov &nbsp;5 14:48:30 2007), 站内<BR><BR>class base{<BR>public:<BR>&nbsp;&nbsp; &nbsp;virtual void f() {<BR>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;cout&lt;&lt;"base::f()"&lt;&lt;endl;<BR>&nbsp;&nbsp; &nbsp;}<BR>};<BR>class derived: public base{<BR>public:<BR>&nbsp;&nbsp; &nbsp;void f() {<BR>&nbsp;&nbsp; &nbsp; &nbsp; &nbsp;cout&lt;&lt;"derived::f()"&lt;&lt;endl;<BR>&nbsp;&nbsp; &nbsp;}<BR>};<BR>void main()<BR>{<BR>&nbsp;&nbsp; &nbsp;base b;<BR>&nbsp;&nbsp; &nbsp;(&amp;b)-&gt;f();<BR>&nbsp;&nbsp; &nbsp;(&amp;b)-&gt;~base();<BR>&nbsp;&nbsp; &nbsp;new(&amp;b) derived;<BR>&nbsp;&nbsp; &nbsp;(&amp;b)-&gt;f();<BR>&nbsp;&nbsp; &nbsp;base *pb = &amp;b;<BR>&nbsp;&nbsp; &nbsp;pb-&gt;f();<BR>}<BR>输出结果是：<BR>base::f() <BR>base::f() <BR>derived::f()<BR>其中第二个结果挺困惑的，难道不是derived::f()么？<BR>

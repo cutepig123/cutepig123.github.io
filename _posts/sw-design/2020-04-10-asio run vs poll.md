@@ -1,3 +1,6 @@
+---
+categories: sw-design
+---
 # asio run vs poll
 
 ## discussions

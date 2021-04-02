@@ -1,3 +1,6 @@
+---
+categories: windows
+---
 script studio源码分析
 
 # 什么是script studio

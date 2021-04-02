@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 VSCode如何用快捷键清空terminal内容？
 
 https://stackoverflow.com/questions/48713604/how-can-i-clear-the-terminal-in-visual-studio-code

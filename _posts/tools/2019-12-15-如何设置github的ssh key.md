@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 [TOC]
 
 How to add SSH key to github

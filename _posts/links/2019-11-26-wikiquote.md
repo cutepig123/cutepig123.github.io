@@ -1,3 +1,6 @@
+---
+categories: links
+---
 發現了一個很好玩的網站wikiquote，上面有很多引用的句子
 比如關於編程語言的說法
 https://en.m.wikiquote.org/wiki/Category:Programming_languages

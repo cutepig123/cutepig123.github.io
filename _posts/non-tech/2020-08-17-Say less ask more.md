@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 Say less ask more
 
 

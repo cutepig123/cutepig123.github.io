@@ -1,3 +1,6 @@
+---
+categories: vision
+---
 Tensorflow  graph optimization
 
 

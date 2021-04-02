@@ -1,3 +1,6 @@
+---
+categories: windows
+---
 如何能用windows把其他協議map成folder
 
 # 背景/目的

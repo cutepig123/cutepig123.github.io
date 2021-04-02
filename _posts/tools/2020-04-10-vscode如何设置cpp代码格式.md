@@ -1,3 +1,6 @@
+---
+categories: tools
+---
 vscode如何设置cpp代码格式
 
 # How to customize your own coding style rule

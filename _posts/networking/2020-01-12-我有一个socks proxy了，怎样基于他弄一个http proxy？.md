@@ -1,3 +1,6 @@
+---
+categories: networking
+---
 我有一个socks proxy了，怎样基于他弄一个http proxy？
 
 

@@ -1,3 +1,6 @@
+---
+categories: links
+---
 <p><a href="http://web.cecs.pdx.edu/%7Eharry/Blitz/">http://web.cecs.pdx.edu/~harry/Blitz/</a></p>
 <p><img src="http://web.cecs.pdx.edu/%7Eharry/Blitz/logo.jpg" alt="The BLITZ Home Page - LOGO" border="0" /> </p>
 <h2>

@@ -1,3 +1,6 @@
+---
+categories: CSArch
+---
 <p>关于什么事actor model，什么事intel tbb这样的用法我就不详细说了，具体请上网查文档</p>
 <p>&nbsp;</p>
 <div class="cnblogs_Highlighter">

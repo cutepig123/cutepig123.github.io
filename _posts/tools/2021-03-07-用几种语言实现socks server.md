@@ -1,5 +1,5 @@
 ---
-categories: networking
+categories: networkingtools
 ---
 用几种语言实现socks server
 

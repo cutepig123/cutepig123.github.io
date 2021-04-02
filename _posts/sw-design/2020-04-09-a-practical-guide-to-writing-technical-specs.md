@@ -1,3 +1,6 @@
+---
+categories: sw-design
+---
 [TOC]
 
 https://stackoverflow.blog/2020/04/06/a-practical-guide-to-writing-technical-specs/?utm_source=Iterable&utm_medium=email&utm_campaign=the_overflow_newsletter
