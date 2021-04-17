@@ -1,0 +1,80 @@
+todo
+
+# [CPS 变换](https://www.zhihu.com/question/27581940/answer/88684896)
+
+FRP函数反应式编程比如Fjax，把对服务器端的请求处理成一个**流Stream**，callback不见了。
+
+还有的办法是处理不了callback，可以把它藏起来啊。像**ClojureScript的core.async**，引入一个并发模型，用一组协作的线程来简化异步编程。
+
+还有其他的理解路径。
+比如程序语言处理的路径，可以研究下**指称语义**，看看**用lambda演算做程序语言的模型**，是如何**用Continuation来建模goto、异常**这些涉及控制流转向的构造。
+
+然后可以使用下**Scheme这样的显式支持Continuation的语言**，它有一个call/cc构造。最后还可以看看在对Scheme、ML这些函数程序语言的编译过程中，如何应用CPS变换把函数程序的控制流凸显出来，向着C语言、或者更底层的汇编语言转化的。
+
+CPS 变换说白了就是把程序内部原本隐式的控制流跳转，用某种方法抽象出来暴露给程序员。[@vczh](https://www.zhihu.com/people/0970f947b898ecc0ec035f9126dd4e08) 之前说过光用 CPS 在小萌语言中做出了各种控制流（if 什么的）。
+一种常见的情况是，**通过 CPS 变换，可以将 Javascript 的回调地狱消除**，能用同步的方式写异步程序： [BYVoid/continuation · GitHub](http://link.zhihu.com/?target=https%3A//github.com/BYVoid/continuation)
+人肉的 CPS 是一种递归技巧，能写出更有格(nan)调(dong)的递归程序。（SICP 有提到）
+CPS 常常用到的地方是实现 ==call/cc ，用这货能实现诸如协程，yield 之类的特性。[Call-with-current-continuation](http://link.zhihu.com/?target=http%3A//en.wikipedia.org/wiki/Call-with-current-continuation)== 不过要在编译器里面实现这货，还需要对过程的栈做垃圾回收。（[Spaghetti stack](http://link.zhihu.com/?target=http%3A//en.wikipedia.org/wiki/Spaghetti_stack) 麻花栈）
+还有很多我不知道的黑魔法，比如说==阴阳谜题……（[continuations](http://link.zhihu.com/?target=http%3A//cs.stackexchange.com/questions/11417/are-there-a-lambda-mu-expression-equivalent-to-the-yin-yang-puzzle)）==
+还能帮助你理解 ==Haskell 的 monad [陈年译稿——一个面向Scheme程序员的monad介绍](http://link.zhihu.com/?target=http%3A//www.cnblogs.com/fzwudc/archive/2011/04/19/2020982.html)==
+
+## [从协程到状态机--regenerator源码解析(一)](https://zhuanlan.zhihu.com/p/37562698)
+
+# PCA
+
+## [PCA主成分分析学习总结](https://zhuanlan.zhihu.com/p/32412043)
+
+# Rust
+
+## [Linux 内核对 Rust 的支持](https://www.oschina.net/news/118364/discussion-about-supporting-linux-kernel-development-in-rust)
+
+涉及到的三个方面：内核中现有的 API、架构支持，和 ABI 与内核的兼容性问题。
+
+
+
+Rust 与 C 具有良好的互操作性；此外，==[bindgen](https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fgithub.com%2Frust-lang%2Frust-bindgen) 工具==能够解析 C 头文件以生成适当的 Rust 声明，因此 Rust 不需要从 C 复制重复的定义
+
+但实际上实施起来还存在一些挑战。例如，Linux 大量使用了预处理器宏和内联函数，bindgen 和 Rust 的外函数接口不容易支持它们
+
+
+
+需要手动封装多少 C API 才能呈现惯用的 Rust 接口？
+
+Thomas 和 Gaynor 展示了==一个 [linux-kernel-module-rust](https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fgithub.com%2Ffishinabarrel%2Flinux-kernel-module-rust%2F) 项目==，可在其中看到内核模式的 Rust 代码示例。在这个项目中，指向用户空间的指针被封装到 <u>UserSlicePtr</u> 类型中。这样的封装生成的代码对现有 Rust 开发者而言更加熟悉，并使 Rust 的类型系统和借用检查器提供最大程度的安全性。但是，必须针对每个 API 进行设计和开发，用 C 和 Rust 编写的模块也会创建不同的 API。这无疑加重了工作的繁琐度。
+
+John Baublitz 也给出了一个[演示模块](https://www.oschina.net/action/GoToLink?url=https%3A%2F%2Fgithub.com%2Fjbaublitz%2Fknock-out)，它更直接地绑定了内核的用户访问功能，绑定多由 bindgen 自动生成。然而，Rust 开发者对这些代码可能会不太习惯，并且这种方式可能需要放弃 Rust 的许多安全保证。
+
+最后，会议达成了共识：对于某些最常见和关键的 API，编写 Rust 封装器是有意义的，但是手动封装每个内核 API 不可行。Thomas 还提到[谷歌正致力于自动生成 C++ 代码的惯用绑定](https://www.oschina.net/news/118148/chrome-rust-and-c-interoperability)，并考虑内核是否可以做类似的事情。
+
+
+
+https://zhuanlan.zhihu.com/p/137077998
+
+## 用Rust重写Linux内核模块体验
+
+[![Kevin Wang](https://pic2.zhimg.com/v2-0673287aec07413d5c7c1d268bc1e414_xs.jpg?source=172ae18b)](https://www.zhihu.com/people/loong-wong)
+
+[Kevin Wang](https://www.zhihu.com/people/loong-wong)
+
+## [在 Rust 中创建 C/C++ API](https://zhuanlan.zhihu.com/p/70095462)
+
+最简单的入门方法是使用 `bindgen` 工具。
+
+`cbindgen` 为 Rust 生成 C 绑定
+
+另一个在Rust中制作 C ++ API的便利工具是 `cpp` crate。
+
+## [Rust语言：元编程，强大的宏系统，菜鸟到高手进阶的必经之路](https://zhuanlan.zhihu.com/p/161497677)
+
+# 傅里叶变换
+
+## [傅立叶变换的性质证明](https://zhuanlan.zhihu.com/p/80683289)
+
+# 机器人
+
+## [如何制作机械臂](https://zhuanlan.zhihu.com/p/20880450)
+
+## [如何制作一个简单的机械臂](https://zhuanlan.zhihu.com/p/78907358)
+
+# 英文听力
+
