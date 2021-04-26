@@ -1,3 +1,6 @@
+---
+categories: Work-related-thinking
+---
 what we can do in roadmap as a general sw team
 
 # 我们的sw面临的问题
