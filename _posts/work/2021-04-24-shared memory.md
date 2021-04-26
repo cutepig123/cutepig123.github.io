@@ -1,3 +1,6 @@
+---
+categories: work
+---
 shared memory
 
 
