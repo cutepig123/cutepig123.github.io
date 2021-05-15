@@ -1,0 +1,16 @@
+KD树伪码 
+Posted on 2005-08-15 15:34 模式识别技术 阅读(117) 评论(0)  编辑 收藏 引用 所属分类: 计算几何  
+Algorithm BUILDKDTREE(P,depth)
+Input: A set of points P and the current depth depth. 
+Output: The root of a kd-tree storing P.
+1.    if P contains only one point then
+2.        return a leaf storing this point
+3.    else if depth is even then
+4.        Split P into two subsets with a vertical line l through the median x-coordinate of the points in P. Let P1 be the set of points to the left and P2 be the set of points to the right. Points exactly on the line belong to P1.
+5.    else
+6.        Split P into two subsets with a horizontal line l through the median y-coordinate of the points in P. Let P1 be the set of points above l and P2 be the points below l. Points exactly on the line belong to P1.
+7.    Vright := BUILDKDTREE(P1,depth+1)
+8.    Vleft := BUILDKDTREE(P2,depth+1)
+9.    Create a node V with Vright and Vleft as its right and left children, respectively. 
+10.    return V.
+
