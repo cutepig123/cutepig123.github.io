@@ -119,12 +119,23 @@ def add_categories():
 
     dir_recur('.', '', callback)
 
+def encoding(filename):
+    from chardet.universaldetector import UniversalDetector
+    detector = UniversalDetector()
+    for line in open(filename, 'rb'):
+        detector.feed(line)
+        if detector.done: break
+    detector.close()
+    return (detector.result['encoding'])
+
 def convert_txt_to_markdown():
     prefixChecker = PrefixChecker()
 
     def ConvertToMD(src, des):
-        df = open(des,'w')
-        for line in open(src,'r').readlines():
+        endoc = encoding(src)
+        print(src, endoc)
+        df = open(des,'w', encoding='utf-8')
+        for line in open(src,'r',encoding=endoc, errors='replace').readlines():
             df.write(line)
             df.write('\n')
         df.close()
@@ -135,10 +146,11 @@ def convert_txt_to_markdown():
         if not os.path.isfile(fpath) or not fpath.lower().endswith('.txt'): return
         
         [is_rename_needed, des_fpath] = prefixChecker.check(os.path.join(root_path, sub_path), item)
-        if is_rename_needed and not os.path.isfile(des_fpath):
+        if is_rename_needed:
             des_fpath = des_fpath[:-3] + 'md'
-            print('convert to ', des_fpath)
-            ConvertToMD(fpath, des_fpath)
+            if not os.path.isfile(des_fpath):
+                print('convert to ', des_fpath)
+                ConvertToMD(fpath, des_fpath)
 
     dir_recur('.', '', callback)
 
