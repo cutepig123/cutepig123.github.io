@@ -1,3 +1,9 @@
+# Desc
+# 遞歸目錄下的所有文件，
+# 如果沒有YYYY-MM-DD-前綴，就根據文件的時間自動加上
+# 如果在子目錄下，自動把目錄名加到categories裏面
+# 如果是txt文件，生成一個對應的md文件
+
 import os, sys, re, time
 
 def MySystem(cmd):
@@ -18,29 +24,33 @@ def dir_recur(root_path, sub_path, callback):
         else:
             callback(root_path, sub_path, item)
 
+class PrefixChecker:
+    def __init__(self):
+        self.pattern = re.compile("^\d\d\d\d-.*")
+    def check(self, dir_path, file_name):
+        if not self.pattern.match(file_name):
+            fpath = os.path.join(dir_path, file_name)
+            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fpath)))
+            des_fname = mtimestr + file_name
+            des_fpath = os.path.join(dir_path, des_fname)
+            return [True, des_fpath]
+        else:
+            fpath = os.path.join(dir_path, file_name)
+            return [False, fpath]
+
+# 如果沒有YYYY-MM-DD-前綴，就根據文件的時間自動加上
 def add_prefix():
-    pattern = re.compile("^\d\d\d\d-.*")
+    prefixChecker = PrefixChecker()
 
     def callback(root_path, sub_path, fname):
         fpath = os.path.join(root_path, sub_path, fname)
         if not os.path.isfile(fpath) or not fpath.lower().endswith('.md'): return
-        if not pattern.match(fname):
+        
+        [is_rename_needed, des_fpath] = prefixChecker.check(os.path.join(root_path, sub_path), fname)
+        print(des_fpath)
+        if is_rename_needed:
             print(fname)
-        if not pattern.match(fname):
-            print(fname)
-            
-            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fpath)))
-            des_fname = mtimestr + fname
-            des_fpath = os.path.join(root_path, sub_path, des_fname)
-            #print(des_fname)
-            MyRename(fpath, des_fpath)
-        elif False:
-            mtimestr = time.strftime('%Y-%m-%d-', time.gmtime(os.path.getmtime(fpath)))
-            fname_no_prefix = fname[len('2020-01-01-'):]
-            des_fname = mtimestr + fname_no_prefix
-            des_fpath = os.path.join(root_path, sub_path, des_fname)
-            #print(des_fname)
-            #MyRename(fname, des_fname)
+           
             MyRename(fpath, des_fpath)
             
     dir_recur('.', '', callback)
@@ -110,6 +120,22 @@ def add_categories():
 
     dir_recur('.', '', callback)
 
+def convert_txt_to_markdown():
+    def callback(root_path, sub_path, item):
+        fpath = os.path.join(root_path, sub_path, item)
+        
+        if not os.path.isfile(fpath) or not fpath.lower().endswith('.txt'): return
+        
+        categories = sub_path.split('\\')
+        categories = [x for x in categories if len(x)>0]
+        print(fpath, categories)
+        add_categorie_to_file(fpath, categories)
+
+    dir_recur('.', '', callback)
+
+# 如果沒有YYYY-MM-DD-前綴，就根據文件的時間自動加上
 add_prefix()
+# 如果在子目錄下，自動把目錄名加到categories裏面
 add_categories()
 #dir_recur('.', '',lambda x,y:print(x,y))
+# 如果是txt文件，生成一個對應的md文件
