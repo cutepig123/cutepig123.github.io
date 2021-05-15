@@ -13,7 +13,6 @@ def MySystem(cmd):
 def MyRename(src, des):
     MySystem('move "%s" "%s"'%(src, des))
 
-
 def dir_recur(root_path, sub_path, callback):
     full_path = os.path.join(root_path, sub_path)
     for item in os.listdir(full_path):
@@ -121,21 +120,32 @@ def add_categories():
     dir_recur('.', '', callback)
 
 def convert_txt_to_markdown():
+    prefixChecker = PrefixChecker()
+
+    def ConvertToMD(src, des):
+        df = open(des,'w')
+        for line in open(src,'r').readlines():
+            df.write(line)
+            df.write('\n')
+        df.close()
+
     def callback(root_path, sub_path, item):
         fpath = os.path.join(root_path, sub_path, item)
         
         if not os.path.isfile(fpath) or not fpath.lower().endswith('.txt'): return
         
-        categories = sub_path.split('\\')
-        categories = [x for x in categories if len(x)>0]
-        print(fpath, categories)
-        add_categorie_to_file(fpath, categories)
+        [is_rename_needed, des_fpath] = prefixChecker.check(os.path.join(root_path, sub_path), item)
+        if is_rename_needed and not os.path.isfile(des_fpath):
+            des_fpath = des_fpath[:-3] + 'md'
+            print('convert to ', des_fpath)
+            ConvertToMD(fpath, des_fpath)
 
     dir_recur('.', '', callback)
 
 # 如果沒有YYYY-MM-DD-前綴，就根據文件的時間自動加上
-add_prefix()
+#add_prefix()
 # 如果在子目錄下，自動把目錄名加到categories裏面
-add_categories()
+#add_categories()
 #dir_recur('.', '',lambda x,y:print(x,y))
 # 如果是txt文件，生成一個對應的md文件
+convert_txt_to_markdown()

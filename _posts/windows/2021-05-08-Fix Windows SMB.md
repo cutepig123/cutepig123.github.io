@@ -1,3 +1,6 @@
+---
+categories: windows
+---
 # 問題
 
 可以訪問`\\localhost`，但無法訪問`\\ip`
