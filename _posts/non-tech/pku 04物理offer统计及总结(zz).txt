@@ -1,0 +1,175 @@
+pku 04物理offer统计及总结(zz)
+发信站: 水木社区 (Thu Apr 24 18:35:03 2008), 站内
+
+发信人: majiamj (PHY04||飞跃专用马甲), 信区: AdvancedEdu
+标  题: 04物理offer统计及总结
+发信站: 北大未名站 (2008年04月23日23:56:20 星期三) , 站内信件
+
+
+04物理（包括元培物理方向）offer统计情况
+
+物理offer均直接以数字表示。
+AP=Applied Phy.
+AOS=Atmospheric and Oceanic Sci.
+EE=Electrical Eng.
+MSE=Materials Sci. & Eng.
+NSE=Nuclear Sci. & Eng.
+ME=Mechenical Eng.
+BMS=Bio. Med. Sci.
+BME=Bio. Med. Eng.
+CED=Computational Eng. Design
+MP=Med. Phy.
+CE=Civil Eng.
+
+                Offer                       Accept
+MIT             2+1MSE+1NSE+1CED            1MSE+1NSE+1CED
+Stanford        1+3MSE+2AP+1EE(AD)          2MSE+1EE(AD)
+Caltech         3+1MSE+1AOS+1Geophy         1+1AOS+1Geophy
+Harvard         2ChemPhy                    2ChemPhy
+Princeton       1+3EE+1Astro+1Plasma        1+1Astro+1Plasma
+Berkeley        1+1MSE+1Geophy              1Geophy
+Cornell         1+1AP+1Astro+1BME           0
+UChicago        5+1AOS                      1
+UIUC            4+3MSE+1Astro+1ME+1Biophy   1MSE+1Astro
+Columbia        3+1AP                       2
+UT Austin       4+1EE                       1+1EE
+UMich           7+1EE+1Astro+1AOS+1BMS+1CE  3+1BMS
+Yale            1+1EE                       1
+U Maryland      4+1BME+1BE                  0
+UCLA            2+1AOS+1BioMath+1BE+1MSE    0
+UCSD            4+5MSE(AD)+1AOS             1MSE(AD)+1AOS
+UC Boulder      2                           1
+UPenn           2MSE                        1MSE
+UW Seattle      3+1MSE+1EE+1AOS             1+1MSE+1EE
+UW Madison      2+1AOS+1Chem+2MP            0
+JHU             1+1AOS                      0
+SUNY-SB         1+4AOS                      0
+OSU             2+1EE                       0
+PSU             3+1Astro+2AOS               1Astro+1AOS
+Rutgers         1+1AP+1ME                   1AP
+Rice            3+2AP+1EE                   0
+UMN             3+1BME                      0
+Brown           6                           2
+CMU             1                           1
+Duke            10                          0
+Northwestern    2MSE+1BME                   1BME
+UC Irvine       1+1AP                       1
+BostonU         5                           1
+Gatech          5+2MSE+1EE+3AOS             1
+IU-Bloomington  4                           0
+NYU             1                           1
+Purdue          2+2EE+1AOS                  0
+U Arizona       1                           0
+U Florida       3+1Astro                    0
+Rochester       1ME                         0
+U Virginia      2                           0
+WUSTL           2+1BE                       1BE
+TAMU            2+2AOS                      1AOS
+CWRU            3                           0
+CUNY            2                           1
+UPitts          1+1Astro                    0
+USC             1                           0
+Notre Dame      4+1EE                       0
+ASU             2                           1
+ISU             1MSE                        0
+NCSU            1                           0
+RPI             5                           0
+UMass           2+1Astro                    1
+U Oregon        3                           0
+UC Riverside    2                           0
+BC              1                           0
+U Georgia       1                           0
+Lehigh          1                           0
+Utah            1+1Astro                    1Astro
+UT HSCH         1MP                         1MP
+SUNY-Buffalo    1                           0
+UI Chicago      1                           0
+C of W & M      1                           0
+U New Hampshire 1                           0
+Syracuse        1                           0
+Mayo Clinic     1BME                        0
+Tulane          1                           1
+U Nebraska      1                           0
+UBC             1                           0
+U Toronto       1+1Astro                    1
+Waterloo        1                           0
+HKU             1                           0
+CUHK           1                           1
+NUS             1                           1
+Cambridge       1+1Astro(conditional)       0
+Max-Plank       2+1Astro                    1+1Astro
+INGP(France)    1MSE                        0
+Leuven(Belgium) 1MSE                        1MSE
+奥地利          1                           1
+
+
+
+数据：物理学院+元培物理方向共64人申请，有61位同学，拿到8个国家和地区，80所学校
+,12个专业共计253offer。其中美国69个学校共238个offer。主要的去向：物理156个off
+er，28位同学接受；材料20个offer，8位同学接受；天体物理12个offer，5位同学接受。
+大气科学20个offer，4位同学接受。EE13个offer，3位同学接受。
+
+还是按惯例，对今年物理申请的总体形势做一点评论。（几个同学讨论的意见，免不了主
+观因素，仅供参考，师弟师妹们要以当年的申请信息为准）
+
+今年物理的申请总体来说是比较成功，大部分同学都拿到了满意的offer。无论从总体数
+量及牛offer的比例，04的申请都应该是911以后最好的一届。其中高端方面六大（给师弟
+师妹妹们扫扫盲，物理所谓六大是指MIT, Stanford, Caltech, Harvard, Princeton, B
+erkeley）总共收了29个offer，走了15位同学。这应该是数年来北大物理最辉煌的一届。
+
+但总体好的的形势下还是有不太如人意之处。有3位同学至今还没有明确的结果。top10的
+同学里也有offer很不符合自身水平的情况。总体来说，今年实验凝聚态及材料方向申请
+比较容易，高能及理论的方向不是非常理想。在top10的同学两大类背景差不多人数的情
+况下，前者拿了六大offer数目的一半以上，后者仅拿到4个.（这里申明以下，说这些决
+不是诱导师弟师妹们选择科研方向有所限制，只是客观的形势介绍，最多供后面的同学在
+申请策略上考虑）
+
+一些学校的评述：
+UCSB这个学校好像确实就是不发offer（起码物理的情况是这样的），我们这届有几个同
+学不大死心，尝试了一下。各个方向都有，最后还是一个都没拿到。Top30的学校里除UC
+SB外，Harvard和Upenn的物理我们都没有拿到，综合以前的数据看，这两个学校也是不很
+友好的（其实说H校是废话，他家从来就容易申过）。然后对于我们物理背景的人能申的
+方向来说，Yale也是很难申的学校。
+
+友好学校：
+（事先声明，本评述仅由本届及往上几届的情况总结而出，日后完全有可能有变化，还是
+那句话，仅供参考）
+Chicago，Umich，Duke，Brown的物理是近几年一直对北大物理比较友好的。特别值得一
+提的是Duke，今年给我们发了两位数的offer，还发了若干WL。两位数的offer在01年以后
+只有UIUC一度出现过。（不过Duke我们最后没有一个人去。。。）
+师弟师妹可能还比较关心UIUC和PSU这两个传统友好学校的情况。这里要指出，此两校近
+两年的offer数量有所下降（没有以前接近10个的标准），是因为很多人withdraw的原因
+，单纯看数字并不足以体现其真实友好程度。
+顺便提一下，Caltech的物理，师弟师妹们以后或许会有些机会。
+（其实罗嗦了这么多关于友好，友好也不见得就容易拿。因为每年的所谓“友好”学校，
+申的人数总是会达到一个惊人的数字。。。）
+
+关于方向：
+近几届的结果已经说明，我们物理背景的同学申请方向其实是可以很多样化的。这也就是
+院里每年新生典礼的时候提的“没有想好读什么，就读物理”的道理MSE，EE，AP以至于
+Geophy，BME，都是不错的选择。并且近来的经验是物理的同学在与这些方向申请人的竞
+争中GPA的优势还是十分明显的。另外欧洲的学校大家今后可以考虑。Cambridge和Max-P
+lank这样的世界顶级做学问的地方也是可能给我们系的同学发offer的。此外欧洲还有很
+多其他不错的学校，其学术水平不逊于美国很多的学校，而且其奖学金申请并非传统认识
+上的比较困难。关于这些情况，可一参考pz等同学即将可能写出的申请总结。
+
+Withdraw和Decline：
+十分重要！！！而且是十万火急。很多学校在申材料以至发offer的时候，是会按国家以
+至不同学校来划分申请人的。不夸张的说，你占的不去的offer就很可能是直接堵了你同
+学的活路！我们级近415的时候，有好几对的情况就是一个同学苦苦的等另一个同学decl
+ine某个offer。所以，如果你有中意的offer，请马上decline其他的，并withdraw还在p
+ending的。就算没有中意的，据掉你不可能去的。无论如何，你只能去一个学校，请把机
+会留给别的同学，希望师弟师妹们注意。
+
+感谢：
+感谢去年秋天时一起组织04物理申请协调会的zhading，wft，bigbigbear，Hasegawa，s
+illybear，topcat和Luanjing同学。感谢leophy帮助大家整理物理申请方向的英语考试要
+求。申请协调会在很大程度上还是对很多同学的选校有一定的帮助作用，希望师弟师妹们
+可以把这个从03开始的传统继续下去。
+感谢offer统计中pz，yyzzcanor，xspaladin，robertwu，kds，bigbigbear, topcat, l
+eophy和Luanjing等同学的协助。
+
+--
+
+※ 修改:·spare 于 Apr 24 19:17:53 2008 修改本文·[FROM: 211.99.222.*]
+※ 来源:·水木社区 newsmth.net·[FROM: 211.99.222.*]
