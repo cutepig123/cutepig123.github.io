@@ -1,0 +1,402 @@
+数据挖掘资源！[分享]
+
+数据挖掘 
+
+Data Mining: What Is Data Mining ? 
+http://www.anderson.ucla.edu/faculty/jason.frand/teacher/technologies/palace/datamining.htm 
+
+
+Data Mining - An Introduction 
+http://databases.about.com/library/weekly/aa100700a.htm?iam=excite_1&terms=data+mining 
+
+
+Data Mining - An Introduction Student Notes 
+http://www.pcc.qub.ac.uk/tec/courses/datamining/stu_notes/dm_book_1.html 
+
+
+Data Mining Overview 
+http://www.megaputer.com/dm/index.php3 
+
+
+Data Mining - Award Winning Software 
+http://www.salford-systems.com/?source=goto 
+
+
+Data Mining With MicroStrategy Best In Business Intelligence 
+http://www.microstrategy.com/Software/Mining.asp?CID=1818dm 
+
+
+Data Mining, Web Mining and Knowledge Discovery Directory 
+http://www.kdnuggets.com/ 
+
+
+Data Miners Home Page 
+http://www.data-miners.com/ 
+
+
+Data Mining and Knowledge Discovery Journal 
+http://www.digimine.com/usama/datamine/ 
+
+
+Data Mining and Knowledge Discovery Journal 
+http://www.kluweronline.com/issn/1384-5810 
+
+
+Effective Data Mining Technology 
+http://www.enablesoft.com/ 
+
+
+Find Data Mining Solutions 
+http://www.knowledgestorm.com/SearchServlet?ksAction=keyMap&x=data+mining&site=Overture 
+
+
+Data Mining Solutions - Business Intelligence 
+http://www.netsoft-usa.com/01_bi.aspx 
+
+
+Data Mining Resources 
+http://databases.about.com/cs/datamining/index.htm?PM=ss15_databases 
+
+
+The Data Mine Information Index About Data Mining 
+http://www.the-data-mine.com/ 
+
+
+ITtoolbox Business Intelligence 
+http://businessintelligence.ittoolbox.com/ 
+
+
+Mining Data For Actionable Business Decisions 
+http://internet.about.com/library/aa_data_mining_041202.htm?iam=excite_1&terms=data+mining 
+
+
+The Data Mining Group 
+http://www.dmg.org/ 
+
+
+Data Mining Software 
+http://www.knowledgestorm.com/SearchServlet?ksAction=keyMap&x=Data+Mining+Software&site=LOOKSMART 
+
+
+IBM Data Mining Project/Group Quest 
+http://www.almaden.ibm.com/cs/quest/ 
+
+
+Data Mining Resources 
+http://psychology.about.com/cs/datamining/index.htm?iam=excite_1&terms=data+mining 
+
+
+Data Mining, Text Mining and Web Mining Software 
+http://www.megaputer.com/ 
+
+
+Data Mining and Data Warehousing Links 
+http://databases.about.com/cs/datamining/index.htm?iam=excite_1&terms=data+mining 
+
+
+Data Mining Software : EDM & DMSK 
+http://www.data-miner.com/ 
+
+
+Data Mining and Knowledge Discovery In Databases 
+http://db.cs.sfu.ca/sections/publication/kdd/kdd.html 
+
+
+DM Review: Strategic Solutions For Business Intelligence 
+http://www.dmreview.com/ 
+
+
+Data, Text and Web Mining 
+http://internet.about.com/cs/datamining/index.htm?iam=excite_1&terms=data+mining 
+
+
+First SIAM International Conference On Data Mining 
+http://www.siam.org/meetings/sdm01/ 
+
+
+Data Mining 2002 International Conference On Data Mining Methods and Databases For Engineering, 
+http://www.wessex.ac.uk/conferences/2002/datamining02/ 
+
+
+SIGKDD - ACM Special Interest Group On Knowledge Discovery and Data Mining 
+http://www.acm.org/sigkdd/ 
+
+
+Data Mining News 
+http://www.idagroup.com/ 
+
+
+NCDM National Center For Data Mining 
+http://www.ncdm.uic.edu/ 
+
+
+Data Mining Benchmarking Association (DMBA) 
+http://www.dmbenchmarking.com/ 
+
+
+Data Mining In Molecular Biology 
+http://industry.ebi.ac.uk/~brazma/dm.html 
+
+
+Data Mining and Machine Learning 
+http://www.cs.helsinki.fi/research/fdk/datamining/ 
+
+
+NCBI Tools For Data Mining 
+http://www.ncbi.nlm.nih.gov/Tools/ 
+
+
+Guide Your Organization's Future With Data Mining 
+http://www.spss.com/spssbi/applications/datamining/ 
+
+
+URLs For Data Mining 
+http://www.galaxy.gmu.edu/stats/syllabi/DMLIST.html 
+
+
+Generate maximum return on data in minimum time with Clementine 
+http://www.spss.com/spssbi/clementine/ 
+
+
+ICDM'02 The 2002 IEEE International Conference On Data Mining 
+http://kis.maebashi-it.ac.jp/icdm02/ 
+
+
+DMI: Data Mining Institute 
+http://www.cs.wisc.edu/dmi/ 
+
+
+Data Mining On The Web 
+http://www.webtechniques.com/archives/2000/01/greening/ 
+
+
+Data Mining Lecture Notes 
+http://www-db.stanford.edu/~ullman/mining/mining.html 
+
+
+ITSC Data Mining Center 
+http://datamining.itsc.uah.edu/ 
+
+
+Imperial College Data Mining Research Group 
+http://ruby.doc.ic.ac.uk/ 
+
+
+Knowledge Discovery & Data Mining Foundation 
+http://www.kdd.org/ 
+
+
+Untangling Text Data Mining 
+http://www.sims.berkeley.edu/~hearst/papers/acl99/acl99-tdm.html 
+
+
+Directory Of Data Warehouse, Data Mining and Decision Support Resources 
+http://www.infogoal.com/dmc/dmcdwh.htm 
+
+
+Data Mining Techniques 
+http://www.statsoftinc.com/textbook/stdatmin.html 
+
+
+Knowledge Discovery In Biology and Medicine 
+http://bioinfo.weizmann.ac.il/cards/knowledge.html 
+
+
+SAS Analytic Intelligence Data & Text Mining 
+http://www.sas.com/technologies/data_mining/ 
+
+
+Analysis of Data Mining Algorithms 
+http://userpages.umbc.edu/~kjoshi1/data-mine/proj_rpt.htm 
+
+
+BIOKDD, 2001 Workshop On Data Mining In Bioinformatics 
+http://www.cs.rpi.edu/~zaki/BIOKDD01/ 
+
+
+Advances In Knowledge Discovery and Data Mining 
+http://www.aaai.org/Press/Books/Fayyad/fayyad.html 
+
+
+Online Program In Data Mining 
+http://www.ccsu.edu/datamining/ 
+
+
+Data Mining: Concepts & Techniques (Book) 2000 
+http://www.cs.sfu.ca/~han/DM_Book.html 
+
+
+Tutorial On High Performance Data Mining 
+http://www-users.cs.umn.edu/~mjoshi/hpdmtut/ 
+
+
+GMDH Group Method Of Data Handling 
+http://www.gmdh.net/ 
+
+
+The Serendip Data Mining Project 
+http://www.bell-labs.com/project/serendip/ 
+
+
+Data Mining Forum 
+http://www.data-mining-forum.de/ 
+
+
+Open Directory: Data Mining 
+http://dmoz.org/Computers/Software/Databases/Data_Mining/ 
+
+
+Data Warehouse Information Center - Data Mining 
+http://www.dwinfocenter.org/datamine.html 
+
+
+Data Mining Magazine 
+http://www.mining.dk/ 
+
+
+Data Mining Server 
+http://dms.irb.hr/ 
+
+
+NAG Data Mining Components to Create Critical Competitive Advantage 
+http://www.nag.co.uk/numeric/DR/drdescription.asp 
+
+
+Data Mining and Multidimensional Analysis 
+http://www.ics.uci.edu/~eppstein/gina/datamine.html 
+
+
+ADC's Data Mining Resources For Space Science 
+http://adc.gsfc.nasa.gov/adc/adc_datamining.html 
+
+
+Laboratory For Knowledge Discovery In Databases (KDD) 
+http://www.kddresearch.org/Groups/Data-Mining/ 
+
+
+NCSA Data, Mining and Visualization 
+http://archive.ncsa.uiuc.edu/DMV/ 
+
+
+CRoss Industry Standard Process For Data Mining 
+http://www.crisp-dm.org/ 
+
+
+International Workshop On Visual Data Mining 
+http://www-staff.it.uts.edu.au/~simeon/vdm_pkdd2001/ 
+
+
+Mathematic Challenges In Scientific Data Mining 
+http://www.ipam.ucla.edu/programs/sdm2002/ 
+
+
+Mining Customer Data 
+http://www.db2mag.com/db_area/archives/1998/q3/98fsaar.shtml 
+
+
+Constraint-Based Multidimensional Data Mining 
+http://www-sal.cs.uiuc.edu/~hanj/pdf/computer99.pdf 
+
+
+什么是数据挖掘 
+http://www.seamlessit.com/documents/DataMiner/DM2002-05-24A.htm 
+
+
+数据挖掘-技术与应用 
+http://www.seamlessit.com/documents/DataMiner/DM2002-05-24B.htm 
+
+
+数据挖掘助竞争 
+http://www.cai.com.cn/suc_story/0426.htm 
+
+
+数据挖掘讨论组 
+http://www.dmgroup.org.cn/ 
+
+
+数据挖掘在CRM中的应用 
+http://www.chinabyte.com/20020726/1622396.shtml 
+
+
+Open Miner 数据挖掘工具 
+http://www.neusoft.com/UploadFile/0.4.3/217/217.htm 
+
+
+数据挖掘-概念与技术（影印书） 
+http://www.hep.edu.cn/books/computer/photocopy/20.html 
+
+
+数据挖掘在科学数据库中的应用探索 
+http://www.sdb.ac.cn/thesis/thesis5/paper/p6.doc 
+
+
+数据挖掘概述 (一) 
+http://www.ccf-dbs.org.cn/pages_c/datamining1.htm 
+
+
+数据挖掘概述 (二) 
+http://www.ccf-dbs.org.cn/pages_c/datamining2.htm 
+
+
+数据挖掘在CRM中的核心作用 
+http://www.cndata.com/sjyw/dcd_knowlege/texts/article491.asp 
+
+
+网络数据挖掘 
+http://www.pcworld.com.cn/2000/back_issues/2014/1436a.asp 
+
+
+<构建面向CRM的数据挖掘应用> 2001 人民邮电出版社 
+http://www.e-works.net.cn/business/category18/126700621324531250.html 
+
+
+数据挖掘在CRM中的应用 
+http://www.e-works.net.cn/ewkArticles/Category38/Article9809.htm 
+
+
+数据挖掘及其工具的使用 
+http://eii.dlrin.edu.cn/zjlw/zhlw17.htm 
+
+
+数据挖掘-极具发展前景的新领域 
+http://www.creawor.com/biforum/bi_02.htm 
+
+
+数据挖掘的研究现状 
+http://www.creawor.com/biforum/bi_03.htm 
+
+
+数据挖掘-数据库技术的新时代 
+http://www.china-pub.com/computers/emook/1188/info.htm 
+
+
+XML 与面向Web的数据挖掘技术 
+http://www.aspcool.com/lanmu/browse1.asp?ID=719&bbsuser=xml 
+http://www.swm.com.cn/rj/2000-10/25.htm 
+http://www.ccidnet.com/tech/web/2001/09/04/58_3176.html 
+
+
+上海市计算机学会数据挖掘技术讨论网站 
+http://scs.stc.sh.cn/main/sjwj.htm 
+
+
+数据挖掘与统计工作 
+http://www.bjstats.gov.cn/zwxx/wzxw/zzwz/200207020115.htm 
+
+
+数据仓库、数据集市和数据挖掘 
+http://eii.dlrin.edu.cn/zjlw/zhlw16.htm 
+
+
+数据挖掘-图书馆员应掌握的基本工具 
+http://www.zslib.com.cn/xhlw/wk.doc 
+
+
+数据挖掘技术概述 
+http://www.china-pub.com/computers/emook/0903/info.htm 
+
+
+数据挖掘及其在工程诊断中的应用(博士论文) 
+http://www.monitoring.com.cn/papers/GaoYilong_C_D.htm
+
+

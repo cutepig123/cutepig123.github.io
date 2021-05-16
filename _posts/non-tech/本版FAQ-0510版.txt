@@ -1,0 +1,60 @@
+发信人: NavyAnt (站在海军码头边的蚂蚁), 信区: CSArch
+标  题: 本版FAQ-0510版
+发信站: 水木社区 (Mon Oct  3 12:13:03 2005), 站内
+
+
+CSARCH FAQ
+By NavyAnt Oct 1,2005
+
+计算机体系结构版常见问题集
+Q1: 计算机体系结构(computer architecture)是研究什么的？
+A1: 计算机体系结构是关于如何挑选硬件组件并将之互连而成一计算机器，使之满足功能，
+性能和成本方面的要求的一门科学与艺术。Computer Architecture is the science and
+art of selecting and interconnecting hardware components to create computers
+that meet functional, performance and cost goals.
+
+Q2: 有没有经典的教材供我入门和学习？
+A2: 很幸运，虽然comp arch是一个日新月异的研究领域，但我们有两本经典可靠的教材可
+供使用。Book1: Computer Organization and Design, Hardware/Software Interface by
+Hennessy & Peterson.
+(http://www.amazon.com/exec/obidos/tg/detail/-/1558606041/102-0900541-3727333?v=
+glance)和Computer Architecture: A Quantitative Approach 同样作者
+(http://www.amazon.com/exec/obidos/tg/detail/-/1558605967/ref=pd_bxgy_img_2/102-
+0900541-3727333?v=glance&s=books). 建议新手们看别的书之前，先看第一本，以少走弯
+路。
+
+ Q3:能说说本版具体讨论那些方面的问题吗？
+ A3:本版的话题包括：Processor architectures including GPU & SPU (DSP) (处理器体
+系结构）, Memory hierarchy subsystems （存储子系统设计),Multiprocessors and
+multicomputers (多处理器，多机系统），Storage and interconnect subsystems（存储
+和互连）Application-specific, reconfigurable,and embedded architectures (专用，
+可重配置，以及嵌入系统），Power-efficient architectures（节能体系结构）
+Performance/power evaluation and measurement （性能/能耗测评分析）, 还包括操作系
+统(Operating System), Compiler, linker, loader等系统软件。另外处理器模拟器
+(simulator)也是一个重要话题。当然国内体系结构的发展也是我们十分关心的话题。
+
+ Q4:从哪里我可以下载到最新的研究成果
+ A4: comp arch的最新和主要的研究成果一般都发表在ISCA (International Symposium
+on Computer architecture), HPCA (High Performance Computer Architectur),
+microarchitecture, PACT (Parallel Architecture and Compilation Techniques),
+ASPLOS(Architectural Support for Programming Languages and Operating Systems).
+
+ Q5:有那些网络资源我们可以使用呢？
+ A5: google "computer architecture"，你可以连到
+http://www.cs.wisc.edu/~arch/www/，是computer architecture的门户网站
+ 可以通过它找到很多工具，论文，会议等信息。当然本版的
+web:http://www3.newsmth.net/bbsdoc.php?board=CSArch，也很有用:).愿意的话，你还可
+以加入我们的mailing list http://groups-beta.google.com/group/csarch 和计算机体系
+结构华人业者联谊会http://www.cs.wisc.edu/CPU-CA/about.html
+
+ Q6:你怎么才写了这么点？
+ A6:太晚了，下次接着写，同时请将你认为好的FAQ发给我,谢谢:)
+
+--
+  人类一思索，    上帝就发笑
+  CPU一思索，     人类就发笑
+  搞arch的一思索， CPU就发笑
+
+
+※ 修改:·NavyAnt 于 Mar  2 14:25:54 修改本文·[FROM: 76.243.92.*]                                                      
+※ 来源:·水木社区 newsmth.net·[FROM: 69.208.214.*]                                                                    

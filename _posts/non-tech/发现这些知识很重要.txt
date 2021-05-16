@@ -1,0 +1,22 @@
+发现这些知识很重要
+发信站: 水木社区 (Sat Apr 26 00:13:44 2008), 站内
+
+  本人计算机系硕士，本科乃其他专业。实验室学术研究
+气氛浓厚，大牛众多。
+  一年下来，感觉无论是AI、KDD、Data Mining、Web，还
+是IR，基本的理论工具都无非这些变来变去:
+
+  Bayesian Theory
+  Graphical Model, including (Hidden)Markov Model,
+                              Belief Propagation
+  Classification
+  Clustering Algorithm
+  SVM
+  Entropy
+  Random Walk Graph(Probability)
+
+
+总觉得是不是我前两年好好打下数学基础，那么在高级会议
+上发好paper就不是特别遥不可及的事情？ 因为我总能在基于
+这些理论上的extensive experiments 上发现些东西
+

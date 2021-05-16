@@ -1,0 +1,264 @@
+wang he 93760384 
+
+541-580510-292
+W23497986
+
+词汇：
+semiconductor equipment
+end user
+wafer front-end晶片前端
+assembly & packaging
+copper 铜
+shrink 缩短
+die芯片
+die bonder芯片焊接机（管芯焊机）
+die handling管芯处理
+wire bond丝焊
+packaging封装方式:BGA/miniBGA, CSP ,Flip Chip覆晶
+packaging process封装工艺过程：
+	die attach把芯片粘在leadframe上；
+	wire Bond把die pad压料垫, 顶料板, 冲模垫junction连接到leadframe基座上（gold wire金线）
+	molding成型:leadframe epoxy环氧的 molding
+	Trim修整, 微调 & form
+
+
+mandatory 命令的, 强制的, 托管的,provident fund公积金
+
+pearly
+[5pE:li]
+adj.
+珍珠似的, 用珍珠装饰的
+nautilus
+[5nC:tilEs]
+n.
+[动]鹦鹉螺, 缸鱼, 鹦鹉螺号
+allegory
+[5Ali^Eri]
+n.
+寓言
+
+IC fabrication 制作, 构成, 伪造物, 装配工 过程：
+	die bond将晶圆粘到leadframe pad上
+	wire bond：把晶圆die和lead引脚连起来
+	trim/form:
+THT：芯片引脚插入电路板内
+SMT：芯片引脚粘在电路板上，可以两侧都有芯片
+PQFP
+COB:chip-on-board
+Flip Chip
+BGA
+
+substrate (=substratum)底层,下层,[地]底土层,基础,本源,[生]培养基,[生化]酶作用物,[摄](胶片)感光底层
+copper 铜 sphere球
+ceramic陶器的substrate基底
+bumping隆起焊盘形成
+anatomy剖析
+flip chip 叨焊晶片, 倒装晶片 倒装法
+thermal cycling热循环
+
+Automold自动塑封成形(Molding)设备和模具
+
+QFN
+stacked die大量管芯
+stacked package多层包装
+flip chip覆晶（倒装焊）
+system-in-package组装系统
+fine pitch wire bonding微距焊线
+thin die attachment微细管芯焊接
+ultra thin molded package超微细铸模包装
+BEP：back end product后工序产品（包括制模molding，焊球放置ball placement，包装切割package singulation，测试处理器test handler）
+parts fabrication部件制造
+molding system塑封工序设备系统
+test handler测试处理器
+eching lines浸蚀生产线
+stamped leadframe冲压引线框架
+air bearing table空气轴承台, 气浮台
+COG（chip on glass） bonder：chip on glass,晶片直接玻璃封装焊接机
+MSL 1:(moisture sensitivity level 1) leadframe温度敏感性水平1引线框架
+oxide treatment line：氧化处理生产线
+PPF：pre-plated leadframe预镀引线框架
+trim-and-form system切筋成型系统
+两种leadframe：蚀片etched leadframe和冲压stamped leadframe
+fine pitch微间距
+MCM：multi chip module多片组件
+SiP：system in package组装系统
+copper铜
+encapsulation塑封
+
+集团产品包括设备产品和leadframe引线框架（好像是芯片的基底的东东）
+设备产品包括：管芯焊机die bond，焊线机wire bond，覆晶焊机flip chip bonder，塑封工艺设备encapsulation equipment，整合式测试处理器integrated test handler，晶体封装设备CSP assembly equipment
+
+flip-Chip
+倒焊芯片。裸芯片封装技术之一，在LSI 芯片的电极区制作好金属凸点，然后把金属凸点与印刷基板上的电极区进行压焊连接。封装的占有面积基本上与芯片尺寸相同。是所有封装技术中体积最小、最薄的一种。
+但如果基板的热膨胀系数与LSI 芯片不同，就会在接合处产生反应，从而影响连接的可靠性。因此必须用树脂来加固LSI 芯片，并使用热膨胀系数基本相同的基板材料。
+Flip Chip 技术起源于1960 年代，为IBM 开发出之技术，Flip Chip 技术是在I/O pad上沉积锡铅球，然后将芯片翻转佳热利用熔融的锡铅球与陶瓷机板相结合此技术替换常规打线接合，逐渐成为未来的封装主流 -
+COG(Chip On Glass) 是利用 Flip Chip 的技術，將長有金凸塊的 IC 晶片，以 ACF 為中間介面，接合在 LCD 的 ITO 端。
+
+国际半导体设备材料产业协会(SEMI)
+层压基板(Laminate Substrates)
+软性电路板(flex circuit/tape substrates)、导线架(leadframes)、bonding wire、模压化合物(mold compounds)、underfill materials、液态封装材料(liquid encapsulants)、粘晶材料(die attach materials)、焊球(solder balls)、晶圆级封装介质(wafer level package dielectrics)以及热接口材料(thermal interface materials)
+
+CSP(Chip Size PACkage)，即芯片尺寸封装,日本电子工业协会把CSP定义为芯片面积与封装体面积之比大于80％的封装,CSP产品的主要特点：封装体尺寸小
+
+外延器件（epitaxial Device Application）
+先进衬底技术（advanced substrate technologies）
+
+请解释一下‘半导体封装测试’:
+简单的说，就是将芯片封装到一个载体中，流程包括：芯片背面研磨、芯片粘贴、引线键合、塑封、切割、打印Logo、、测试、包装等。
+
+ 
+June Chip（晶驰）Auto Die Bond
+自动固晶机台规格
+ 
+1、 Wafe Table晶圆工作台
+XY Travel行程：6〞X 6〞
+Resolution精确度：0.2mil／5mm
+ 
+2、 PCB Table工作台
+XY Travel行程：6〞X 10〞
+ 
+3、  Die Placement Accuracy晶片放置的精确度
+Accuracy粘片位置X-Y：      ±0.5mil
+q Rotary q 旋转：            ±2～３°（根据LED芯片尺寸和用途而转变）
+4、Die Size & Wafer 晶片尺寸与晶圆
+Die 晶片：    7mil*7mil至40mil*40mil
+Wafer晶圆：  6〞
+Die Type晶片种类：   R、G、B、三种晶片     
+Bond Force固晶压力：40gm～200gm（programmable可调节）
+ 
+5、PR System图像识别系统
+Method方法：          256 grey levels灰度
+Detection检测器：     ink 墨点/Chipping破晶/Cracked die裂晶
+Montior显示器：       touch screen触摸屏
+Montior resolution屏幕分辨率：   1024*768
+ 
+6、Optics System光学系统
+Camera摄影机：   Solid state 固体
+OPTICS Magnifier光学放大倍率：  0.7~4.5倍
+ 
+7、Cycle time（速度）：450MS/EA
+UPH产能：8.0 K/H
+ 
+ 
+8、Program Storage Capacity程式储存容量
+No. of programs practically unlimited程式库储存数量：    无限制
+1000chips/program:         每程式LED数量1000个LED
+ 
+9、Equipment Require设备要求：
+Voltage电压：AC220V/50HZ
+Air source压缩空气：最少6BAR
+Vacuum source真空度：700mmHg（真空泵）
+Power Consumption功率：2000W
+ 
+10、Dimensions and Weight体积及重量
+Size(D*W*H)外型尺寸：长1200MM*宽1000MM*高1500MM
+Weight重量：450KG
+ 
+11、Missing Die漏晶检测系统：
+Vacuum Sensor真空传感器检测/Photoelectricty Sensor光电传感器检测（OPTIONAL可选） 
+
+易达E-tek    
+
+
+高速焊线机      
+4″X 4″有效焊线面积（LED） UPH 10K    
+     
+
+
+机器基本性能      
+Speed焊接速度                        5.2wires/s（2.0mm线长）     
+Bonder Pads Size焊盘尺寸          2.4mil/60μm     
+Bonder Pads Size焊盘间距尺寸    2.7mil/68μm     
+
+Bonder Head 焊头     
+Bond Angle 焊线角度                  30°     
+Bond Force 焊线压力                  15～200g     
+Bond Time 焊接时间                    programmables可调节     
+Wire Size 线直径                        0.7～2mil      
+
+X-Y-θ Table X-Y-θ 工作台     
+XY Travel XY行程                       4″X 4″（LED）  3″X 3″（COB）     
+XY Resolution XY 析度                 0.02mil     
+θ Resolution分析度                      +/-360°     
+
+Z - Table Z工作台     
+Travel行程                                 0.4inch     
+Resolution分析度                         0.02mil     
+
+Program storage capacity 程式储存数量     
+NO.of programs practically unlimited       程式库数量无限制
+1000 chips/program           每程式最多1000个晶片/LED     
+1000 wire/chip                 每晶片最多1000条线     
+
+Power 电源     
+Power Consumption功率                   800W(max/最高)     
+Voltage 电压                                  220V/110V可选     
+Frequency频率                               50～60Hz     
+
+Dimension and weight 体积及重量     
+Size D x W x H 长 x 宽 x 高             750 x 1050x 1450mm     
+Weight 重量                                 330 kgs 
+
+产品编号： 自动锡球贴装生产线 
+生 产 商： 翠涛自动化 
+发布日期： 2006-8-4 
+查看数次： 1399 
+　产 品 详 细 介 绍： 
+  
+BGA是以锡球阵列取代移交的封装工艺。与QFP相比，BGA具有引脚数量高、电气和物理特性优良、生产成本低的特点。在九十年代后期得到迅速发展。
+
+自动锡球贴装生产线共分为基板送料、助焊剂涂敷、锡球贴放、和回流焊、收料五个单元。
+
+1、基板上料单元：
+此单元把存放于基板和内的基板取出，通过传送带传递直下一单元。每一机板盒可存储20至30块基板，并最多可容纳4个基板盒。操作员可随时取出空的并放入满的基板盒，实现不间断生产。
+
+2、助焊剂涂敷单元：
+此单元采用传统SMY的丝网印刷技术，把定量的滴状助焊剂加在基板的焊盘位置。由传送带传送过来的基板首先被精确定位，然后由气缸和马达带动的丝网装置把助焊剂印在基板上。整个过程于5分钟内完成。此单元还包括残留助焊剂清洁功能。助焊剂添加的数量和质量由丝网的厚度和材料、网孔的尺寸、印刷的速度和压力、以及助焊剂的特性决定。
+
+3、锡球贴放单元：
+锡球贴放是这条生产线最核心的部分。首先把锡球自动被放置于与基板焊盘匹配的模具上，然后再用与基板焊盘匹配的真空吸盘拾取这些锡球，通过一个XYZU直角坐标机械手放置在已精确定位的基板上。此单元还包括一套自动检查系统，可以把废品检出并取走。是放精度可达+/-0.05mm。
+
+4、回流焊单元：
+锡球被放在基板上后，基板会被自动送入回流焊炉中，使锡球与基板的焊盘紧密结合。回流焊炉采用标准SMT焊炉。
+
+5、收料单元：
+收料单元与送料单元结构类似，但作用相反。他把焊好的基板收入基板盒中。
+
+特点：
+1、 自动化程度高，完全实现不停顿生产和人手不接触生产。
+2、 速度快，一次完成整个基板的锡球贴放。
+3、 弹性高，可以快速更换夹具，转化产品种类。
+4、 自动检测并挑出不合格品。
+
+锡球直径： 0.3mm - 0.9mm (12mils to 30mils)
+锡球间距：0.5mm - 1.5mm
+产品尺寸： 23mm x 23mm –45mm x 45mm
+锡球数量t： 169 to 731 balls/unit
+基板规格:：4 to 7 units (e.g.balls per strip: 272 balls x 6 units = 1632 balls) 
+
+AAA（HK）
+die bonder固晶机
+flip chip bonder覆晶机
+AI wire bonder铝线焊接机
+Trim Form Eqipment分离成型设备
+Ball Placement & Reflow ：CSP产品
+Test Handling & Finishing System检测处理及完成系统
+沙头角(STJ)
+fabricated parts部件制造
+stamped leadframe零部件组装
+福永(AMC)
+stamped leadframe冲压式引线框架
+后道工序部件制造及组装
+ATS（新加坡）
+etched leadframe蚀刻式引线框架
+gold wire bonder金线焊接
+stud bumping machine自动塑封系统
+in-line system内嵌式系统
+ATM(马来西亚)
+fabricated parts部件制造
+subassembles零部件组装
+引线框架电镀
+
+晶圆处理设备(wafer fabrication equipment)
+制造工艺诊断设备(process diagnositic equipment)
+测试和材料处理设备(test & material handling equipment)
