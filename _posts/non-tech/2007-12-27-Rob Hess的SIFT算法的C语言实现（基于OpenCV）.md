@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 Rob Hess的SIFT算法的C语言实现（基于OpenCV） 
 
 Rob Hess的homepage 

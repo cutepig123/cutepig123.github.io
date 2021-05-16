@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 发信人 lxuidd (进宝), 信区 FamilyLife
 
 标  题 我亲爱的老弟

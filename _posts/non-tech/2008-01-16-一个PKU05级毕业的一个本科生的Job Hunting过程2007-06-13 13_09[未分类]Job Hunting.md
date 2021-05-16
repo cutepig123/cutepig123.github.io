@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 一个PKU05级毕业的一个本科生的Job Hunting过程2007-06-13 13:09[未分类]Job Hunting 
 
 Alcyone 发表于 2005-11-23 18:04:00

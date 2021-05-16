@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 标  题: Re: program/product/project manager
 
 发信站: 水木社区 (Mon Mar  9 21:16:10 2009), 站内

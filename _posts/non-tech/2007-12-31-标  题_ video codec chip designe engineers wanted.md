@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 标  题: video codec chip designe engineers wanted
 
 发信站: 水木社区 (Sun Dec 30 11:33:58 2007), 站内

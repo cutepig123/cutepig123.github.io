@@ -155,9 +155,9 @@ def convert_txt_to_markdown():
     dir_recur('.', '', callback)
 
 # 如果沒有YYYY-MM-DD-前綴，就根據文件的時間自動加上
-#add_prefix()
-# 如果在子目錄下，自動把目錄名加到categories裏面
-#add_categories()
+add_prefix()
 #dir_recur('.', '',lambda x,y:print(x,y))
 # 如果是txt文件，生成一個對應的md文件
 convert_txt_to_markdown()
+# 如果在子目錄下，自動把目錄名加到categories裏面
+add_categories()

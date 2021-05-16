@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 nongchao (尼罗河狂想), 信区 PieLove
 
 标  题 [合集] 元旦聚会花絮－俺滴版本

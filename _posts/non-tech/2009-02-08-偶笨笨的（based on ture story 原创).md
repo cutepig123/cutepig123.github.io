@@ -1,3 +1,6 @@
+---
+categories: non-tech
+---
 偶笨笨的（based on ture story 原创)
 
 发信站 南京大学小百合站 (Fri Mar 26 094642 2004)
