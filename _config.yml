@@ -47,7 +47,7 @@ exclude: [images]
 markdown: kramdown
 kramdown:
     input: GFM
-paginate: 3000
+paginate: 300
 #permalink: /:year/:month/:day/:title/
 plugins:
     - jekyll-paginate
