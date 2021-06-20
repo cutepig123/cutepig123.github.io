@@ -56,7 +56,7 @@ device manager暴露出REST服务给客户端
 
 客户端编写gui与REST服务通讯
 
-![image-20210620235833673](../images/2021-06-20-%E5%85%B3%E4%BA%8Einstant%20camera%E7%B3%BB%E7%BB%9F%E8%AE%BE%E8%AE%A1/image-20210620235833673.png)
+![image-20210620235833673](../images/image-20210620235833673.png)
 
 ==画图描述该模型在不同硬件结构下的组件图==
 
