@@ -1,3 +1,6 @@
+---
+categories: networking
+---
 
 
 标题：CppCon 2017: Jeremy Demeule & Quentin Duval “Using Functional Programming Patterns...”

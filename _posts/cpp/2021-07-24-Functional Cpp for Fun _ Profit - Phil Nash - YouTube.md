@@ -1,3 +1,6 @@
+---
+categories: cpp
+---
 学到的几个技巧
 
 

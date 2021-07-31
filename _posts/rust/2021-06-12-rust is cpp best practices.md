@@ -1,3 +1,6 @@
+---
+categories: rust
+---
 rust is c++ best practices
 
 

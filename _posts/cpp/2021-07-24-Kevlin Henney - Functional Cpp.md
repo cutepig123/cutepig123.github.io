@@ -1,3 +1,6 @@
+---
+categories: cpp
+---
 Kevlin Henney - Functional C++观后感
 
 https://www.youtube.com/watch?v=CIg6eyJv4dk

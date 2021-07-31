@@ -1,3 +1,6 @@
+---
+categories: sw-design
+---
 message queue。消息队列。一般提供放东西，拿东西之类的功能 。
 
 RPC。用户只需要声明message，和对应的处理函数。框架就自动能生成客户端代码和服务器
