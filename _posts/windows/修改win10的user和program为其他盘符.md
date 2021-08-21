@@ -23,7 +23,7 @@ https://blog.csdn.net/qq_45392321/article/details/105300036
 设置，系统，存储，更改新内容的保存位置
 可以修改应用，文档，音乐，照片视频的位置
 
-== mklink (测试过，对于users\xxx不ok，对于users下一层ok，比如uses\xxx\appdata, etc OK)
+## mklink (测试过，对于users\xxx不ok，对于users下一层ok，比如uses\xxx\appdata, etc OK)
 
 https://www.zhihu.com/question/35138451
 作者：郭宇
@@ -46,7 +46,7 @@ mklink/j "c:\%~1" "g:\%~1"
 pause
 ```
 
-== ProgramFilesDir (测试过，OK)
+## ProgramFilesDir (测试过，OK)
 
 只要打开注册表编辑器，找到“HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\”分选择“CurrentVersion”项，双击右侧窗口”中的“ProgramFilesDir”，将“数值数据”修改为你自己需要的路 径如“D:\Program Files”，以后安装软件的默认位置便是这个设置的文件夹了呀。
 
