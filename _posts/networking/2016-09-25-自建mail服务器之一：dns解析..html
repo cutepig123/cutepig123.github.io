@@ -1,0 +1,46 @@
+<p><strong>这个其实不是必须的</strong></p>
+<p>&nbsp;</p>
+<p>1，maradns服务器安装和设置</p>
+<p>mararc文件</p>
+<div class="cnblogs_code">
+<pre># Win32-specific MaraRC file<span style="color: #008000;">;</span><span style="color: #008000;"> this makes a basic recursive DNS</span>
+<span style="color: #000000;"># server.
+
+hide_disclaimer </span>= "YES"<span style="color: #000000;">
+ipv4_bind_addresses </span>= "127.0.0.1,192.168.2.100"<span style="color: #000000;">
+recursive_acl </span>= "127.0.0.1/8"<span style="color: #000000;">
+timestamp_type </span>= 2<span style="color: #000000;">
+
+csv2 </span>=<span style="color: #000000;"> {}
+csv2</span><span style="color: #800000; font-weight: bold;">[</span><span style="color: #800000;">"local.com."</span><span style="color: #800000; font-weight: bold;">]</span> = "db.lan.txt"<span style="color: #000000;">
+
+# This is insecure until the secret.txt file is edited
+random_seed_file </span>= "secret.txt"<span style="color: #000000;">
+
+upstream_servers </span>=<span style="color: #000000;"> {}
+upstream_servers</span><span style="color: #800000; font-weight: bold;">[</span><span style="color: #800000;">"."</span><span style="color: #800000; font-weight: bold;">]</span> = "203.185.0.35,203.185.0.36"</pre>
+</div>
+<p>db.lan.txt</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:bash;gutter:true;">test.%       192.168.2.100 ~
+%	MX	10 mail.% ~
+mail.%	192.168.2.100 ~
+</pre>
+</div>
+<p>　　</p>
+<p><img src="http://images2015.cnblogs.com/blog/23777/201609/23777-20160925145951476-563200281.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>2,配置系统dns服务器为127.0.0.1</p>
+<p><img src="http://images2015.cnblogs.com/blog/23777/201609/23777-20160925150047917-262394846.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;3，测试</p>
+<p>&nbsp;</p>
+<p>C:\Users\cutepig&gt;e:\Users\cutepig\Downloads\maradns-2-0-13-win32\maradns-2-0-13-win32\<strong>askmara.exe Amail.local.com.</strong><br /># Querying the server with the IP 127.0.0.1<br /># Question: Amail.local.com.<br />mail.local.com. +86400 a 192.168.2.100<br /># NS replies:<br />#local.com. +86400 ns synth-ip-c0a80264.local.com.<br /># AR replies:<br />#synth-ip-c0a80264.local.com. +86400 a 192.168.2.100</p>
+<p>&nbsp;</p>
+<p>C:\Users\cutepig&gt;<strong>nslookup test.local.com</strong><br />Server:  localhost<br />Address:  127.0.0.1</p>
+<p>Name:    test.local.com<br />Address:  192.168.2.100</p>
+<p><br />C:\Users\cutepig&gt;<br />C:\Users\cutepig&gt;<strong>nslookup mail.local.com</strong><br />Server:  localhost<br />Address:  127.0.0.1</p>
+<p>Name:    mail.local.com<br />Address:  192.168.2.100</p>
+<p><br />C:\Users\cutepig&gt;<strong>nslookup -type=MX local.com</strong><br />Server:  localhost<br />Address:  127.0.0.1</p>
+<p>local.com       MX preference = 10, mail exchanger = mail.local.com<br />local.com       nameserver = synth-ip-c0a80264.local.com<br />mail.local.com  internet address = 192.168.2.100<br />synth-ip-c0a80264.local.com     internet address = 192.168.2.100</p>
+<p>&nbsp;</p>

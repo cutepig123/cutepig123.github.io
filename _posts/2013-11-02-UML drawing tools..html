@@ -1,0 +1,32 @@
+<p><strong>1. tools based on the script</strong></p>
+<p>http://www.websequencediagrams.com/</p>
+<p>UMLet 12.1</p>
+<p>My best two recommendations right now would be: yUML and PlantUML (http://www.plantuml.com/plantuml/form)</p>
+<p>If you need something more complex and integrated with Eclipse try TextUML</p>
+<p>&nbsp;</p>
+<p><strong>2. Examples of&nbsp;PlantUML&nbsp;</strong></p>
+<p>a)&nbsp;</p>
+<p><br />(*)--&gt; "2D calibration" <br />--&gt; "3D calibration"<br />--&gt; "Z calibration &amp; Adjust belt levels"<br />--&gt; "Learn"<br />if "3DS Optics" then<br />  --&gt;[true] "Check belt vibration (without wafer)"<br />  --&gt; "Check belt vibration (with wafer)"<br />else<br />  --&gt; "Check belt vibration (with wafer)"<br />endif</p>
+<p>--&gt; "0-90 deg Calibration (Update Z Calibration)"<br />--&gt; "5-PT TTV compensation"<br />--&gt; "Thickness compensation"<br />--&gt; "Check repeatability"<br />--&gt; (*)</p>
+<p>&nbsp;</p>
+<p>b)&nbsp;</p>
+<div class="cnblogs_code">
+<pre>Host --&gt; <span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span><span style="color: #000000;">: Start auto run mode
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span><span style="color: #000000;">: Start OTF mode
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span> --&gt;<span style="color: #000000;"> Host: Auto run mode enabled
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Wafer</span><span style="color: #800000;">"</span> --&gt; <span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span>: Wafer <span style="color: #0000ff;">is</span><span style="color: #000000;"> comming
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span><span style="color: #000000;">: Start sensor detected
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span><span style="color: #000000;">: Start OTF trigger
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span><span style="color: #000000;">: Trigger points are triggered
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision Algorithm</span><span style="color: #800000;">"</span>: Do construction &amp;<span style="color: #000000;"> Inspection
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span><span style="color: #000000;">: Stop OTF trigger
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Algorithm</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span>: Construction &amp;<span style="color: #000000;"> Inspection done
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span> --&gt;<span style="color: #000000;"> Host: Wafer inspection done
+Host </span>--&gt; <span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span><span style="color: #000000;">: Get inspection result
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span> --&gt;<span style="color: #000000;"> Host: Send inspection result
+
+Host </span>--&gt; <span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span><span style="color: #000000;">: Stop auto run mode
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span>--&gt;<span style="color: #800000;">"</span><span style="color: #800000;">Vision System</span><span style="color: #800000;">"</span><span style="color: #000000;">: Stop auto run mode
+</span><span style="color: #800000;">"</span><span style="color: #800000;">Vision Appl</span><span style="color: #800000;">"</span> --&gt; Host: Stop auto run mode ok</pre>
+</div>
+<p>&nbsp;</p>

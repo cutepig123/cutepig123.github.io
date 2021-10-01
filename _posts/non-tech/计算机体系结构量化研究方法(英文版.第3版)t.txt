@@ -1,0 +1,106 @@
+计算机体系结构:量化研究方法(英文版.第3版)
+已读过(1人) |      放入书架　什么是书架？ 丛书名： 经典原片书库
+点击查看大图
+作　　者： （美）亨尼西，（美）帕特森 著
+出 版 社： 机械工业出版社
+
+    * 出版时间： 2003-9-1
+    * 字　　数：
+    * 版　　次： 1
+    * 页　　数： 883
+    * 印刷时间： 2003/09/01
+    * 开　　本：
+    * 印　　次：
+    * 纸　　张： 胶版纸
+    * I S B N ： 9787111109211
+    * 包　　装： 平装
+
+所属分类： 图书 >> 计算机/网络 >> 影印版
+定价：￥99.00　当当价：￥74.10　折扣：75折　节省：￥24.90　
+顾客评分：　共有顾客评论1条 查看评论摘要
+编辑推荐
+The third edition of Computer Architecture: A Quantitative Approach should have been easy to write. After all, our quantitative approach hasn't changed, and we sought to continue our focus on the basic principles of computer design through two editions. The examples had to be updated, of course, just as we did for the second edition. The dramatic and ongoing advances in the field as well as the creation of new markets for computers and new approaches for those markets, however, led us to rewrite almost the entire book. The pace of innovation in computer architecture continued unabated in the six years since the second edition. As when we wrote the second edition, we found that numerous new concepts needed to be introduced, and other material designated as more basic. Although this is officially the third edition of Computer Architecture: A Quantitative Approach, it is really our fifth book in a series that began with the first edition, continued with Computer Organization and Design:The Hardware/Software Interface (COD:HSI), and then the second edition of both books. Over time ideas that were once found here have moved to COD:HSI or to background tutorials in the appendices. This migration, combined with our goal to present concepts in the context of the most recent computers, meant there was remarkably little from the second edition that could be preserved intact, and practically nothing is left from the first edition.
+内容简介
+The third edition of Computer Architecture: A Quantitative Approach should have been easy to write. After all, our quantitative approach hasn't changed, and we sought to continue our focus on the basic principles of computer design through two editions. The examples had to be updated, of course, just as we did for the second edition. The dramatic and ongoing advances in the field as well as the creation of new markets for computers and new approaches for those markets, however, led us to rewrite almost the entire book. The pace of innovation in computer architecture continued unabated in the six years since the second edition. As when we wrote the second edition, we found that numerous new concepts needed to be introduced, and other material designated as more basic. Although this is officially the third edition of Computer Architecture: A Quantitative Approach, it is really our fifth book in a series that began with the first edition, continued with Computer Organization and Design:The Hardware/Software Interface (COD:HSI), and then the second edition of both books. Over time ideas that were once found here have moved to COD:HSI or to background tutorials in the appendices. This migration, combined with our goal to present concepts in the context of the most recent computers, meant there was remarkably little from the second edition that could be preserved intact, and practically nothing is left from the first edition.
+
+作者简介
+
+
+
+目录
+Chapter 1 Fundamentals of Computer Design
+1.1 Introduction
+1.2 The Changing Face of Computing and the Task of the Computer Designer
+1.3 Technology Trends
+1.4 Cost, Price, and Their Trends
+1.5 Measuring and Reporting Performance
+1.6 Quantitative Principles of Computer Design
+1.7 Putting It All Together: Performance and Price-Performance
+1.8 Another View: Power Consumption and Efficiency as the Matric
+1.9 Fallacies and Pitfalls
+1.10 Concluding Remarks
+1.11 Historical Perspective and References
+Exercises
+Chapter 2 InStruction Set Prindples and Examples
+2.1 Introduction
+2.2 Classifying Instruction Set Architectures
+2.3 Memory Addressing
+2.4 Addressing Modes for Signal Processing
+2.5 Type and Size of Operands
+2.6 Operands for Media and Signal Processing
+2.7 Operations in the Instruction Set
+2.8 Operations for Media and Signal Processing
+2.9 Instructions for Control Flow
+2.10 Encoding an Instruction Set
+2.11 Crosscutting lssues:The Role of Compilers
+2.12 Putting It All Together:The MIPS Architecture
+2.13 Another View: The Trimedia TM32 CPU
+2.14 Fallacies and Pitfalls
+2.15 Concluding Remarks
+2.16 Historical Perspective and References
+Exercises
+Chapter 3 Instruction-Level Parallelism and Its Dynamic Exploitation
+3.1 Instruction-Level Parallelism:Concepts and Challenges
+3.2 Overcoming Data Hazards with Dynamic Scheduling
+3.3 Dynamic Scheduling: Examples and the Algorithm
+3.4 Reducing Branch Costs with Dynamic Hardware Prediction
+3.5 High-Performance Instruction Delivery
+3.6 Taking Advantage of More ILP with Multiple Issue
+3.7 Hardware-Based Speculation
+3.8 Studies of the Limitations of ILP
+3.9 Limitations on ILP for Realizable Processors
+3.10 Putting It All Together: The P6 Microarchitecture
+3.11 Another View: Thread-Level Parallelism
+3.12 Crosscutting lssues: Using an ILP Data Path to Exploit TLP
+3.13 Fallacies and Pitfalls
+3.14 Concluding Remarks
+3.15 Historical Perspective and References
+Exercises
+Chapter 4 Exploiting Instruction-Level Parallelism with Software Approaches
+4.1 Basic Compiler Techniques for Exposing ILP
+4.2 Static Branch Prediction
+4.3 Static Multiple Issue: The VLIW Approach
+4.4 Advanced Compiler Support for Exposing and Exploiting ILP
+4.5 Hardware Support for Exposing More Parallelism at Compile Time
+4.6 Crosscutting Issues: Hardware versus Software Speculation Mechanisms
+4.7 Putting It All Together:The Intel IA-64 Architecture and Itanium Processor
+4.8 AnotherView: ILP in the Embedded and Mobile Markets
+4.9 Fallacies and Pitfalls
+4.10 Concluding Remarks
+4.11 Historical Perspective and References
+Exercises
+Chapter 5 Memory Hierarchy Design
+Chapter 6 Multiprocessors and Thread-Level Parallelism
+Chapter 7 Storage Systems
+Chapter 8 Interconnection Networks and Clusters
+Appendix A Pipelining: Basic and Intermediate Concepts
+Appendix B Solutions to Selected Exercises
+Appendix C A Survey of RISC Architectures for Desktop, Server, and Embedded omputers
+Appendix D An Alternative to RISC:The Intel 80X86
+Appendix E Another Alternative to RISC:The VAX Architecture
+Appendix F The IBM 360/370 Architecture for Mainframe Computer
+Appendix G Vector Processors Revised by Krste Asanovic
+Appendix H Computer Arithmotic by David Goldberg
+Appendix I Implementing Coherence Protocols
+References
+Index

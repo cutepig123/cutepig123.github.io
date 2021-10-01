@@ -1,0 +1,20 @@
+<P>正向运动学</P>
+<P><FONT color=#ff0000>不用twist也不用D-Htable，直接随便建立坐标系，根据相邻坐标系之间的坐标变换，来计算总的变换。经试验，的确可行。</FONT><BR>%输入是各个关节的数值，输出(BASE)世界坐标系的6维向量<BR>in=[7952, 2913, -815, 56554, -2050, -34617];</P>
+<P>s1=in(1)*pi/2/120000;<BR>s2=-in(2)*pi/2/160000; % -<BR>s3=-s2+in(3)*pi/2/120000; % + 和2有耦合<BR>s4=-in(4)*pi/2/80000; % -<BR>s5=in(5)*pi/2/80000; % +<BR>s6=-in(6)*pi/2/50000; % -</P>
+<P>%从世界坐标系c0到坐标系c1，仅有绕z轴的转动<BR>g01=rot(3,s1,[0 0 0]);</P>
+<P>%从c1到c2，包括一个y轴平移和一个绕x轴的转动<BR>g12=rot(1,s2,[0 150 0]);</P>
+<P>%从c2到c3，包括一个z轴平移和一个绕x轴的转动<BR>g23=rot(1,s3,[0 0 260]);</P>
+<P>%从c3到c4，包括一个z轴平移和y轴转动<BR>g34=rot(2,s4,[0 0 60 ]);</P>
+<P>%从c4到c5，包括一个y轴平移和x轴转动<BR>g45=rot(1,s5,[0 260 0]);</P>
+<P>%从c5到c6，包括一个y轴转动<BR>g56=rot(2,s6,[0 0 0]);<BR>%c6到ctool<BR>g6t=[0 1 0 0;0 0 1 90;1 0 0 0;0 0 0 1];</P>
+<P>gw0=[0 1 0 0;-1 0 0 0;0 0 1 0;0 0 0 1];<BR>g01<BR>g02=g01*g12<BR>g03=g02*g23<BR>g04=g03*g34<BR>g05=g04*g45<BR>g06=g05*g56</P>
+<P>gw6=gw0*g06<BR>gwt=gw6*g6t</P>
+<P>out=[gwt(1:3,4).' oula(gwt(1:3,1:3).')*180/pi]<BR><BR>function y=oula(x)<BR>[h,w]=size(x);<BR>if h==3 &amp; w==3<BR>&nbsp;&nbsp;&nbsp; y=oula1(x);<BR>else<BR>&nbsp;&nbsp;&nbsp; y=oula2(x);<BR>end</P>
+<P>function [sitaxyz]=oula1(R)<BR>R=R.';<BR>if abs(det(R)-1)&gt;1e-2,error;end<BR>sita=asin(-R(3));</P>
+<P>if abs(1-R(3)^2)&lt;1e-5<BR>&nbsp;&nbsp;&nbsp; sai=0;<BR>&nbsp;&nbsp;&nbsp; fai=0;<BR>&nbsp;&nbsp;&nbsp; sitaxyz=[fai sita sai];<BR>&nbsp;&nbsp;&nbsp; return;<BR>end</P>
+<P>sai=asin(R(2)/sqrt(1-R(3)^2));<BR>if R(2)&gt;=0 &amp; R(1)&gt;=0<BR>elseif R(1)&lt;0<BR>&nbsp;&nbsp;&nbsp; sai=pi-sai;<BR>else<BR>&nbsp;&nbsp;&nbsp; sai=2*pi+sai;<BR>end<BR>&nbsp;&nbsp;&nbsp; <BR>fai=asin(R(6)/sqrt(1-R(3)^2));<BR>if R(9)&lt;0<BR>&nbsp;&nbsp;&nbsp; fai=pi-fai;<BR>elseif R(6)&lt;0 &amp; R(9)&gt;0<BR>&nbsp;&nbsp;&nbsp; fai=2*pi+fai;<BR>end</P>
+<P>if fai&gt;pi<BR>&nbsp;&nbsp;&nbsp; fai=fai-2*pi;<BR>end<BR>if sai&gt;pi<BR>&nbsp;&nbsp;&nbsp; sai=sai-2*pi;<BR>end<BR>sitaxyz=[fai sita sai];</P>
+<P>function R=oula2(sitaxyz)<BR>if length(sitaxyz)~=3,error;end<BR>fai=sitaxyz(1);<BR>sita=sitaxyz(2);<BR>sai=sitaxyz(3);<BR>R=[1 0 0;0 cos(fai) sin(fai);0 -sin(fai) cos(fai)]* [cos(sita) 0 -sin(sita);0 1 0;sin(sita) 0 cos(sita)]* [cos(sai) sin(sai) 0;-sin(sai) cos(sai) 0;0 0 1];<BR><BR><BR><IMG src="null"><BR><BR><IMG height=479 alt=坐标系定义.JPG src="https://www.cnblogs.com/images/cnblogs_com/cutepig/坐标系定义.JPG" width=645 border=0><BR><BR>例子：<BR>----PulseNO.S 0,L 0,U 0,R 0,B 0,T 0<BR>----CartPos.S 500.001,L 0.001,U 319.999,R 180,B -90,T 0</P>
+<P>----PulseNO.S 1568,L 75,U -846,R 1088,B -777,T 1816<BR>----CartPos.S 500.699,L 10.249,U 314.796,R 108.51,B -85.29,T 72.71</P>
+<P>----PulseNO. 7952, 2913, -815, 56554, -2050, -34617<BR>----CartPos. 505.507, 49.537, 314.702, 109.49, -85.34, 74.46</P>
+<P><BR>&nbsp;</P>

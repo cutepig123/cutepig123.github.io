@@ -1,0 +1,56 @@
+公布计算任意多边形相交部分的面积的方法
+楼主numen27（影子）2003-05-28 17:46:16 在 VC/MFC / 图形处理/算法 提问
+
+最近开发过程中遇到了这个问题，费了好大的劲才搞定，贴出来跟大家分享  
+   
+  假设lpVertex1[]里存放着多边形1的顶点，nVertexCount1为多边形1的顶点数  
+  lpVertex2[]里存放着多边形2的顶点，nVertexCount2为多边形2的顶点数  
+      //创建多边形区域1  
+      CRgn   poly1;  
+      poly1.CreatePolygonRgn(lpVertex1,nVertexCount1,ALTERNATE);  
+      delete[]   lpVertex1;  
+      //创建多边形区域2  
+      CRgn   poly2;  
+      poly2.CreatePolygonRgn(lpVertex2,nVertexCount2,ALTERNATE);  
+      delete[]   lpVertex2;  
+   
+      //获取相交的多边形区域  
+      CRgn   IntersectRgn;  
+      IntersectRgn.CreateRectRgn(0,0,0,0);  
+      int   nIntersectResult   =   IntersectRgn.CombineRgn(   &poly1,&poly2,RGN_AND);  
+      if(nIntersectResult==ERROR)  
+            {  
+  AfxMessageBox("多边形求交出错");  
+  return   0;  
+            }  
+        //没有相交  
+        if(nIntersectResult==NULLREGION)  
+                return   0;  
+        /***********精华部分到了************/    
+        //计算相交部分的面积  
+          Region   intersectRegion((HRGN)IntersectRgn);  
+          Matrix   matrix;  
+          Rect*   rects   =   NULL;  
+          int   count   =   0;    
+   
+          CClientDC   dc(this);  
+          Graphics   graphics(   dc.GetSafeHdc()   );  
+          graphics.GetTransform(&matrix);  
+          count   =   intersectRegion.GetRegionScansCount(&matrix);  
+          rects   =   (Rect*)malloc(count*sizeof(Rect));  
+          intersectRegion.GetRegionScans(&matrix,   rects,   &count);  
+           
+          double   dbTotalArea=0;  
+          for(int   j   =   0;   j   <   count;   ++j)  
+              dbTotalArea +=(rects[j].GetBottom()-rects[j].GetTop())*   (rects[j].GetRight()-rects[j].GetLeft());  
+   
+          free(rects);  
+          graphics.ReleaseHDC(dc.GetSafeHdc());  
+          //返回面积值  
+          return   dbTotalArea;  
+   
+  该方法不仅可以计算多边形之间相交部分的面积，而且可以算圆和多边形的相交面积，甚至是任意图形相交部分的面积。  
+  在使用该方法的时候，用到了GDI+的相关类Region,相关资料请查看MSDN。  
+  顺便说一句：之前在网上找相关算法，找了大半天才找到一个像样的，编好程序以后  
+  发现该算法有漏洞，白编了，呵呵，组长叫我好好看看GDI的Region类，结果给我找到了这个方法，所得：有些东西MFC里都有现成的(特别是图形相关)，用起来很方便。找算法往往又费劲，又得担心算法的正确性，不怎么好。  
+    

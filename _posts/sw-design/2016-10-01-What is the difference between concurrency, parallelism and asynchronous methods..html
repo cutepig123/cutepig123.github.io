@@ -1,0 +1,14 @@
+<p>Ref:&nbsp;http://stackoverflow.com/questions/4844637/what-is-the-difference-between-concurrency-parallelism-and-asynchronous-methods</p>
+<p>&nbsp;</p>
+<p>Concurrent and parallel are effectively the same principle as you correctly surmise, both are related to tasks being executes simultaneously although I would say that parallel tasks should be truly multitasking, executed "at the same time" whereas concurrent could mean that the tasks are sharing the execution thread while still appearing to be executing in parallel.</p>
+<p>Concurrent and parallel几乎相同，都是跟task同时执行有关。parallel 的task是真正的同时执行，而concurrent表示共享执行单元但是看起来是同时执行</p>
+<p>Asynchronous methods aren't directly related to the previous two concepts, asynchrony is used to present the impression of concurrent or parallel tasking but effectively an asynchronous method call is normally used for a process that needs to do work away from the current application and we don't want to wait and block our application awaiting the response.</p>
+<p>Asynchronous 方法跟前两者没直接关系，异步用于表达concurrent or parallel task；但&nbsp;asynchronous method call通常用于不直接写&nbsp;current application，避免wait and block our application&nbsp;</p>
+<p>For example, getting data from a database could take time but we don't want to block our UI waiting for the data. The asynch call takes a call-back reference and returns execution back to your code as soon as the request has been placed with the remote system. Your UI can continue to respond to the user while the remote system does whatever processing is required, once it returns the data to your call-back method then that method can update the UI (or hand off that update) as appropriate.</p>
+<p>比如，从数据库获取数据会占用时间，但我们不想block ui。asynch call会传入call-back 之后直接返回。UI可以继续执行，而远程系统完成之后callback会执行从而update你的ui</p>
+<p>From the User perspective it appears like multitasking but it may not be.</p>
+<p>这个看起来像multitasking 但可能不是</p>
+<hr />
+<p>EDIT</p>
+<p>It's probably worth adding that in many implementations an asynchronous method call will cause a thread to be spun up but it's not essential, it really depends on the operation being executed and how the response can be notified back to the system.</p>
+<p>在很多asynchronous 的实现里会创建线程，但这不是必须的。这依赖于操作如何执行，以及response如何notified</p>

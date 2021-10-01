@@ -1,0 +1,103 @@
+<h2><a href="https://www.doorcome.com/?p=62" rel="bookmark" title="Permanent Link: 使用Rainbow tables和Ophcrack的组合工具破解Windows密码">使用Rainbow tables和Ophcrack的组合工具破解Windows密码</a></h2>
+<p>
+			</p>
+<hr />
+<p><small><b>By</b> simon ~ 一月 20th, 2008. <b>Filed under:</b> <a href="https://www.doorcome.com/?cat=6" title="查看 Linux桌面应用 中的全部文章" rel="category">Linux桌面应用</a>, <a href="https://www.doorcome.com/?cat=12" title="查看 windows应用 中的全部文章" rel="category">windows应用</a>. </small>
+<span id="wppvp_tv_62">5,896</span>views</p>
+<div class="entry">
+<p>本文为<a href="http://blog.cn-ic.org/" target="_blank">寻找人生的起点</a>(http://blog.cn-ic.org)原创，如需转载，请注明出处，并保留原文链接。</p>
+<p>从前面的两篇文章（<a href="http://blog.cn-ic.org/?p=42">得到WindowsXP管理员权限的有效方法</a>，<a href="http://blog.cn-ic.org/?p=18">John/bkhive/samdump, 在Linux下破解SAM密码</a>）
+可以看出我对Windows系统权限突破的兴趣。由于目前的压迫尚未推翻，所以反抗还在继续。这次讨论的是采用Rainbow
+Table与Ophcrack结合的另外一种暴力破解机制。这里假设的前提是你已经得到加密hash。如果你还没有办法得到hash，请参考上面提到的两
+篇文章。</p>
+<p>说实话，google上关于rainbow tables的相关说明并不多。相信最全的解释可以通过<a href="http://en.wikipedia.org/wiki/Rainbow_table">这个链接</a> 了解。但是wiki的，英文的，除非有特别必要的需求之前我还没有打算细细研究。但是据我目前的了解，作如下解释，不确切之处还请指出：</p>
+<p>Rainbow
+tables是一些表，它可以是指定字符的各种组合以及这些组合经过MD5或LM或NTLM等加密手段加密后的对照表。所以可想而知，这些表是相当庞大
+的。当你得到这些表后，破解hash密码实际上相当于字典破解了，速度相对普通的暴力破解会大大增加。下面让我告诉你著名的基于Rainbow
+tables的开源破解软件<a href="http://ophcrack.sourceforge.net/">Ophcrack</a>的帮助文档里面描述的表有多大吧：</p>
+<p>针对LM密码的Rainbow Tables:</p>
+<p>1.包含所有字母和数字1-7位组合的Table分成有两个 Alphanumeric
+SSTIC04-10k(388MB)和Alphanumeric
+SSTIC04-5k(720MB)，从我查得的资料表明这两个Table在密码组合个数上是一致的。但是Alphanumeric
+SSTIC04-5k文件更大一倍，如果有1G以上的内存的话，破解速度快4四倍(为什么会有这种诡异的差异，没有查到)。他们包含800亿个hash,
+由于LM加密对大小写不敏感，所以能破解2^83个1-14位的LM密码。</p>
+<p>下载地址： <a href="http://lasecwww.epfl.ch/%7Eoechslin/projects/ophcrack/">http://lasecwww.epfl.ch/~oechslin/projects/ophcrack/</a></p>
+<p>2.LM延伸表，包含所有字母＋数字＋33个特殊字符（!&rdquo;#$%&amp;&rsquo;()*+,-./:;&lt;=&gt;?@[\]^_`{|} ~）的96%的1-7位组合包含7万亿个hash,能破解2^92个LM密码。大小7.5G</p>
+<p>获取方式：目前没有官方下载，可以通过ophcrack的网站购买DVD，价格$240,地址：<a href="http://www.objectif-securite.ch/en/products.php">http://www.objectif-securite.ch/en/products.php</a></p>
+<p>另外我找到<a href="http://www.freerainbowtables.com/">freerainbowtables.com</a>的bt下载，号称更大，33.8G(<a href="http://www.freerainbowtables.com/tables/lm.php">http://www.freerainbowtables.com/tables/lm.php</a>),或者下载软件自己生成（生成方式见本文后面）。</p>
+<p>针对NTLM密码的Rainbow Tables:</p>
+<p>1.NT hash table: 包含1-6位的字母+数字+33个特殊字符组合，7位字母+数字组合，8位小写字母+字符组合;包含7万亿个hash,能破解7万亿个密码。大小8.5G</p>
+<p>获取方式： 目前没有官方下载，可以通过ophcrack的网站购买DVD，大小就是上面描述的8.5G，价格$240,地址：<a href="http://www.objectif-securite.ch/en/products.php">http://www.objectif-securite.ch/en/products.php</a></p>
+<p>同样可以上 <a href="http://www.freerainbowtables.com/">freerainbowtables.com</a>看看（地址：<a href="http://www.freerainbowtables.com/tables/ntlm.php" target="_blank">http://www.freerainbowtables.com/tables/ntlm.php</a>），有很多选择，最大的1-9位小写字母＋数字组合有123G，小心你的磁盘。</p>
+<p>从上面的内容我们可以看到Rainbow
+tables都相当庞大。而实际上这些东西从某种意义上来说都只是字典文件而已。当然它跟传统的字典是有区别的，它是一个庞大的字符加密hash与字符加
+密前的对照表，使用相应破解工具在破解过程中进行的只是对比的工作，省却了将字符加密计算的过程，从而大大节省了时间。</p>
+<p>如果上面提到的Rainbow Tables的获取有困难，或者不满意他们的组合方式，也可以自己生成，这里有一个开源工具：</p>
+<p>RainbowCracK：<a href="http://www.antsight.com/zsl/rainbowcrack/" target="_blank">http://www.antsight.com/zsl/rainbowcrack/</a>作者可能是个叫Lei Shuang 的国人。</p>
+<p>目前最新版本：rainbowcrack-1.2</p>
+<p>提供Windows二进制码（<a href="http://www.antsight.com/zsl/rainbowcrack/rainbowcrack-1.2-win.zip">rainbowcrack-1.2-win.zip</a>）和可用于所有平台（Windows/Linux/Unix等）的源码（<a href="http://www.antsight.com/zsl/rainbowcrack/rainbowcrack-1.2-src.zip">rainbowcrack-1.2-src.zip</a>）</p>
+<p>提供自定义组合字符，</p>
+<p>提供lm,md5,sha1以及自定义组合加密方式。如果加一个补丁（ <a href="http://www.antsight.com/zsl/rainbowcrack/rainbowcrack-1.2-src-algorithmpatch.zip">Algorithm patch for RainbowCrack 1.2</a>）还提供NTLM,MD2, MD4 and RIPEMD160加密算法</p>
+<p>如果你打算使用工具自己生成的大Table的话，你需要做好心理准备，需要强劲的CPU，大的磁盘可用空间，以及大量的时间（使用单台PC以年为单位的时间）。所以该工具的主页上也有一些Table提供下载。</p>
+<p>讲了半天，上面提到的还只是Rainbow tables的各种表，至于如何使用这些表，还需要一个工具。这里推荐大名鼎鼎的Ophcrack:</p>
+<p>Ophcrack主页：<a href="http://ophcrack.sourceforge.net/" target="_blank">http://ophcrack.sourceforge.net/</a></p>
+<p>最新版本：<a href="http://sourceforge.net/project/showfiles.php?group_id=133599" target="_blank">Ophcrack-2.4.1</a>,提供Windows二进制文件包（<a href="http://downloads.sourceforge.net/ophcrack/ophcrack-win32-installer-2.4.1.exe?modtime=1195661800&amp;big_mirror=0">ophcrack-win32-installer-2.4.1.exe</a> ）和可用于所有平台(Windows/Linux/Unix等）的源码(<a href="http://downloads.sourceforge.net/ophcrack/ophcrack-2.4.1.tar.gz?modtime=1195654653&amp;big_mirror=0">ophcrack-2.4.1.tar.gz</a>)</p>
+<p>使用该软件破解需要两个条件</p>
+<p>1.需要另外提供Rainbow tables,就是上面提到的</p>
+<p>2.要求已经得到密码的hash,方法可参考<a href="http://blog.cn-ic.org/?p=18">John/bkhive/samdump, 在Linux下破解SAM密码</a>，所以主页还提供了 			<a href="http://downloads.sourceforge.net/ophcrack/bkhive-1.1.1.tar.gz?modtime=1195737086&amp;big_mirror=0">bkhive-1.1.1.tar.gz</a>和 			<a href="http://downloads.sourceforge.net/ophcrack/samdump2-1.1.1.tar.gz?modtime=1195737097&amp;big_mirror=0">samdump2-1.1.1.tar.gz</a>。</p>
+<p>另外Ophcrack还提供一个Live CD,最新版本1.2.2，下载地址：<a href="http://downloads.sourceforge.net/ophcrack/ophcrack-livecd-1.2.2.iso?modtime=1188977884&amp;big_mirror=0">ophcrack-livecd-1.2.2.iso</a></p>
+<p>ophcrack-livecd 基于一个叫SLAX6的小Linux 系统，整个系统包括SLAX6,ophcrack for linux 以及一些小的字母+数字的Rainbow tables。大小477M</p>
+<p>所以只要可以通过光盘启动，无需安装就可以开始破解了。</p>
+<p>关于Windows密码的LM加密和NTLM加密：</p>
+<p>LM又叫LanManage，它是Windows古老而脆弱的密码加密方式。任何大于7位的密码都被分成以7为单位的几个部分，最后不足7位的密码
+以0补足7位，然后通过加密运算最终组合成一个hash。所以实际上通过破解软件分解后，LM密码破解的上限就是7位，这使得以今天的PC运算速度在短时
+间内暴力破解LM加密的密码成为可能（上限是两周），如果使用Rainbow tables,
+那么这个时间数量级可能被下降到小时。而这种脆弱的加密方式在Windows2003还在使用。当然我们也可以通过设定注册表参数禁用LM加密，代之以
+NTLM方式加密（默认生成LM以及NTLM两种方式的加密hash）.方法如下：</p>
+<p>1. 打开注册表编辑器；</p>
+<p>2. 定位到 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Lsa；</p>
+<p>3. 选择菜单&ldquo;编辑&rdquo;，&ldquo;添加数值&rdquo;；</p>
+<p>4. 数值名称中输入：LMCompatibilityLevel ，数值类型为：DWORD，单击 确定；</p>
+<p>5. 双击新建的数据，并根据具体情况设置以下值：</p>
+<p>0 &ndash; 发送 LM 和 NTLM响应；</p>
+<p>1 &ndash; 发送 LM 和 NTLM响应；</p>
+<p>2 &ndash; 仅发送 NTLM响应；</p>
+<p>3 &ndash; 仅发送 NTLMv2响应；(Windows 2000有效)</p>
+<p>4 &ndash; 仅发送 NTLMv2响应，拒绝 LM；(Windows 2000有效)</p>
+<p>5 &ndash; 仅发送 NTLMv2响应，拒绝 LM 和 NTLM；(Windows 2000有效)</p>
+<p>6. 关闭注册表编辑器；</p>
+<p>7. 重新启动机器</p>
+<p>在Windows NT SP3引入了NTLM加密以及Windows2000以后逐步引入的NTLM 2.0加密解决了这个问题，让我们在短期内破解长度超过8位的密码成为一种运气。但是LM加密方式默认还是开启的，除非通过上面的方法刻意关闭它。</p>
+<div>寻找人生的起点 <a href="https://www.doorcome.com/">https://www.doorcome.com</a>，如需转载请注明出处<br />
+本站域名由原<a href="http://cn-ic.org/">cn-ic.org</a>更改为<a href="http://doorcome.com/">doorcome.com</a></div>
+
+
+<b>Tags:</b> <a href="https://www.doorcome.com/?tag=linux" rel="tag">Linux</a>, <a href="https://www.doorcome.com/?tag=ophcrack" rel="tag">Ophcrack</a>, <a href="https://www.doorcome.com/?tag=rainbow-tables" rel="tag">rainbow tables</a>, <a href="https://www.doorcome.com/?tag=sam" rel="tag">SAM</a>, <a href="https://www.doorcome.com/?tag=windows" rel="tag">Windows</a>
+<h3 class="related_post_title">相关文章</h3>
+<ul class="related_post">
+<li><a href="https://www.doorcome.com/?p=64" title="&ldquo;Free Rainbow Tables&rdquo;分布式计算破解密码">&ldquo;Free Rainbow Tables&rdquo;分布式计算破解密码</a> (0)</li>
+<li><a href="https://www.doorcome.com/?p=146" title="Linux PHP5连接SQL Server 2000">Linux PHP5连接SQL Server 2000</a> (0)</li>
+<li><a href="https://www.doorcome.com/?p=63" title="Linux Mount Windows域用户限制的共享文件夹">Linux Mount Windows域用户限制的共享文件夹</a> (7)</li>
+<li><a href="https://www.doorcome.com/?p=42" title="得到WindowsXP管理员权限的有效方法（实践验证）">得到WindowsXP管理员权限的有效方法（实践验证）</a> (12)</li>
+<li><a href="https://www.doorcome.com/?p=18" title="John/bkhive/samdump, 在Linux下破解SAM密码">John/bkhive/samdump, 在Linux下破解SAM密码</a> (3)</li>
+</ul>
+<br />
+<h3>最多访问</h3>
+<ul>
+<li><a href="https://www.doorcome.com/?p=638" title="专为国人设计的爬墙软件puff">专为国人设计的爬墙软件puff</a> - 13,488 views</li>
+<li><a href="https://www.doorcome.com/?p=289" title="免费好用的VPN, UltraVPN，爬墙利器">免费好用的VPN, UltraVPN，爬墙利器</a> - 8,267 views</li>
+<li><a href="https://www.doorcome.com/?p=42" title="得到WindowsXP管理员权限的有效方法（实践验证）">得到WindowsXP管理员权限的有效方法（实践验证）</a> - 7,563 views</li>
+<li><a href="https://www.doorcome.com/?p=62" title="使用Rainbow tables和Ophcrack的组合工具破解Windows密码">使用Rainbow tables和Ophcrack的组合工具破解Windows密码</a> - 5,896 views</li>
+<li><a href="https://www.doorcome.com/?p=34" title="c/c++ reference （STL参考）chm格式文件">c/c++ reference （STL参考）chm格式文件</a> - 4,830 views</li>
+<li><a href="https://www.doorcome.com/?p=63" title="Linux Mount Windows域用户限制的共享文件夹">Linux Mount Windows域用户限制的共享文件夹</a> - 4,105 views</li>
+<li><a href="https://www.doorcome.com/?p=395" title="Google中文版的渐隐图片">Google中文版的渐隐图片</a> - 3,545 views</li>
+<li><a href="https://www.doorcome.com/?p=522" title="Proxy Switchy! FoxyProxy一样的chromium 扩展">Proxy Switchy! FoxyProxy一样的chromium 扩展</a> - 3,519 views</li>
+<li><a href="https://www.doorcome.com/?p=94" title="Linux下配置PHP5连接Oracle 10.2.0">Linux下配置PHP5连接Oracle 10.2.0</a> - 3,228 views</li>
+<li><a href="https://www.doorcome.com/?p=335" title="Windows下文件同步工具Rsync的简单使用">Windows下文件同步工具Rsync的简单使用</a> - 3,148 views</li>
+</ul>
+<div class="navigation">
+<div class="alignleft">&laquo; <a href="https://www.doorcome.com/?p=63" rel="prev">Linux Mount Windows域用户限制的共享文件夹</a></div>
+<div class="alignright"><a href="https://www.doorcome.com/?p=64" rel="next">&ldquo;Free Rainbow Tables&rdquo;分布式计算破解密码</a> &raquo;</div>
+</div>
+</div>
+<h3 id="comments">Reader's Comments</h3>

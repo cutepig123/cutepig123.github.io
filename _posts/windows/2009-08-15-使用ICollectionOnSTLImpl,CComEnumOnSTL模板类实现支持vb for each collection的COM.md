@@ -1,0 +1,4 @@
+---
+categories: windows
+---
+这个例子来自 http://msdn.microsoft.com/zh-cn/library/s8cb31f2.aspx<br />如果安装了vc9, 源代码可在C:\Program Files\Microsoft Visual Studio 9.0\Samples\1033\AllVCLanguageSamples.zip下的ATLCollections工程里看到<br />实现原理可在atl internals第8章-collections and enumerators看到<br />vb的collection对应的com接口需要继承自IDispatch,并且必须含有属性 Count, Item 及_NewItem<br />**vb访问collection有两种方法, 第一种是<**br />for i = 1 to wordObj.count<br />&nbsp;&nbsp; &nbsp;'s = s &amp; wordObj.item(i) &amp; " "<br />&nbsp;&nbsp; &nbsp;s = s &amp; wordObj(i) &amp; " "<br />next<br />这种方法会调用com的Count, Item 属性<br /><br />**第二种为**<br />for each word in wordObj<br />&nbsp;&nbsp; &nbsp;s = s &amp; word &amp; " "<br />next<br />这种方式会调用_NewItem生成一个IEnumXX对象, 而该对象也需要继承自IDispatch,并且有Next, Skip, Reset, Clone之类的方法<br /><br />atl对这两个类做了包装以便于将stl的容器转换为vb vollection, 其中collection对应ICollectionOnSTLImpl, enumerator对应CComEnumOnSTL<br />

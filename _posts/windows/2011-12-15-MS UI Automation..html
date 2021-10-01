@@ -1,0 +1,10 @@
+<p>http://blogs.msdn.com/b/lixiong/archive/2009/12/05/ui-automation-under-the-hood.aspx</p>
+<p>UI spy</p>
+<h3 class="post-title entry-title"><a href="http://huan-lin.blogspot.com/2009/02/where-is-uispyexe.html">UISpy.exe 跑哪兒去了？</a></h3>
+<div class="postmeta-primary"><span class="meta_date">2/08/2009 01:28:00 下午</span> &nbsp;<span class="meta_author">Huanlin Tsai</span> &nbsp;<span class="meta_comments"><a href="http://www.blogger.com/comment.g?blogID=4500363753981919783&amp;postID=2727810955876074841">尚無評論</a>
+</span> &nbsp;&nbsp;</div>
+<p>&nbsp;</p>
+<p>本來要找 Spy++，結果找到 Microsoft Windows SDK Blog 的一篇文章：<a href="http://blogs.msdn.com/windowssdk/archive/2008/02/18/where-is-uispy-exe.aspx">Where is UISpy.exe?</a></p>
+<p>原來 2008 年 2 月發布的 Windows SDK for Windows Server 2008 and .NET Framework 3.5 裡面並沒有附這支工具程式（漏掉了？），微軟會在下一個版本把它放回去。如果現在要用的話，可以下載 <a href="http://www.microsoft.com/downloads/details.aspx?familyid=4377F86D-C913-4B5C-B87E-EF72E5B4E065&amp;displaylang=en">Windows SDK for Vista Update</a>，在安裝時，只勾選「.NET Framework Tools｣就行了。安裝好之後，UISpy.exe 可以在 \Program Files\Microsoft SDKs\Windows\v6.0\Bin 目錄下找到。<br /><br />但是那篇文章也有提出警告，此更新版會安裝在 \Program Files\Microsoft SDKs\Windows\<span style="font-weight: bold; color: #ff0000;">v6.0</span>\ 目錄下，如果你的電腦原本就已經有安裝 Visual Studio 2008 和 Windows SDK for Windows Server 2008 and .NET Framework 3.5，則分別會有 <span style="font-weight: bold; color: #ff0000;">v6.0A</span> 和 <span style="color: #ff0000; font-weight: bold;">v6.1</span> 這兩個版本。可是 VS2008 總是會使用最新安裝的 SDK，因此如果你選擇只安裝部分元件，在使用 VS2008 時可能就會出問題。<br /><br />解決辦法在那篇文章裡面已經說得很清楚，就不贅述了。</p>
+<p>&nbsp;</p>
+<p>2&nbsp;&nbsp; &nbsp;&nbsp; Automate windows applications&nbsp;&nbsp; &nbsp;1<br />2.1&nbsp;&nbsp; &nbsp;Home&nbsp; Is White the right choice&nbsp;&nbsp; &nbsp;2<br />2.2&nbsp;&nbsp; &nbsp;Home&nbsp; Get Started&nbsp;&nbsp; &nbsp;3<br />3&nbsp;&nbsp; &nbsp;UISpy.exe and Spy++&nbsp;&nbsp; &nbsp;4<br />3.1.1&nbsp;&nbsp; &nbsp;Spy++ Internals&nbsp;&nbsp; &nbsp;5<br />4&nbsp;&nbsp; &nbsp;UI Automation Verify (UIA Verify) Test Automation Framework&nbsp;&nbsp; &nbsp;7</p>

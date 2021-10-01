@@ -1,0 +1,11 @@
+<p>Precondition:</p>
+<p>doxygen in c:\ folder</p>
+<p>&nbsp;</p>
+<p>testdoxygen.bat</p>
+<p>---</p>
+<p>path %path%;C:\Doxygen;C:\Doxygen\graphviz\bin<br />rd/s/q html<br />set INPUTFILE=%1<br />doxygen Doxyfile<br />start html\index.html<br />pause</p>
+<p>&nbsp;</p>
+<p>shortcuts.xml</p>
+<p>------</p>
+<p>&lt;NotepadPlus&gt;<br />    &lt;InternalCommands /&gt;<br />    &lt;Macros /&gt;<br />    &lt;UserDefinedCommands&gt;<br />        &lt;Command name="doxygen" Ctrl="yes" Alt="yes" Shift="yes" Key="86"&gt;c:\tool\npp\testdoxygen.bat $(FULL_CURRENT_PATH) $(CURRENT_DIRECTORY)\html\index.html&lt;/Command&gt;<br />        &lt;Command name="uml" Ctrl="yes" Alt="yes" Shift="yes" Key="85"&gt;$(CURRENT_DIRECTORY)\testuml.bat $(FULL_CURRENT_PATH) $(CURRENT_DIRECTORY)\$(NAME_PART).png&lt;/Command&gt;<br />    &lt;/UserDefinedCommands&gt;<br />    &lt;PluginCommands /&gt;<br />    &lt;ScintillaKeys /&gt;<br />&lt;/NotepadPlus&gt;</p>
+<p>&nbsp;</p>

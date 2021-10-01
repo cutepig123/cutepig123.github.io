@@ -1,0 +1,26 @@
+<p>Flv.js 是 HTML5 Flash 视频（FLV）播放器，纯原生 JavaScript 开发，没有用到 Flash。由 bilibili 网站开源。</p>
+<p>该项目依托于&nbsp;<a href="https://w3c.github.io/media-source/" data-cke-saved-href="https://w3c.github.io/media-source/">Media Source Extensions</a>，受到&nbsp;<a href="https://www.oschina.net/p/hls-js" target="_blank">hls.js</a>&nbsp;的启发。</p>
+<p><strong>概览：</strong></p>
+<p>一个实现了在 HTML5 视频中播放 FLV 格式视频的 JavaScript 库。它的工作原理是将 FLV 文件流转码复用成 ISO BMFF（MP4 碎片）片段，然后通过&nbsp;<a href="https://w3c.github.io/media-source/" data-cke-saved-href="https://w3c.github.io/media-source/">Media Source Extensions</a>&nbsp;将 MP4 片段喂进浏览器。</p>
+<p>flv.js 是使用 ECMAScript 6 编写的，然后通过&nbsp;<a href="https://babeljs.io/" data-cke-saved-href="https://babeljs.io/">Babel Compiler</a>&nbsp;编译成 ECMAScript 5，使用&nbsp;<a href="http://browserify.org/" data-cke-saved-href="http://browserify.org/">Browserify</a>&nbsp;打包。</p>
+<p><strong>功能：</strong></p>
+<ul class=" list-paddingleft-2">
+<li>
+<p>FLV 容器，具有 H.264 + AAC 编解码器播放功能</p>
+</li>
+<li>
+<p>多部分分段视频播放</p>
+</li>
+<li>
+<p>HTTP FLV 低延迟实时流播放</p>
+</li>
+<li>
+<p>FLV 通过 WebSocket 实时流播放</p>
+</li>
+<li>
+<p>兼容 Chrome, FireFox, Safari 10, IE11 和 Edge</p>
+</li>
+<li>
+<p>十分低开销，并且通过你的浏览器进行硬件加速</p>
+</li>
+</ul>

@@ -1,0 +1,47 @@
+<FONT color=#810081><FONT color=#000000>虚函数<BR></FONT><A href="http://blog.csdn.net/hustli/archive/2003/07/02/19357.aspx">http://blog.csdn.net/hustli/archive/2003/07/02/19357.aspx</A><BR><A href="http://blog.csdn.net/ox_thedarkness/archive/2006/02/27/611370.aspx">http://blog.csdn.net/ox_thedarkness/archive/2006/02/27/611370.aspx</A><BR><A href="http://blog.csdn.net/pandaxiaoxi/archive/2006/07/02/864025.aspx">http://blog.csdn.net/pandaxiaoxi/archive/2006/07/02/864025.aspx</A><BR><A href="http://blog.csdn.net/Nicrosoft/archive/2001/04/25/4030.aspx">http://blog.csdn.net/Nicrosoft/archive/2001/04/25/4030.aspx</A><BR><A href="http://blog.csdn.net/wangwang1103/archive/2006/07/01/858726.aspx">http://blog.csdn.net/wangwang1103/archive/2006/07/01/858726.aspx</A><BR><A href="http://blog.csdn.net/simonwan/archive/2005/04/19/354169.aspx">http://blog.csdn.net/simonwan/archive/2005/04/19/354169.aspx</A><BR><A href="http://blog.csdn.net/zhc/archive/2001/10/28/2730.aspx">http://blog.csdn.net/zhc/archive/2001/10/28/2730.aspx</A><BR><BR><U>以下均为转载：<BR>&nbsp;奇巧淫技 ――― C++ 直接操纵虚函数表 </U></FONT>&nbsp;&nbsp;
+<SCRIPT src="http://blog.csdn.net/count.aspx?ID=1530081&amp;Type=Rank"></SCRIPT>
+ <SPAN title=文章指数:57><IMG src="http://blog.csdn.net/images/star.gif" border=0><IMG src="http://blog.csdn.net/images/star.gif" border=0><IMG src="http://blog.csdn.net/images/star_half.gif" border=0></SPAN>&nbsp;&nbsp;<IMG title="CSDN Blog推出文章指数概念，文章指数是对Blog文章综合评分后推算出的，综合评分项分别是该文章的点击量，回复次数，被网摘收录数量，文章长度和文章类型；满分100，每月更新一次。" alt="CSDN Blog推出文章指数概念，文章指数是对Blog文章综合评分后推算出的，综合评分项分别是该文章的点击量，回复次数，被网摘收录数量，文章长度和文章类型；满分100，每月更新一次。" src="http://blog.csdn.net/images/ask.gif" border=0> 
+<DIV class=postText>
+<DIV>以下代码没有什么实用价值，最多拿来加深一下对虚函数表的印象，一时性起，想直接操纵虚函数表。这段代码只尝试了在VS2005上编译通过，没有在其他编译器上尝试，它并不具有可移植性。</DIV>
+<DIV>&nbsp;</DIV>
+<DIV>大家都知道C++的虚函数机制通常是通过一个虚函数表来实现的，C++不对内存访问做限制，所以我们可以通过指针自己访问虚函数表，然后进行操作。</DIV>
+<DIV>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">#include</SPAN><SPAN style="FONT-SIZE: 9pt"> <SPAN style="COLOR: #a31515">&lt;iostream&gt;</SPAN></SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">using</SPAN><SPAN style="FONT-SIZE: 9pt"> <SPAN style="COLOR: blue">namespace</SPAN> std;</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">class</SPAN><SPAN style="FONT-SIZE: 9pt"> B</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">public</SPAN><SPAN style="FONT-SIZE: 9pt">:</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">virtual</SPAN> <SPAN style="COLOR: blue">void</SPAN> fun1()</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; {</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout&lt;&lt;<SPAN style="COLOR: #a31515">"B::fun1"</SPAN>&lt;&lt;endl;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; }</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">virtual</SPAN> <SPAN style="COLOR: blue">void</SPAN> fun2()</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; {</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout&lt;&lt;<SPAN style="COLOR: #a31515">"B::fun2"</SPAN>&lt;&lt;endl;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; }</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">};</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt; COLOR: blue">int</SPAN><SPAN style="FONT-SIZE: 9pt"> main()</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">{</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">typedef</SPAN> <SPAN style="COLOR: blue">void</SPAN>(*FUN)();</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; B b;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; <SPAN style="COLOR: blue">void</SPAN>** ptable = *(<SPAN style="COLOR: blue">void</SPAN>***)&amp;b;</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; </SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; FUN f1 = (FUN)(*ptable);</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; f1();</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt"></SPAN>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; FUN f2 = *((FUN*)((FUN*)(ptable) + 1));</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">&nbsp;&nbsp;&nbsp;&nbsp; f2();</SPAN></DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt"></SPAN>&nbsp;</DIV>
+<DIV align=left><SPAN style="FONT-SIZE: 9pt">}</SPAN></DIV>
+<DIV align=left>&nbsp;</DIV>
+<DIV>输出</DIV>
+<DIV>B::fun1</DIV>
+<DIV>B::fun2</DIV>&nbsp;<BR><BR>
+<P id=TBPingURL>Trackback: http://tb.blog.csdn.net/TrackBack.aspx?PostId=1530081</P></DIV>

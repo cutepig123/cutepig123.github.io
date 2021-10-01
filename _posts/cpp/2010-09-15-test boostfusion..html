@@ -1,0 +1,14 @@
+<p>// testBoost.cpp : Defines the entry point for the console application.<br />//</p>
+<p>#include "stdafx.h"</p>
+<p>#if 1</p>
+<p>#include &lt;boost/fusion/sequence.hpp&gt;<br />#include &lt;boost/fusion/include/sequence.hpp&gt;<br />#include &lt;boost/fusion/include/vector.hpp&gt;<br />#include &lt;string&gt;<br />#include &lt;iostream&gt;<br />#include &lt;boost/fusion/algorithm.hpp&gt;<br />#include &lt;boost/fusion/include/algorithm.hpp&gt;<br />#include &lt;boost/fusion/support/is_sequence.hpp&gt;<br />#include &lt;boost/fusion/include/is_sequence.hpp&gt;</p>
+<p>&nbsp;</p>
+<p>template &lt;bool IsSeq&gt; struct print_xml;</p>
+<p>template &lt;&gt;<br />struct print_xml&lt;false&gt;<br />{<br />&nbsp;&nbsp;&nbsp; template &lt;typename T&gt;<br />&nbsp;&nbsp;&nbsp; void operator()(T const&amp; x) const<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::cout<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; '&lt;' &lt;&lt; typeid(x).name() &lt;&lt; '&gt;'<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; x<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; "&lt;/" &lt;&lt; typeid(x).name() &lt;&lt; "&gt;\n"<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ;<br />&nbsp;&nbsp;&nbsp; }<br />};</p>
+<p>template &lt;&gt;<br />struct print_xml&lt;true&gt;<br />{<br />&nbsp;&nbsp;&nbsp; template &lt;typename T&gt;<br />&nbsp;&nbsp;&nbsp; void operator()(T const&amp; x) const<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;boost::fusion::for_each(x, value_printer());<br />&nbsp;&nbsp;&nbsp; }<br />};</p>
+<p>struct value_printer<br />{<br />&nbsp;&nbsp;&nbsp; template&lt; typename T &gt; void operator()(T const&amp; x) const<br />&nbsp;&nbsp;&nbsp; {<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print_xml&lt;boost::fusion::traits::is_sequence&lt;T&gt;::value &gt; printXml; <br />&nbsp;&nbsp;printXml(x);<br />&nbsp;&nbsp;&nbsp; }<br />};</p>
+<p>int _tmain(int argc, _TCHAR* argv[])<br />{<br />&nbsp;typedef boost::fusion::vector&lt;int, char, std::string&gt; Stuff;<br />&nbsp;Stuff stuff(1, 'x', "howdy");<br />&nbsp;boost::fusion::vector&lt;int, char, Stuff&gt; stuff2(2, 'y', stuff);</p>
+<p>&nbsp;int i = boost::fusion::at_c&lt;0&gt;(stuff);<br />&nbsp;char ch = boost::fusion::at_c&lt;1&gt;(stuff);<br />&nbsp;std::string s = boost::fusion::at_c&lt;2&gt;(stuff);</p>
+<p>&nbsp;//boost::fusion::for_each(stuff, print_xml());<br />&nbsp;value_printer()(stuff2);</p>
+<p>&nbsp;return 0;<br />}</p>
+<p>#endif</p>

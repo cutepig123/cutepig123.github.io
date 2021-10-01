@@ -1,0 +1,31 @@
+<p>&nbsp;</p>
+<p>How to implement a windbg plugin</p>
+<p>&nbsp;</p>
+<p>Define EXT_CLASS</p>
+<div>
+<p>&nbsp;</p>
+<p>#include "lauxlib.h"</p>
+<p>&nbsp;</p>
+<p>class EXT_CLASS : public ExtExtension</p>
+<p>{</p>
+<p>public:</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; EXT_COMMAND_METHOD(lua);</p>
+<p>};</p>
+<p>&nbsp;</p>
+<p>EXT_DECLARE_GLOBALS();</p>
+</div>
+<p>&nbsp;</p>
+<p>Impl methods</p>
+<p>&nbsp;</p>
+<p>EXT_COMMAND(luado,</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "Execute lua code.",</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; "{;x,r;lua string;lua code.}")</p>
+<p>{</p>
+<p>}</p>
+<p>&nbsp;</p>
+<p>Functions can be called in methods:</p>
+<p>Get input arguments&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LPCSTR lua_code = GetUnnamedArgStr(0);</p>
+<p>Error&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Err("Cannot find script in code.\r\n");</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>Ref: C:\Users\test\Downloads\luadbg-master\luadbg-master\luadbg\luadbg.cpp</p>

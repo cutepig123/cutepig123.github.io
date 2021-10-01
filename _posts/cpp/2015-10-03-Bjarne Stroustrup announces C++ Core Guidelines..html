@@ -1,0 +1,36 @@
+<p>This morning in his <a href="http://sched.co/3vVp">opening keynote</a> at <a href="http://cppcon.org/"><strong>CppCon</strong></a>, Bjarne Stroustrup announced the <strong>C++ Core Guidelines </strong>(<a href="https://github.com/isocpp/CppCoreGuidelines">github.com/isocpp/CppCoreGuidelines</a>), the start of a new open source project on GitHub to build modern authoritative guidelines for writing C++ code. The guidelines are designed to be modern, machine-enforceable wherever possible, and open to contributions and forking so that organizations can easily incorporate them into their own corporate coding guidelines.</p>
+<p>The initial primary authors and maintainers are Bjarne Stroustrup and Herb Sutter, and the guidelines so far were developed with contributions from experts at CERN, Microsoft, Morgan Stanley, and several other organizations. The guidelines are currently in a &ldquo;0.6&rdquo; state, and contributions are welcome. As Stroustrup said: &ldquo;We need help!&rdquo;</p>
+<p>Stroustrup said: &ldquo;You can write C++ programs that are statically type safe and have no resource leaks. You can do that without loss of performance and without limiting C++&rsquo;s expressive power. This supports the general thesis that garbage collection is neither necessary nor sufficient for quality software. Our core C++ guidelines makes such code simpler to write than older styles of C++ and the safety can be validated by tools that should soon be available as open source.&rdquo;</p>
+<p>From Stroustrup&rsquo;s talk abstract:</p>
+<blockquote>
+<p>In this talk, I describe a style of guidelines that can be deployed to help most C++ programmers&hellip; The rules are prescriptive rather than merely sets of prohibitions, and about much more than code layout&hellip;&nbsp;The core guidelines and a guideline support library reference implementation will be open source projects freely available on all major platforms (initially, GCC, Clang, and Microsoft).</p>
+</blockquote>
+<p>Although the repository was not officially announced until today, it was made public last week and was noticed: CppCoreGuidelines was the #1 trending repository worldwide on GitHub on Friday, and is currently the #1 trending repository worldwide for the past week, across all languages and projects.</p>
+<p>Stroustrup also announced two other related projects.</p>
+<p><strong>Guideline Support Library (GSL): </strong>First, the C++ Core Guidelines also specifies a small Guideline Support Library (GSL), a set of common types like array_view and not_null to facilitate following the modern guidelines. An initial open source reference implementation contributed and supported by Microsoft is now available on GitHub at <a href="https://github.com/Microsoft/GSL">github.com/Microsoft/GSL</a>. It is written in portable C++ that should work on any modern compiler and platform, and has been tested on Clang/LLVM 3.6 and GCC 5.1 for Linux, with Xcode and GCC 5.2.0 for OS X, and with Microsoft Visual C++ 2013 (Update 5) and 2015 for Windows. This is both a supported library and an initial reference implementation; other implementations by other vendors are encouraged, as are forks of and contributions to this implementation.</p>
+<p><strong>Checker tool: </strong>Second, the C++ Core Guidelines are designed to be machine-enforceable wherever possible, and include many rules that can be checked by a compiler, lint, or other tool. An initial implementation based on Microsoft&rsquo;s Visual Studio will be demonstrated in several talks at CppCon this week, including <a href="http://sched.co/41a3">Herb Sutter&rsquo;s Day 2 plenary session</a> tomorrow morning. This implementation will be made available as a Windows binary in October, with the intention to open source the implementation thereafter. This too will become a supported tool and an initial reference implementation open to others; other implementations by other vendors of compilers, linters, and other tools are encouraged.</p>
+<p>A number of other CppCon talks will go deeper into the related topics, notably the following talks by speakers who collaborated on the Guidelines effort:</p>
+<blockquote>
+<p>Herb Sutter: <a href="http://sched.co/41a3">Writing Good C++14 by Default</a> (Tue 10:30am)</p>
+<p>Gabriel Dos Reis: <a href="http://sched.co/3vQQ">Large Scale C++ with Modules: What You Should Know</a> (Tue 2:00pm)</p>
+<p>Neil MacIntosh: <a href="http://sched.co/3vaZ">More Than Lint: Modern Static Analysis for C++</a> (Wed 2pm)</p>
+<p>Neil MacIntosh: <a href="http://sched.co/3vbQ">A Few Good Types: Evolving array_view and string_view for Safe C++ Code</a> (Wed 3:15pm)</p>
+<p>Gabriel Dos Reis: <a href="http://sched.co/3vac">Contracts for Dependable C++</a> (Wed 4:45pm)</p>
+<p>Eric Niebler: <a href="http://sched.co/3vWJ">Ranges and the Future of the STL</a> (Fri 10:30am)</p>
+<p>(and more)</p>
+</blockquote>
+<p> If you&rsquo;re at CppCon this week, watch for those talks. If you aren&rsquo;t, like last year&rsquo;s event, CppCon 2015 is again professionally recording all talks, and they will be freely available online about a month after the conference.<br />&nbsp; &nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>videos</strong></p>
+<p>he guidelines were introduced during a number of talks at&nbsp;<a href="http://cppcon.org/">CppCon</a>&nbsp;2015. Here are video recordings of those talks:</p>
+<ul>
+<li><a href="https://www.youtube.com/watch?t=9&amp;v=1OEu9C51K2A">Keynote: Writing Good C++ 14 (Bjarne Stroustrup)</a></li>
+<li><a href="https://www.youtube.com/watch?v=hEx5DNLWGgA%5D">Writing good C++ 14 By Default (Herb Sutter)</a></li>
+<li>Large Scale C++ With Modules: What You Should Know (Gabriel Dos Reis)</li>
+<li>Contracts for Dependable C++ (Gabriel Dos Reis)</li>
+<li>Static analysis and C++: more than lint (Neil MacIntosh):</li>
+<li>A few good types: Evolving&nbsp;<code>array_view</code>&nbsp;and&nbsp;<code>string_view</code>&nbsp;for safe C++ code (Neil MacIntosh):</li>
+</ul>
+<p>The YouTube channel for&nbsp;<a href="http://cppcon.org/">CppCon</a>&nbsp;is&nbsp;<a href="https://www.youtube.com/channel/UCMlGfpWw-RUdWX_JbLCukXg">here</a>.</p>
+<p>Slides from the talks are available in this folder.</p>
+<p>&nbsp;</p>

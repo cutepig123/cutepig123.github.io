@@ -1,0 +1,211 @@
+<p>端口转发工具，端口映射<br />&nbsp;<strong>rinetd</strong>， https://www.cnblogs.com/cutepig/p/4298903.html<br />&nbsp;<strong>fpipe</strong>， <br />&nbsp;<strong>passport</strong> https://sourceforge.net/projects/pjs-passport/<br />&nbsp;<strong>lcx</strong><br />&nbsp;<strong>ew</strong> http://rootkiter.com/EarthWorm 端口映射、Socks5代理 https://paper.tuisec.win/detail-77ca168fd36b3e2.html<br />&nbsp;<strong>tunna&nbsp;</strong>HTTP隧道 https://github.com/SECFORCE/Tunna&nbsp;https://payloads.online/archivers/2018-02-02/1<br /><strong>openssh</strong></p>
+<p><strong>SSF <a href="https://github.com/securesocketfunneling/ssf">https://github.com/securesocketfunneling/ssf</a></strong></p>
+<p>https://github.com/987432340/LCX</p>
+<p>正向代理 lan--&gt;proxy--&gt;wan</p>
+<p>反向代理（reverse proxy） wan --&gt; proxy --&gt; lan</p>
+<p>&nbsp;</p>
+<p><strong>-</strong></p>
+<h3>: Setup - server</h3>
+<p>Following command will listen on port 1080 and support socks server</p>
+<p>&nbsp;-_windows_386 server -v -p 1080 --socks5</p>
+<p>&nbsp;</p>
+<h3>Setup - client</h3>
+<p>Following command will</p>
+<p>l&nbsp; Turn on socks server at 1080</p>
+<p>l&nbsp; Turn on local 21000 and 21001 port forwarding</p>
+<p>&nbsp;</p>
+<p>-_windows_</p>
+<p>386 client -v&nbsp; clientip:1080 socks 21000 21001</p>
+<p>&nbsp;</p>
+<h2>How to remote desktop to pc?</h2>
+<p>&nbsp;</p>
+<p>Following map AMC&rsquo;s 33890 to HK&rsquo;s 3389 port</p>
+<p>&nbsp;</p>
+<p>-_windows_</p>
+<p>386 client -v&nbsp; clientip:1080 socks 21000 21001 <strong>localhost:33890:localhost:3389</strong></p>
+<p>&nbsp;</p>
+<h1>Python http proxy</h1>
+<p>Install opencv via proxy:</p>
+<p>SET HTTPS_PROXY=http://ACCOUNT:PASSWORD@PROXYIP:PORT</p>
+<p>python -m pip install --upgrade pip</p>
+<p>&nbsp;</p>
+<h1>how to auto turn on RDP</h1>
+<p>schedule task run this batch file</p>
+<p>&nbsp;</p>
+<p>regedit /s C:\temp\useful\term.reg</p>
+<p>&nbsp;</p>
+<p>reg file</p>
+<div>
+<p>Windows Registry Editor Version 5.00</p>
+<p>&nbsp;</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services]</p>
+<p>"fDenyTSConnections"=dword:00000000</p>
+<p>&nbsp;</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Client]</p>
+<p>"fEnableUsbNoAckIsochWriteToDevice"=dword:00000050</p>
+<p>"fEnableUsbBlockDeviceBySetupClass"=dword:00000001</p>
+<p>"fEnableUsbSelectDeviceByInterface"=dword:00000001</p>
+<p>&nbsp;</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Client\UsbBlockDeviceBySetupClasses]</p>
+<p>"1000"="{3376f4ce-ff8d-40a2-a80f-bb4359d1415c}"</p>
+<p>&nbsp;</p>
+<p>[HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services\Client\UsbSelectDeviceByInterfaces]</p>
+<p>"1000"="{6bdd1fc6-810f-11d0-bec7-08002be2092f}"</p>
+
+
+
+
+
+
+
+</div>
+<p>&nbsp;</p>
+<p><br />Links<br />&nbsp;<br />&nbsp;https://zhuanlan.zhihu.com/p/43684005<br />&nbsp;</p>
+<p>proxy checker</p>
+<p><img src="https://img2018.cnblogs.com/blog/23777/201903/23777-20190330101035240-1336201141.png" alt="" /></p>
+<p>&nbsp;</p>
+<h2>十大代理方式在常见操作系统中的支持情况</h2>
+<div class="fixed">&nbsp;</div>
+<div class="info">2018年1月13日&nbsp;| 分类:&nbsp;<a href="https://www.igfw.net/archives/category/fanqiangxiangguan" rel="category tag">翻墙相关</a>&nbsp;| 标签:&nbsp;<a href="https://www.igfw.net/archives/tag/%e5%8d%81%e5%a4%a7%e4%bb%a3%e7%90%86" rel="tag">十大代理</a>
+<div class="fixed">&nbsp;</div>
+
+
+
+
+</div>
+<div class="content">
+<p>&radic;代表系统支持，&times;代表系统不支持</p>
+<table>
+<tbody>
+<tr>
+<td width="104">&nbsp;</td>
+<td colspan="2" width="73">Windows</td>
+<td width="75">Mac OS X</td>
+<td width="84">iOS</td>
+<td width="84">Android</td>
+<td width="84">Linux</td>
+<td width="84">Router</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://shadowsocks.org/">Shadowsocks</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104">ShadowsocksR</td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://www.v2ray.com/">V2Ray</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104">HTTPs/2 proxy</td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104">SSH -</td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://github.com/txthinking/brook">Brook</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://github.com/chinashiyu/gfw.press">GFW.Press</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://github.com/coyove/goflyway">GoFlyway</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&times;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://github.com/pipesocks/pipesocks">PipeSocks</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&times;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+<tr>
+<td width="104"><a href="https://github.com/UnsignedInt8/LightSword">LightSword</a></td>
+<td width="64">&radic;</td>
+<td colspan="2" width="84">&radic;</td>
+<td width="84">&radic;</td>
+<td width="84">&times;</td>
+<td width="84">&radic;</td>
+<td width="84">&radic;</td>
+
+</tr>
+
+</tbody>
+
+</table>
+<p>以上系统iOS9+，Android4+，Router以OpenWRT系统为例。</p>
+<p><span id="more-13537">iOS可以使用免费的<a href="https://itunes.apple.com/us/app/potatso-lite/id1239860606?mt=8">Potatso Lite</a>或者收费的<a href="https://www.v2ray.com/itunes/us/shadowrocket/id932747118/">Shadowrocket</a>连接ss和ssr；win可以使用<a href="https://github.com/2dust/v2rayN">V2RayN</a>，mac可以使用<a href="https://github.com/Cenmrev/V2RayX">V2RayX</a>，安卓可以使用<a href="https://play.google.com/store/apps/details?id=com.v2ray.ang">V2RayNG</a>，ios可以使用<a href="https://www.v2ray.com/itunes/us/kitsunebi/id1275446921/">Kitsunebi</a>、<a href="https://www.v2ray.com/itunes/us/shadowrocket/id932747118/">Shadowrocket</a>或<a href="https://itunes.apple.com/us/app/shadowray/id1283082051?mt=8">Pepi</a>连接V2Ray；HTTP/2 proxy和HTTPS代理在桌面系统上可以直接使用Google Chrome+Proxy SwitchyOmega设置HTTPS代理协议使用，iOS上可以使用免费的<a href="https://itunes.apple.com/us/app/potatso-lite/id1239860606?mt=8">Potatso Lite</a>，安卓上可以使用<a href="https://play.google.com/store/apps/details?id=org.sandroproxy.drony&amp;hl=zh-CN">Drony</a>设置https代理，在goproxy项目停止后使用Caddy搭建http2 proxy成为了一个不错的选择；ssh代理在安卓上可以使用<a href="https://play.google.com/store/apps/details?id=com.-workshop.postern">Postern</a>或<a href="https://play.google.com/store/apps/details?id=com.staf621.ki4a">Ki4a &ndash; SSH -</a>，在ios有<a href="https://itunes.apple.com/us/app/-ssh/id1316776386?mt=8">-SSH</a>和<a href="https://itunes.apple.com/us/app/ssh--/id1260223542?mt=8">SSH -</a>；大杀器官方ios客户端需要越狱，在不越狱的情况下<a href="https://www.v2ray.com/itunes/us/shadowrocket/id932747118/">Shadowrocket</a>和<a href="https://itunes.apple.com/us/app/netshuttle-shadowsocksr-tool/id982708939?mt=8">NetShuttle</a>支持GFW.Press；iOS上<a href="https://www.v2ray.com/itunes/us/shadowrocket/id932747118/">Shadowrocket</a>和level.4可以连接LightSword。</span></p>
+<p>国外服务商目前大多是提供<a href="https://billing.purevpn.com/aff.php?aff=634">HTTP2 proxy</a>和<a href="https://www.tuvpn.com/">SSH -</a>也有<a href="https://www.bvpn.com/">少数</a>提供<a href="https://www.bolehvpn.net/">Shadowsocks</a>连接方式，国内ShadowsocksR还是主流，也有少数提供V2Ray。</p>
+<p>这里主要列举了，目前在翻墙代理中应用较多的10种代理方式，除了这十大代理方式还存在很多代理方式可以用来翻墙，比如<a href="https://github.com/ginuerzh/gost">gost</a>、<a href="https://github.com/yinqiwen/gsnova">GSnova</a>、<a href="https://www.gogo-.com/home">GoGo-</a>、<a href="https://www.uproxy.org/">uProxy</a>、<a href="https://github.com/yryz/httpproxy">httpproxy</a>、<a href="https://github.com/mmatczuk/go-http--">Go HTTP -</a>、<a href="https://github.com/jpillora/-">-</a>、<a href="https://github.com/gwuhaolin/lightsocks">Lightsocks</a>等。</p>
+<p>&nbsp;</p>
+<p>公司测试结果</p>
+<p>http - 成功，可以在内网建立socks代理访问外网，但是缺点是无法在外网访问内网</p>
+<p>-成功，速度很快啊</p>
+<p>&nbsp;</p>
+<p><strong>ssr server 运行失败</strong></p>
+<p>G:\sw\shadowsocks-master&gt;g:\Python36\Scripts\ssserver.exe -p 443 -k password -m aes-256-cfb<br />2019-03-30 11:42:32 WARNING  can't find symbol EVP_get_cipherbyname in C:\WINDOWS\system32\CryptoWinRT.dll<br />Traceback (most recent call last):<br />  File "g:\Python36\Scripts\ssserver-script.py", line 11, in &lt;module&gt;<br />    load_entry_point('shadowsocks==3.0.0', 'console_scripts', 'ssserver')()<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\server.py", line 34, in main<br />    config = shell.get_config(False)<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\shell.py", line 355, in get_config<br />    check_config(config, is_local)<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\shell.py", line 211, in check_config<br />    config['crypto_path'])<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\cryptor.py", line 51, in try_cipher<br />    Cryptor(key, method, crypto_path)<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\cryptor.py", line 100, in __init__<br />    random_string(self._method_info[METHOD_INFO_IV_LEN])<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\cryptor.py", line 130, in get_cipher<br />    return m[METHOD_INFO_CRYPTO](method, key, iv, op, self.crypto_path)<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\crypto\openssl.py", line 286, in __init__<br />    OpenSSLCryptoBase.__init__(self, cipher_name, crypto_path)<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\crypto\openssl.py", line 98, in __init__<br />    load_openssl(crypto_path)<br />  File "g:\Python36\lib\site-packages\shadowsocks-3.0.0-py3.6.egg\shadowsocks\crypto\openssl.py", line 51, in load_openssl<br />    raise Exception('libcrypto(OpenSSL) not found with path %s' % path)<br />Exception: libcrypto(OpenSSL) not found with path None</p>
+<p>https://github.com/v2ray/v2ray-core/releases<br /><strong>V2Ray</strong> 没找到windows server 网上有个文章不知道是不是搭建server https://www.enterpr1se.info/2017/10/v2ray-over-gfw-windows-server-edition/3/ https://ssr.tools/285</p>
+<p>&nbsp;</p>
+
+
+
+
+</div>

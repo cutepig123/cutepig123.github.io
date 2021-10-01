@@ -1,0 +1,66 @@
+<p>&nbsp;</p>
+<p>Lib：</p>
+<p>https://github.com/cpgf/cpgf/tree/master</p>
+<p>&nbsp;</p>
+<p>代码</p>
+<p>以下是operator的实现函数</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">int</span> UserData_operator(lua_State *<span style="color: #000000;"> L)
+{
+    ENTER_LUA()
+    
+    GOperatorGlueDataPointer glueData </span>= static_cast&lt;GGlueDataWrapper *&gt;(lua_touserdata(L, lua_upvalueindex(<span style="color: #800080;">1</span>)))-&gt;getAs&lt;GOperatorGlueData&gt;<span style="color: #000000;">();
+
+    </span><span style="color: #0000ff;">return</span> invokeOperator(glueData-&gt;getBindingContext(), glueData-&gt;getObjectData(), glueData-&gt;getMetaClass(), glueData-&gt;<span style="color: #000000;">getOp());
+    
+    LEAVE_LUA(L, </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">)
+}</span></pre>
+</div>
+<p>可见cpgf&nbsp;设置 一个GGlueDataWrapper *指针作为upvalue，从而可以方便的调用相关实现</p>
+<p>&nbsp;</p>
+<p>而注册函数如下</p>
+<p><span style="color: #ff0000;">由于对lua api不很熟悉，这段代码还没有完全搞懂</span></p>
+<p><span style="color: #ff0000;">有时间仔细研究下</span></p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:cpp;gutter:true;">void helperBindOperator(const GContextPointer &amp; context, const GObjectGlueDataPointer &amp; objectData, IMetaClass * metaClass, GMetaOpType op)
+{
+	lua_State * L = getLuaState(context);
+
+	for(size_t i = 0; i &lt; sizeof(metaOpTypes) / sizeof(metaOpTypes[0]); ++i) {
+		if(metaOpTypes[i] == op) {
+			GOperatorGlueDataPointer operatorData(context-&gt;newOperatorGlueData(objectData, metaClass, op));
+			GLuaRefUserData * glueUserData = operatorData-&gt;getUserDataAs&lt;GLuaRefUserData&gt;();
+			if(glueUserData != nullptr) {
+				glueUserData-&gt;get();
+				if(! lua_isnil(L, -1)) {
+					return;
+				}
+				lua_pop(L, 1);
+			}
+
+			lua_pushstring(L, luaOperators[i]);
+			void * userData = lua_newuserdata(L, getGlueDataWrapperSize&lt;GOperatorGlueData&gt;());
+			newGlueDataWrapper(userData, operatorData);
+
+			lua_newtable(L);
+			setMetaTableSignature(L);
+			setMetaTableGC(L);
+			lua_setmetatable(L, -2);
+
+			lua_pushcclosure(L, &amp;UserData_operator, 1);
+			lua_rawset(L, -3);
+
+			glueUserData = new GLuaRefUserData(L, false);
+			operatorData-&gt;setUserData(glueUserData);
+			glueUserData-&gt;retainAndPop();
+
+			glueUserData-&gt;get();
+
+			return;
+		}
+	}
+}
+</pre>
+</div>
+<p>　　</p>
+<p>&nbsp;</p>

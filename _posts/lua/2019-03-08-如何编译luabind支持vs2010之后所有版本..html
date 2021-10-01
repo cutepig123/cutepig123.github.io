@@ -1,0 +1,70 @@
+<p>步骤</p>
+<ul>
+<li>下载https://github.com/luabind/luabind/tree/0.9。 其最后一次commit为
+<p>Revision: 8c66030818f0eacbb7356c16776539b55d8c5319<br />Author: Peter Colberg &lt;peter.colberg@utoronto.ca&gt;<br />Date: 12/24/2011 1:53:29 AM<br />Message:<br />Lua 5.2: use new macro lua_pushglobaltable</p>
+<p>This macro is not mentioned in the Lua 5.2 manual.<br />----<br />Modified: luabind/object.hpp<br />Modified: src/scope.cpp</p>
+<p>&nbsp;</p>
+</li>
+<li>添加#include "luabind_compatibility.hpp"，内容为</li>
+<li>
+<div class="cnblogs_code">
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">
+@Author Sygn (</span><span style="color: #008000; text-decoration: underline;">https://github.com/sygn-jp</span><span style="color: #008000;">)
+
+This file is from </span><span style="color: #008000; text-decoration: underline;">https://github.com/sygh-JP/CompactLua</span><span style="color: #008000;"> . Detailed descriptions could be found
+at the author's blog: </span><span style="color: #008000; text-decoration: underline;">http://sygh.hatenadiary.jp/entry/2014/06/22/000456</span><span style="color: #008000;"> (Japanese only).
+</span><span style="color: #008000;">*/</span>
+
+<span style="color: #0000ff;">#pragma</span> once<span style="color: #000000;">
+
+#include </span>&lt;lua.hpp&gt;<span style="color: #000000;">
+#include </span>&lt;boost/version.hpp&gt;
+
+
+<span style="color: #008000;">//</span><span style="color: #008000;"> Luabind 0.9.1 uses "boost::operator" but it has been moved to "boost::iterators::operator" in Boost 1.57.0 or later.
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> As a result, many compilation errors will occur at the macro "LUABIND_OPERATOR_ADL_WKND" in "luabind/object.hpp".
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> One of the best and wisest solutions is to modify the source code of Luabind directly.
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> As an alternative way, the following workaround can avoid modifying it but is unbeautiful and pollutes the namespace "boost".</span>
+
+<span style="color: #0000ff;">#if</span> (BOOST_VERSION &gt;= 105700)<span style="color: #000000;">
+#include </span>&lt;boost/operators.hpp&gt;
+<span style="color: #0000ff;">namespace</span><span style="color: #000000;"> luabind
+{
+    </span><span style="color: #0000ff;">namespace</span><span style="color: #000000;"> detail
+    {
+        </span><span style="color: #008000;">//</span><span style="color: #008000;"> Forward declaration</span>
+        template&lt;typename T&gt; <span style="color: #0000ff;">class</span><span style="color: #000000;"> basic_iterator;
+    }
+}
+</span><span style="color: #0000ff;">namespace</span><span style="color: #000000;"> boost
+{
+    template</span>&lt;typename T&gt; <span style="color: #0000ff;">bool</span> <span style="color: #0000ff;">operator</span> ==<span style="color: #000000;">(
+        </span><span style="color: #0000ff;">const</span> luabind::detail::basic_iterator&lt;T&gt;&amp;<span style="color: #000000;"> x,
+        </span><span style="color: #0000ff;">const</span> luabind::detail::basic_iterator&lt;T&gt;&amp;<span style="color: #000000;"> y)
+    {
+        </span><span style="color: #0000ff;">return</span> boost::iterators::<span style="color: #0000ff;">operator</span> ==<span style="color: #000000;">(x, y);
+    }
+
+    template</span>&lt;typename T&gt; <span style="color: #0000ff;">bool</span> <span style="color: #0000ff;">operator</span> !=<span style="color: #000000;">(
+        </span><span style="color: #0000ff;">const</span> luabind::detail::basic_iterator&lt;T&gt;&amp;<span style="color: #000000;"> x,
+        </span><span style="color: #0000ff;">const</span> luabind::detail::basic_iterator&lt;T&gt;&amp;<span style="color: #000000;"> y)
+    {
+        </span><span style="color: #0000ff;">return</span> boost::iterators::<span style="color: #0000ff;">operator</span> !=<span style="color: #000000;">(x, y);
+    }
+}
+</span><span style="color: #0000ff;">#endif</span></pre>
+</div>
+<p>&nbsp;</p>
+</li>
+<li>为config。h，和lua_include.hpp 添加#include "luabind_compatibility.hpp"</li>
+<li>在policy。hpp添加</li>
+<li>
+<div class="cnblogs_code">
+<pre>LUABIND_NUMBER_CONVERTER(<span style="color: #0000ff;">long</span> <span style="color: #0000ff;">double</span><span style="color: #000000;">, number)
+LUABIND_NUMBER_CONVERTER(__int64, number)
+LUABIND_NUMBER_CONVERTER(unsigned __int64, number)</span></pre>
+</div>
+<p>&nbsp;</p>
+</li>
+</ul>
+<p>&nbsp;</p>

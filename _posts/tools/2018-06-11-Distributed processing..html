@@ -1,0 +1,755 @@
+<p>Distributed processing</p>
+<p>&nbsp;</p>
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="354">
+<p><strong>Tool</strong></p>
+</td>
+<td valign="top" width="174">
+<p><strong>好处</strong></p>
+</td>
+<td valign="top" width="168">
+<p><strong>坏处</strong></p>
+</td>
+<td valign="top" width="176">
+<p><strong>类型</strong></p>
+</td>
+<td valign="top" width="164">
+<p><strong>支持序列化</strong></p>
+</td>
+<td valign="top" width="164">
+<p><strong>支持根据负载动态调度任务</strong></p>
+</td>
+<td valign="top" width="164">
+<p><strong>支持c</strong></p>
+</td>
+<td valign="top" width="173">
+<p><strong>支持dependency</strong><strong>的调度</strong></p>
+</td>
+<td valign="top" width="167">
+<p><strong>有成熟的library</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Actor model</p>
+</td>
+<td valign="top" width="174">
+<p>天生支持分布式，本身已经包含基本的serialization功能</p>
+</td>
+<td valign="top" width="168">
+<p>比较底层</p>
+<p>需要自己编写调度代码</p>
+<p>没有广泛支持c的library</p>
+</td>
+<td valign="top" width="176">
+<p>传统基于msg的系统</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>x</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="173">
+<p>x</p>
+</td>
+<td valign="top" width="167">
+<p>x</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Apache Storm</p>
+<p><a href="http://storm.apache.org/">http://storm.apache.org/</a></p>
+</td>
+<td valign="top" width="174">
+<p>本身支持分布式，dependency的调度</p>
+</td>
+<td valign="top" width="168">
+<p>基于java，不支持c</p>
+</td>
+<td valign="top" width="176">
+<p>Streaming 系统</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>x</p>
+</td>
+<td valign="top" width="173">
+<p>v</p>
+</td>
+<td valign="top" width="167">
+<p>v</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Grpc</p>
+</td>
+<td valign="top" width="174">
+<p>支持c</p>
+</td>
+<td valign="top" width="168">
+<p>需要自己编写调度代码</p>
+<p>效率不高（基于http）</p>
+</td>
+<td valign="top" width="176">
+<p>RPC</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>x</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="173">
+<p>x</p>
+</td>
+<td valign="top" width="167">
+<p>v</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Stapl (Standard Adaptive Parallel Library)</p>
+<p><a href="https://parasol.tamu.edu/stapl/">https://parasol.tamu.edu/stapl/</a></p>
+<p><a href="https://parasol-lab.gitlab.io/stapl-home/docs/sgl/">https://parasol-lab.gitlab.io/stapl-home/docs/sgl/</a></p>
+<p><a href="https://gitlab.com/parasol-lab">https://gitlab.com/parasol-lab</a></p>
+</td>
+<td valign="top" width="174">
+<p>STAPL（标准模板自适应并行库）是用于在C ++中开发并行程序的框架。它设计用于共享和分布式内存并行计算机</p>
+<p>&nbsp;</p>
+<p>TaskGraph</p>
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>V?</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Stolos，</p>
+<p>https://github.com/sailthru/stolos/blob/master/README.md</p>
+<p>Chronos， luigi， Azkaban</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;a task dependency scheduler that helps build distributed pipelines</p>
+</td>
+<td valign="top" width="168">
+<p>像是接近批处理框架，实时性可能会慢？</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>V?</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Zeromq</p>
+</td>
+<td valign="top" width="174">
+<p>支持c</p>
+</td>
+<td valign="top" width="168">
+<p>只是消息队列，需要自己编写序列化，和调度</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>V?</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Celery http://www.celeryproject.org/</p>
+</td>
+<td valign="top" width="174">
+<p>芹菜：分布式任务队列</p>
+<p>Celery是基于分布式消息传递的异步任务队列/作业队列。它专注于实时操作，但也支持调度。</p>
+</td>
+<td valign="top" width="168">
+<p>基于python</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>V?</p>
+</td>
+<td valign="top" width="164">
+<p>x</p>
+</td>
+<td valign="top" width="173">
+<p>？</p>
+</td>
+<td valign="top" width="167">
+<p>v</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Thrift</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>hadoop</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>批处理系统，慢</p>
+<p>Map reduce不是非常适用</p>
+<p>Java</p>
+</td>
+<td valign="top" width="176">
+<p>MapReduce-like 系统</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="173">
+<p>x</p>
+</td>
+<td valign="top" width="167">
+<p>V</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>MPI (mpich2 和 openmpi)</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>传统基于msg的系统</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>GraphLab (dato) https://turi.com/</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>好像用于机器学习方面的</p>
+</td>
+<td valign="top" width="176">
+<p>图计算系统</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Giraph / Hama</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>图计算系统</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Spark Streaming</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>不是纯粹的流处理，实时性可能会有影响</p>
+</td>
+<td valign="top" width="176">
+<p>Streaming 系统</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p>Flink</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>Streaming 系统</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<table style="width: 100%;" border="0" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td nowrap="nowrap">
+<p align="left"><a href="http://threadingbuildingblocks.org/" target="_blank">TBB</a></p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left"><a href="http://charm.cs.uiuc.edu/software/" target="_blank">Charm++</a></p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left"><a href="http://www.cs.berkeley.edu/projects/titanium/intro.html" target="_blank">Titanium</a></p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left"><a href="http://upc.gwu.edu/" target="_blank">UPC</a></p>
+</td>
+</tr>
+<tr>
+<td nowrap="nowrap">
+<p align="left"><a href="http://www.extreme.indiana.edu/hpc++/docs/overview/class-lib/PSTL/" target="_blank">PSTL</a></p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p align="left">Bonic</p>
+<p align="left">https://boinc.berkeley.edu/trac/wiki/ProjectMain</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p align="left">Tpl dataflow</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<p align="left">Julia language</p>
+<p align="left">https://julialang.org/</p>
+</td>
+<td valign="top" width="174">
+<p>语言层面支持分布式</p>
+</td>
+<td valign="top" width="168">
+<p>没有图调度</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>v</p>
+</td>
+<td valign="top" width="164">
+<p>vx</p>
+</td>
+<td valign="top" width="173">
+<p>x</p>
+</td>
+<td valign="top" width="167">
+<p>V</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<ul>
+<li><a title="" href="https://en.wikipedia.org/wiki/OpenHMPP">OpenHMPP</a></li>
+</ul>
+<p align="left">&nbsp;</p>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>是一个标准</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<ul>
+<li><a title="OpenMP" href="https://en.wikipedia.org/wiki/OpenMP">OpenMP</a></li>
+</ul>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>是一个标准</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<ul>
+<li>Apache graphx</li>
+</ul>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="354">
+<ul>
+<li>Apache Storm，Trident，Spark Streaming，Samza和Apache Flink</li>
+</ul>
+</td>
+<td valign="top" width="174">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="168">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="176">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="164">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="173">
+<p>&nbsp;</p>
+</td>
+<td valign="top" width="167">
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+<p>&nbsp;</p>
+<p>Keywords</p>
+<p>Distributed processing</p>
+<p>Distributed computing</p>
+<p>Distributed task scheduler</p>
+<p>并行计算</p>
+<p>高性能计算</p>
+<p>Task Dependence Graph</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>技术</p>
+<p>Paxos</p>
+<p>Consistent Hash</p>
+<p>分布式存储系统还有一系列的理论、算法、技术作为支撑：例如 Paxos, CAP, ConsistentHash, Timing (时钟), 2PC, 3PC</p>
+<p>&nbsp;</p>
+<p>分布式计算系统也做了一个分类，如下：</p>
+<p>&nbsp;</p>
+<p>1. 传统基于msg的系统</p>
+<p>2. MapReduce-like 系统</p>
+<p>3. 图计算系统</p>
+<p>4. 基于状态（state）的系统</p>
+<p>5. Streaming 系统</p>
+<p>&nbsp;</p>
+<p><a href="https://en.wikipedia.org/wiki/List_of_concurrent_and_parallel_programming_languages">https://en.wikipedia.org/wiki/List_of_concurrent_and_parallel_programming_languages</a></p>
+<p><a href="http://www.infoq.com/cn/articles/comparison-of-main-stream-processing-framework">http://www.infoq.com/cn/articles/comparison-of-main-stream-processing-framework</a></p>
+<p><a href="http://www.infoq.com/cn/articles/comparison-of-main-stream-processing-framework">http://www.infoq.com/cn/articles/comparison-of-main-stream-processing-framework</a></p>
+<p>&nbsp;</p>

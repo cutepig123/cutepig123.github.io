@@ -1,0 +1,155 @@
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td valign="top" width="73">
+<p><strong>Date</strong></p>
+</td>
+<td valign="top" width="495">
+<p><strong>todo</strong></p>
+</td>
+</tr>
+<tr>
+<td valign="top" width="73">
+<p>20180317</p>
+</td>
+<td valign="top" width="495"><ol>
+<li>Opencv</li>
+</ol>
+<p><span style="text-decoration: line-through;">a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span><span style="text-decoration: line-through;">Install opencv+python+ide (<a href="http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html">http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_setup/py_setup_in_windows/py_setup_in_windows.html</a>)</span><span style="text-decoration: line-through;">。--&gt; G:\Python35-32 </span><span style="text-decoration: line-through;">&agrave; <a href="http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html#display-image">http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_gui/py_image_display/py_image_display.html#display-image</a> </span><span style="text-decoration: line-through;">&agrave; http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_core/py_basic_ops/py_basic_ops.html#basic-ops</span></p>
+<p>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Opencv python学习http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_template_matching/py_template_matching.html#template-matching http://opencv-python-tutroals.readthedocs.io/en/latest/py_tutorials/py_imgproc/py_template_matching/py_template_matching.html#template-matching</p>
+<p>c)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编写程序抓图，找秋千</p>
+<p>d)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 自己编译</p>
+<p>e)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 研究Opencv如何编译python和numpy无缝应用？</p>
+<ol>
+<li>研究python hirsch原理</li>
+<li>Open source visual programming tool</li>
+</ol>
+<p>a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://www.zaluum.com/">http://www.zaluum.com/</a></p>
+<p>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; https://www.postscapes.com/iot-visual-programming-tools/</p>
+<ol>
+<li>VS plugin imageview</li>
+<li>如何远程访问家里的本地文件？</li>
+<li>Study hdevelop measurement tool</li>
+</ol></td>
+</tr>
+<tr>
+<td valign="top" width="73">
+<p>20180319</p>
+</td>
+<td valign="top" width="495">
+<p><strong><span style="text-decoration: line-through;">编译python</span></strong><strong><span style="text-decoration: line-through;">扩展</span></strong></p>
+<p><span style="text-decoration: line-through;">1</span><span style="text-decoration: line-through;">，通过setup.py</span><span style="text-decoration: line-through;">编译自己的扩展 &ndash; </span><span style="text-decoration: line-through;">因为python</span><span style="text-decoration: line-through;">和VS</span><span style="text-decoration: line-through;">版本不同，失败。俺又不想搞半天版本问题。放弃！</span></p>
+<p><span style="text-decoration: line-through;">http://intermediate-and-advanced-software-carpentry.readthedocs.io/en/latest/c++-wrapping.html</span></p>
+<p><span style="text-decoration: line-through;">出错，找不到vsvarsxxx.bat</span></p>
+<p><span style="text-decoration: line-through;">&nbsp;</span></p>
+<p><span style="text-decoration: line-through;">Ans: (https://docs.microsoft.com/en-us/visualstudio/install/modify-visual-studio)</span></p>
+<p><span style="text-decoration: line-through;">(<a href="https://blogs.msdn.microsoft.com/pythonengineering/2016/04/11/unable-to-find-vcvarsall-bat/">https://blogs.msdn.microsoft.com/pythonengineering/2016/04/11/unable-to-find-vcvarsall-bat/</a>)</span></p>
+<p><span style="text-decoration: line-through;">&nbsp;</span></p>
+<p><strong><span style="text-decoration: line-through;">Update:</span></strong><span style="text-decoration: line-through;">&nbsp;Install&nbsp;<a href="https://visualstudio.com/">Visual Studio 2017</a></span><span style="text-decoration: line-through;">, select the&nbsp;<strong>Python development workload</strong>&nbsp;and the Native development tools option.</span></p>
+<p><span style="text-decoration: line-through;">&nbsp;</span></p>
+<p><span style="text-decoration: line-through;">在您的计算机上找到</span><span style="text-decoration: line-through;">Visual Studio</span><span style="text-decoration: line-through;">安装程序。</span></p>
+<p><span style="text-decoration: line-through;">例如，在运行</span><span style="text-decoration: line-through;">Windows 10</span><span style="text-decoration: line-through;">周年更新的计算机上，选择</span><span style="text-decoration: line-through;">&ldquo;&nbsp;</span><strong><span style="text-decoration: line-through;">开始</span></strong><strong><span style="text-decoration: line-through;">&rdquo;</span></strong><span style="text-decoration: line-through;">，然后滚动到字母</span><strong><span style="text-decoration: line-through;">V</span></strong><span style="text-decoration: line-through;">，它被列为</span><strong><span style="text-decoration: line-through;">Visual Studio</span></strong><strong><span style="text-decoration: line-through;">安装程序</span></strong><span style="text-decoration: line-through;">。</span></p>
+<p>&nbsp;</p>
+<p><span style="text-decoration: line-through;">2</span><span style="text-decoration: line-through;">， </span><span style="text-decoration: line-through;">通过VS</span><span style="text-decoration: line-through;">直接编译扩展&mdash;</span><span style="text-decoration: line-through;">成功！</span></p>
+<p><span style="text-decoration: line-through;">参考文献：<a href="https://docs.python.org/3/extending/extending.html">https://docs.python.org/3/extending/extending.html</a></span></p>
+<p><span style="text-decoration: line-through;">&nbsp;</span></p>
+<p><span style="text-decoration: line-through;">注意：release</span><span style="text-decoration: line-through;">班和debug</span><span style="text-decoration: line-through;">班的lib</span><span style="text-decoration: line-through;">是不同的！</span></p>
+<p>&nbsp;</p>
+<p>学习</p>
+<p><a href="https://docs.python.org/3/extending/extending.html" target="_blank">https://docs.python.org/3/extending/extending.html</a><br />
+  <a href="https://docs.python.org/3/extending/building.html" target="_blank">https://docs.python.org/3/extending/building.html</a></p>
+<p><a href="http://intermediate-and-advanced-software-carpentry.readthedocs.io/en/latest/c++-wrapping.html#manual-wrapping" target="_blank">http://intermediate-and-advanced-software-carpentry.readthedocs.io/en/latest/c++-wrapping.html#manual-wrapping</a></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+
+
+  </td>
+
+
+ </tr>
+<tr>
+<td valign="top" width="73">
+<p>&nbsp;</p>
+
+
+  </td>
+<td valign="top" width="495">
+<p><span style="text-decoration: line-through;"><a href="https://stackoverflow.com/questions/48188940/migrate-halcon-code-to-opencv">https://stackoverflow.com/questions/48188940/migrate-halcon-code-to-opencv</a></span></p>
+<p><span style="text-decoration: line-through;">交互式可视化调试：<a href="https://docs.opencv.org/3.3.0/d7/dcf/tutorial_cvv_introduction.html">https</a></span><span style="text-decoration: line-through;">：<a href="https://docs.opencv.org/3.3.0/d7/dcf/tutorial_cvv_introduction.html">//docs.opencv.org/3.3.0/d7/dcf/tutorial_cvv_introduction.html</a></span></p>
+<p><span style="text-decoration: line-through;"><a href="https://github.com/dov/hirsch">https://github.com/dov/hirsch</a></span></p>
+<p>&nbsp;</p>
+<p>有一个新的开源库：TUM.CMS.VPLControl。<a href="https://github.com/tumcms/TUM.CMS.VPLControl">在这里</a>获取。</p>
+<p><a href="https://github.com/jdye64/nifi-opencv">https://github.com/jdye64/nifi-opencv</a></p>
+<p><span style="text-decoration: line-through;"><a href="https://www.npmjs.com/package/node-red-contrib-opencv">https://www.npmjs.com/package/node-red-contrib-opencv</a></span></p>
+<p>&nbsp;</p>
+<p><span style="text-decoration: line-through;">查看</span><span style="text-decoration: line-through;">Google
+  Blockly</span><span style="text-decoration: line-through;">。</span><span style="text-decoration: line-through;">Blockly</span><span style="text-decoration: line-through;">允许开发人员创建自己的块，翻译（生成器）到几乎所有的编程语言（甚至</span><span style="text-decoration: line-through;">JSON
+  / XML</span><span style="text-decoration: line-through;">），并包含一个图形界面以允许最终用户创建自己的程序。</span></p>
+<p>&nbsp;</p>
+<p>研究xod</p>
+<p><a href="https://fossbytes.com/xod-programming-language-raspberry-pi-arduino/">https://fossbytes.com/xod-programming-language-raspberry-pi-arduino/</a></p>
+<p>https://xod.io/</p>
+
+
+  </td>
+
+
+ </tr>
+<tr>
+<td valign="top" width="73">
+<p>2018/3/21</p>
+
+
+  </td>
+<td valign="top" width="495">
+<p>目标：</p>
+<p>1，&nbsp; 确定先做框架还是使用halcon？</p>
+<p>a)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  老婆对在家搞这个有意见，所以还是在公司搞框架吧，python+opencv+qt?</p>
+<p>b)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  具体流程干啥呢？</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  i.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  研究pyqt5 实现gui至少要有livevideo，画graphics功能。 <a href="http://zetcode.com/gui/pyqt5/">http://zetcode.com/gui/pyqt5/</a></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ii.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  https://erget.wordpress.com/2014/03/13/building-an-interactive-gui-with-opencv/</p>
+
+
+  </td>
+
+
+ </tr>
+<tr>
+<td valign="top" width="73">
+<p>&nbsp;</p>
+
+
+  </td>
+<td valign="top" width="495">
+<p>&nbsp;</p>
+
+
+  </td>
+
+
+ </tr>
+<tr>
+<td valign="top" width="73">
+<p>&nbsp;</p>
+
+
+  </td>
+<td valign="top" width="495">
+<p>&nbsp;</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>

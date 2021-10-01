@@ -1,0 +1,4 @@
+---
+categories: CSArch
+---
+针对C语言编程者的Verilog开发指南实例<BR>from <A href="http://news.zfa.cn/indexpage/zzym/zzym.jsp?id=1614&amp;name=cpsj">http://news.zfa.cn/indexpage/zzym/zzym.jsp?id=1614&amp;name=cpsj</A><BR><BR>verilog/VHDL设计经验点滴 <A href="http://www.blog.edu.cn/user2/rickywu/archives/2006/1078817.shtml">http://www.blog.edu.cn/user2/rickywu/archives/2006/1078817.shtml</A><BR><BR>学EDA的同学可以通过开源提高自己 <A href="http://www.blog.edu.cn/user2/shiori/archives/2006/1591066.shtml">http://www.blog.edu.cn/user2/shiori/archives/2006/1591066.shtml</A><BR><BR>Verilog简明教程 <A href="http://blog.xdnice.com/user1/165/archives/2005/8696.shtml">http://blog.xdnice.com/user1/165/archives/2005/8696.shtml</A><BR><BR>連續進位加法器verilog例子 <A href="http://www.blog.edu.cn/user1/18687/archives/2005/333269.shtml">http://www.blog.edu.cn/user1/18687/archives/2005/333269.shtml</A>

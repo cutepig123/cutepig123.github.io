@@ -1,0 +1,72 @@
+<p>1. 如何将网页（http://jokedata.blogspot.com/2013/06/blog-post_6.html）中的alert去掉</p>
+<p>注意：把里面的if(0)改为if(1)能达到同样效果，但是在html view里面看到是不同的</p>
+<p>if(0) ：会在页面的body加上我们的script</p>
+<p>if(1)： 直接野蛮的修改网页（不推荐）</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('65b1f26f-1ba9-4ada-b3ab-6675bbe2b587')"><img id="code_img_closed_65b1f26f-1ba9-4ada-b3ab-6675bbe2b587" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_65b1f26f-1ba9-4ada-b3ab-6675bbe2b587" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('65b1f26f-1ba9-4ada-b3ab-6675bbe2b587',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_65b1f26f-1ba9-4ada-b3ab-6675bbe2b587" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> ==UserScript==</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> @name        Select-click-copy Enabler</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> @namespace   cutepig</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> @include     *</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> @version     1</span><span style="color: #008000;">
+//</span><span style="color: #008000;"> ==/UserScript==</span>
+<span style="color: #000000;">
+
+GM_log(</span>'Select-click-copy Enabler\n'<span style="color: #000000;">);
+
+</span><span style="color: #0000ff;">function</span><span style="color: #000000;"> fixElem(elem){
+    elem.onkeydown </span>=<span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.onkeyup </span>=<span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.oncopy </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.onmouseup </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.onmousedown </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.oncontextmenu </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.onselect </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+    elem.onselectstart </span>= <span style="color: #0000ff;">null</span><span style="color: #000000;">;
+}
+
+</span><span style="color: #0000ff;">function</span><span style="color: #000000;"> MyLog(s)
+{
+    </span><span style="color: #0000ff;">if</span>(<span style="color: #0000ff;">typeof</span> GM_log != 'undefined'<span style="color: #000000;">)
+        GM_log(s);
+}
+
+</span><span style="color: #0000ff;">function</span><span style="color: #000000;"> enableSelectClickCopy(window) { 
+
+    MyLog(</span>'Select-click-copy enableSelectClickCopy enter\n'<span style="color: #000000;">);
+    
+    fixElem(document);
+    
+    element </span>= document.getElementsByTagName('*'<span style="color: #000000;">);
+    </span><span style="color: #0000ff;">for</span>(i = 0; i &lt; element.length; i++<span style="color: #000000;">) {
+        fixElem(element[i])
+    }
+    
+    MyLog(</span>'Select-click-copy window '+<span style="color: #000000;">window);
+    MyLog(</span>'Select-click-copy window.$ '+<span style="color: #000000;">window.$);
+    
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> (window)
+    {
+        fixElem(window)
+    }
+    
+    MyLog(</span>'Select-click-copy enableSelectClickCopy exit\n'<span style="color: #000000;">);
+}
+
+</span><span style="color: #0000ff;">if</span>(0<span style="color: #000000;">)
+    enableSelectClickCopy(window);
+</span><span style="color: #0000ff;">else</span><span style="color: #000000;">
+{
+    </span><span style="color: #0000ff;">var</span> scrip = document.createElement("script"<span style="color: #000000;">);
+    scrip.innerHTML </span>= fixElem.toString() + '\n'<span style="color: #000000;"> 
+    scrip.innerHTML </span>+= MyLog.toString() +'\n'<span style="color: #000000;">
+    scrip.innerHTML </span>+= enableSelectClickCopy.toString() +'\n'<span style="color: #000000;">
+    scrip.innerHTML </span>+= 'enableSelectClickCopy(window);\n'<span style="color: #000000;">
+    document.head.appendChild(scrip);
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>
+<p><br /><br />2. -如何debug greasemonkey脚本</p>
+<p>note: 俺试了一下1，2，4，和html版面（显示的是修改之后的网页）用起来都不错</p>
+<p>3.1. 用错误控制台追踪错误 <br />3.2. 用 GM_log 记日志 <br />3.3. 用 DOM 查看器查看元素 <br />3.4. 用 Javascript Shell 计算表达式 <br /><br />3. -Greasemonkey 脚本应用在本地文件的办法<br />在about:config页面设置greasemonkey.fileIsGreaseable =true<br /><br /></p>

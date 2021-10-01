@@ -1,0 +1,23 @@
+<p>什么是timelog？</p>
+<p>我们在分析程序性能的时候，会加入的一些logging信息记录每一部分的时间信息</p>
+<p>timelog模块的功能就是提供统一的接口来允许添加和保存logging</p>
+<p>&nbsp;</p>
+<p>我们正在用的timelog有几个缺点</p>
+<p>1.固定大小，一旦满了就不能加入新的logging</p>
+<p>2.每次进入就会有一个全局的lock锁住，非常影响性能</p>
+<p>&nbsp;</p>
+<p>这两天基于boost的thread_specific_ptr和circular_buffer实现了一个高效的timelog，主要特点有</p>
+<p>1. 几乎不需要任何lock，所以性能理论上会非常高（虽然俺没真正测试过）</p>
+<p>2. 使用的是固定大小的环形队列，满了之后把会最老的信息抹去，所以不存在满了就不能加入logging的问题</p>
+<p>&nbsp;</p>
+<p>代码</p>
+<p>实现很简单</p>
+<p>有一点缺陷，懒得改了</p>
+<p>&nbsp;</p>
+<p>https://github.com/cutepig123/TestCpp/blob/master/cpp11test/1/mytimelog.cpp</p>
+<p>&nbsp;Known issues</p>
+<p>1) 所有<span class="pl-en">timelog_create的timelog现在其实都指向同一个实现，所以无论create多少个其实东西都是一样的</span></p>
+<p><span class="pl-en">2）线程局部存储里的东西不会自动释放，所以会有内存泄露（除非你的每个线程都用boost thread，具体参考boost文档）</span></p>
+<p><span class="pl-en">如果程序的线程是固定的，那么没有什么影响</span></p>
+<p><span class="pl-en">但当程序不停地新建删除线程的时候就会有严重问题</span></p>
+<p>&nbsp;</p>

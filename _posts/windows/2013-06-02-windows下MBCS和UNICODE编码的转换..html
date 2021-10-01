@@ -1,0 +1,24 @@
+<p>1. 从MBCS转到UNICODE</p>
+<p>方法a） 直接调用windows api</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('e7e03e88-7c56-42e1-acc7-c04ec7a4a204')"><img id="code_img_closed_e7e03e88-7c56-42e1-acc7-c04ec7a4a204" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_e7e03e88-7c56-42e1-acc7-c04ec7a4a204" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('e7e03e88-7c56-42e1-acc7-c04ec7a4a204',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_e7e03e88-7c56-42e1-acc7-c04ec7a4a204" class="cnblogs_code_hide">
+<pre>    <span style="color: #0000ff;">char</span> name[<span style="color: #800080;">100</span>] =<span style="color: #800000;">"</span><span style="color: #800000;">大鳄.hxboar</span><span style="color: #800000;">"</span><span style="color: #000000;">;
+    
+    wchar_t wname[</span><span style="color: #800080;">100</span><span style="color: #000000;">];
+
+    </span><span style="color: #008000;">//</span><span style="color: #008000;">setlocale(LC_ALL, "chinese"); </span>
+    <span style="color: #0000ff;">int</span> nLen = MultiByteToWideChar(CP_ACP, <span style="color: #800080;">0</span>,name, -<span style="color: #800080;">1</span><span style="color: #000000;">, NULL, NULL);
+    MultiByteToWideChar(CP_ACP, </span><span style="color: #800080;">0</span><span style="color: #000000;">, 
+       name, </span>-<span style="color: #800080;">1</span>, wname, nLen);</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>方法b）用swprintf</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('695b1a8a-8459-4e3c-ac20-d51019f5b7c2')"><img id="code_img_closed_695b1a8a-8459-4e3c-ac20-d51019f5b7c2" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_695b1a8a-8459-4e3c-ac20-d51019f5b7c2" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('695b1a8a-8459-4e3c-ac20-d51019f5b7c2',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_695b1a8a-8459-4e3c-ac20-d51019f5b7c2" class="cnblogs_code_hide">
+<pre> wchar_t buf[<span style="color: #800080;">100</span><span style="color: #000000;">];
+         setlocale(LC_ALL, </span><span style="color: #800000;">"</span><span style="color: #800000;">chs</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+         swprintf(buf, </span><span style="color: #800080;">100</span>, L<span style="color: #800000;">"</span><span style="color: #800000;">%S</span><span style="color: #800000;">"</span>, <span style="color: #800000;">"</span><span style="color: #800000;">世界你好</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+         wprintf(L</span><span style="color: #800000;">"</span><span style="color: #800000;">%s\n</span><span style="color: #800000;">"</span>, buf);</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>

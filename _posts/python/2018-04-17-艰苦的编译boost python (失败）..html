@@ -1,0 +1,16 @@
+<p>1.下载 boost_1_67_0</p>
+<p>2.在目录下执行&nbsp;bootstrap</p>
+<p>3.将python36添加到path环境变量</p>
+<p>4.执行 b2 --with-python，将会声场如下dll</p>
+<p>&nbsp;</p>
+<p>2018/04/17 23:27 6,244,996 libboost_numpy36-vc141-mt-gd-x32-1_67.lib<br />2018/04/17  23:29         6,466,770 libboost_numpy36-vc141-mt-gd-x64-1_67.lib<br />2018/04/17  23:28           291,906 libboost_numpy36-vc141-mt-x32-1_67.lib<br />2018/04/17  23:29           385,224 libboost_numpy36-vc141-mt-x64-1_67.lib<br />2018/04/17  23:27        27,240,334 libboost_python36-vc141-mt-gd-x32-1_67.lib<br />2018/04/17  23:28        30,640,500 libboost_python36-vc141-mt-gd-x64-1_67.lib<br />2018/04/17  23:28         4,303,530 libboost_python36-vc141-mt-x32-1_67.lib<br />2018/04/17  23:29         5,299,538 libboost_python36-vc141-mt-x64-1_67.lib</p>
+<p>&nbsp;</p>
+<p>如下编译例子</p>
+<p>5.cd&nbsp;G:\_codes\boost_1_67_0\libs\python\example</p>
+<p>6.修改G:\_codes\boost_1_67_0\libs\python\example\Jamroot其中一段如下</p>
+<p>project<br />  : requirements<br />    &lt;include&gt;G:/_codes/boost_1_67_0<br /> #   &lt;library&gt;boost_python<br />;</p>
+<p>7.执行b2</p>
+<p>8.出错</p>
+<p>&nbsp;</p>
+<p>LINK : fatal error LNK1104: cannot open file 'boost_pythonPY_MAJOR_VERSIONPY_MINOR_VERSION-vc141-mt-gd-x32-1_67.lib'</p>
+<p>&nbsp;</p>

@@ -1,0 +1,20 @@
+<div class="postbody">
+		<div class="postbody">
+				<h1>
+						<p>http://www.cppblog.com/Tauruser/archive/2007/02/28/19049.html</p><p>结构体对齐的具体含义（#pragma pack）</p>
+				</h1>
+				<p>作者：<a title="Panic" href="http://blog.vckbase.com/panic/">panic</a>2005年4月2日</p>
+				<p>还是来自csdn的帖子：<br>主　　题： &nbsp;&nbsp;探讨：内存对齐<br>作　　者： &nbsp;&nbsp;typedef_chen ((名未定)(我要骗人))<br>等　　级： &nbsp;&nbsp;<br>信 誉 值： &nbsp;&nbsp;100<br>所属论坛： &nbsp;&nbsp;C/C++ C++ 语言<br>问题点数： &nbsp;&nbsp;50<br>回复次数： &nbsp;&nbsp;1<br>发表时间： &nbsp;&nbsp;2005-04-02 22:53:27<br>&nbsp;&nbsp;<br>&nbsp;&nbsp;<br>朋友帖了如下一段代码：<br>　　#pragma pack(4)<br>　　class TestB<br>　　{<br>　　public:<br>　　　　int aa;<br>　　　　char a;<br>　　　　short b;<br>　　　　char c;<br>　　};<br>　　int nSize = sizeof(TestB);<br>　　这里nSize结果为12，在预料之中。</p>
+				<p>　　现在去掉第一个成员变量为如下代码：<br>　　#pragma pack(4)<br>　　class TestC<br>　　{<br>　　public:<br>　　　　char a;<br>　　　　short b;<br>　　　　char c;<br>　　};<br>　　int nSize = sizeof(TestC);<br>　　按照正常的填充方式nSize的结果应该是8，为什么结果显示nSize为6呢？</p>
+				<p>事实上，很多人对#pragma pack的理解是错误的。<br>#pragma pack规定的对齐长度，实际使用的规则是：<br>结构，联合，或者类的数据成员，第一个放在偏移为0的地方，以后每个数据成员的对齐，按照#pragma pack指定的数值和这个数据成员自身长度中，比较小的那个进行。<br>也就是说，当#pragma pack的值等于或超过所有数据成员长度的时候，这个值的大小将不产生任何效果。<br>而结构整体的对齐，则按照结构体中最大的数据成员 和 #pragma pack指定值 之间，较小的那个进行。<br><br>具体解释<br>#pragma pack(4)<br>　　class TestB<br>　　{<br>　　public:<br>　　　　int aa; //第一个成员，放在[0,3]偏移的位置，<br>　　　　char a; //第二个成员，自身长为1，#pragma pack(4),取小值，也就是1，所以这个成员按一字节对齐，放在偏移[4]的位置。<br>　　　　short b; //第三个成员，自身长2，#pragma pack(4)，取2，按2字节对齐，所以放在偏移[6,7]的位置。<br>　　　　char c; //第四个，自身长为1，放在[8]的位置。<br>　　};<br>这个类实际占据的内存空间是9字节<br>类之间的对齐，是按照类内部最大的成员的长度，和#pragma pack规定的值之中较小的一个对齐的。<br>所以这个例子中，类之间对齐的长度是min(sizeof(int),4)，也就是4。<br>9按照4字节圆整的结果是12，所以sizeof(TestB)是12。</p>
+				<p>
+						<br>如果<br>#pragma pack(2)<br>&nbsp;&nbsp;&nbsp; class TestB<br>　　{<br>　　public:<br>　　　　int aa; //第一个成员，放在[0,3]偏移的位置，<br>　　　　char a; //第二个成员，自身长为1，#pragma pack(4),取小值，也就是1，所以这个成员按一字节对齐，放在偏移[4]的位置。<br>　　　　short b; //第三个成员，自身长2，#pragma pack(4)，取2，按2字节对齐，所以放在偏移[6,7]的位置。<br>　　　　char c; //第四个，自身长为1，放在[8]的位置。<br>　　};<br>//可以看出，上面的位置完全没有变化，只是类之间改为按2字节对齐，9按2圆整的结果是10。<br>//所以 sizeof(TestB)是10。</p>
+				<p>最后看原贴：<br>现在去掉第一个成员变量为如下代码：<br>　　#pragma pack(4)<br>　　class TestC<br>　　{<br>　　public:<br>　　　　char a;//第一个成员，放在[0]偏移的位置，<br>　　　　short b;//第二个成员，自身长2，#pragma pack(4)，取2，按2字节对齐，所以放在偏移[2,3]的位置。<br>　　　　char c;//第三个，自身长为1，放在[4]的位置。<br>　　};<br>//整个类的大小是5字节，按照min(sizeof(short),4)字节对齐，也就是2字节对齐，结果是6<br>//所以sizeof(TestC)是6。<br><br>感谢<!--StartFragment --><a id="Comments1_CommentList__ctl8_NameLink" href="http://blog.vckbase.com/Michael/" target="_blank">Michael</a> 提出疑问，在此补充：<br><br><strong>当数据定义中出现__declspec(&nbsp;align()&nbsp;)时，指定类型的对齐长度还要用自身长度和这里指定的数值比较，然后取其中较大的。最终类/结构的对齐长度也需要和这个数值比较，然后取其中较大的。</strong><br><br>可以这样理解，<!--StartFragment --> __declspec(&nbsp;align()&nbsp;) 和 #pragma pack是一对兄弟，前者规定了对齐的最小值，后者规定了对齐的最大值，两者同时出现时，前者拥有更高的优先级。<br>__declspec(&nbsp;align()&nbsp;)
+的一个特点是，它仅仅规定了数据对齐的位置，而没有规定数据实际占用的内存长度，当指定的数据被放置在确定的位置之后，其后的数据填充仍然是按
+照#pragma pack规定的方式填充的，这时候类/结构的实际大小和内存格局的规则是这样的：<br>在
+__declspec(&nbsp;align()&nbsp;)之前，数据按照#pragma
+pack规定的方式填充，如前所述。当遇到__declspec(&nbsp;align()&nbsp;)的时候，首先寻找距离当前偏移向后最近的对齐点（满足对齐长度为
+max(数据自身长度,指定值) )，然后把被指定的数据类型从这个点开始填充，其后的数据类型从它的后面开始，仍然按照#pragma
+pack填充，直到遇到下一个__declspec(&nbsp;align()&nbsp;)。<br>当所有数据填充完毕，把结构的整体对齐数值和__declspec(&nbsp;align()&nbsp;)规定的值做比较，取其中较大的作为整个结构的对齐长度。<br>特别的，当__declspec(&nbsp;align()&nbsp;)指定的数值比对应类型长度小的时候，这个指定不起作用。</p>
+		</div>
+</div>

@@ -1,0 +1,27 @@
+<p>Write a file t1.js</p>
+<div class="cnblogs_code">
+<pre>'use strict'<span style="color: #000000;">;
+
+const express </span>= require('express'<span style="color: #000000;">);
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> Constants</span>
+const PORT = 8080<span style="color: #000000;">;
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;"> App</span>
+const app =<span style="color: #000000;"> express();
+app.get(</span>'/', <span style="color: #0000ff;">function</span><span style="color: #000000;"> (req, res) {
+  res.send(</span>'Hello world\n'<span style="color: #000000;">);
+});
+
+app.listen(PORT);
+console.log(</span>'Running on http://localhost:' + PORT);</pre>
+</div>
+<p>&nbsp;</p>
+<p>运行</p>
+<p>node t1.js</p>
+<p>&nbsp;</p>
+<p>在浏览器输入</p>
+<p>http://localhost:8080/</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:javascript;gutter:true;"><span style="font-family: verdana, Arial, Helvetica, sans-serif; font-size: 14px; line-height: 1.5; background-color: #ffffff;">&nbsp;</span></pre>
+</div>

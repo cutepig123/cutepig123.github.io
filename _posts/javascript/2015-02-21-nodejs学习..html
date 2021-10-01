@@ -1,0 +1,206 @@
+<p>代码</p>
+<pre class="sh_sourceCode"><span class="sh_keyword">var http <span class="sh_symbol">= <span class="sh_function">require<span class="sh_symbol">(<span class="sh_string">'http'<span class="sh_symbol">);
+http<span class="sh_symbol">.<span class="sh_function">createServer<span class="sh_symbol">(<span class="sh_keyword">function <span class="sh_symbol">(req<span class="sh_symbol">, res<span class="sh_symbol">) <span class="sh_cbracket">{
+  res<span class="sh_symbol">.<span class="sh_function">writeHead<span class="sh_symbol">(<span class="sh_number">200<span class="sh_symbol">, <span class="sh_cbracket">{<span class="sh_string">'Content-Type'<span class="sh_symbol">: <span class="sh_string">'text/plain'<span class="sh_cbracket">}<span class="sh_symbol">);
+  res<span class="sh_symbol">.<span class="sh_function">end<span class="sh_symbol">(<span class="sh_string">'Hello World<span class="sh_specialchar">\n<span class="sh_string">'<span class="sh_symbol">);
+<span class="sh_cbracket">}<span class="sh_symbol">).<span class="sh_function">listen<span class="sh_symbol">(<span class="sh_number">1337<span class="sh_symbol">, <span class="sh_string">'127.0.0.1'<span class="sh_symbol">);
+console<span class="sh_symbol">.<span class="sh_function">log<span class="sh_symbol">(<span class="sh_string">'Server running at http://127.0.0.1:1337/'<span class="sh_symbol">);<br /><br /></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></pre>
+<pre class="sh_none">% node example.js
+Server running at http://127.0.0.1:1337/</pre>
+<p>Here is an example of a simple TCP server which listens on port 1337 and echoes whatever you send it:</p>
+<pre class="sh_sourceCode"><span class="sh_keyword">var net <span class="sh_symbol">= <span class="sh_function">require<span class="sh_symbol">(<span class="sh_string">'net'<span class="sh_symbol">);
+
+<span class="sh_keyword">var server <span class="sh_symbol">= net<span class="sh_symbol">.<span class="sh_function">createServer<span class="sh_symbol">(<span class="sh_keyword">function <span class="sh_symbol">(socket<span class="sh_symbol">) <span class="sh_cbracket">{
+  socket<span class="sh_symbol">.<span class="sh_function">write<span class="sh_symbol">(<span class="sh_string">'Echo server<span class="sh_specialchar">\r\n<span class="sh_string">'<span class="sh_symbol">);
+  socket<span class="sh_symbol">.<span class="sh_function">pipe<span class="sh_symbol">(socket<span class="sh_symbol">);
+<span class="sh_cbracket">}<span class="sh_symbol">);
+
+server<span class="sh_symbol">.<span class="sh_function">listen<span class="sh_symbol">(<span class="sh_number">1337<span class="sh_symbol">, <span class="sh_string">'127.0.0.1'<span class="sh_symbol">);</span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span><br /><br /><br /></pre>
+<pre class="displaycode">// these modules need to be imported in order to use them.
+// Node has several modules.  They are like any #include
+// or import statement in other languages
+var http = require("http");
+var url = require("url");
+
+// The most important line in any Node file.  This function
+// does the actual process of creating the server.  Technically,
+// Node tells the underlying operating system that whenever a
+// connection is made, this particular callback function should be
+// executed.  Since we're creating a web service with REST API,
+// we want an HTTP server, which requires the http variable
+// we created in the lines above.
+// Finally, you can see that the callback method receives a 'request'
+// and 'response' object automatically.  This should be familiar
+// to any PHP or Java programmer.
+http.createServer(function(request, response) {
+
+     // The response needs to handle all the headers, and the return codes
+     // These types of things are handled automatically in server programs
+     // like Apache and Tomcat, but Node requires everything to be done yourself
+     response.writeHead(200, {"Content-Type": "text/plain"});
+
+     // Here is some unique-looking code.  This is how Node retrives
+     // parameters passed in from client requests.  The url module
+     // handles all these functions.  The parse function
+     // deconstructs the URL, and places the query key-values in the
+     // query object.  We can find the value for the "number" key
+     // by referencing it directly - the beauty of JavaScript.
+     var params = url.parse(request.url, true).query;
+     var input = params.number;
+
+     // These are the generic JavaScript methods that will create
+     // our random number that gets passed back to the caller
+     var numInput = new Number(input);
+     var numOutput = new Number(Math.random() * numInput).toFixed(0);
+     
+     // Write the random number to response
+     response.write(numOutput);
+     
+     // Node requires us to explicitly end this connection.  This is because
+     // Node allows you to keep a connection open and pass data back and forth,
+     // though that advanced topic isn't discussed in this article.
+     response.end();
+
+   // When we create the server, we have to explicitly connect the HTTP server to
+   // a port.  Standard HTTP port is 80, so we'll connect it to that one.
+}).listen(80);
+
+// Output a String to the console once the server starts up, letting us know everything
+// starts up correctly
+console.log("Random Number Generator Running...");<br /><br /><br /></pre>
+<p>一个聊天服务器允许多个客户端连接到它。每个客户端都可以编写消息，然后广播给所有其他用户。下面给出了最简单的聊天服务器的代码。</p>
+<div class="codesection">
+<pre class="displaycode">net = require('net');
+
+var sockets = [];
+
+var s = net.Server(function(socket) {
+
+    sockets.push(socket);
+
+    socket.on('data', function(d) {
+
+        for (var i=0; i &lt; sockets.length; i++ ) {
+            sockets[i].write(d);
+        }
+    });
+});
+
+s.listen(8001);<br /><br /><br /><br /><br /></pre>
+<p>下面的源代码（在下载示例文件中叫做 chat2.js ）是一个经过改进的套接字服务器，其功能有所增强，能够处理&ldquo;糟糕的情况&rdquo;（比如客户端断开）。</p>
+<div class="codesection">
+<pre class="displaycode">net = require('net');
+
+var sockets = [];
+var name_map = new Array();
+var chuck_quotes = [
+    "There used to be a street named after Chuck Norris, but it was changed because 
+     nobody crosses Chuck Norris and lives.",
+    "Chuck Norris died 20 years ago, Death just hasn't built up the courage to tell 
+     him yet.",
+    "Chuck Norris has already been to Mars; that's why there are no signs of life.",
+    "Some magicians can walk on water, Chuck Norris can swim through land.",
+    "Chuck Norris and Superman once fought each other on a bet. The loser had to start 
+     wearing his underwear on the outside of his pants."
+]
+
+function get_username(socket) {
+    var name = socket.remoteAddress;
+    for (var k in name_map) {
+        if (name_map[k] == socket) {
+            name = k;
+        }
+    }
+    return name;
+}
+
+function delete_user(socket) {
+    var old_name = get_username(socket);
+    if (old_name != null) {
+        delete(name_map[old_name]);
+    }
+}
+
+function send_to_all(message, from_socket, ignore_header) {
+    username = get_username(from_socket);
+    for (var i=0; i &lt; sockets.length; i++ ) {
+        if (from_socket != sockets[i]) {
+            if (ignore_header) {
+                send_to_socket(sockets[i], message);
+            }
+            else {
+                send_to_socket(sockets[i], username + ': ' + message);
+            }
+        }
+    }
+}
+
+function send_to_socket(socket, message) {
+    socket.write(message + '\n');
+}
+
+function execute_command(socket, command, args) {
+    if (command == 'identify') {
+        delete_user(socket);
+        name = args.split(' ', 1)[0];
+        name_map[name] = socket;
+    }
+    if (command == 'me') {
+        name = get_username(socket);
+        send_to_all('**' + name + '** ' + args, socket, true);
+    }
+    if (command == 'chuck') {
+        var i = Math.floor(Math.random() * chuck_quotes.length);
+        send_to_all(chuck_quotes[i], socket, true);
+    }
+    if (command == 'who') {
+        send_to_socket(socket, 'Identified users:');
+        for (var name in name_map) {
+            send_to_socket(socket, '- ' + name);
+        }
+    }
+}
+
+function send_private_message(socket, recipient_name, message) {
+    to_socket = name_map[recipient_name];
+    if (! to_socket) {
+        send_to_socket(socket, recipient_name + ' is not a valid user');
+        return;
+    }
+    send_to_socket(to_socket, '[ DM ' + get_username(socket) + ' ]: ' + message);
+}
+
+var s = net.Server(function(socket) {
+    sockets.push(socket);
+    socket.on('data', function(d) {
+        data = d.toString('utf8').trim();
+        // check if it is a command
+        var cmd_re = /^\/([a-z]+)[ ]*(.*)/g;
+        var dm_re = /^@([a-z]+)[ ]+(.*)/g;
+        cmd_match = cmd_re.exec(data)
+        dm_match = dm_re.exec(data)
+        if (cmd_match) {
+            var command = cmd_match[1];
+            var args = cmd_match[2];
+            execute_command(socket, command, args);
+        }
+        // check if it is a direct message
+        else if (dm_match) {
+            var recipient = dm_match[1];
+            var message = dm_match[2];
+            send_private_message(socket, recipient, message);
+        }
+        // if none of the above, send to all
+        else {
+            send_to_all(data, socket);
+        };
+
+    });
+    socket.on('close', function() {
+        sockets.splice(sockets.indexOf(socket), 1);
+        delete_user(socket);
+    });
+});
+s.listen(8001);<br /><br /><br /></pre>
+</div>
+</div>

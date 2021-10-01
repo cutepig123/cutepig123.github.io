@@ -1,0 +1,72 @@
+<p><strong>1.下载编译https://github.com/0cch/luadbg</strong></p>
+<p><strong>2.编写脚本1.txt</strong></p>
+<p>.load luadbg_v15<br />*.sympath+ srv*c:\MyServerSymbols*https://msdl.microsoft.com/download/symbols<br />x *!*CrtDumpMemoryLeaks*<br />bm *!*CrtDumpMemoryLeaks* ".logopen temp.txt;gu;.logclose;!lua analyse_leak.lua"<br />bl<br />gc</p>
+<p>&nbsp;</p>
+<p><strong>3.编写脚本analyse_leak.lua</strong></p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">function</span><span style="color: #000000;"> Sleep(n)
+   </span><span style="color: #0000ff;">if</span> n &gt; <span style="color: #800080;">0</span> <span style="color: #0000ff;">then</span> <span style="color: #ff00ff;">os.execute</span>(<span style="color: #800000;">"</span><span style="color: #800000;">ping -n </span><span style="color: #800000;">"</span> .. <span style="color: #ff00ff;">tonumber</span>(n + <span style="color: #800080;">1</span>) .. <span style="color: #800000;">"</span><span style="color: #800000;"> localhost &gt; NUL</span><span style="color: #800000;">"</span>) <span style="color: #0000ff;">end</span>
+<span style="color: #0000ff;">end</span>
+
+
+<span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">---1\n</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+</span><span style="color: #0000ff;">local</span> open = <span style="color: #ff00ff;">io.open</span>
+
+<span style="color: #0000ff;">local</span> <span style="color: #0000ff;">function</span><span style="color: #000000;"> read_file(path)
+    </span><span style="color: #0000ff;">local</span> file = open(path, <span style="color: #800000;">"</span><span style="color: #800000;">rb</span><span style="color: #800000;">"</span>) <span style="color: #008000;">--</span><span style="color: #008000;"> r read mode and b binary mode</span>
+    <span style="color: #0000ff;">if</span> <span style="color: #0000ff;">not</span> file <span style="color: #0000ff;">then</span> <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">nil</span> <span style="color: #0000ff;">end</span>
+    <span style="color: #0000ff;">local</span> content = <span style="color: #ff00ff;">file:read</span> <span style="color: #800000;">"</span><span style="color: #800000;">*a</span><span style="color: #800000;">"</span> <span style="color: #008000;">--</span><span style="color: #008000;"> *a or *all reads the whole file</span>
+    <span style="color: #ff00ff;">file:close</span><span style="color: #000000;">()
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> content
+</span><span style="color: #0000ff;">end</span>
+
+<span style="color: #0000ff;">local</span> <span style="color: #0000ff;">function</span><span style="color: #000000;"> exec_from_io(cmd)
+    </span><span style="color: #0000ff;">local</span> path=<span style="color: #800000;">'</span><span style="color: #800000;">temp.txt</span><span style="color: #800000;">'</span><span style="color: #000000;">
+    exec(</span><span style="color: #ff00ff;">string.format</span>(<span style="color: #800000;">'</span><span style="color: #800000;">.logopen %s</span><span style="color: #800000;">'</span><span style="color: #000000;">, path))
+    exec(cmd)
+    Sleep(</span><span style="color: #800080;">1</span><span style="color: #000000;">)
+    exec(</span><span style="color: #800000;">'</span><span style="color: #800000;">.logclose</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    
+    </span><span style="color: #0000ff;">local</span> file = open(path, <span style="color: #800000;">"</span><span style="color: #800000;">rb</span><span style="color: #800000;">"</span>) <span style="color: #008000;">--</span><span style="color: #008000;"> r read mode and b binary mode</span>
+    <span style="color: #0000ff;">if</span> <span style="color: #0000ff;">not</span> file <span style="color: #0000ff;">then</span> <span style="color: #0000ff;">return</span> <span style="color: #0000ff;">nil</span> <span style="color: #0000ff;">end</span>
+    <span style="color: #0000ff;">local</span> content = <span style="color: #ff00ff;">file:read</span> <span style="color: #800000;">"</span><span style="color: #800000;">*a</span><span style="color: #800000;">"</span> <span style="color: #008000;">--</span><span style="color: #008000;"> *a or *all reads the whole file</span>
+    <span style="color: #ff00ff;">file:close</span><span style="color: #000000;">()
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> content
+</span><span style="color: #0000ff;">end</span>
+
+<span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">---2\n</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+</span><span style="color: #0000ff;">local</span> leak_str = read_file(<span style="color: #800000;">'</span><span style="color: #800000;">temp.txt</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+</span><span style="color: #008000;">--</span><span style="color: #008000;">print('---leak_str:', leak_str, '\n')</span>
+
+<span style="color: #008000;">--</span><span style="color: #008000;">g:\temp\mfcapplication2\mfcapplication2\mfcapplication2dlg.cpp(74) : {286} normal block at 0x000CD920, 4 bytes long.</span>
+<span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">---3\n</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+
+pe</span>=<span style="color: #800080;">1</span><span style="color: #000000;">
+i</span>=<span style="color: #800080;">1</span>
+<span style="color: #0000ff;">while</span> (<span style="color: #0000ff;">true</span><span style="color: #000000;">)
+</span><span style="color: #0000ff;">do</span>
+    <span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">-----------------</span><span style="color: #800000;">'</span>,i,<span style="color: #800000;">'</span><span style="color: #800000;">\n</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    i </span>= i+<span style="color: #800080;">1</span><span style="color: #000000;">
+    
+    p2b, p2e, addr</span>= <span style="color: #ff00ff;">string.find</span>(leak_str, <span style="color: #800000;">'</span><span style="color: #800000;">normal block at ([^,]*),</span><span style="color: #800000;">'</span><span style="color: #000000;">, pe)
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">---p2b, p2e, addr</span><span style="color: #800000;">'</span>,p2b, p2e, addr, <span style="color: #800000;">'</span><span style="color: #800000;">\n</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    </span><span style="color: #0000ff;">if</span> p2b==<span style="color: #0000ff;">nil</span> <span style="color: #0000ff;">then</span> <span style="color: #0000ff;">break</span> <span style="color: #0000ff;">end</span><span style="color: #000000;">
+    
+    cmd</span>=<span style="color: #ff00ff;">string.format</span>(<span style="color: #800000;">'</span><span style="color: #800000;">!heap -p -a %s</span><span style="color: #800000;">'</span><span style="color: #000000;">, addr)
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">---cmd:</span><span style="color: #800000;">'</span>,cmd,<span style="color: #800000;">'</span><span style="color: #800000;">\n</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    stacks</span>=<span style="color: #000000;">exec_tostring(cmd)
+    </span><span style="color: #ff00ff;">print</span>(<span style="color: #800000;">'</span><span style="color: #800000;">---stacks\n</span><span style="color: #800000;">'</span><span style="color: #000000;">, stacks)
+    
+    pe </span>=<span style="color: #000000;"> p2e
+</span><span style="color: #0000ff;">end</span></pre>
+</div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><strong>4.&nbsp;attach程序，执行 $&lt;1.txt</strong></p>
+<p><strong>5.程序运行，执行令他泄露，然后退出</strong></p>
+<p><strong>6.程序会break到windbg里面，显示出泄露信息，比如在我这边的输出</strong></p>
+<p>&nbsp;</p>
+<p>0:000&gt; !lua analyse_leak.lua<br />---1<br />	<br />---2<br />	<br />---3<br />	<br />-----------------	1	<br />	<br />---p2b, p2e, addr	148	174	0x088C4FF8	<br />	<br />---cmd:	!heap -p -a 0x088C4FF8	<br />	<br />---stacks<br />	    address 088c4ff8 found in<br />    _DPH_HEAP_ROOT @ 57c1000<br />    in busy allocation (  DPH_HEAP_BLOCK:         UserAddr         UserSize -         VirtAddr         VirtSize)<br />                                 8852c64:          88c4fd8               28 -          88c4000             2000<br />    5360a65c verifier!AVrfDebugPageHeapAllocate+0x0000023c<br />    778768c5 ntdll!RtlDebugAllocateHeap+0x0000003c<br />    777d553c ntdll!RtlpAllocateHeap+0x000017dc<br />    777d2f8a ntdll!RtlpAllocateHeapInternal+0x0000017a<br />    777d2dfe ntdll!RtlAllocateHeap+0x0000003e<br />    06225028 ucrtbased!heap_alloc_dbg_internal+0x00000198<br />    06224e36 ucrtbased!heap_alloc_dbg+0x00000036<br />    0622760a ucrtbased!_malloc_dbg+0x0000001a<br />    0fb91257 mfc140ud!operator new+0x00000037<br />    0fb912e6 mfc140ud!operator new+0x00000016<br />    00d785aa MFCApplication2+0x000185aa<br />    0fe5f48d mfc140ud!AfxDlgProc+0x0000005d<br />    74a634bb USER32!_InternalCallWinProc+0x0000002b<br />    74a3ac48 USER32!UserCallDlgProcCheckWow+0x000002a8<br />    74a3a307 USER32!DefDlgProcWorker+0x000000c7<br />    74a3a224 USER32!DefDlgProcW+0x00000054<br />    74a634bb USER32!_InternalCallWinProc+0x0000002b<br />    74a55913 USER32!UserCallWinProcCheckWow+0x000002d3<br />    74a4b387 USER32!CallWindowProcW+0x00000097<br />    0ff7fb7a mfc140ud!CWnd::DefWindowProcW+0x0000004a<br />    0ff7fc6f mfc140ud!CWnd::Default+0x0000005f<br />    0fe609b7 mfc140ud!CDialog::HandleInitDialog+0x00000137<br />    0ff86d1d mfc140ud!CWnd::OnWndMsg+0x00000e2d<br />    0ff8abb6 mfc140ud!CWnd::WindowProc+0x00000056<br />    0ff7c1b8 mfc140ud!AfxCallWndProc+0x00000128<br />    0ff7d1b5 mfc140ud!AfxWndProc+0x000000b5<br />    0fcca0ad mfc140ud!AfxWndProcBase+0x0000006d<br />    74a634bb USER32!_InternalCallWinProc+0x0000002b<br />    74a55913 USER32!UserCallWinProcCheckWow+0x000002d3<br />    74a413da USER32!SendMessageWorker+0x0000028a<br />    74a3ebef USER32!InternalCreateDialog+0x000011df<br />    74a4f075 USER32!CreateDialogIndirectParamAorW+0x00000035</p>
+<p> <br />	<br />-----------------	2	<br />	<br />---p2b, p2e, addr	296	322	0x088C4FF9	<br />	<br />---cmd:	!heap -p -a 0x088C4FF9	<br />	<br />---stacks<br />	    address 088c4ff9 found in<br />    _DPH_HEAP_ROOT @ 57c1000<br />    in busy allocation (  DPH_HEAP_BLOCK:         UserAddr         UserSize -         VirtAddr         VirtSize)<br />                                 8852c64:          88c4fd8               28 -          88c4000             2000<br />    5360a65c verifier!AVrfDebugPageHeapAllocate+0x0000023c<br />    778768c5 ntdll!RtlDebugAllocateHeap+0x0000003c<br />    777d553c ntdll!RtlpAllocateHeap+0x000017dc<br />    777d2f8a ntdll!RtlpAllocateHeapInternal+0x0000017a<br />    777d2dfe ntdll!RtlAllocateHeap+0x0000003e<br />    06225028 ucrtbased!heap_alloc_dbg_internal+0x00000198<br />    06224e36 ucrtbased!heap_alloc_dbg+0x00000036<br />    0622760a ucrtbased!_malloc_dbg+0x0000001a<br />    0fb91257 mfc140ud!operator new+0x00000037<br />    0fb912e6 mfc140ud!operator new+0x00000016<br />    00d785aa MFCApplication2+0x000185aa<br />    0fe5f48d mfc140ud!AfxDlgProc+0x0000005d<br />    74a634bb USER32!_InternalCallWinProc+0x0000002b<br />    74a3ac48 USER32!UserCallDlgProcCheckWow+0x000002a8<br />    74a3a307 USER32!DefDlgProcWorker+0x000000c7<br />    74a3a224 USER32!DefDlgProcW+0x00000054<br />    74a634bb USER32!_InternalCallWinProc+0x0000002b<br />    74a55913 USER32!UserCallWinProcCheckWow+0x000002d3<br />    74a4b387 USER32!CallWindowProcW+0x00000097<br />    0ff7fb7a mfc140ud!CWnd::DefWindowProcW+0x0000004a<br />    0ff7fc6f mfc140ud!CWnd::Default+0x0000005f<br />    0fe609b7 mfc140ud!CDialog::HandleInitDialog+0x00000137<br />    0ff86d1d mfc140ud!CWnd::OnWndMsg+0x00000e2d<br />    0ff8abb6 mfc140ud!CWnd::WindowProc+0x00000056<br />    0ff7c1b8 mfc140ud!AfxCallWndProc+0x00000128<br />    0ff7d1b5 mfc140ud!AfxWndProc+0x000000b5<br />    0fcca0ad mfc140ud!AfxWndProcBase+0x0000006d<br />    74a634bb USER32!_InternalCallWinProc+0x0000002b<br />    74a55913 USER32!UserCallWinProcCheckWow+0x000002d3<br />    74a413da USER32!SendMessageWorker+0x0000028a<br />    74a3ebef USER32!InternalCreateDialog+0x000011df<br />    74a4f075 USER32!CreateDialogIndirectParamAorW+0x00000035</p>
+<p> <br />	<br />-----------------	3	<br />	<br />---p2b, p2e, addr	&lt;out of memory&gt;	&lt;out of memory&gt;	&lt;out of memory&gt;	<br />	</p>
+<p>&nbsp;</p>

@@ -1,0 +1,97 @@
+<p>1. nvidia提供了一个c++的类库thrust用来简化编程，在安装cuda toolkit时候已经包含了thrust<br />这个库全是头文件，不需要添加任何库文件的依赖<br />测试程序</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('a257d18c-4928-4c98-a93f-667ef4949c6c')"><img id="code_img_closed_a257d18c-4928-4c98-a93f-667ef4949c6c" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_a257d18c-4928-4c98-a93f-667ef4949c6c" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('a257d18c-4928-4c98-a93f-667ef4949c6c',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_a257d18c-4928-4c98-a93f-667ef4949c6c" class="cnblogs_code_hide">
+<pre>#include &lt;thrust/host_vector.h&gt;<span style="color: #000000;">
+#include </span>&lt;thrust/device_vector.h&gt;<span style="color: #000000;">
+#include </span>&lt;thrust/generate.h&gt;<span style="color: #000000;">
+#include </span>&lt;thrust/sort.h&gt;<span style="color: #000000;">
+#include </span>&lt;thrust/copy.h&gt;<span style="color: #000000;">
+#include </span>&lt;algorithm&gt;<span style="color: #000000;">
+#include </span>&lt;cstdlib&gt;
+
+<span style="color: #808080;">/////////</span><span style="color: #008000;">//cpu</span>
+#include &lt;windows.h&gt;<span style="color: #000000;">
+#include </span>&lt;algorithm&gt;<span style="color: #000000;">
+
+template </span>&lt;<span style="color: #0000ff;">class</span> T&gt;
+<span style="color: #0000ff;">void</span><span style="color: #000000;"> cpu_sort(T begin, T end)
+{
+    std::sort(begin, end);
+}
+
+</span><span style="color: #0000ff;">void</span> gpu_sort(thrust::host_vector&lt;<span style="color: #0000ff;">int</span>&gt; &amp;<span style="color: #000000;">h_vec)
+{
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> transfer data to the device</span>
+  thrust::device_vector&lt;<span style="color: #0000ff;">int</span>&gt; d_vec =<span style="color: #000000;"> h_vec;
+
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> sort data on the device (846M keys per second on GeForce GTX 480)</span>
+<span style="color: #000000;">  thrust::sort(d_vec.begin(), d_vec.end());
+
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> transfer data back to host</span>
+<span style="color: #000000;">  thrust::copy(d_vec.begin(), d_vec.end(), h_vec.begin());
+}
+
+</span><span style="color: #0000ff;">#define</span> CHK_TIME(x)    {int t1=GetTickCount();x;int t2=GetTickCount();printf(#x ": %d\n", t2-t1);}
+
+<span style="color: #0000ff;">int</span> main(<span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+  </span><span style="color: #008000;">//</span><span style="color: #008000;"> generate 32M random numbers serially</span>
+  thrust::host_vector&lt;<span style="color: #0000ff;">int</span>&gt; h_vec(<span style="color: #800080;">32</span> &lt;&lt; <span style="color: #800080;">20</span><span style="color: #000000;">);
+  std::generate(h_vec.begin(), h_vec.end(), rand);
+
+  thrust::host_vector</span>&lt;<span style="color: #0000ff;">int</span>&gt;<span style="color: #000000;"> h_vec_1(h_vec);
+  CHK_TIME(cpu_sort(h_vec_1.begin(), h_vec_1.end()));
+
+  thrust::host_vector</span>&lt;<span style="color: #0000ff;">int</span>&gt;<span style="color: #000000;"> h_vec_2(h_vec);
+  CHK_TIME(gpu_sort(h_vec_2));
+
+  </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>
+<p>notes<br />a）文件要保存为.cu格式以便使用nvcc编译<br />b）如果不知道vcproj如何设置，最简单的是把代码直接拷贝到一个example里面，利用其现成的工程来编译<br />c）compile的时间实在太长了<br />d）生成的文件太大了（15MB）</p>
+<p>这是俺的测试结果（注意，这里cpu是单线程，如果利用上多核的话，cpu性能会好很多）</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('050ffdd0-6266-4433-8123-18874a3331c6')"><img id="code_img_closed_050ffdd0-6266-4433-8123-18874a3331c6" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_050ffdd0-6266-4433-8123-18874a3331c6" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('050ffdd0-6266-4433-8123-18874a3331c6',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_050ffdd0-6266-4433-8123-18874a3331c6" class="cnblogs_code_hide">
+<pre><span style="color: #000000;">（debug version）
+cpu_sort(h_vec_1.begin(), h_vec_1.end()): </span><span style="color: #800080;">94609</span><span style="color: #000000;">
+gpu_sort(h_vec_2): </span><span style="color: #800080;">3312</span><span style="color: #000000;">
+（release version）
+cpu_sort(h_vec_1.begin(), h_vec_1.end()): </span><span style="color: #800080;">2828</span><span style="color: #000000;">
+gpu_sort(h_vec_2): </span><span style="color: #800080;">594</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>2. 关于cuda的sort算法，用的是 radix sort</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('92538653-c67a-4149-9b3f-3914e4bcb6be')"><img id="code_img_closed_92538653-c67a-4149-9b3f-3914e4bcb6be" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_92538653-c67a-4149-9b3f-3914e4bcb6be" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('92538653-c67a-4149-9b3f-3914e4bcb6be',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_92538653-c67a-4149-9b3f-3914e4bcb6be" class="cnblogs_code_hide">
+<pre>http:<span style="color: #008000;">//</span><span style="color: #008000;">stackoverflow.com/questions/6502151/parallel-sorting-on-cuda</span>
+Many GPU sorting implementations are variants of the bitonic sort, which <span style="color: #0000ff;">is</span> pretty well known and described <span style="color: #0000ff;">in</span> most reasonable texts on algorithms published <span style="color: #0000ff;">in</span> the last <span style="color: #800080;">25</span> or <span style="color: #800080;">30</span><span style="color: #000000;"> years.
+
+The </span><span style="color: #800000;">"</span><span style="color: #800000;">reference</span><span style="color: #800000;">"</span> sorting implementation <span style="color: #0000ff;">for</span> CUDA done by Nadathur Satish <span style="color: #0000ff;">from</span> Berkeley and Mark Harris and Michael Garland <span style="color: #0000ff;">from</span> NVIDIA (paper here) <span style="color: #0000ff;">is</span> a radix sort, and forms the basis of what <span style="color: #0000ff;">is</span> <span style="color: #0000ff;">in</span> NPP and Thrust.</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>
+<p><br /><br />3. NPP是nvidia的信号处理函数库，类似于ipp，包含了很多基本的处理算法<br />https://developer.nvidia.com/npp<br /><br /></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('af106c1a-a26a-43b9-b020-289217a8b19d')"><img id="code_img_closed_af106c1a-a26a-43b9-b020-289217a8b19d" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_af106c1a-a26a-43b9-b020-289217a8b19d" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('af106c1a-a26a-43b9-b020-289217a8b19d',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_af106c1a-a26a-43b9-b020-289217a8b19d" class="cnblogs_code_hide">
+<pre>    Eliminates unnecessary copying of data to/<span style="color: #0000ff;">from</span><span style="color: #000000;"> CPU memory
+        Process data that </span><span style="color: #0000ff;">is</span> already <span style="color: #0000ff;">in</span><span style="color: #000000;"> GPU memory
+        Leave results </span><span style="color: #0000ff;">in</span> GPU memory so they are ready <span style="color: #0000ff;">for</span><span style="color: #000000;"> subsequent processing
+    Data Exchange and Initialization
+        Set, Convert, Copy, CopyConstBorder, Transpose, SwapChannels
+    Arithmetic and Logical Operations
+        Add, Sub, Mul, Div, AbsDiff, Threshold, Compare
+    Color Conversion
+        RGBToYCbCr, YcbCrToRGB, YCbCrToYCbCr, ColorTwist, LUT_Linear
+    Filter Functions
+        FilterBox, Filter, FilterRow, FilterColumn, FilterMax, FilterMin, Dilate, Erode, SumWindowColumn, SumWindowRow
+    JPEG
+        DCTQuantInv, DCTQuantFwd, QuantizationTableJPEG
+    Geometry Transforms
+        Mirror, WarpAffine, WarpAffineBack, WarpAffineQuad, WarpPerspective, WarpPerspectiveBack  , WarpPerspectiveQuad, Resize
+    Statistics Functions
+        Mean_StdDev, NormDiff, Sum, MinMax, HistogramEven, RectStdDev</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>4.&nbsp; 另外，还有一些额外的库比如NVIDIA cuFFT，NVIDIA cuBLAS （6x to 17x faster performance than the latest MKL BLAS.），EM Photonics CULA Tools（linear algebra library）， NVIDIA cuSPARSE，NVIDIA CUDA Math Library&nbsp;&nbsp; &nbsp;<br />https://developer.nvidia.com/gpu-accelerated-libraries</p>

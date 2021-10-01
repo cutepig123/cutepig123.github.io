@@ -1,0 +1,22 @@
+<p>【 在 kaoyan (A u ready?) 的大作中提到: 】<br />
+: 是99年试题<br />
+: A是一个二阶方阵，试证：如果有矩阵B使得AB-BA=A,则A^2=0<br />
+发信人: researchmonk (蛰伏中...), 信区: Kaoyan<br />
+标&nbsp; 题: Re: [CS]一个线代的问题<br />
+发信站: 北大未名站 (2003年01月05日09:47:01 星期天), 站内信件</p>
+<p>证：<br />
+左乘A A^2*B-A*B*A = A^2<br />
+右乘A A*B*A-B*A^2 = A^2<br />
+相加：A^2*B - B*A^2 = A^2</p>
+<p>所以：tr(A) = tr(AB-BA) = 0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; tr(A^2) = tr(A^2*B-B*A^2) = 0</p>
+<p>A^2的特征值是A的特征值的平方<br />
+特征值的和等于迹&nbsp; <br />
+因此，A的特征值为0&nbsp;&nbsp; (西格马的每一项都是平方的形式)</p>
+<p>所以存在X可逆 A = X^(-1) * J * X&nbsp;&nbsp;&nbsp; J为A的若当标准型，J的对角线元素为0<br />
+所以 A^2 = X^(-1) * J^2 * X</p>
+<p>如果A是n阶，那么，J^n = 0<br />
+可以推出 A^n = X^(-1) * J^n * X = X^(-1) * 0 * X = 0</p>
+<p>特别的, n = 2 ,有， A^2 = 0<br />
+&nbsp;</p>
+<p>&nbsp;</p>

@@ -1,0 +1,22 @@
+<p><strong>背景</strong>： 公司的vcxproj有个模板，必须要遵守</p>
+<p>程序测试</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>config =<span style="color: #000000;"> {
+    {
+        ProjName </span>= <span style="color: #800000;">'</span><span style="color: #800000;">my_exe</span><span style="color: #800000;">'</span><span style="color: #000000;">,
+        ClCompile </span>= {<span style="color: #800000;">'</span><span style="color: #800000;">main.cpp</span><span style="color: #800000;">'</span>, <span style="color: #800000;">'</span><span style="color: #800000;">main2.cpp</span><span style="color: #800000;">'</span><span style="color: #000000;">},
+        lib_path </span>= <span style="color: #800000;">''</span><span style="color: #000000;">,
+        additonal_incdir </span>= <span style="color: #800000;">'</span><span style="color: #800000;">my_dll_inc_dir</span><span style="color: #800000;">'</span><span style="color: #000000;">,
+        additonal_linkdir</span>= <span style="color: #800000;">'</span><span style="color: #800000;">my_dll_link_dir</span><span style="color: #800000;">'</span><span style="color: #000000;">,
+        ConfigurationType </span>= <span style="color: #800000;">'</span><span style="color: #800000;">Application</span><span style="color: #800000;">'</span><span style="color: #000000;">
+    },
+    {
+        ProjName </span>= <span style="color: #800000;">'</span><span style="color: #800000;">my_dll</span><span style="color: #800000;">'</span><span style="color: #000000;">,
+        ClCompile </span>= {<span style="color: #800000;">'</span><span style="color: #800000;">main.cpp</span><span style="color: #800000;">'</span>, <span style="color: #800000;">'</span><span style="color: #800000;">main2.cpp</span><span style="color: #800000;">'</span><span style="color: #000000;">},
+        additonal_incdir</span>=<span style="color: #800000;">''</span><span style="color: #000000;">,
+        ConfigurationType </span>= <span style="color: #800000;">'</span><span style="color: #800000;">DynamicLibrary</span><span style="color: #800000;">'</span><span style="color: #000000;">
+    }
+}</span></pre>
+</div>
+<p>&nbsp;</p>

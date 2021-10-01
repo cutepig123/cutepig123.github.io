@@ -1,0 +1,25 @@
+<p>SW</p>
+<p>https://github.com/rjpcomputing/luaforwindows/releases</p>
+<p>&nbsp;</p>
+<p>Steps</p>
+<p>Install lua for windows</p>
+<p>write a bat file</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">set</span> LUA_PATH=%<span style="color: #0000ff;">cd</span>%\lua\?.lua;<span style="color: #000000;">%LUA_PATH%
+</span><span style="color: #0000ff;">set</span> LUA_CPATH=%<span style="color: #0000ff;">cd</span>%\clibs\?.dll;<span style="color: #000000;">%LUA_CPATH%
+lua </span>"E:\Program Files (x86)\Lua\5.1\examples\iup\button.wlua"</pre>
+</div>
+<p>Test fail!</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre>E:\Program Files (x86)\Lua\5.1&gt;lua "E:\Program Files (x86)\Lua\5.1\examples\iup\button.wlua"
+lua: error loading module 'iuplua' from file 'E:\Program Files (x86)\Lua\5.1\clibs\iuplua.dll':
+        The specified module could not be found.
+
+stack traceback:
+        [C]: ?
+        [C]: in function 'require'
+        ...Program Files (x86)\Lua\5.1\examples\iup\button.wlua:4: in main chunk
+        [C]: ?</pre>
+</div>
+<p>&nbsp;</p>

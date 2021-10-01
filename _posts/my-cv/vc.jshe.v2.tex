@@ -1,0 +1,171 @@
+% Build by https://www.overleaf.com/project/5f361f0fc168e40001777227
+%% start of file `template.tex'.
+%% Copyright 2006-2013 Xavier Danaux (xdanaux@gmail.com).
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License version 1.3c,
+% available at http://www.latex-project.org/lppl/.
+
+
+\documentclass[11pt,a4paper,sans]{moderncv}        % possible options include font size ('10pt', '11pt' and '12pt'), paper size ('a4paper', 'letterpaper', 'a5paper', 'legalpaper', 'executivepaper' and 'landscape') and font family ('sans' and 'roman')
+
+% modern themes
+\moderncvstyle{banking}                            % style options are 'casual' (default), 'classic', 'oldstyle' and 'banking'
+\moderncvcolor{blue}                                % color options 'blue' (default), 'orange', 'green', 'red', 'purple', 'grey' and 'black'
+%\renewcommand{\familydefault}{\sfdefault}         % to set the default font; use '\sfdefault' for the default sans serif font, '\rmdefault' for the default roman one, or any tex font name
+%\nopagenumbers{}                                  % uncomment to suppress automatic page numbering for CVs longer than one page
+
+% character encoding
+\usepackage[utf8]{inputenc}                       % if you are not using xelatex ou lualatex, replace by the encoding you are using
+%\usepackage{CJKutf8}                              % if you need to use CJK to typeset your resume in Chinese, Japanese or Korean
+
+% adjust the page margins
+\usepackage[scale=0.75]{geometry}
+%\setlength{\hintscolumnwidth}{3cm}                % if you want to change the width of the column with the dates
+%\setlength{\makecvtitlenamewidth}{10cm}           % for the 'classic' style, if you want to force the width allocated to your name and avoid line breaks. be careful though, the length is normally calculated to avoid any overlap with your personal info; use this at your own typographical risks...
+
+\usepackage{import}
+
+% personal data
+\name{HE}{Jinshou}
+%\title{Curriculum Vitae}                               % optional, remove / comment the line if not wanted
+%\address{Tsuen Wan, N.T, H.K}{}{}% optional, remove / comment the line if not wanted; the "postcode city" and and "country" arguments can be omitted or provided empty
+\phone[mobile]{+852 6579 4607}                   % optional, remove / comment the line if not wanted
+%\phone[fixed]{01234 123456}                    % optional, remove / comment the line if not wanted
+%\phone[fax]{+3~(456)~789~012}                      % optional, remove / comment the line if not wanted
+\email{jinshouhe@gmail.com}                               % optional, remove / comment the line if not wanted
+\homepage{cutepig.cnblogs.com}                         % optional, remove / comment the line if not wanted
+%\extrainfo{additional information}                 % optional, remove / comment the line if not wanted
+%\photo[64pt][0.4pt]{picture}                       % optional, remove / comment the line if not wanted; '64pt' is the height the picture must be resized to, 0.4pt is the thickness of the frame around it (put it to 0pt for no frame) and 'picture' is the name of the picture file
+%\quote{Some quote}                                 % optional, remove / comment the line if not wanted
+
+% to show numerical labels in the bibliography (default is to show no labels); only useful if you make citations in your resume
+%\makeatletter
+%\renewcommand*{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}
+%\makeatother
+%\renewcommand*{\bibliographyitemlabel}{[\arabic{enumiv}]}% CONSIDER REPLACING THE ABOVE BY THIS
+
+% bibliography with mutiple entries
+%\usepackage{multibib}
+%\newcites{book,misc}{{Books},{Others}}
+%----------------------------------------------------------------------------------
+%            content
+%----------------------------------------------------------------------------------
+\begin{document}
+%\begin{CJK*}{UTF8}{gbsn}                          % to typeset your resume in Chinese using CJK
+%-----       resume       ---------------------------------------------------------
+\makecvtitle
+
+\small{More than 10 years software development working experience with semiconductor industry vision application background. Strong C/C++ development and debugging skills. Experience of software design and leading of a team. Passionate about science, with strong technical, business, and interpersonal skills for working in a team and successfully completing a project.}
+
+\section{Working Experience}
+
+\vspace{6pt}
+
+\begin{itemize}
+
+
+\item{\cventry{Jan. 2017--Present}{Technical Manager}{ASM Pacific Technology Ltd.}{Hong Kong}{}{\vspace{3pt}As a software architect, I am responsible for system architecture design, task breakdown and follow-up, code review. Designed and implemented general AI segmentation system, portability system, event trace system, configurable image capture system, integrated script engine. The related technologies are task scheduling based on dependencies, code generation based on C++ template, design patterns, and code refactor.}}
+
+\vspace{6pt}
+
+\item{\cventry{Jan. 2012--2017}{Senior Software Engineer}{ASM Pacific Technology Ltd.}{Hong Kong}{}{\vspace{3pt}I was responsible for vision software architecture design, implementation and testing for raw solar wafer 3D inspection system. As the key developer, I fixed many software bugs and did performance tuning by profiling, algorithm optimization, caching strategy, thread pool and memory pool. Perform unit test and integration test. Analyze failure case and find solution.\\Now I act as a  supervisor for ATC vision application team, and also lead a application team in Hong Kong, the rules including requirement analysis, system design, task assignment, review and follow-up.}}
+
+\vspace{6pt}
+
+
+\item{\cventry{Apr. 2008--Jan. 2012}{Software Engineer}{ASM Pacific Technology Ltd.}{Hong Kong}{}{\vspace{3pt}My roles includes collecting product group requirements, software design, implementation and testing for Post Encapsulation Product (PEP). I developed and enhanced some vision core features including mark inspection, kerf inspection, auto-lighting and auto model alignment. I also participated in the design and development of vision OO platform including alignment module, refactor system, serialization, criteria module developments.}}
+
+\vspace{6pt}
+
+\item{\cventry{Feb. 2008--Apr. 2008}{Software Engineer (Intern)}{Tencent}{ShenZhen}{}{\vspace{3pt}I 
+was responsible to support internationalization and localization for a QQ game in International Product Center (IPC).}}
+
+\vspace{6pt}
+
+\item{\cventry{Jul. 2005--Sep. 2005}{Software Engineer (Intern)}{Ji'nan Yin Hu}{Ji'nan}{}{\vspace{3pt}I was responsible for design and implement the water, electric, gas meter charges software for Department of Finance, Shandong Province. Collect customer requirements, design software architecture, implementation and testing.}}
+
+
+\end{itemize}
+
+\section{Education}
+
+\vspace{5pt}
+
+\subsection{Academic Qualifications}
+
+\vspace{5pt}
+
+\begin{itemize}
+
+\item{\cventry{2005--2008}{Mphil Control Science and Engineering}{Harbin Institute of Technology}{Shenzhen}{}{}}
+
+\item{\cventry{2001--2005}{Beng Industry Automation}{Shandong University}{Ji'nan}{}{}}  % arguments 3 to 6 can be left empty
+
+\end{itemize}
+
+\vspace{2pt}
+
+\subsection{Notable Projects}
+
+\vspace{5pt}
+
+\begin{itemize}
+
+\item{\textbf{Masters Project:} \textit{Computer vision based mobile robot attitude and position estimation based on stereo vision}
+
+\vspace{3pt}
+
+%\small{I am part of a team developing a 5ft autonomous humanoid robot. This ambitious project requires strong team-working skills and high technical ability. I work well as part of the team, contributing in group discussions and taking initiative to set myself tasks when the next stage of the project is not clear. Given the role of electronics supervisor I am responsible for setting goals and ensuring all the electronic system designs are realised on time and meet the specifications of the project.}
+}
+
+\item{\textbf{Bachelor Project:} \textit{Fingerprint image enhancement}
+
+\vspace{3pt}}
+\end{itemize}
+
+\section{Technical and Personal skills}
+
+\vspace{6pt}
+
+\begin{itemize}
+
+\item \textbf{Programming Languages:} Proficient in: C, C++, Python, Matlab, Basic \\ Basic ability with: Assembly, Java, Javascript, C\#. I am very interested in Rust recently.
+
+\vspace{6pt}
+
+\item \textbf{OS:} Working environment is Windows, and Linux (Mainly for AI training). I have setup a Respberry server in home.
+
+\vspace{6pt}
+
+\item \textbf{Certification:} Software Design Engineer (Advanced Programmer) Qualification. CET 4, CET 6 Qualification.
+
+\vspace{6pt}
+
+\item \textbf{General Business Skills:} Presentation skills, Works well in a team.
+
+\end{itemize}
+
+
+% Publications from a BibTeX file without multibib
+%  for numerical labels: \renewcommand{\bibliographyitemlabel}{\@biblabel{\arabic{enumiv}}}% CONSIDER MERGING WITH PREAMBLE PART
+%  to redefine the heading string ("Publications"): \renewcommand{\refname}{Articles}
+\nocite{*}
+\bibliographystyle{plain}
+\bibliography{publications}                        % 'publications' is the name of a BibTeX file
+
+% Publications from a BibTeX file using the multibib package
+%\section{Publications}
+%\nocitebook{book1,book2}
+%\bibliographystylebook{plain}
+%\bibliographybook{publications}                   % 'publications' is the name of a BibTeX file
+%\nocitemisc{misc1,misc2,misc3}
+%\bibliographystylemisc{plain}
+%\bibliographymisc{publications}                   % 'publications' is the name of a BibTeX file
+
+%-----       letter       ---------------------------------------------------------
+
+\end{document}
+
+
+%% end of file `template.tex'.

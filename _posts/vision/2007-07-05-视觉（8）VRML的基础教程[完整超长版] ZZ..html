@@ -1,0 +1,642 @@
+<p>VRML的基础教程[完整超长版] <br>&nbsp;资源来自 <a href="http://219.131.221.85/bbs/viewthread.php?tid=384&amp;extra=page%3D1">http://219.131.221.85/bbs/viewthread.php?tid=384&amp;extra=page%3D1</a></p>
+<p><br>VRML创作工具很多是&#8220;所见即所得&#8221;式的，通过图形界面可以方便地创作虚拟境界，但VRML不仅仅是普通的三维设计，尽管这些工具很容易上手，却往往屏蔽掉了VRML标准的具体细节，因为如果想深入掌握VRML，还需要全面了解节点、域、检测器等技术细节，而达成此目的的最好方法就是用编写文本文件的方式创作VRML境界。本教程提供了六个典型例子，这些例子并不复杂，也不精彩，但涵盖了VRML的关键内容。 </p>
+<p>在开始创作之前，应作好下面的准备。 </p>
+<p>文本编辑器 随便你喜欢的文本编辑器，如Win95下的NotePad,Dos下的Edit等等。 </p>
+<p>VRML浏览器 若用的Web浏览器是Netscape4.0一下版本，可下载CosmoPlayer(<a href="http://cosmo.sgi.com/">http://cosmo.sgi.com</a>);若用的是Netscape4.0或更高版本，则已内置CosmoPlayer2.0,只是安装Netscape时请注意是否选中了相应选项；若用的是Internet Explore4.0，则有可能已经内置了VRML2.0浏览器，判断是否内置的方法很简单，就是看它能否打开VRML文件（*.wrl,*.wrz）,如果不行，可以从<a href="http://www.microsoft.com/vrml/">http://www.microsoft.com/vrml/</a>下载VRML浏览器插件，对于IE3.x,还需要下载一些辅助插件。当然在开始之前应基本熟悉VRML浏览器的操作方法。 </p>
+<p>硬件 VRML和硬件平台无关，只要能提供VRML浏览器。在下面的教程中，我们假定硬件平台是微机，输出设备是图形窗口，输入设备为鼠标器和键盘。当然，如果有更先进的虚拟现实设备和支持它的VRML浏览软件效果会更好。对于我们将要创作的境界，微机就足够了。 </p>
+<p>资料 本站就是最全面的资料，遇到新概念时可查阅本站相关资料。 </p>
+<p>第一节 "Hello,World!" </p>
+<p>按照惯例，我们以"Hello,World!"作为我们的第一个虚拟境界，它由立方体、圆锥和球体组成，你可能已经注意到，VRML的标志正是由这三个几何形状构成的。输入的第一行文字是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>这是VRML文件的标志，所有2.0版本的VRML文件都以这行文字打头，VRML97是由VRML2.0版修订而成的，符合VRML97规范的VRML文件也以这行文字打头。其中&#8220;#&#8221;表示这是一个注释。而utf8表示此文件采用的是utf8编码方案，这在标准中有详细说明。 </p>
+<p>先加入一个Group节点（组节点）： </p>
+<p>Group { </p>
+<p>组节点的花括号之内的所有内容视为一个整体，利用组节点可以把虚拟场景组织成条理清晰的树形分支结构。下面定义组节点的children域（孩子域）： </p>
+<p>children [ </p>
+<p>在children后的方括号内定义Group节点的所有孩子对象，第一个孩子是一个Shape节点（形态节点），它描述一个几何形状及其颜色等特征： </p>
+<p>Shape { </p>
+<p>在Shape 节点内定义一个几何体Box（方盒节点）： </p>
+<p>geometry Box {} </p>
+<p>注意我们没有为Box定义任何域，这意味着它的尺寸和坐标位置等特性取缺省值（单位立方体）。随后补齐各右括号： </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>至此，我们已经成功地制作了第一个虚拟境界，把它保存为Hello World.wrl,下面是完整的文件： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>用浏览器打开这个文件，你会看到一个灰色的立方体，尽管不太好看，但你还是可以通过改变视点位置从不同方位观察它，初步体验&#8220;三维交互&#8221;的感觉。 </p>
+<p>下面定义立方体的外观，这只需改变Shape节点的appearance域（外观），appearance 域是一个Appearance 节点，此Appearance节点的material域（材质）定义为一个Material 节点： </p>
+<p>appearance Appearance { </p>
+<p>material Material {} </p>
+<p>} </p>
+<p>这样，上面的Shape节点变成了： </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material {} </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>这是定义几何造型的基本格式。现在立方体还是灰色的，这是因为其中的Material节点采用的还是缺省值，下面修改它的diffuseColor域（漫射色），VRML的颜色说明采用的是RGB颜色模型，所以要定义红色的立方体，漫射色应该是{1 0 0},三个数字依次表示红色、绿色和蓝色，取值范围都是0到1： </p>
+<p>material Material {diffuseColor 1 0 0 } </p>
+<p>现在我们生成了第二个场景，完整的代码是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>在这个场景中，红色的立方体位于屏幕的中心，它的中心坐标为{0 0 0 }。若想把它移动一个位置，可以通过为它外套一个Transform(变换节点)来实现： </p>
+<p>Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material {} </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>在VRML中，Transform节点除了可以引进平移、旋转和缩放变换以外，其作用和Group节点的作用一样。把Transform 节点的translation域（平移）设置为5 0 0,意味着Transform节点所在的坐标系相对于其上层坐标系向右平移（即x轴方向）5个单位，在其它两个方向不移动，VRML的距离单位是米，5个单位相当于5米。我们第三个场景的完整代码是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>接下来我们把方块所在的Transform节点复制三份，并把各自包含的几何形状依次定义为方块、球体和圆锥： </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { .... geometry Box {} } </p>
+<p>] </p>
+<p>} </p>
+<p>Transform { </p>
+<p>translation 0 0 0 </p>
+<p>children [ </p>
+<p>Shape { ... geometry Sphere {} } </p>
+<p>] </p>
+<p>} </p>
+<p>Transform { </p>
+<p>translation -5 0 0 </p>
+<p>children [ </p>
+<p>Shape { ... geometry Cone {} } </p>
+<p>] </p>
+<p>} </p>
+<p>]#end of Group children </p>
+<p>} </p>
+<p>你可能已经感觉到，VRML文件中有许多括号（花括号&#8220;{}&#8221;和方括号&#8220;[]&#8221;），所以务请注意括号的配对，建议采用本教程的缩进风格。注意上面的VRML文件中三个Transform节点的平移量是不同的，因而三个几何体的位置也就不同。另外，还可以修改三个几何体的颜色：球面Sphere为绿色（0 1 0），圆锥为蓝色（ 0 1 0 ）。最后，为了以后引用方便，分别给这三个Transform 节点指定一个名称： </p>
+<p>DEF box Transform {...} </p>
+<p>DEF sphere Transform {...} </p>
+<p>DEF cone Transform {...} </p>
+<p><br>#VRML V2.0 utf8 <br>Group { <br>children [ <br>DEF box Transform&nbsp; { <br>translation 5 0 0 <br>children [ <br>Shape { <br>appearance Appearance { <br>material Material { diffuseColor 1 0 0 } <br>} <br>geometry Box {} <br>} <br>] <br>} <br>DEF sphere Transform { <br>translation 0 0 0 <br>children [ <br>Shape { <br>appearance Appearance { <br>material Material { diffuseColor 0 1 0 } <br>} <br>geometry Sphere {} <br>} <br>] <br>} <br>DEF cone Transform { <br>translation -5 0 0 <br>children [ <br>Shape { <br>appearance Appearance { <br>material Material { diffuseColor 0 0 1 } <br>} <br>geometry Cone { } <br>} <br>] <br>} <br>]# end of Group children <br>} </p>
+<p>把此文件保存为helloworld.wrl,用VRML浏览器打开这个文件，通过调整视点从多个方位浏览自己的作品。 </p>
+<p>小结：在这一节，我们创建了第一个虚拟境界，涉及到如何用几何体构建境界，以及如何设定几何体的颜色与材质。尽管这个由方块、圆锥和球体组成的场景图比较简单，但已经反映了VRML的基本功能。当然，除了可用鼠标改变视点外，这还只是一个静态世界，在下一节，我们将引进VRML的动态特征。 </p>
+<p>第二节 增加交互能力 </p>
+<p>上一节我们学习了用几何体建立虚拟境界以及为几何体赋予色彩和材质的方法，这样建立的虚拟境界是静态的。这一节我们将使一个几何体（为了更具一般性，下面我们称之为对象）能够根据用户动作做出反应，即交互能力，这是VRML2.0最突出的特征。 </p>
+<p>1。检测器 </p>
+<p>在VRML中，检测器（Sensor）节点是交互能力的基础。检测器节点共九种。在场景图中，检测器节点一般是以其它节点的子节点的身份而存在的，它的父节点称为可触发节点，触发条件和时机由检测器节点类型确定。 </p>
+<p>接触检测器（ TouchSensor）是最常用的检测器之一，最典型的应用例子是开关。其它检测器将在后续教程中陆续介绍。这里我们定义一个开关节点lightSwitch（这是一个组节点），并定义一个接触检测器作为它的子节点： <br>DEF lightSwitch Group { </p>
+<p>children [ </p>
+<p>各几何造型子节点... </p>
+<p>DEF touchSensor TouchSensor {} </p>
+<p>] </p>
+<p>} <br>这样开关节点lightSwitch就是一个可触发节点。当然，检测器存在的理由是它被触发时能够引起某种变化，所以在更深入讨论开关节点之前，我们先讨论一下场景变化。 2.视点 </p>
+<p>最常见的变化是视点的变化，在我们的第一个境界中你可能已经体验到视点变化：当你拖动鼠标或按动箭头键时（按照VRML术语，称为航行），虚拟境界就会旋转或缩放，这实际上是在调整你的视点位置或视角。在虚拟场景的重要位置可以定义视点节点（ViewPoint）,它们是境界作者给用户推荐的上佳观赏方位，在CosmoPlayer浏览器中，用户就可以通过鼠标右键选择作者推荐的各个视点。这里我们定义两个视点节点： <br>DEF view1 Viewpoint { </p>
+<p>position 0 0 20 </p>
+<p>description "View1" </p>
+<p>} </p>
+<p>DEF view2 Viewpoint { </p>
+<p>position 5 0 20 </p>
+<p>description "view2" </p>
+<p>} <br>我们的潜在目的是使用户可以通过触发开关节点来切换视点。现在先研究一下这两个视点节点，其中的坐标表示视点在场景中的位置，坐标的单位是米，这在前面已经提到过，视点的名称将会在浏览器菜单中提示出来供用户选择。把上述视点说明加入helloworld.wrl中（放在Group节点之前），并把其中的方块节点修改成可触发节点： </p>
+<p>DEF box Tranform { </p>
+<p>children [ </p>
+<p>Shape { .... Box ...} </p>
+<p>DEF touchBox TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>把修改过的文件另存为&#8220;touchme.wrl&#8221;。 <br>3。事件传递 </p>
+<p>下面我们把触发（用鼠标箭头按动方块）和场景变化（视点切换）这两件事情联系起来，在场景图中，除节点构成的层次体系外，还有一个&#8220;事件体系&#8221;，事件体系由相互通讯的节点组成。能够接收事件的节点都应具有事件入口（eventIn），如果它要接收多种类型的事件（称为入事件），它就应该具有多个事件入口，也就是说，事件入口象节点的域一样是有类型的。同样，发送事件的节点应有事件出口（eventOut）,事件出口也是有类型的。例如ViewPoint节点就有一个事件入口set_bind,当向此事件送入一个值&#8220;TRUE&#8221;（即所谓的入事件）时，该viewpoint节点成为当前视点。又如，接触检测器TouchSensor有一个事件出口isActive,当受到用户触发后它就从此出口送出一个&#8220;TRUE&#8221;（即所谓的出事件），补充一句，在下一个事件发送之前，此事件一直保存在事件出口中（作为记录）。 </p>
+<p>事件出口和事件入口通过路径相连，这就是VRML文件中除节点以外的另一基本组成部分：ROUTE 语句。ROUTE语句把事件出口和事件入口联系在一起，从而构成事件体系。在这里，我们是把接触检测器touchBox的事件出口isActive连接到视点节点view2的事件入口set_bind: </p>
+<p>ROTUE touchBox.isActive TO view2.set_bind </p>
+<p>好了！现在我们得到的VRML文件是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>DEF view1 Viewpoint { </p>
+<p>position 0 0 20 </p>
+<p>description "view1" </p>
+<p>} </p>
+<p>DEF view2 Viewpoint { </p>
+<p>position 5 0 20 </p>
+<p>description "view2" </p>
+<p>} </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>DEF box Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0} </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>DEF touchBox TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF sphere Transform { </p>
+<p>translation 0 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 1 0} </p>
+<p>} </p>
+<p>geometry Sphere {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF cone Transform { </p>
+<p>translation -5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 0 1 } </p>
+<p>} </p>
+<p>geometry Cone {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>] #end of Group children </p>
+<p>} </p>
+<p>ROUTE touchBox.isActive TO view2.set_bind </p>
+<p>把这个文件调入浏览器，然后把鼠标指向方块并按下左钮（先别松开！），可以看到视点已经变为view2,内部的机制我们已经很清楚：左钮按下时方块节点的接触检测器被触发，接着接触检测器从事件出口isActive送出一个事件&#8220;TRUE&#8221;，这个事件通过路由进入视点节点view2的事件入口set_bind,view2收到&#8220;TRUE&#8221;后成为当前视点，所以在我们眼前场景发生了变化。 </p>
+<p>现在松开左钮，可以看到场景恢复到原来方位，这种功能称为视点回跳，其原因是松开左钮后接触检测器向view2发送了一个&#8220;FASLE&#8221;事件，这样view2当前的地位被解除，原来的视点成为系统视点栈的栈顶节点（即当前视点），详细说明可参见标准中对视点节点的专门论述。如果我们不想视点回跳，就想停留在view2视点，那该怎么办呢？这种非系统缺省功能要自己来定义。 </p>
+<p>4。 利用脚本编写自定义行为 在VRML中，利用Script节点（脚本节点）定义用户自定义行为，所谓定义即用脚本描述语言（Scripting Language）编写脚本的过程。VRML97支持的脚本描述语言目前有两种：Java和EMCAScript(这是JavaScript标准化后的名称)，关于这两种语言本身，请参考相应参考书，VRML97标准中定义了它们和VRML的接口方法。应提请注意的是：VRML是基于节点的语言，所以脚本也是封装在Script这个特殊节点中的。这里我们不过多讨论脚本描述语言的细节，主要讨论把脚本集成到VRML文件中的方法。 </p>
+<p>上面我们曾把接触检测器touchBox 和视点view2直接通过路径连接起来，现在要定义我们指定的行为，就需要在二者之间插入一个脚本节点，也就是让路径绕个弯： ROUTE touchBox.isActive TO touchScript.touchBoxIsActive </p>
+<p>ROUTE touchScript.bindView2 TO view2.set_bind </p>
+<p>其中的脚本节点touchScript有一个事件人口touchBoxIsActive和一个事件出口bind_View2,前者接收来自接触检测器touchBox的事件，然后经自己的脚本处理后，把结果发送给视点节点view2: </p>
+<p>DEF touchScript Script { </p>
+<p>eventIn SFBool touchBoxIsActive </p>
+<p>eventOut SFBool bindView2 </p>
+<p>url"javescript: </p>
+<p>function touchBoxIsActive(active) { </p>
+<p>bindView2= TRUE; </p>
+<p>}" </p>
+<p>} </p>
+<p>关于这个Script节点，请注意一下几点：（1）它的事件入口touchBoxIsActive和事件出口bindView2是自定义的，其它VRML节点的域和事件都是固定的。（2）事件入口touchBoxIsActive(即入事件)和事件出口bindView2(即出事件)的类型都是SFBool(单值布尔型)，touchBox的事件出口isActive和view2的事件入口set_bind的类型也是相同的。（3）&#8220;url&#8221;是脚本节点的一个域，可以直接包含脚本，也可以包含一个或多个用URL地址指示的脚本，若有多个地址，则按照先后次序获取第一个可得到的脚本。（4）脚本是以函数（function）的形式给出的，函数名touchBoxIsActive 与事件入口的名称相同，这是和ECMAScript语言的接口约定，表示相应事件入口收到事件后调用此函数进行处理。 </p>
+<p>5.事件流程与小结 </p>
+<p>下面我们整理一下事件流程： </p>
+<p>（1）用户在方块上按下鼠标左键。 </p>
+<p>（2）接触检测器发出一个&#8220;TRUE&#8221;事件。 </p>
+<p>（3）此事件进入脚本节点touchScript的事件入口touchBoxIsActive. </p>
+<p>（4）调用脚本函数touchBoxIsActive(注意函数并没有判断入事件的值)。 </p>
+<p>（5）函数向touchScript的事件出口bindView2发送一个&#8220;TRUE&#8221;事件（还可以进行其它判断或执行其它事件）。 </p>
+<p>（6）view2节点收到&#8220;TRUE&#8221;事件，成为当前视点。按照VRML约定，&#8220;认为&#8221;上述事件是同时发生的，也就是这些事件的时间戳相同。 </p>
+<p>（7）若用户松开鼠标左键，则接触检测器发出一个&#8220;FALSE&#8221;事件，此事件同样引起脚本函数调用并发送&#8220;TRUE&#8221;事件，所以view2仍然保持为当前视点。 </p>
+<p>本节的完整代码是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>DEF view1 Viewpoint { </p>
+<p>position 0 0 20 </p>
+<p>description "view1" </p>
+<p>} </p>
+<p>DEF view2 Viewpoint { </p>
+<p>position 5 0 20 </p>
+<p>description "view2" </p>
+<p>} </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>DEF box Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>DEF touchBox TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF sphere Transform { </p>
+<p>translation 0 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 1 0} </p>
+<p>} </p>
+<p>geometry Sphere {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF cone Tranform { </p>
+<p>transltion -5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 0 1 } </p>
+<p>} </p>
+<p>geometry Cone {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>] #end of Group children </p>
+<p>} </p>
+<p>DEF touchScript Script { </p>
+<p>eventIn SFBool touchBoxIsActive </p>
+<p>eventOut SFBool bindView2 </p>
+<p>url "javascript : </p>
+<p>function touchBoxIsActive (active) { </p>
+<p>bindView2 = TRUE; </p>
+<p>}" </p>
+<p>} </p>
+<p>ROUTE touchBox.isActive TO touchScript.touchBoxIsActive </p>
+<p>ROUTE touchScript.bindView2 TO view2.set_bind </p>
+<p>小结：本节建立的虚拟境界并不复杂，但涉及到了VRML2.0最基础性的功能和概念：利用检测器产生事件、利用路由传递事件以及利用脚本编写自定义行为，掌握了这些内容也就掌握了VRML2.0的核心。在后面的几节中，我们将探索一些专题性的有趣功能，而本节是基础，因而必须透彻理解。 </p>
+<p>第三节 邻近检测器 </p>
+<p>本节讨论邻近检测器（proximitySensor),当用户进入或离开邻近检测器所划定的区域时就会触发它。正如你在标准中可以查到的那样，ProximitySensor节点定义为： </p>
+<p>ProximitySensor { </p>
+<p>exposedField SFVec3f center 0 0 0 </p>
+<p>exposedField SFVec3f size 0 0 0 </p>
+<p>exposedField SFBool enabled TRUE </p>
+<p>eventOut SFBool isActive </p>
+<p>eventOut SFVec3f position_changed </p>
+<p>eventOut SFRotation orientation_changed </p>
+<p>eventOut SFTime enterTime </p>
+<p>eventOut SFTime exitTime </p>
+<p>} </p>
+<p>这里稍作介绍。ProximitySensor节点共有三个外露域（exposedField)和五个出事件（eventOut）.出事件我们已经熟悉，是节点状态发生改变时用来通知其它节点的，这里的出事件isActive 用于ProximitySensor通报自己已被激活。enterTime和exitTime通报用户（代表用户的用户化身或指示器）进入和退出ProximitySensor检测区的时刻。若用户已在检测器之内，则当用户的位置或方位发生变化时，送出position_changed和orientation_changed出事件这五个出事件联合起来，就定义了邻近检测器的功能。外露域则集域（Field）、入事件（eventIn）和出事件（eventOut）三者的功能于一身，也就是说，它既象域一样描述了节点的当前状态，又可以作为入事件由其它节点修改这种状态，并作为出事件把这种改变通知其它节点。这里的enabled外露域是布尔型的，用于ProximitySensor的启用和停用，center和size定义形为长方体的邻近检测区。 </p>
+<p>我们的出发点是第一节中建造的境界helloworld,它是由方块、球体和圆柱这三个物体构成的静态世界，现在在球体周围增加一个邻近检测区： </p>
+<p>DEF sphere Transform { </p>
+<p>translation 0 0 0 </p>
+<p>children [ </p>
+<p>Shape {....} </p>
+<p>DEF comeClose ProximitySensor { </p>
+<p>center 0 0 0 </p>
+<p>size 4 4 4 </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>ProximitySensor的名字为comeCloser,邻近区的中心和球体的球心重合，形状为正方体，边长为4米，是球体直径的两倍。当用户走进球体时就会触发这个邻近检测器，检测器发出isActive事件，我们把这个事件出口通过路由指向Script节点（用来绑定视点2）： </p>
+<p>DEF comeCloserScript Script { </p>
+<p>eventIn SFBool enterProximitySensorIsActive </p>
+<p>eventOut SFBool bindView2 </p>
+<p>url " javascript : </p>
+<p>function enterProximitySensorIsActive (active) { </p>
+<p>bindView2=TRUE; </p>
+<p>} " </p>
+<p>} </p>
+<p>随后，我们在邻近检测器的出事件isActive和脚本节点comeCloserScript的入事件enterProximitySensorIsActive之间建立路由，后者收到事件后执行函数enterProximitySensroIsActive,函数发出bindView2出事件，这个出事件通过路由连接到视点节点View2: </p>
+<p>ROUTE comeCloser.isActive TO comeCloserScript.enterProximitySensorIsActive </p>
+<p>ROUTE comeCloserScript.bindView2 TO view2.set_bind </p>
+<p>也就是说，一旦用户进入邻近区，境界的当前视点将转换成View2.这个由两个视点、三个物体、一个邻近检测器和一个脚本节点组成的境界的完整代码如下： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>DEF view1 Viewpoint { </p>
+<p>position 0 0 20 </p>
+<p>description "view1" </p>
+<p>} </p>
+<p>DEF view2 Viewpoint { </p>
+<p>position 0 0 20 </p>
+<p>description "view2" </p>
+<p>} </p>
+<p>Group { </p>
+<p>children [ </p>
+<p>DEF box Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF sphere Transform { </p>
+<p>translation 0 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 1 0 } </p>
+<p>} </p>
+<p>geometry Sphere {} </p>
+<p>} </p>
+<p>DEF comeCloser ProximitrySensor { </p>
+<p>center 0 0 0 </p>
+<p>size 4 4 4 </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF cone Transform { </p>
+<p>translation -5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 0 1} </p>
+<p>} </p>
+<p>geometry Cone {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>]#end of Group children </p>
+<p>} </p>
+<p>DEF comeCloserScript Script { </p>
+<p>eventIn SFBool enterProximitySensorIsActive </p>
+<p>eventOut SFBool bindView2 </p>
+<p>url "javascript : </p>
+<p>function enterProximitySensorIsActive(active) { </p>
+<p>bindView2=TRUE; </p>
+<p>}" </p>
+<p>} </p>
+<p>ROUTE comeCloser.isActive TO comeCloserScript.enterProximitySensorIsActive </p>
+<p>ROUTE comeCloserScript.bindView2 TO view2.set_bind </p>
+<p>启动VRML浏览器进入境界，面向球体一直走过去，当你刚刚感到靠近球体时，会突然感到自己后退了一大步（或者说物体跳到前方更远的地方），这表明邻近检测器已经检测到你的靠近，它把这件事通知脚本节点，脚本节点把视点View2绑定成当前视点，从而使你感到视点突然改变。 </p>
+<p>再稍稍修改一下邻近检测器，把它的中心位置向右移了2米： </p>
+<p>DEF comeCloser ProximitySensor { </p>
+<p>center 2 0 0 </p>
+<p>size 4 4 4 </p>
+<p>} </p>
+<p>这样你就可以从左边（方块那一边）走进球体（视点不跳），但不能从右边（圆锥那一边）走近它（视点跳转）。 </p>
+<p>总之，ProximitySensor能够检测用户是否进入或离开检测器指定的空间区域，典型用法是当用户走进房间时开启灯光，当用户离开时关闭灯光，从而建立功能丰富的&#8220;智能&#8221;空间。 </p>
+<p>第四节 连续动画 </p>
+<p>在第二节中我们已经使用过接触检测器，当我们把鼠标指针放到方块（这个几何节点包含接触检测器）上面时，指针形状发生变化，这意味着我们已经进入检测区，如果按下鼠标左钮，则按照我们的定义，当前视点会发生变化。 </p>
+<p>这一节仍然制作这样一个对接触有反应的方块，只是接触后它会连续不断地转动，动画行为可以用时间检测器（TimeSensor）驱动，而不断变化的旋转值可用脚本节点或朝向插补器（orientationInterpolator）给出。 </p>
+<p>1。接触检测器 </p>
+<p>作为开始的基本代码是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>DEF cube Transform { </p>
+<p>rotation 1 1 1 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>DEF TouchS TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF revolver Script { </p>
+<p>eventIn SFBool startRevolving </p>
+<p>eventOut SFRotation revolve </p>
+<p>field SFFloat angle 0 </p>
+<p>url "javascript : </p>
+<p>function startRevolving () { </p>
+<p>revolve[0]=1; </p>
+<p>revolve[1]=1; </p>
+<p>revolve[2]=1; </p>
+<p>revolve[3]=angle; </p>
+<p>angle+=0.1; </p>
+<p>}" </p>
+<p>} </p>
+<p>ROUTE TouchS.isOver TO revolver.startRevolving </p>
+<p>ROUTE revolver.revolve TO cube.set_rotation </p>
+<p>其中，方块cube包含两个子节点，前者定义了它的形态（红色的单位立方体），后者把它定义成接触检测器。注意，cube的类型是Transform节点，它的rotation 域是外露域，指定本组相对于上层坐标系的旋转值，这里指定的初始值是&#8220;1 1 1 0 &#8221;，其中前三个数值定义旋转轴，最后一个值定义旋转角。由于它是外露域，因而可以通过入事件（名为set_rotation）进行修改，下面定义的动态行为就是这样实现的。 </p>
+<p>Script节点revolver的核心是内联的ECMAScript脚本函数。它给定一个不断变化的旋转值。当鼠标指针移动到方块之上时，接触检测器发出isOver,和第一节中采用的isActive事件不同，isOver只有在鼠标左钮按下时才会发出。isOver事件通过路由传递给脚本节点的事件入口startRevolving,从而启动函数startRevolving,函数将一个新的旋转值发往事件出口revolve,这个旋转值通过路由进入cube的外露域rotation,修改了方块的旋转角，引起它的朝向变化。鼠标指针在cube上面的每次方位变化都引起isOver事件发送一次，从而导致方块旋转一次。 </p>
+<p>2。时间检测器 </p>
+<p>为了使方块能够连续旋转，需要引进等间隔连续发送的时间序列，这正是时间检测器的用武之地。时间检测器随着时间推移不断产生事件，可用于多种目的，包括： a. 驱动连续性的仿真和动画 </p>
+<p>b. 控制周期性的活动（如每分钟一次） </p>
+<p>c. 初始化单独事件，如报警钟 </p>
+<p>下面是我们要用的时间检测器和修改后的路由关系： </p>
+<p>DEF ticker TimeSensor { </p>
+<p>cleInterval 0.1 </p>
+<p>loop TRUE </p>
+<p>enabled FALSE </p>
+<p>} </p>
+<p>ROUTE TouchS.isOver TO ticker.set_enabled </p>
+<p>ROUTE ticker.cycleTime TO revolver.startRevolving </p>
+<p>ROUTE revolver.revolve TO cube.set_rotation </p>
+<p>enabled用于启用和停用时间检测器，开始时它处于停用状态，以后由接触检测器的isOver事件修改这一状态。启用的时间检测器每隔0.1秒送出一个cycleTime事件，并用它来触发revolver的startRevolving事件，注意，cycleTime事件的类型为SFTime,而路由两端事件的类型必须匹配，所以尽管这里我们不关心这个事件表示的具体时刻，还是把revolver的startRevolving事件类型也改为SFTime.这样，revolver的函数startRevolving()就会每0.1秒调用一次，从而驱动方块连续旋转。完整的代码是： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>DEF cube Transform { </p>
+<p>rotation 1 1 1 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geoemtry Box {} </p>
+<p><br>} </p>
+<p>DEF TouchS TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF revolver Script { </p>
+<p>eventIn SFTime startRevolving </p>
+<p>eventOut SFRotation revolve </p>
+<p>field SFFloat angle 0 </p>
+<p>url "vrmlscript : </p>
+<p>function startRevolving () { </p>
+<p>revolve[0]=1; </p>
+<p>revolve[1]=1; </p>
+<p>revolve[2]=1; </p>
+<p>revolve[3]=angle; </p>
+<p>angle+=0.1; </p>
+<p>}" </p>
+<p>} </p>
+<p>DEF ticker TimeSensor { </p>
+<p>cycleInterval 0.1 </p>
+<p>loop TRUE </p>
+<p>enabled FALSE </p>
+<p>} </p>
+<p>ROUTE TouchS.isOver TO ticker.set_enabled </p>
+<p>ROUTE ticker.cycleTime TO revolver.startRevolving </p>
+<p>ROUTE revolver.revolve TO cube.set_rotation </p>
+<p>上述脚本节点的功能比较简单，只是不断送出调整的旋转值，它是关键帧动画的一种。由于关键帧动画十分常用，故VRML专门定义了插补器节点来实现它。 </p>
+<p>3。 朝向插补器 </p>
+<p>插补器节点可认为是VRML内置的脚本节点，它们执行简单的动态计算，通常和时间检测器或者能够使对象产生动作的节点结合在一起使用，生成线性关键帧动画。插补器节点实际上是一个由关键点和对应关键值定义的分段线形函数。根据插值类型的不同，VRML共定义六个插补器节点：ColorInterpolator(颜色插补器)、CoordinateInterpolator(坐标插补器)、NormalInterpolator(法线插补器)、OrientationInterpolator(朝向插补器）、positionInterpolator(位置插补器)、ScalarInterpolator(标量插补器)。 </p>
+<p>所有插补器的域和事件都是类似的： </p>
+<p>eventIn SFFloat set_fruction </p>
+<p>exposedField MFFloat key [...] </p>
+<p>exposedField MF keyValue [.....] </p>
+<p>eventOut [S|M]F value_changed </p>
+<p>关键值域keyValue的类型决定了插补器的类型（例如，OrientationInterpolator的keyValue域的类型是MFFloat）.入事件set_fraction接收SFFloat型的事件，插补器随即根据它进行插值，并通过出事件value_changed送出插值结果。 </p>
+<p>这里我们把时间检测器的fraction_changed事件作为插补器的输入，这个事件是一个[0,1]区间的值，每个时间步都送出一次，表示当前周期内已过去的时间相对于整个周期的比例，是插补器常用的输入源之一。与此对应，我们把插补器关键帧的取值也定义在[0,1]范围内。与0和1这两个关键帧对应的关键值的旋转轴是相同的，只是旋转角度不同（0,3.14159）,这样方位插补器输出的旋转值的旋转轴固定不变，旋转角从0递增到3.14159,然后不断重复。 </p>
+<p>#VRML V2.0 utf8 </p>
+<p>DEF cube Transform { </p>
+<p>rotation 1 1 1 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>DEF TouchS TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF revolver OrientationInterpolator { </p>
+<p>key [0,1] </p>
+<p>keyValue [ 0.5 0.5 0.5 0,0.5 0.5 0.5 3.14149] </p>
+<p>} </p>
+<p>DEF ticker TimeSensor { </p>
+<p>cycleInterval 2 </p>
+<p>loop TRUE </p>
+<p>enabled FALSE </p>
+<p>} </p>
+<p>ROUTE TouchS.isOver TO ticker.set_enabled </p>
+<p>ROUTE ticker.fraction_changed TO revolver.set_fraction </p>
+<p>ROUTE revolver.value_changed TO cube.set_rotation </p>
+<p>小结：本节实现连续动画，动画由接触检测器启动，由时间检测器驱动，动画本身比较简单，就是不断地旋转。产生不断变化的旋转值的方法有两种：自己编写脚本，或者利用插补器节点。 </p>
+<p>第五节 动态修改场景图 </p>
+<p>场景图是描述境界结构的基本概念，节点是构成场景图的基本单元。组节点是能够包含字节点的节点，组节点本身还可作为其它组节点的子节点，从而形成层次性体系结构。VRML中的组节点包含Anchor(锚)、 Billboard(布告牌)、 Collision(碰撞)、Group (组)、Inline (内联)、LOD(细节层次)、 Switch(开关)、Transform(变换)共八种，除Inline、LOD、Switch这几个具有特殊功能外，它们都定义了入事件addChildren 和removeChildren ,前者用于向组节点的子节点域children 中增加新的子节点，后者用于从中删除子节点，这样就可以动态修改场景图的结构。 </p>
+<p>下面是我们这一节要建立的境界，开始的时候球体位于左边红色方块的内部，在按动底部的绿色方块后，球体进入右边蓝色方块之内。 </p>
+<p>首先定义三个方块： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>Viewpoint { position 0 0 15 } </p>
+<p>DEF leftBox Transform { </p>
+<p>translation -5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF rightBox Transform { </p>
+<p>translation 5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 0 1 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>DEF onoff Transform { </p>
+<p>translation 0 -5 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 0 1 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>其中左边的方块为红色，右边的方块为蓝色，下边的方块为绿色，都是Transform类型，三者都位于场景图的最高层，都是场景图的根节点，都包含一个Box几何体作为子节点。下面为红方块增加一个球体子节点： </p>
+<p>DEF leftBox Transform { </p>
+<p>translation -5 0 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>DEF SphereChild Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor 1 0 1 } </p>
+<p>} </p>
+<p>geometry Sphere { radius 1.2 } </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>为了以后引用方便，这里还为球体子节点起了名字：SphereChild .为了让用户能够增删这个儿子，把绿方块定义成接触检测器： </p>
+<p>DEF onoff Transform { </p>
+<p>translation 0 -5 0 </p>
+<p>children [ </p>
+<p>Shape { </p>
+<p>appearance Appearance { </p>
+<p>material Material {diffuseColor 0 1 0 } </p>
+<p>} </p>
+<p>geometry Box {} </p>
+<p>} </p>
+<p>DEF TS TouchSensor {} </p>
+<p>] </p>
+<p>} </p>
+<p>子节点增删的具体任务由Script节点来完成： </p>
+<p>DEF S Script { </p>
+<p>eventIn SFBool isActive </p>
+<p>eventOut MFNode child </p>
+<p>field MFNode testNode USE SphereChild </p>
+<p>　 </p>
+<p>url"javascript : </p>
+<p>function isActive (value) { </p>
+<p>if (value)child = testNode; </p>
+<p>}" </p>
+<p>} </p>
+<p>注意它的出事件child的类型是MFNode,也就是说通过这个事件送出的是节点。节点S的testNode域是对球体SphereChild引用（USE语句），引用不复制该节点，而是把同一节点再次插入场景图，从而导致SphereChild拥有多个父亲，所以场景图仅仅是层次结构，而不是树形结构。加上下面的路由语句，建立事件联系： </p>
+<p>ROUTE TS.isActive TO S.isActive </p>
+<p>ROUTE S.child TO leftBox.removeChildren </p>
+<p>ROUTE S.child TO rightBox.addChildren </p>
+<p>接触检测器TS的激活事件isActive连接到脚本节点S的isActive,这样用户一旦按动绿方块，就会启动脚本节点的事件处理函数isActive(),此函数把testNode节点（即球体节点SphereChild ）送至出事件S.child.根据路由，左边红方块的事件入口leftBox.removeChildren 收到此事件，按照removeChildren的语义，球体节点SphereChild从leftBox的子节点列表中删除。与此同时，右边蓝方块的事件入口rightBox.addChildren也收到S.child出事件，根据addChildren的语义，球体节点SphereChild加入 rightBox的子节点列表。通过这个过程，球体节点SphereChild的父节点从leftBox更换成rightBox. </p>
+<p>第六节 扩充节点类型 </p>
+<p>VRML提供了54种节点类型，称为内部节点类型。然而实际应用种可能要求新的节点类型，原型（prototype）是VRML实现节点类型扩充的基本机制。新节点类型是根据已定义的（内部的或原型的）节点类型定义的，一旦定义，原型节点类型就可以象内部节点类型一样在场景图中实例化。原型可以在当前文件中定义并使用，也可以在其它文件中定义，即外部原型，外部原型提供了一种使节点类型能够跨越网络的机制。本节的原型例子取自VRML97标准，它定义的是一个桌子类型，这个原型为： </p>
+<p>#VRML V2.0 utf8 </p>
+<p>PROTO TwoColor Table [ field SFColor legColor 0.8 0.4 0.7 </p>
+<p>field SFColor topColor 0.6 0.6 0.1 ] </p>
+<p>} </p>
+<p>Transform { </p>
+<p>children [ </p>
+<p>Transform { </p>
+<p>translation 0.0 0.6 0.0 </p>
+<p>children [ </p>
+<p>Transform { </p>
+<p>appearance Appearance { </p>
+<p>material Material { diffuseColor IS topColor } </p>
+<p>} </p>
+<p>geometry Box { size 1.2 0.2 1.2 } </p>
+<p>} </p>
+<p>} </p>
+<p>Transform { </p>
+<p>translation -0.5 0 -0.5 </p>
+<p>children [ </p>
+<p>DEF Leg Shape { </p>
+<p>appearance Appearance { diffuseColor IS legColor } </p>
+<p>} </p>
+<p>geometry Cylinder { height 1 radius 0.1 } </p>
+<p>} </p>
+<p>] </p>
+<p>} </p>
+<p>Transform { #另一条桌腿 </p>
+<p>translation 0.5 0 -0.5 </p>
+<p>children USE Leg </p>
+<p>} </p>
+<p>Transform { #另一条桌腿 </p>
+<p>translation -0.5 0 0.5 </p>
+<p>children USE Leg </p>
+<p>} </p>
+<p>Transform { #另一条桌腿 </p>
+<p>translation 0.5 0 0.5 </p>
+<p>children USE Leg </p>
+<p>} </p>
+<p>]#根节点Transform的儿子结束 </p>
+<p>}#根Transform 结束 </p>
+<p>}#原型结束 </p>
+<p>原型语句PROTO分为原型接口声明和原型定义两部分、接口声明包括原型的入事件和出事件的类型和名称，以及原型的域的类型、名称和缺省值。这里的接口声明为： </p>
+<p>PROTO TwoColorTable [ field SFColor legColor 0.8 0.4 0.7 </p>
+<p>field SFColor topColor 0.6 0.6 0.1 ] </p>
+<p>这个原型的类型名称为&#8220;TwoColorTable"(双色桌)，它有两个域：legColor(桌腿色)和topColor(桌面色)。作为节点类型，TwoColorTable的用法和其它内部节点类型一样，例如下面的语句定义一个TwoColorTable类型的节点，它的桌腿为红色，桌面为绿色： </p>
+<p>TwoColor Table { </p>
+<p>legColor 1 0 0 topColor 0 1 0 </p>
+<p>} </p>
+<p>接口声明之后是原型的主体，称为原型定义。原型定义实际上是一个场景图，由一个或多个根节点、嵌入的PROTO语句和ROUTE语句构成，其中的第一个节点类型确定原型实例在VRML文件中的使用方法。例如，如果原型定义中的第一个节点是Material节点，则只要可以使用Material节点的地方，原型实例都可以使用。原型定义中定义的其它节点及其附带的场景图都不进入原型实例所在的变换层系，但可以被原型定义中的ROUTE语句或Script节点引用。TwoColorTable原型中的第一个节点是Transform组节点，它决定了TwoColorTable型节点在场景图中的方法，在场景图中添加一个TwoColorTable型节点，相当于增加Transform. </p>
+<p>原型定义中节点的域、入事件、出事件可以通过IS语句和接口声明中的域、入事件、出事件建立关联，关联实际上相当于把原型定义中的这些域和事件公开作为原型的域和事件。关联的基本规则是域和域、入事件和入事件、出事件和出事件对应关联，原型定义中的外露域可以和接口声明中的域、入事件、出事件或外露域关联。本例中的关联有两个：桌面diffuseColor 域和接口声明中的topColor域，桌腿的diffuseColor域和接口声明中的legColor域之间。也就是说，TwoColorTable型节点中的topColor和legColor值实际上分别确定了桌面和桌腿的漫反射色diffuseColor. </p>
+<p>第七节 结束语 </p>
+<p>本教程创建了六个典型VRML境界，介绍了VRML的主要功能。这些例子的侧重点在于VRML的交互式特征，而不是营造境界的造型特征，后者可参见一般的三维图形工具，把这二者结合起来，可以创建更加精彩的交互式3D境界。本章根据需要介绍了部分VRML节点的基本用法，以后将对VRML节点进行分类和较为全面的评论。 </p>
+<p>当然，VRML功能十分丰富，要成为VRML专家，一方面需要研读VRML97标准，以求全面深入的掌握和应用，另一方面，要经常研读成功的作品，获取创作灵感。<br></p>

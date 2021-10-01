@@ -1,0 +1,14 @@
+<p><strong>啥是pykd？</strong></p>
+<p>一个windbg插件，能在windbg里面运行python指令</p>
+<p>&nbsp;</p>
+<p><strong>试用步骤</strong></p>
+<p>下载from https://pykd.codeplex.com/releases/view/615625</p>
+<p>解压后有这样几个文件</p>
+<p>dbgeng.dll<br />dbghelp.dll<br />msdia120.dll<br />pykd.pyd<br />srcsrv.dll<br />symsrv.dll</p>
+<p>运行windbg，attach一个进程</p>
+<p>敲入命令</p>
+<p>.load C:\Users\cutepig\Downloads\pykd-0.3.0.26-py27-win32\pykd\pykd.pyd<br /><br /></p>
+<p>0:019&gt; !py<br />Python 2.7.9 (default, Dec 10 2014, 12:24:55) [MSC v.1500 32 bit (Intel)] on win32<br />Type "help", "copyright", "credits" or "license" for more information.<br />(InteractiveConsole)<br />&gt;&gt;&gt; ls<br />Traceback (most recent call last):<br />&nbsp; File "&lt;console&gt;", line 1, in &lt;module&gt;<br />NameError: name 'ls' is not defined<br />&gt;&gt;&gt; print 'xx'<br />xx<br /><br /></p>
+<p>&nbsp;</p>
+<p><strong>从原代码编译</strong> （未做）<br />https://pykd.codeplex.com/wikipage?title=PYKD%200.2.%20Documentation&amp;referringTitle=Documentation#introduction-buildingfromsource<br /><br />安装：Python. boost<br />设置环境变量：$(DIA_SDK_ROOT) $(DBG_SDK_ROOT) $(BOOST_ROOT) $(PYTHON_ROOT) <br />编译boost：<br />编译pykd：<br /><br /><strong>执行自带的单元测试</strong><br />F:\_codes\pykd-84103\branch\0.3.x\test\scripts&gt;_run_p<br />ykdtest.cmd C:\Users\cutepig\Downloads\pykd-0.3.0.26-py27-win32\pykd\pykd.pyd<br /><br /></p>
+<p>&nbsp;</p>

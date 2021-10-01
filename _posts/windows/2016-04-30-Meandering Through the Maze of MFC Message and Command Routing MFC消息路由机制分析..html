@@ -1,0 +1,3798 @@
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="center"><strong>Meandering Through the Maze of MFC Message and Command Routing</strong></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p align="left">&nbsp;</p>
+<p align="center">Paul DiLascia</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="center"><em>Paul DiLascia is a freelance software consultant specializing in developing C++ applications for Windows. He is the author of Windows++:&nbsp;</em>Writing Reusable Code in C++&nbsp;<em>(Addison-Wesley, 1992).</em></p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p align="left">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left"><strong>If you've ever written</strong>&nbsp;even a simple program using Visual C++&trade;&nbsp;and MFC, you're familiar with messages and commands. You know that MFC uses something called "message maps" to route Windows&reg;messages to your virtual functions. But being familiar with something is not the same as understanding it. How does it all work? And what if you ever want to do something unusual?&nbsp;<br />
+  It
+  goes something like this. You run AppWizard to create a fledgling app. You
+  fill in the blanks, write some code to handle OnFileNew and OnFileOpen. You
+  write your view's OnDraw function. You add more menu commands and maybe some
+  toolbar buttons for them. With ClassWizard, hooking everything up is a
+  breeze. You add some message handlers: WM_CLOSE to clean up as your main
+  frame is dying and WM_SIZE to shuffle the child windows when your view
+  changes size. You're really flying now. Your app is growing by leaps and
+  bounds. Serialization works, your view manages several windows, they all
+  paint themselves correctly. You've got a half dozen dialog boxes and a cute
+  bitmap in your About box. Hey, this is fun. Aren't you glad you switched to
+  C++?&nbsp;<br />
+  Then
+  it happens.&nbsp;<br />
+  Something
+  unusual comes up. Maybe it's a modeless dialog or a specialized control bar
+  and you figured you could use ON_UPDATE_COMMAND_UI to enable and disable the
+  buttons. But it doesn't work. Or maybe you want to handle a command, but the
+  ID is stored in a variable, not a #define symbol. Or maybe you have a
+  specialized child window with ON_COMMAND entries in its message map. But,
+  funny, the menu item shows up grayed. So you crank up the debugger, pick the
+  Fooble command, and watch closely as control flows through the twisty maze.
+  Mumble calls Fumble calls Bumble calls Bletch. Where oh where will your
+  message go next? Poof! Into a black hole.<br />
+  And
+  what if you want to route commands to new objects? Where do you begin? Which
+  of the seemingly gazillions of virtual functions do you override to change
+  MFC's behavior? If you unplug that wire, will the whole thing fizzle? How do
+  you reroute a few cortical pathways without lobotomizing your program?&nbsp;<br />
+  MFC's
+  command routing paths are bogglesome even to supposed experts like me. The
+  first time I traced the flow of a simple command like ID_APP_EXIT, I came
+  away with a mental picture of MFC's message routing system that resembled
+  something like&nbsp;<strong>Figure 1</strong>. Judging from the scores of questions I
+  get, I'm not alone.&nbsp;<br />
+  <br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 1 Where's the Minotaur?</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">So let me guide you through the labyrinth of message and command
+  routing, show you how MFC handles commands differently from other window
+  messages, why menu items sometimes appear mysteriously grayed, how and when
+  user interface objects get updated and how to solve all the problems I just
+  mentioned. And more. Want to punt the document/view architecture in favor of
+  something else? I'll show you how. I'll even show you some tricks to impress
+  your friends. So grab your compass and golden thread, here we go.<br />
+  <br />
+  </p>
+<p align="left"><strong>Message Madness Made Merry</strong>&nbsp;<br />
+  I
+  have a friend who's fond of saying, when confronted with any daunting task,
+  "How do you eat an elephant? One bite at a time." Frankly, I can't
+  for the life of me figure why anyone would attempt to eat an elephant, but I
+  suspect the overall experience may not be unlike trying to digest MFC source
+  code. To explain the intricacies of message and command handling, I'll break
+  it into bite-sized pieces. At its simplest level, there are two steps:<br />
+  <br />
+  </p>
+<ol>
+<li>Get a message.&nbsp;<br />
+  <br />
+  </li>
+<li>Process it.</li>
+
+</ol>
+<p align="left">Simple, right? The first involves not
+  only getting the message, but also possibly translating it. As for step two,
+  MFC devotes so much effort to processing WM_COMMAND messages that it makes
+  sense to consider commands separately from other Windows messages. MFC also
+  adds a new concept that doesn't exist in Windows: user interface objects. You
+  know, those little CCmdUI doodads that come your way when it's time to enable
+  menu items and toolbar buttons? The ones in the UPDATE_COMMMAND_UI handlers?
+  So the revised elephant dissection looks something like this:<br />
+  <br />
+  </p>
+<ol>
+<li>Get a message.&nbsp;</li>
+
+</ol>
+<ul>
+<li>Maybe translate it.</li>
+
+</ul>
+<ol>
+<li>Process it.</li>
+
+</ol>
+<ul>
+<li>Process ordinary messages.</li>
+<li>Process command messages.</li>
+
+</ul>
+<ol>
+<li>Handle user interface objects</li>
+
+</ol>
+<p align="left">In the sections that follow, I'll
+  discuss these topics in detail. I'll describe the vanilla way things work,
+  then how MFC implements specific behavior for various classes, and finally
+  ways you might want to override MFC's default behavior. Then I'll attempt to
+  synthesize everything at the end with a sample program. In a display of
+  amazing editorial synchronicity, this month's C/C++ Q&amp;A column also
+  answers a number of questions related to command and message handling.&nbsp;<br />
+  <br />
+  </p>
+<p align="left"><strong>Pump It Up</strong>&nbsp;<br />
+  In
+  the days of yore, when a hacker was anyone who spent most waking hours
+  writing programs and C++ was confined to research halls, everyone wrote a
+  function called WinMain with a loop that went like this:</p>
+<p align="left">以前，黑客花费了几个小时的时间写程序，此时c++还局限于科研大厅。每个人都要写一个winmain如下</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;MSG msg;</p>
+<p align="left">&nbsp;while (GetMessage(&amp;msg, NULL, 0, 0)) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  TranslateMessage(&amp;msg);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  DispatchMessage(&amp;msg);&nbsp; //
+  send to window proc</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">This message pump is the heart of every Windows-based
+  program. MSG is a struct that holds the HWND, message ID, WPARAM, and LPARAM,
+  plus a couple of other things. You get one, then dispatch it. Pretty
+  straightforward. Except for that TranslateMessage in the middle&mdash;what's that?
+  Oh, never mind, it's just a function to translate WM_ KEYDOWN and WM_KEYUP
+  messages into WM_CHAR. Just do it. What's that you say? You want accelerator
+  keys? You want Ctrl-X and Ctrl-V to do Cut and Paste? Well, then, you need
+  TranslateAccelerator.</p>
+<p align="left">这个消息泵是每个windows函数的核心。MSG结构包含HWND, message ID, WPARAM, and LPARAM，和一些别的东西。你拿到一个，在分发它，非常直接，除了中间的TranslateMessage，这是什么？别介意，他只是一个函数，用来把WM_ KEYDOWN and WM_KEYUP 消息转换成WM_CHAR。你还要做什么？加速键？想把Ctrl-X and Ctrl-V 转换到 Cut and Paste？好的，那你需要TranslateAccelerator</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;MSG msg;</p>
+<p align="left">&nbsp;HWND hwnd =&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // your main window</p>
+<p align="left">&nbsp;HACCEL hAccel =&nbsp;&nbsp; // load from resource file</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;while (GetMessage(&amp;msg, NULL, 0, 0)) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (!TranslateAccelerator(hwnd, hAccel, &amp;msg)) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // Not an accelerator, so dispatch as normal.</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  TranslateMessage(&amp;msg);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  DispatchMessage(&amp;msg);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">TranslateAccelerator is a voodoo
+  function you must call to do accelerators. TranslateAccelerator sees Ctrl-X
+  go by, looks in your accelerator table, and translates it into a WM_ COMMAND.
+  Unlike TranslateMessage, it dispatches a WM_COMMAND message with ID of
+  ID_EDIT_CUT to your window proc. To your program, it looks just like the user
+  picked Edit Cut from the menu. TranslateMessage returns TRUE indicating the
+  message was translated and dispatched, so you know not to dispatch it
+  again.&nbsp;</p>
+<p align="left">TranslateAccelerator是一个voodoo函数，你必须调用来完成加速键。TranslateAccelerator查看你的加速键表，把他转换成WM_ COMMAND消息。不想TranslateMessage，它分发WM_COMMAND消息+ ID_EDIT_CUT ID到你的程序过程。对你程序来讲，他就像看到用户从菜单式选了Edit Cut菜单。TranslateMessage返回TRUE表示消息已经翻译了以及分发了，所以不需要在分发了</p>
+<p align="left"><br />
+  Windows
+  has all sorts of voodoo functions to translate messages: you don't really
+  understand the rhyme or reason, you just do what they tell you. You use
+  IsDialogMessage for modeless dialogs, so Tab keys and Ctrl mnemonics work.
+  You might expect them to work on their own&mdash;after all, they do for modal
+  dialogs&mdash;but no. There's TranslateMDISysAccel for MDI accelerators, like
+  Ctrl-F6 for Next Window and Shift-F5 for Cascade. Oh, and I almost forgot&mdash;if
+  you want to do idle processing, better call PeekMessage, not GetMessage. </p>
+<p align="left">Windows有很多这样的woodoo函数用来转换消息，你不需要明白原因，只需要按照他们告诉你的来做。你用IsDialogMessage处理modeless dialog，</p>
+<p align="left">以便tab，ctrl能工作。你可能希望他们自己搞定-毕竟，他们为model dialog处理了-但是现实不是。你需要有TranslateMDISysAccel处理MDI加速键，像Ctrl-F6 for Next Window and Shift-F5 for
+  Cascade。哦，我忘了，你如果想做idle处理，你要用PeekMessage而不是GetMessage</p>
+<p align="left">&nbsp;</p>
+<p align="left">By the time you're finished with all the voodoo, your message pump is
+  even more complicated than the Windows version of "Hello,
+  world"!&nbsp;</p>
+<p align="left">当你完成所有voodoo后，你的消息泵会比windows版本的helloworld更加复杂<br />
+  Not
+  to worry. A few years pass, Bjarne Stroustrup is a household name, your
+  mother-in-law is writing Windows-based apps, and even Microsoft has a C++
+  compiler. Life is so easy all you have to do is press a button to generate
+  apps by the score. Message pumps go the way of the passenger pigeon.&nbsp;<br />
+  <br />
+  </p>
+<p align="left">不要担心，几年过去了，Bjarne
+  Stroustrup， 一个家庭主妇的名字。正在写windows程序，甚至MS有一个c++编译器了。生命如此简单，你所有需要做的就是按一下按钮来生成apps，不想要搞什么消息泵了</p>
+<p align="left">&nbsp;</p>
+<p align="left">But underneath all the object glitz, your Wizard-generated app still
+  trudges through the same old muck. You just don't see it, that's all. Buried
+  inside a function called CWinApp::Run is the mother-of-all-message-pumps. MFC
+  hides the voodoo, or at least repackages it in more palatable ways.&nbsp;</p>
+<p align="left">但是在所有东西下面，你的wizard geberator的程序仍旧做同样的old muck。你只是看不到而已，隐藏在了函数CWinApp::Run之下，作为所有消息泵的母亲。MFC隐藏了voodoo，至少重新打包成了可口的方式<br />
+  To
+  understand how it works, stop a moment to consider a hypothetical old-world
+  situation. You just finished your Acme App, complete with central loop in
+  WinMain. It's all debugged, shining brightly, waiting for shrink wrap.
+  Suddenly orders come from on high: you need an XYZ feature, which calls for a
+  modeless dialog box. You race to the keyboard. Tap-tappity-tap-tap and . . .
+  the dialog is running. Except the Tab key doesn't work. Shoot. After beating
+  your head a while, you realize you forgot your voodoo: you're supposed to
+  call IsDialogMessage from your main message loop in WinMain!&nbsp;</p>
+<p align="left">为了明白他是如何工作的，听一下，想一想古老的世界的情形。你刚写完你的Acme程序，完成了WinMain里面的中心loop。都已经debug完了，闪闪发光，等待着你来压缩。突然高层命令来了。<br />
+  你需要xyz功能，它需要调用一个modeless dialog。你冲向键盘开始敲起来。。。程序跑起来了，但是tab还不工作。nnd，你意识到你忘记了你的voodoo，你需要支持IsDialogMessage！</p>
+<p align="left">If you think there's something wrong with this picture, you win the
+  grand prize. This is not the way life should be, folks! Objects should
+  implement their own behavior! It's bad enough you have to call some weirdo
+  function, but puh-lease, don't make WinMain do it! That's like operating on
+  your shoulder to fix your kidneys.&nbsp;</p>
+<p align="left">如果你觉得这样是有问题的，那你赢了。生命不应该这样。object应该完成他们自己的行为，不应该要做一些很奇怪的函数，不要让winmain做他！那就像搞你的肩膀来治疗你的肾病</p>
+<p align="left"><br />
+  MFC
+  corrects this situation by letting windows do their own message translation.
+  In MFC, the dialog, not WinMain, calls IsDialogMessage. How does it work? To
+  understand, let's start with MFC's version of the message pump. It starts in
+  CWinApp::Run.</p>
+<p align="left">Mfc纠正了这个问题，他通过让窗口完成他们自己的消息转换。在mfc里，dialog，而不是winmain，调用IsDialogMessage。他是怎么做的呢？为了理解，我们看看mfc的消息泵</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;int CWinApp::Run()</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  for (;;) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  while (!::PeekMessage(&amp;m_msgCur,...)) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  if (!OnIdle(...))&nbsp;&nbsp;&nbsp; // do some
+  idle work</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // I have a message, or else no idle work to do: // pump it</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  if (!PumpMessage())</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  break;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return ExitInstance();</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p>If there are
+  no messages waiting, MFC calls OnIdle, which you can override to do something
+  useful like calculate twin primes in your spare time. Just make sure you call
+  CWinApp::OnIdle at the end or you'll be in deep doodoo. If there are no
+  messages, or no more idle work to do, CWinApp calls PumpMessage, which does
+  the Get/Translate/Dispatch schtick, just like in the old days:</p>
+<p>如果没有消息，mfc调用onidle，你可以重载来做有用的事情比如计算twin
+  primes。只需要保证在最后面要调用CWinApp::OnIdle，否则你会在deep doodo里面。如果没有消息或者没有idle
+  work，cwinapp调用pumpMessage，这个函数Get/Translate/Dispatch的事情</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p>&nbsp;</p>
+<p>&nbsp;BOOL
+  CWinApp::PumpMessage()</p>
+<p>&nbsp;{</p>
+<p>&nbsp;&bull;</p>
+<p>&nbsp;&bull;</p>
+<p>&nbsp;&bull;</p>
+<p>&nbsp;&nbsp;&nbsp; if
+  (!::GetMessage(&amp;m_msgCur,...)) {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+  FALSE;</p>
+<p>&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp; if
+  (!PreTranslateMessage(&amp;m_msgCur)) {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ::TranslateMessage(&amp;m_msgCur);</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ::DispatchMessage(&amp;m_msgCur);</p>
+<p>&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp; return TRUE;</p>
+<p>&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p>Look
+  familiar? Except for PreTranslateMessage. That's a new virtual function. The
+  default implementation for CWinApp walks the window hierarchy starting with
+  the window that sent the message, up through its parent and grandparents, all
+  the way up to the topmost window, calling CWnd::PreTranslateMessage for each
+  one.</p>
+<p>看起来很熟悉？除了PreTranslateMessage。那是一个新的虚函数。默认的实现是遍历window hierarchy，从发送消息的窗口开始，直到他的parent和grandparents，直到最上层窗口。对每个窗口调用CWnd::PreTranslateMessage</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p>&nbsp;</p>
+<p>&nbsp;BOOL
+  CWinApp::PreTranslateMessage(MSG* pMsg)</p>
+<p>&nbsp;{</p>
+<p>&nbsp;&nbsp;&nbsp; for (pWnd =
+  /* window that sent msg */; pWnd; pWnd=pWnd-&gt;getParent())</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if
+  (pWnd-&gt;PreTranslateMessage(pMsg))</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+  TRUE;</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp; if (pMainWnd
+  = /* main frame and it's not one of the parents */)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if
+  (pMainWnd-&gt;PreTranslateMessage(pMsg))</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return
+  TRUE;</p>
+<p>&nbsp;</p>
+<p>&nbsp;&nbsp;&nbsp; return
+  FALSE;&nbsp; // not handled</p>
+<p>&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p>&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p>That's
+  right, there's PreTranslateMessage for CWinApp and PreTranslateMessage for
+  CWnd. Now windows can translate messages. When one does, it returns TRUE all
+  the way up the stack. Message received. Next, please. The flow is illustrated
+  in&nbsp;<strong>Figure 2</strong>.<br />
+  就是这样，CWinApp和cwnd各自有PreTranslateMessage</p>
+<p>现在窗口可以转换消息了，当一个做了之后他返回true一路网上</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 2 The Message Pump</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">It may make your head spin, but this translation tango is actually
+  pretty slick because now that dialog problem is tidily dispatched (ahem).
+  Take a look at how MFC implements PreTranslateMessage for dialogs:</p>
+<p align="left">这可能让你头都大了，但是这个转换非常漂亮因为现在dialog问题解决了</p>
+<p align="left">看看mfc如何为dialog实现PreTranslateMessage</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CDialog::PreTranslateMessage(MSG* pMsg)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;
+  if (pMsg-&gt;message &gt;= WM_KEYFIRST &amp;&amp; // for performance</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  pMsg-&gt;message &lt;= WM_KEYLAST)</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  // maybe translate dialog key</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return ::IsDialogMessage(m_hWnd, pMsg);</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;
+  return FALSE;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">It makes a lot more sense to translate dialog messages in the dialog
+  class instead of CWinApp, don't you think? CWinApp doesn't know a dialog from
+  a hole in the wall. Of course, ::IsDialogMessage is technically only required
+  for modeless dialogs, but PreTranslateMessage doesn't get called for modal
+  dialogs because when you call DoModal, Windows starts another message loop
+  and control doesn't return until the dialog is over. But the really wonderful
+  thing is you never have to worry about ::IsDialogMessage again! In fact, you
+  can just forget it exists: any dialog you write inherits the goodness from CDialog,
+  even if you add it in a flurry of haste at the last minute. If you've never
+  programmed without MFC, you've probably never even heard of IsDialogMessage.
+  And a good thing, too!&nbsp;</p>
+<p align="left">这样在dialog而不是cwinapp里面转换dialog明显合理多了。你觉得呢？cwinapp根本不知道dialog。当然，IsDialogMessage技术上只适用于modeless dialog，但是对于model dialog，PreTranslateMessage不会调用到，因为当你调用domodel的时候，windows开始了另个message loop，控制权直到dialog关掉之后才会返回。但是真正伟大的事情是你再也不用担心IsDialogMessage了。事实上，你可以忘了他的存在，任何从cdialog集成的dialog，即使你匆忙的在最后一分钟添加。如果你一直用mfc，你可能从未听说过IsDialogMessage</p>
+<p align="left"><br />
+  Likewise,
+  since the frame window owns the menus, it makes sense for it to handle
+  accelerators. And so it does. When you create the frame in your app's
+  InitInstance function, it loads the accelerator table with whatever ID you
+  used to define the document template, usually IDR_ MAINFRAME or
+  IDR_MYDOCTYPE. CFrameWnd stores the table in m_hAccel, which
+  CFrameWnd::PreTranslateMessage passes to ::TranslateAccelerator, magically
+  translating your accelerators without you having to lift so much as a finger.
+  (Well, you have to lift your finger to press the key, but that's all.) One
+  interesting tidbit I discovered writing this article is that CFrameWnd first
+  tries to get the accelerator table from CDocument::GetDefaultAccelerator. In
+  other words, if you want document-specific accelerators, all you have to do
+  is override this virtual function. (In older versions of MFC it's called
+  GetDefaultAccel.) It's amazing the things you discover when you start poking
+  around.</p>
+<p align="left">类似的，由于frame窗口拥有菜单，理所当然他要处理加速键。事实上也是这样。当你在Init Instance函数里面创建frame时候，他会架子啊加速键表，改表定义了document
+  template，如IDR_ MAINFRAME or IDR_MYDOCTYPE。CFrameWnd吧这个表奥存在m_hAccel。CFrameWnd::PreTranslateMessag把他传给TranslateAccelerator，很魔术师的。另一个有趣的事情是我发现CFrameWnd首先会试图用CDocument::GetDefaultAccelerator火的加速剪标。换句话说，如果你想要文档相关的加速剪标，你只需要重载这个虚函数！</p>
+<p align="left"><br />
+  &nbsp;<strong>Figure
+  3</strong>&nbsp;shows how various MFC classes implement PreTranslateMessage. MFC
+  handles about 99.9 percent of the situations you're likely to run into, so
+  you can mostly forget about PreTranslateMessage. This month's C/C++ Q&amp;A
+  gives an example of the other 0.1 percent.<br />
+  Oh,
+  one more thing. In 32-bit versions of MFC, you can replace CWinApp with
+  CWinThread everywhere in the preceding discussion. There's CWinThread::Run,
+  CWinThread::OnIdle, CWinThread::PumpMessage, and CWinThread::PreTranslateMessage.
+  I'd have mentioned it straight away, but I didn't want to give you a heart
+  attack so early in the story. In multitaskingland, each thread has its own
+  message pump, and an app is just a specialization of a thread. So most MFC
+  functions that were in CWinApp have migrated to CWinThread, from which
+  CWinApp is now derived.</p>
+<p align="left">&nbsp;</p>
+<p align="left">图3显示各种各样的mfc class如何实现PreTranslateMessage的， mfc处理了99%的情形，所以你完全可以忘了他。这个月的c qa举例子另外的1%<br />
+  另外一件事情是，32位的mfc，你可以认为cwinapp、和wcinthread一样。比如有CWinThread::Run, CWinThread::OnIdle, CWinThread::PumpMessage, and
+  CWinThread::PreTranslateMessage。</p>
+<p>我直接讲出来先，但我不想这么快讲（？？）。在多task的情况下，每个线程有自己的消息泵，一个程序只是一个线程的特化。因此大多数cwinapp的mfc函数迁移到了cwinthread，而cwinapp从他继承</p>
+<p>&nbsp;</p>
+<p align="left"><strong>One Framework, One Window Proc</strong>&nbsp;<br />
+  Most
+  messages are never translated. PreTranslateMessage returns FALSE all the way
+  up the line and CWinApp::PumpMessage calls ::DispatchMessage, which is a kind
+  of Windows wormhole. Your message disappears inside, then magically reappears
+  in your window procedure (see<strong>Figure 4</strong>).&nbsp;<br />
+  大多数消息从未被翻译。PreTranslateMessage会返回false，从而::DispatchMessage会被调用，这是windows的黑洞。你的消息从中消失，然后魔术般的重新再你的windoiws过程中出现</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 4 Window Message Routing</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">You know the window proc. It's that big function you wrote in the old
+  days, the one with the giant switch statement that fills pages and pages,
+  defying even the most determined compiler's efforts at optimization. A lot
+  fewer people do that stuff these days. In MFC, window procs are gone. Well,
+  not really gone, but hidden. Replaced by MFC's universal window procedure,
+  AfxWndProc. How can one window proc work for all windows? Easy. It does
+  nothing application-specific.</p>
+<p align="left">你知道windows过程，他是在以前你需要写的一个大函数，有着巨大的switch语句。现在很少人这样做了。mfc里面，windows过程消失了。好吧，不是真的消失了。而是被mfc的统一的过程AfxWndProc代替了。一个windows 过程怎样为所有窗口工作呢？很简单，他没有做任何appl specific的事事情</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;LRESULT</p>
+<p align="left">&nbsp;AfxWndProc(HWND hWnd, UINT nMsg, WPARAM
+  wParam, LPARAM lParam)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // minor details omitted</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CWnd* pWnd = CWnd::FromHandlePermanent(hWnd);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return AfxCallWndProc(pWnd, hWnd, nMsg, wParam,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lParam);</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">CWnd::FromHandlePermanent looks up the HWND in map and retrieves the
+  CWnd associated with it. With CWnd in hand, action flows to AfxCallWndProc,
+  the MFC analog of ::CallWindowProc.</p>
+<p align="left">CWnd::FromHandlePermanent查找hwnd map，找到对应的cwnd。利用cwnd，流程跑向AfxCallWndProc</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;LRESULT AFXAPI</p>
+<p align="left">&nbsp;AfxCallWndProc(CWnd* pWnd,HWND hWnd,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; UINT nMsg,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; WPARAM wParam,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LPARAM lParam)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // Save message params in a</p>
+<p align="left">&nbsp;&bull;//&nbsp;
+  state variable</p>
+<p align="left">&nbsp;&nbsp;
+  LRESULT lResult = pWnd-&gt;</p>
+<p align="left">WindowProc(nMsg, wParam, lParam);</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return lResult;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">AfxCallWndProc calls WindowProc. Instead of passing an HWND to a C
+  window procedure, MFC calls a CWnd virtual WindowProc function. So all that's
+  been accomplished is to convert C into C++-. But oh, what an accomplishment
+  that is! Because WindowProc is virtual!</p>
+<p align="left">AfxCallWndProc调用wndowsproc。mfc调用了cwnd的虚函数WindowProc，而不是传递hwnd到c的windows过程。所以所有的完成的就是从c编导c++。但是，这是多大的进步啊，因为windowproc是虚函数！</p>
+<p align="left"><br />
+  CWnd::WindowProc
+  is, as its name implies, the C++ equivalent of the window procedure. It's
+  where messages are handled. Because it's virtual, different window classes
+  can implement WindowProc differently. C++ virtual functions (aka
+  polymorphism) are what make AfxWndProc work for all windows.&nbsp;<br />
+  You
+  all know CWnd::WindowProc is not the place where you normally handle
+  messages, but you should understand that you can handle messages here if you
+  need to. WindowProc is the first stop on the message highway, the first CWnd
+  function to see a message when it arrives. If you're porting a C program, you
+  can more or less copy your entire window-proc-with-the-giant-switch-statement
+  to CMainFrame::WindowProc, change "hwnd" to "m_hWnd,"
+  clean up a few details, and everything should work. Just don't tell anyone.
+  And definitely don't tell them you learned it from me!<br />
+  CWnd::WindowProc顾名思义，c++的windows 过程。他就是消息处理的地方。因为他是虚函数。不同的window clsss可以用不同的方式实现。</p>
+<p align="left">你知道CWnd::WindowProc不是我们一般处理消息的地方，但你应该明白如果需要，你可以在这里处理消息。WindowProc是消息高速路上的第一站。如果你在移植c程序，你可以或多或少的把整个windows proc拷贝到CMainFrame::WindowProc。</p>
+<p align="left">&nbsp;</p>
+<p align="left"><strong>One Ringie-Dingie, Two Ringie-Dingie</strong>&nbsp;<br />
+  As
+  everyone knows, the proper way to handle messages is through message maps.
+  Where do message maps come in? CWnd::WindowProc does it. First, it checks to
+  see if the message is WM_COMMAND or WM_NOTIFY. If so, the message takes a
+  fork that I'll describe later. All other messages stay on the main road and
+  get dispatched via your window's message map. CWnd::WindowProc acts like a
+  central switchboard, directing messages right and left to the proper handler
+  functions.<br />
+  <br />
+  </p>
+<p>每个人都知道，正确的处理消息的方法是通过消息map。消息map从哪里来？CWnd::WindowProc。首先，他检查消息是否WM_COMMAND or
+  WM_NOTIFY.如果是。。。否则，所有其他消息继续呗你的windows map分发。CWnd::WindowProc作为中央交换机，把消息分发到不同的处理函数</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 5 Message Maps</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">Message maps are tables that associate WM_XXX message IDs with C++
+  virtual functions (see&nbsp;<strong>Figure 5</strong>). WM_SIZE goes to OnSize.
+  WM_CLOSE goes to OnClose. And so on. The details are hidden behind the
+  familiar macros DECLARE_MESSAGE_MAP, BEGIN_MESSAGE_MAP, END_MESSAGE_MAP, and
+  all those ON_WM_WHOZAMACALLIT macros. If you peek under the covers, you won't
+  find anything magical, just some disgusting code. DECLARE_MESSAGE_MAP
+  declares a few variables, and, most importantly, the function GetMessageMap.
+  Here, let me put on my preprocessor hat and show you. This is what I see:</p>
+<p align="left">消息map是一些表格，吧WM_XXX消息和C++ virtual functions联系起来。WM_SIZE goes to OnSize. WM_CLOSE goes to OnClose等等。细节隐藏在DECLARE_MESSAGE_MAP, BEGIN_MESSAGE_MAP,
+  END_MESSAGE_MAP, and all those ON_WM_WHOZAMACALLIT之类的macro中。这些东西都很直接，DECLARE_MESSAGE_MAP声明了一变量，更重要的是函数GetMessageMap</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;class CMyFrame : public CFrameWnd {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  DECLARE_MESSAGE_MAP()</p>
+<p align="left">&nbsp;};</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BEGIN_MESSAGE_MAP(CMyFrame, CFrameWnd)</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // entries</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;END_MESSAGE_MAP()</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">And this is what I spit out:</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;class CMyFrame : public CFrameWnd {</p>
+<p align="left">&nbsp;private:</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  static const AFX_MSGMAP_ENTRY _messageEntries[];</p>
+<p align="left">&nbsp;protected:</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  static AFX_DATA const AFX_MSGMAP messageMap;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  virtual const AFX_MSGMAP* GetMessageMap() const;</p>
+<p align="left">&nbsp;};</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;// BEGIN_MESSAGE_MAP</p>
+<p align="left">&nbsp;const AFX_MSGMAP* CMyFrame::GetMessageMap()
+  const</p>
+<p align="left">&nbsp;{
+  return &amp;CMyFrame::messageMap; }</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;const AFX_MSGMAP CMyFrame::messageMap = {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  &amp;CFrameWnd::messageMap,&nbsp;&nbsp; //
+  base class's message map</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  &amp;CMyFrame::_messageEntries[0] // this class's entries</p>
+<p align="left">&nbsp;};</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;const AFX_MSGMAP_ENTRY
+  CMyFrame::_messageEntries[] = {</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // entries</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;// END_MESSAGE_MAP:</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  {0, 0, 0, 0, 0, 0 }</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">AFX_MSGMAP contains just two members: a
+  pointer to the base class's message map and one to the actual entries.</p>
+<p align="left">AFX_MSGMAP包含两个成语，一个指针指向基类的消息map，一个指向真正的map</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;struct AFX_MSGMAP {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  const AFX_MSGMAP* pBaseMap;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  const AFX_MSGMAP_ENTRY* lpEntries;</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">The base map pointer provides a way to walk the inheritance chain,
+  effectively implementing inheritance for message maps. Derived classes
+  automatically inherit any messages handled by their base. If you link with
+  the DLL version of MFC (_AFXDLL defined), pBaseMap is actually a pointer to a
+  function that returns the base map, not the base map itself, but that's an
+  implementation detail. The entries themselves look like this:</p>
+<p align="left">Base map指针提供了一种方式来遍历继承链，从而有效的实现了消息map的继承。派生类自动继承了基类处理的消息。如果你连接dll版本的mfc，pBaseMap其实是一个指针函数，它返回的事base map，而不是base map自身</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;struct AFX_MSGMAP_ENTRY {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT nMessage;&nbsp;&nbsp; // windows
+  message</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT nCode;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // control code
+  or WM_NOTIFY code</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT nID;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // control ID
+  (or 0 for windows</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // messages)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT nLastID;&nbsp;&nbsp;&nbsp; // used for
+  entries specifying a</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // range of control id's</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT nSig;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // signature
+  type (action) or</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // pointer to message #</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AFX_PMSG pfn;&nbsp;&nbsp;&nbsp; // routine to
+  call (or special</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // value)</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">Each entry maps a particular Windows message, including control ID and
+  notification code (such as EN_CHANGED or CBN_DROPDOWN) if any, to a
+  CmdTarget-derived member function (AFX_PMSG). The nCode and nID fields are
+  new in 32-bit MFC. They support ON_NOTIFY and ON_COMMAND_RANGE. Each
+  ON_WM_WHATEVER macro initializes an entry for the WM_WHATEVER message. For
+  example, ON_WM_CREATE expands like this:</p>
+<p align="left">每一项map到一个特别的windows消息，包括空间id，通知码，一个CmdTarget继承的成员函数，ncode和nid是32位mfc新加的，他们支持ON_NOTIFY and ON_COMMAND_RANGE</p>
+<p align="left">比如ON_WM_CREATE展开如下</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;{
+  WM_CREATE, 0, 0, 0, AfxSig_is,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  (AFX_PMSG)(AFX_PMSGW)(int (CWnd::*)(LPCREATESTRUCT))OnCreate },</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">At first glance, it looks like something
+  off the Rosetta Stone. WM_CREATE is obvious: that's the message ID, that's
+  how CWnd::WindowProc knows to use this entry when WM_CREATE happens. The
+  zeroes are there because child notification and command IDs don't apply. The
+  three ugly casts make sure your OnCreate function has the right signature. In
+  other words, they make the macro type-safe. Not all macros have the function
+  name hardwired. ON_MESSAGE(msg, mbrfn) expands like this:</p>
+<p align="left">第一眼，看起来像走下神坛。WM_CREATE很直接，消息id，CWnd::WindowProc直到如何使用这个entry。0是因为通知码和消息id没用，三个很丑的cast用来确保oncreate有正确的签名。换句话，他使macro类型安全。不是所有macro都对应硬编码的函数。ON_MESSAGE(msg, mbrfn)展开如下</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;{
+  msg, 0, 0, 0, AfxSig_lwl,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  (AFX_PMSG)(AFX_PMSGW)(LRESULT (CWnd::*)(WPARAM, LPARAM))mbrfn },</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">You can use whatever member function you
+  like for ON_MESSAGE, but it must take WPARAM and LPARAM and return LRESULT.
+  If you try to pass any other kind of function, C++ will have a
+  conniption.&nbsp;<br />
+  The
+  only remaining mystery is the funny-looking AfxSig_xxx symbols. To understand
+  what they're for, stop a moment to consider how CWnd knows which arguments
+  should be passed to your handler function. In AFX_MSGMAP_ENTRY, every
+  function is declared as AFX_PMSG, which is a pointer to a CCmdTarget member
+  function that takes no arguments and returns void.</p>
+<p align="left">你可以用任意你喜欢的成员函数来给ON_MESSAGE，但是必须要带有WPARAM and LPARAM参数并且返回LRESULT。如果你传了其他类型函数，c++回报做</p>
+<p>唯一保留的秘密是有趣的AfxSig_xxx符号。为了明白他们，休息一下考虑cwnd如何知道那个参数应该给你的handle函数。在AFX_MSGMAP_ENTRY，每个函数声明为AFX_PMSG，他使指向CCmdTarget的成员函数，不需要参数</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;typedef void (CCmdTarget::*AFX_PMSG)(void);</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">So how can the dispatch code pass
+  arguments to your handler functions? That's where the AfxSig (signature)
+  codes come in. Here's how WindowProc actually calls your function once it's
+  found the right message map entry.</p>
+<p align="left">分发码如何传递参数到你的handle函数呢？那就是AfxSig？？这里是WindowProc如何调用你的函数的代码</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;LRESULT CWnd::WindowProc(UINT nMsg, WPARAM
+  wParam, LPARAM lParam)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;const AFX_MSGMAP_ENTRY* lpEntry = // (entry
+  for this</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //&nbsp; message)</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;union MessageMapFunctions mmf; // described
+  below ptr</p>
+<p align="left">&nbsp;mmf.pfn = lpEntry-&gt;pfn;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // to your virtual function</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;switch (lpEntry-&gt;nSig) {</p>
+<p align="left">&nbsp;case AfxSig_is:</p>
+<p align="left">&nbsp;&nbsp;
+  return (this-&gt;*mmf.pfn_is)((LPTSTR)lParam);</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;case AfxSig_lwl:</p>
+<p align="left">&nbsp;&nbsp;
+  return (this-&gt;*mmf.pfn_lwl)(wParam, lParam);</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // etc</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">AfxSig_is means the function takes a
+  string (s) and returns an int (i). AfxSig_lwl means it takes a WORD and LONG,
+  and returns a LONG (lwl). And so on. AFXMSG_.H defines a zillion or so
+  different signatures&mdash;well, actually there are 55.</p>
+<p align="left">AfxSig_is表示函数参数为字串返回int。AfxSig_lwl表示参数为word和long，返回long。AFXMSG_.H定义了55个这样的函数</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;enum AfxSig {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_end = 0, // [marks end of message map]</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_bD,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // BOOL (CDC*)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_bb,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // BOOL (BOOL)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_bWww,&nbsp;&nbsp;&nbsp; // BOOL (CWnd*,
+  UINT, UINT)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_hDWw,&nbsp;&nbsp;&nbsp; // HBRUSH (CDC*,
+  CWnd*, UINT)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_iwWw,&nbsp;&nbsp;&nbsp; // int (UINT,
+  CWnd*, UINT)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_iWww,&nbsp;&nbsp;&nbsp; // int (CWnd*,
+  UINT, UINT)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_is,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // int (LPTSTR)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AfxSig_lwl,&nbsp;&nbsp;&nbsp;&nbsp; // LRESULT
+  (WPARAM, LPARAM)</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">You get the idea. That "union
+  MessageMapFunctions mmf" you saw in WindowProc is a bit of grotesquery
+  used to "cast" the function without casting it:</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;union MessageMapFunctions</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  AFX_PMSG pfn;&nbsp;&nbsp; // generic
+  member function pointer</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  // specific type safe variants</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  BOOL&nbsp;&nbsp;&nbsp; (CWnd::*pfn_bD)(CDC*);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  BOOL&nbsp;&nbsp;&nbsp; (CWnd::*pfn_bb)(BOOL);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  BOOL&nbsp;&nbsp;&nbsp; (CWnd::*pfn_bWww)(CWnd*,
+  UINT, UINT);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  HBRUSH&nbsp; (CWnd::*pfn_hDWw)(CDC*,
+  CWnd*, UINT);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  int&nbsp;&nbsp;&nbsp;&nbsp; (CWnd::*pfn_iwWw)(UINT,
+  CWnd*, UINT);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  int&nbsp;&nbsp;&nbsp;&nbsp; (CWnd::*pfn_iWww)(CWnd*,
+  UINT, UINT);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  int&nbsp;&nbsp;&nbsp;&nbsp; (CWnd::*pfn_is)(LPTSTR);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  LRESULT (CWnd::*pfn_lwl)(WPARAM, LPARAM);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  &bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  &bull; // etc, for each AfxSig code</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  &bull;</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">There's only one real function (pfn),
+  but depending how you access it through the union, pfn_is is a
+  string-returning-int function, pfn_lwl is word-and-long-returning-long and so
+  on. What's pretty on the outside is sometimes ghastly on the inside.
+  Fortunately, you don't have to look. I only showed you so you wouldn't think
+  I was hiding anything, and so you can count your blessings you never have to
+  write code like that.<br />
+  Having
+  said that, now let me tell you how you might use this stuff if you're the
+  masochistic type. Say you have some messages of your own. WM_RUN_FOR_CONGRESS
+  and WM_KICK_THE_BUMS_OUT. The first takes a pointer to a
+  CCongressionalDistrict; the second, a pointer to a CListOfBums. The easiest
+  way to handle these is to use ON_MESSAGE and do old-world casting:</p>
+<p align="left">下面是如何处理你自定义的消息</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BEGN_MESSAGE_MAP(...)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  ON_MESSAGE(WM_RUN_FOR_CONGRESS, OnRunForCongress)</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;END_MESSAGE_MAP()</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;LRESULT OnRunForCongress(WPARAM wp, LPARAM,
+  lp)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CCongressionalDistrict* pCd = (CCongressionalDistrict*)lp;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">But say you're writing a library. Maybe even an MFC extension library.
+  You don't want to make programmers remember that LPARAM is the district. Or
+  maybe your fastidiousness exceeds that of Felix Unger. You don't want to use
+  ON_MESSAGE and put disgusting casts in your code. You want
+  ON_WM_RUN_FOR_CONGRESS and ON_WM_KICK_THE_BUMS_OUT, so programmers can use
+  macros in their message maps. Ok, just do it.&nbsp;<br />
+  "But
+  what AfxSig code should I use?" Why, AfxSig_is, of course.
+  String-returning-int. Because it doesn't matter, a pointer-to-string is the
+  same as a pointer-to-CCongressionalDistrict is the same as a
+  pointer-to-anything when it comes to pushing it on the stack. One address,
+  four bytes. (I'm assuming FAR pointers or Win32&reg;.) Take a closer look at the expansion for ON_WM_CREATE: it uses
+  AfxSig_is too! So here's your macro:</p>
+<p align="left">如果你写的是lib，你不想用户记住LPARAM表示区域，你可以这样</p>
+<p align="left">下面是你自己定义macro来让用户更加易用</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;#define ON_WM_RUN_FOR_CONGRESS() \</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  { WM_RUN_FOR_CONGRESS, 0, 0, 0, AfxSig_is, (AFX_PMSG)(AFX_PMSGW) \</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  (int (CWnd::*)(CCongressionalDistrict*))OnRunForCongress },</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BEGIN_MESSAGE_MAP(...)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  ON_WM_RUN_FOR_CONGRESS()</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;END_MESSAGE_MAP()</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;// Returns int to agree with AfxSig_is.</p>
+<p align="left">&nbsp;int OnRunForCongress(CCongressionalDistrict*
+  pCd)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  pCd-&gt;RunForHouse();</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  pCd-&gt;RunForSenate();</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return 0;&nbsp;&nbsp; // mission
+  accomplished</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">If you want other parameters, chances are you can find a suitable AfxSig_xxx
+  code. But like I said, for most purposes there's no need to go to such
+  extremes; ON_MESSAGE works just fine.<br />
+  如果你要其他参数，你需要看看有没有合适的AfxSig_xxx码。但我说，大多情况不需要这样极端，ON_MESSAGE已经足够</p>
+<p align="left"><strong>What, No Handler?</strong>&nbsp;<br />
+  If
+  there's no entry in the message map, WindowProc calls CWnd::DefWindowProc,
+  which as you'd expect is the C++ analogue of ::DefWindowProc, the Windows
+  default message procedure. The CWnd version passes the message to the
+  original window proc, the one the window had before MFC subclassed it, which
+  in fact might very well be ::DefWindowProc! Or it might be the default proc
+  for an edit control or MDI child window. The point is, that's it. That's the
+  end of this message, it's been processed, control returns all the way back,
+  back, back out of AfxWndProc, pops through the wormhole, and
+  ::DispatchMessage returns. Done. Finis. The End. Next, please.<br />
+  The
+  other way control can end up in CWnd::DefWindowProc is via one of the default
+  CWnd::OnFooMumbleBletch implementations. When you handle a message, you
+  frequently do something special, then call the base class.</p>
+<p align="left">如果没有合适的entry，会调用CWnd::DefWindowProc</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;CMyWnd::OnFooMumbleBletch()</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CWnd::OnFooMumbleBletch();</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">The base implementations go like this.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;// (From AFXWIN2.INL)</p>
+<p align="left">&nbsp;inline void CWnd::OnSize(UINT, int, int) {
+  Default(); }</p>
+<p align="left">&nbsp;inline void CWnd::OnSetFocus(CWnd*)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { Default(); }</p>
+<p align="left">&nbsp;inline BOOL CWnd::OnNcActivate(BOOL)</p>
+<p align="left">&nbsp;
+  // return (BOOL)Default(); }</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // etc</p>
+<p align="left">&nbsp;&bull;</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">Default() does the same thing as DefWindowProc, the only difference
+  being that Default requires no arguments (msg, wParam, lParam) because it
+  gets them from the state structure where AfxCallWndProc saved them. Remember?<br />
+  In
+  case you're wondering, you've eaten about half the elephant now. You may want
+  to eat some TUMS.<br />
+  Default()和DefWindowProc一样。唯一的区别是他不需要参数。因为他会从以保存的状态获取，该状态是被AfxCallWndProc保存的</p>
+<p align="left">&nbsp;</p>
+<p align="left"><strong>The Evil WM_COMMAND</strong>&nbsp;<br />
+  I
+  mentioned that CWnd::WindowProc sends WM_COMMAND messages down a different
+  fork along the message routing interstate. It's time to explore that path.<br />
+  WM_COMMAND
+  is an unfortunately overloaded message. Windows sends it whenever the user
+  invokes a command, either through the menu or an accelerator key. WPARAM
+  tells which. But controls also use WM_ COMMAND to send notifications, for
+  example when a button sends BN_CLICKED or an edit control sends EN_ CHANGED.
+  When this happens, the control's HWND, notification code, and ID are packed
+  like sardines into WPARAM and LPARAM, leaving no room for additional
+  information. How they're packed depends on whether you're using 16-bit
+  Windows or Win32.</p>
+<p align="left">WM_COMMAND是一个重载的函数</p>
+<p align="left"><br />
+  Overloading
+  WM_COMMAND like this has one nice benefit: pressing a button looks to your
+  app much like invoking a menu command. But conceptually, they're entirely
+  different events. A command means "do something," whereas a control
+  notification means "something happened." Newer versions of Windows,
+  such as Windows&reg;&nbsp;for
+  Workgroups 3.11 and versions of Win32 that use the new common controls,
+  introduce a new message, WM_NOTIFY, that attempts to separate these events.
+  WM_NOTIFY is a generalized control notification. Instead of packing WPARAM
+  and LPARAM up the wazoo, LPARAM contains a pointer to a struct.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;struct NMHDR {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  HWND hwndFrom;&nbsp;&nbsp;&nbsp;&nbsp; // control
+  that sent notification</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT idFrom;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // ID of
+  control</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  UINT code;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+  notification code</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">NMHDR is intended to be used as the
+  basic header to which specific controls can append additional information.
+  For example, the common Tool Tip control passes a notification struct like
+  this:</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;struct TOOLTIPTEXT {&nbsp; // In C++, you can derive from NMHDR</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  NMHDR hdr;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // standard
+  header</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  LPSTR lpszText;&nbsp;&nbsp; // tip text or
+  LPSTR_CALLBACK</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  char szText[80];&nbsp; // tip text</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  HINSTANCE hinst;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  UINT uFlags;</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">The details of TOOLTIPTEXT and NMHDR are
+  unimportant. The main point is, there are two kinds of events: menu commands
+  and control notifications. WM_NOTIFY is always a notification, but WM_COMMAND
+  is sometimes a command, sometimes a notification. CWnd::WindowProc handles
+  both events specially, sending them to&nbsp;<strong>Figure 6</strong>&nbsp;of my
+  elephant map.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 6 WM_COMMAND and WM_NOTIFY Message Flow</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;LRESULT CWnd::WindowProc(UINT msg, WPARAM
+  wp, LPARAM lp)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  // special case for commands</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (msg = = WM_COMMAND)&nbsp; {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  if (OnCommand(wp, lp))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return 1L; // command handled</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  else</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return DefWindowProc(msg, wp, lp);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  // special case for notifies</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (msg = = WM_NOTIFY) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  LRESULT lResult = 0;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  NMHDR* pNMHDR = (NMHDR*)lp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  if (pNMHDR-&gt;hwndFrom != NULL &amp;&amp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OnNotify(wp, lp,
+  &amp;lResult))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return lResult; // command handled</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  else</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return DefWindowProc(msg, wp, lp);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">If WindowProc is the first stop on the message processing highway,
+  OnCommand is the first stop on a major fork for all WM_COMMAND messages. If
+  you can't or don't want to use message maps to handle a particular command,
+  you can override OnCommand. Two common reasons for doing this are when the
+  command or control ID is a run-time variable, not a #define symbol or if you
+  want to trap a range of commands in one fell swoop in 16-bit MFC, which
+  doesn't support ON_COMMAND_RANGE.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;CMyFrameWnd::OnCommand(WPARAM wp, LPARAM lp)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;
+if (wp= =m_nPrintCommandID)&nbsp; // ID
+stored in data member</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+OnPrint();</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;
+else if (ID_FOO_FIRST&lt;=wp &amp;&amp; wp&lt;=ID_FOO_LAST)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+// Handle range of IDs</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+OnFooCommands(wp, lp);</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+return CFrameWnd::OnCommand(wp, lp);</p>
+<p align="left">&nbsp;}</p>
+<p align="center">&nbsp;</p>
+<p align="left">These are convenient applications for OnCommand, but the real reasons for
+handling commands and notifications specially are more fundamental: to give
+controls a chance to handle their own notifications and to let nonwindow
+objects process them.<br />
+<br />
+</p>
+<p align="left"><strong>Child Knows Best</strong>&nbsp;<br />
+How
+many times have I said it? Objects should implement their own behavior! This
+applies to controls. Controls emit notifications whenever something interesting
+happens, like when the user changes the contents of an edit control or clicks
+the drop-down button on a combo box. Notification is nice, but often it makes
+more sense for controls to handle their own notifications.&nbsp;<br />
+Say
+you have a combo box in your dance choreography application that displays a list
+of mambo figures, which you generate on-the-fly when the user presses the
+drop-down button. The normal way of doing things in Windows is to make the
+dialog handle the ON_CBN_DROPDOWN notification and fill the combo box. Yuck!
+What if you want to use your combo box in another dialog? It's not reusable!
+Unless you adhere to the copy-and-paste school of reusability: copy-and-paste
+the code from one dialog to another.<br />
+Why
+do that when you can create a nice self-contained combo box that handles its
+own CBN_DROPDOWN? All you have to do is override OnChildNotify. MFC calls this
+virtual function whenever the parent receives a notification from a child
+window.</p>
+<p>我说了多少次了，对象应该实现他们自己的行为！着同样适用于控件。控件每当发生了什么感兴趣的事情就会发出通知，比如用户改变edit内容，点击combobox的下拉按钮。通知很好，但要控件处理他们自己的通知更合理</p>
+<p>比如你有一个combobox，显示xxx显示内容是动态生成的。一般做法是叫dialog处理ON_CBN_DROPDOWN通知然后填上combobox。那如果你想在另外一个dialog里面如何使用这个combobox？不重用！</p>
+<p>为什么不能创建一个字包含的combobox，他处理自己的CBN_DROPDOWN？你需要做的只是重载OnChildNotify，mfc每当父亲收到子窗口的通知后就会调用这个虚函数</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CWnd::OnCommand(WPARAM wParam, LPARAM
+lParam)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;//
+if WM_COMMAND is really a child notification:</p>
+<p align="left">&nbsp;if
+(pChild-&gt;OnChildNotify(message, wParam, lParam, pLResult))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+return TRUE;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;}</p>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">CWnd::OnNotify does the same thing.
+  OnCommand and OnNotify give children first crack at their own notifications.
+  So you can write your combo box like this: </p>
+<p align="left">OnCommand and OnNotify给了孩子机会首先检查他们自己的通知，你的combobox可以如下</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CMamboCombo::OnChildNotify(UINT msg,
+  WPARAM wp, LPARAM lp,LRESULT* pResult)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (msg= =WM_COMMAND) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  int nCode = // extract notification code, depends</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // on Win version</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  if (nCode= =CBN_DROPDOWN) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // fill combo box</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return FALSE;&nbsp; // Pass to parent
+  dialog</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return CComboBox::OnChildNotify(msg, wp, lp, pResult);</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">Now CMamboCombo is entirely
+  self-contained. Whether you return TRUE or FALSE is up to you. It seems
+  better to return FALSE, so dialogs can still know the drop-down button was
+  pressed if they want to. It's up to you.<br />
+  Like
+  PreTranslateMessage, OnChildNotify corrects the architecturally challenged
+  design of Windows. MFC uses it for other messages too. MFC directs the
+  owner-draw messages (WM_COMPAREITEM, WM_MEASUREITEM, WM_DRAWITEM,
+  WM_DELETEITEM) back at the controls that sent them, so they can draw
+  themselves instead of having the parent window do it. In fact, that's the
+  only reason the LPRESULT* argument is required for OnChildNotify:
+  WM_COMPAREITEM is one of the few Windows messages that uses the return code
+  to indicate something significant: positive, negative, or zero to indicate
+  the result of the comparison.&nbsp;<br />
+  <br />
+  </p>
+<p align="left"><strong>Mother of All Targets</strong>&nbsp;<br />
+  So
+  much for children. The major, and I mean major, reason for handling commands
+  differently from other messages is so nonwindow objects can get them. You all
+  know documents can handle commands&mdash;just put ON_ COMMAND in your document's
+  message map. But it may never have occurred to you that this isn't something
+  built into Windows! It's a feature of the MFC document/view architecture.<br />
+  In
+  fact, come to think of it, how come documents even have message maps? Because
+  CDocument is derived from CCmdTarget, the root of all classes that can have
+  message maps and thus handle commands. CDocument, CWnd, CWinApp (or CWinThread),
+  and CDocTemplate are all derived from CCmdTarget, whose only role in life is
+  to provide a common base for these "command targets."</p>
+<p>处理command和其他消息不同的主要原因是：非窗口对象可以收到他们！比如documents</p>
+<p>事实上，为什么document有消息map？这是因为documen从ccmdtarget继承</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;CObject</p>
+<p align="left">&nbsp;&nbsp;
+  CCmdTarget</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  CWnd</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  CWinThread&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // (Win32 only)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  CWinApp</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  CDocTemplate</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  CDocument</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">And the heart of CCmdTarget is
+  CCmdTarget::OnCmdMsg, the next major major stop on the command route. If the
+  child doesn't handle the notification, or if the message wasn't a
+  notification at all, but a command, OnCommand calls OnCmdMsg. OnNotify
+  behaves similarly.</p>
+<p align="left">他的心脏就是CCmdTarget::OnCmdMsg，是command路由中的第二站<br />
+  CCmdTarget::OnCmdMsg
+  is yet another virtual function. It's the command target analog of
+  WindowProc: the function that does the actual dispatching. But only for
+  commands and notifications. WindowProc is a CWnd function that dispatches
+  window messages; OnCmdMsg is a CCmdTarget function that dispatches commands
+  and notifications. OnCmdMsg only handles message map entries generated by the
+  macros in&nbsp;<strong>Figure 7</strong>. It looks in the message map for an entry
+  whose ID and nCode (in the case of a notification) match the ones for
+  WM_COMMAND or WM_NOTIFY. If it finds one, it calls that function. I won't
+  bore you with the details, it's exactly the same AfxSig unpleasantness that
+  goes on in WindowProc.&nbsp;<br />
+  But
+  wait a minute. That still doesn't explain how documents get commands!
+  WindowProc calls OnCommand calls OnCmdMsg&mdash;but the object doing the calling is
+  still whichever CWnd got the command. How do documents get commands? Well, I
+  only told you what CCmdTarget::OnCmdMsg does. Don't forget OnCmdMsg is
+  virtual. Other classes can do other things. In particular, CFrameWnd
+  overrides CCmdMsg to pass commands to views and the application object.</p>
+<p align="left">那么document如何受到command呢？是因为CFrameWnd重载了CCmdMsg从而把command传给view和其他object</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CFrameWnd::OnCmdMsg(...)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (pActiveView-&gt;OnCmdMsg(...))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return TRUE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // handled by
+  view</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (CWnd::OnCmdMsg(...))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return TRUE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // handled by
+  me</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (pApp-&gt;OnCmdMsg(...))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return TRUE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // handled by
+  app</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return FALSE;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // not
+  handled</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left"><strong>Figure 8</strong>&nbsp;illustrates
+  this. And can you guess what CView:: OnCmdMsg does? That's right, it calls
+  its document's OnCmdMsg function! So commands are not automatically routed to
+  all the CCmdTargets in the world, only the active view, document, frame and
+  application. And only because CFrameWnd makes it so.&nbsp;<br />
+  <br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 8 Document/View Command Routing</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">So far, all the routing I've been talking about takes place within a
+  single window (or its children, for OnChildNotify). Not until CFrameWnd gets
+  involved does anything get routed outside the window. This explains one of
+  the common mysteries I mentioned at the outset: how come sometimes when you
+  add a child window, the menu items are grayed even though you have ON_COMMAND
+  handlers in your child window's message map? The answer: because the child
+  window isn't automatically hooked up to the interstate system. The only
+  objects that get main frame commands automatically are the active view,
+  document, frame and application. If you want your arbitrary CGizmoWnd nonview
+  child window to handle main frame commands, you've gotta hook it up yourself!
+  Don't worry, it's easy.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CMyView::OnCmdMsg(...)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (CMyView::OnCmdMsg(...))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return TRUE;&nbsp;&nbsp; // handled by
+  view/doc</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return m_wndGizmo.OnCmdMsg(...); // pass to gizmo</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 100%;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td width="100%">
+<p align="left">Or you might want to give the gizmo
+  first crack. Either way, it's up to you to call OnCmdMsg for any CCmdTarget
+  you want to receive commands. Before you start wondering why MFC doesn't do
+  that, consider that calling OnCmdMsg for every CCmdTarget in the universe is
+  not only expensive, it doesn't really make sense. The document/view
+  architecture is one model, the one MFC supports. You're perfectly free to
+  implement other designs, but you have to do a little typing to make things
+  work.<br />
+  There's
+  one legitimate complaint, however: there's no way for new objects to hook
+  themselves up to the routing mechanism. The app, frame, window, or some other
+  container must explicitly call OnCmdMsg for the new objects. It would be nice
+  to have a way of registering new command targets with the application, say
+  CWinApp::RegisterCmdTarget, so new command targets could hook themselves up
+  to the command highway without requiring their parents or other
+  supra-entities to participate. Then your gizmo control could hook itself up.
+  No need to modify CMainFrame:: OnCmdMsg. Maybe one of our friends in Redmond
+  will read this and add it to the next release of MFC.&nbsp;<br />
+  <br />
+  </p>
+<p align="left"><strong>Ooey GUI</strong>&nbsp;<br />
+  We're
+  almost finished; you should be feeling quite stuffed. In case you hadn't
+  noticed, I've covered the first two elephant chunks: getting/translating
+  messages and processing them. There's just one more piece left to digest,
+  user interface objects. Once again, I'll begin with a history lesson.<br />
+  Millennia
+  ago, shortly after the wheel was invented, but before the advent of HDTV,
+  hominids had problems initializing menus in their Windows-based apps. They
+  wanted to gray their menu items when commands were unavailable, instead of
+  dropping a stone on the user's head. The big question was whether you should
+  maintain menus in real time, enabling and disabling them as your program's
+  state changes or whether you should gray them on demand, when it's time to
+  display the menu.<br />
+  Neanderthals
+  chose the continuous-update approach while Cro-Magnons opted for
+  do-it-on-demand. This not only explains why Neanderthals became extinct, it
+  accounts for WM_INITMENUPOPUP. Windows sends this message when the user
+  clicks a menu, just before the menu is drawn. You can enable and disable
+  items, set checks and radio buttons, change text, whatever you like. This
+  represented a great technological advance, on a par with toilet paper. But
+  the code still lived in that big switch statement, along with all the other
+  message-handling code fragments. That meant your program's entire state had
+  to be accessible from the window proc. Fortunately, they'd already invented
+  globals.&nbsp;<br />
+  Then
+  C++ and MFC came along and our friends in Redmond screamed, "No, no, no!
+  That's not the way to do it! Each menu item is really a little user interface
+  object! Anybody who wants to should be able to turn it on or off!" Thus
+  was born CCmdUI. These little doohickeys get passed around the cocktail party
+  like hors d'oeuvres. Any command target can take one. Whichever object you
+  decide knows best what the state of a particular menu item should be can
+  enable, disable, check, uncheck, or otherwise update it. If File Save is
+  enabled only when the document has been modified, then the document should do
+  the enabling/disabling of that command. If views are the place to gray Window
+  Split, then by all means do it there. If CBeanCounter knows how many beans to
+  display in the bean pane, it can do the displaying.<br />
+  MFC
+  implements this goodness by piggybacking on the general command routing
+  system. Once you have that command highway up and running, it's no big deal
+  to send a special message across the interstate. CN_UPDATE_COMMAND_UI is the
+  message. It goes to all the OnCmdMsg functions, just like WM_COMMAND. Only
+  instead of WPARAM and LPARAM, MFC cooks up a thing called a CCmdUI and passes
+  a pointer to it. ON_UPDATE_COMMAND_UI sticks a CN_UPDATE_COMMAND_UI handler
+  in your message map, and voil&agrave;, the UI object winds up at your doorstep.
+  There are only two complicating details: first, CCmdUI objects comes in
+  several flavors for updating menu items, controls, toolbar buttons, and
+  status bar panes. Second, CN_UPDATE_ COMMAND_UI messages originate in several
+  places.<br />
+  I'll
+  start with the first one, since that's the easy part. The base CCmdUI class
+  is used for menu items or controls. It stores a pointer to menu or window,
+  and has virtual functions to change the underlying object's state.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;class CCmdUI {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CMenu* m_pMenu;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // if a
+  menu</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CWnd*&nbsp; m_pOther;&nbsp;&nbsp;&nbsp;&nbsp; // if a window</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;public:</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  virtual void Enable(BOOL bOn = TRUE);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  virtual void SetCheck(int nCheck = 1);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  virtual void SetRadio(BOOL bOn = TRUE);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  virtual void SetText(LPCTSTR lpszText);</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  void DoUpdate(CCmdTarget* pTarget,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; BOOL bDisableIfNoHndler);</p>
+<p align="left">&nbsp;};</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">SetText ends up calling either ModifyMenu or SetWindowText, depending on
+  whether m_pMenu or m_pOther is set. Likewise, CCmdUI::Enable calls
+  EnableMenuItem or EnableWindow. Derived variants CStatusCmdUI and CToolCmdUI
+  are used for status bar panes and toolbar buttons. CStatusCmdUI::SetText
+  calls SetPaneText; CToolCmdUI::SetText does nothing, since toolbar buttons
+  are bitmap buttons, which have no text. You get the idea. The point is, MFC
+  uses different CCmdUI classes to represent different kinds of user interface
+  objects. Polymorphism working to serve you.&nbsp;<br />
+  As
+  for when CN_UPDATE_COMMAND_UI gets sent, well, if you're thinking
+  WM_INITMENUPOPUP, you're on the right track. When CFrameWnd gets
+  WM_INITMENUPOPUP, it creates a CCmdUI object, initializes it successively to
+  each menu item in the menu, and calls DoUpate for each one. The details are a
+  bit tedious, but the basic idea goes like this:</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;void CFrameWnd::OnInitMenuPopup(CMenu*
+  pMenu, UINT, BOOL bSysMenu)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;
+  // Reader's Digest version</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CCmdUI ui;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  ui.m_nIndexMax = pMenu-&gt;GetMenuItemCount();</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  for (ui.m_nIndex = 0; ui.m_nIndex &lt; ui.m_nIndexMax; ui.m_nIndex++)
+  {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ui.m_nID = pMenu-&gt;GetMenuItemID(ui.m_nIndex);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  ui.DoUpdate(this, m_bAutoMenuEnable);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">I'm glossing over some details because I
+  want to focus on CCmdUI::DoUpdate. This is the function that sends the CN_UPDATE_COMMAND_UI
+  message on its merry way.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;void CCmdUI::DoUpdate(CCmdTarget* pTarget,
+  BOOL bDisableIfNoHndler)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  pTarget-&gt;OnCmdMsg(m_nID, CN_UPDATE_COMMAND_UI, this, NULL)</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">The first argument, pTarget, is the
+  command target, the one whose OnCmdMsg is called and whose message map is
+  used to dispatch the message. Usually it's the main frame window, so the
+  message goes to the active view, document, frame window, and
+  application.&nbsp;<br />
+  The
+  second argument is a flag that indicates whether the object should be
+  disabled if there's no handler for it. CFrameWnd passes m_bAutoMenuEnable,
+  which is TRUE by default. You may have noticed that MFC automatically grays
+  menu items for commands that have no handlers. If you add File-&gt;Barf to your
+  menu but don't add a handler for ID_FILE_BARF, the command is disabled. This
+  is where it happens.&nbsp;<br />
+  How
+  does DoUpate know if the command has a handler or not? That's one of the
+  details I omitted. DoUpdate sends a CN_COMMAND code to OnCmdMsg, exactly as
+  if it were going to execute the command, only it passes a little struct,
+  AFX_CMDHANDLERINFO. The presence of this structure tells OnCmdMsg not to
+  actually do the command, just indicate what function it'd use if it did.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;struct AFX_CMDHANDLERINFO</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CCmdTarget* pTarget;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // command target</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  void (CCmdTarget::*pmf)(void);&nbsp;&nbsp;
+  // message map</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //
+  function</p>
+<p align="left">&nbsp;};</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CCmdTarget::OnCmdMsg(UINT nID, int
+  nCode, void* pExtra,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; AFX_CMDHANDLERINFO*
+  pHandlerInfo)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (pHandlerInfo != NULL)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // just fill in the information, don't do the</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // command (actually happens in</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  // CCmdTarget::DispatchCmdMsg)</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  pHandlerInfo-&gt;pTarget = this;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  pHandlerInfo-&gt;pmf = mmf.pfn;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return TRUE;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">If OnCmdMsg comes back FALSE, nothing handled the command. So if you
+  ever want to know if a particular command or notification is handled, and by
+  what object, just create an AFX_CMDHANDLERINFO object on the stack and pass
+  it to OnCmdMsg (along with the command ID and notification code, of course).
+  If it comes back TRUE, something handles the command and you can look at AFX_
+  CMDHANDLERINFO to see what.<br />
+  The
+  idea behind automatic disabling is that as different kinds of views and/or
+  frames become active (and thus different message maps come into play), the
+  commands that have no handlers are automatically disabled. This is a nice
+  feature, and handles one whole category of menu enabling/disabling without
+  your having to write a line of code. But sometimes you're writing a shell of
+  a program that you want to use to demo the UI before everything is
+  implemented. Then the automatic graying can be a pain. The best way to enable
+  menu items is to write stub handlers for them. You can write a generic
+  OnNotImplemented function and hook it to every command. But if you're lazy,
+  or don't want to rely on programmers remembering to use OnNotImplemented, a
+  quick way to disable the disabling is to set m_bAutoMenuEnable = FALSE in
+  your frame window constructor.<br />
+  So
+  much for menus. What about status bar panes and toolbar buttons? When your
+  app or thread is just hanging around doing nothing, CWinThread::OnIdle sends
+  WM_IDLEUPDATECMDUI to the main window and all its descendants. This
+  MFC-specific message is every item's cue to update itself. CToolBar and
+  CStatusBar catch it and update their buttons and panes. If you need to know
+  the details, read the source.<br />
+  There's
+  one more function you need to know about before calling it quits:
+  CWnd::UpdateDialogControls. This function updates all the controls in a
+  window (usually a dialog) by sending CN_UPDATE_ COMMAND_UI to each one.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;void</p>
+<p align="left">&nbsp;CWnd::UpdateDialogControls(CCmdTarget*</p>
+<p align="left">&nbsp;&nbsp;
+  pTarget, BOOL bDisableIfNoHndler)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&bull;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  CCmdUI ui;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  for (pCtrl = /* each child</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; control in "this" */) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  ui.m_pOther = pCtrl;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  // it's a window, not a menu</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  ui.m_nID=pCtrl-GetDlgCtrlID();</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;
+  ui.DoUpdate(pTarget,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bDisableIfNoHndler);</p>
+<p align="left">&nbsp; &nbsp;&nbsp;}</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">This function lets you use the ON_
+  UPDATE_COMMAND_UI mechanism for dialogs. You can code your dialog's message
+  map and handler functions as you would for a frame or view, then call
+  UpdateDialogControls to update the buttons. For pTarget, you should pass the
+  command target whose message map contains the handlers, usually the dialog
+  itself or perhaps your main frame. You must call UpdateDialogControls
+  whenever you want to do the update. For modeless dialogs, you could do it
+  whenever your frame gets WM_IDLEUPDATECMDUI, but this won't work for modal
+  dialogs because your message pump is suspended during a modal dialog. For
+  modal dialogs, it's usually easier to call UpdateDialogControls whenever
+  something happens that you know might affect the state of the controls (sort
+  of an improved version of the old Neanderthal approach). You could also do it
+  when the parent window gets WM_ENTERIDLE, which Windows sends whenever your
+  modal dialog goes idle.&nbsp;<br />
+  <br />
+  </p>
+<p align="left"><strong>CMDLEARN</strong>&nbsp;<br />
+  Whew!
+  That's plenty of theory to grok in one day.<strong>Figure 9</strong>&nbsp;shows the
+  Grand Unified Theory of message and command routing, a considerable
+  improvement over<strong>Figure 1</strong>. Now it's time to write some code!<br />
+  <br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 9 Figure 1 Revised</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">CMDLEARN is an ordinary old doc/view app that displays information about
+  files.&nbsp;<strong>Figure 10</strong>&nbsp;shows it in action with three files open.
+  But the real purpose of CMDLEARN isn't to show information about
+  files&mdash;CMDLEARN is a multipurpose command routing demo program with three main
+  features.&nbsp;<br />
+  <br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 10 CMDLEARN</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">First, CMDLEARN traces all calls to WindowProc, OnCommand, and OnCmdMsg
+  for windows and command targets. Its tracing is way better than the
+  unreadable stuff MFC gives you. Second, CMDLEARN pulls a few command routing
+  tricks. It routes WM_TIMER messages to all the open documents in the form of
+  a command, and it routes commands to a new CCmdTarget. Finally, CMDLEARN
+  contains a dialog with a special combo box that reroutes button messages to
+  itself to create a self-contained combo-box-with-add-and-delete-buttons.<br />
+  When
+  you run CMDLEARN, it dumps a whole bunch of stuff to a file called TRACE.OUT.
+  I used a file instead of debug output because CMDLEARN generates a ton of
+  diagnostics and also to avoid requiring the debugger. Instead of displaying
+  the kind of unformatted gobbledygook only an assembly language hacker could
+  read, which is what you get with MFC's command and message tracing, CMDLEARN
+  generates pretty output like&nbsp;<strong>Figure 11</strong>. It knows about MFC's
+  private WM_XXX messages and standard ID_MUMBLE commands, as well as
+  CMDLEARN's own commands like ID_TRACE_MSG. You can run CMDLEARN, invoke some
+  commands, and examine the output to see what happened.&nbsp;<br />
+  &nbsp;<strong>Figure
+  11</strong>&nbsp;is a fragment of a trace that shows what happens when I did File
+  Open in CMDLEARN. I've added running play-by-play in the form of C++-style
+  comments. It should make everything I've been talking about a little more
+  clear.&nbsp;<strong>Figure 12</strong>&nbsp;is another trace fragment that shows the
+  tool bar buttons and status bar panes getting updated as a result of a
+  WM_IDLEUPDATECMDUI message. These traces were generated with message tracing
+  off, so you don't see zillions of WM_XXXs traveling all over the place.<br />
+  CMsgTracer
+  writes the file. It also implements its own command and command update
+  handlers for trace messages and trace commands. For this to work, the
+  application class CApp routes commands to the one-and-only-one instance of
+  CMsgTracer.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;BOOL CApp::OnCmdMsg(UINT nID, int nCode,</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void* pExtra,
+  AFX_CMDHANDLERINFO* pHandlerInfo)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (TWinApp::OnCmdMsg(nID, nCode, pExtra, pHandlerInfo))</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  return TRUE;&nbsp;&nbsp;&nbsp;&nbsp; // handled by
+  doc/view/frame/app</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  // Not handled by doc/view: pass to tracer</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  return theTracer.OnCmdMsg(nID, nCode, pExtra, pHandlerInfo);</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">The intercepting of WindowProc, OnCommand, and OnCmdMsg is done using
+  template classes. For details, read the sidebar entitled "Born Again
+  Templates."&nbsp;<br />
+  My
+  specification for CMDLEARN called for its views to update themselves
+  continually. Rather than setting a timer for each view (I'd run out of timers
+  pretty quick), CMDLEARN sets one timer in the main window. Then, whenever the
+  clock ticks, CMainFrame sends a command to all its documents.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;void CMainFrame::OnTimer(UINT nIDEvent)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (nIDEvent = = ID_UPDATE_STATUS) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  CAppDocs alldocs;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  alldocs.SendCommand(ID_UPDATE_STATUS);</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">This effectively lets documents handle
+  WM_ TIMER. CAppDocs is a helper class I wrote that calls OnCmdMsg directly
+  for each open document. You might find it useful in your own apps. The main
+  point is to show how you can use OnCmdMsg as a general mechanism to send
+  messages to any command target. When a doc gets ID_ UPDATE_STATUS, it updates
+  itself. Only if something has changed does CFildDoc bother to update its
+  views. You can witness this feature in action by editing a file while it's
+  open in CMDLEARN: the file size and modification dates are updated to reflect
+  your changes. And if the file is deleted, the window automatically closes
+  with a little popping sound. (Try it!)<br />
+  Why
+  not just call OnUpdateStatus from the CMainFrame::OnTimer, instead of sending
+  a command? That would work, but it has a major drawback. It requires casting
+  CDocument* to CFileDoc*. In other words, the app must know that the document
+  is really a CFileDoc. This means you can't have other doc templates with
+  other doc classes, or if you do, you must make a provision for them. The
+  simplest way is to do what Windows does: just send a unique integer command
+  code, and any doc that wants to can handle it. Since all I wanted to do is to
+  tell the documents "update yourself," a command is all I needed.
+  Had I wanted to send more information, I'd have defined my own NMHDR class
+  and used CAppDocs::SendNotify.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;struct MyNMHDR : public NMHDR { // WM_NOTIFY
+  struct</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  LPCSTR&nbsp;&nbsp; whereBill; // Bill's
+  last known whereabouts</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  double&nbsp;&nbsp; worthBill; // Bill's
+  last known net worth</p>
+<p align="left">&nbsp;};</p>
+<p align="left">&nbsp;</p>
+<p align="left">&nbsp;void CMainFrame::OnTimer(UINT nIDEvent)</p>
+<p align="left">&nbsp;{</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  if (nIDEvent = = ID_UPDATE_STATUS) {</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  CAppDocs alldocs;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  MyNMHDR nmhdr;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  nmhdr.whereBill = "BurgerMaster";</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  nmhdr.worthBill = 8.3994e43;</p>
+<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  alldocs.SendNotify(0, ID_UPDATE_STATUS, &amp;nmhdr); // send info to
+  all docs</p>
+<p align="left">&nbsp;&nbsp;&nbsp;
+  }</p>
+<p align="left">&nbsp;}</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">Finally, CMDLEARN contains a dialog that actually does a bit of command
+  rerouting. This dialog was inspired by a reader, Jean-Louis Leroy, who wrote
+  asking if there were some way to make his list box handle button clicks,
+  instead of the dialog. He had a list box with First and Last buttons that
+  selected the first and last items and wanted to build a reusable list
+  box-with-buttons object.&nbsp;<br />
+  &nbsp;<strong>Figure
+  13</strong>&nbsp;shows my version of this. The dialog contains a combo box with
+  Add and Delete buttons. If you type some text in the edit box, the Add button
+  is enabled, and pressing it adds the text to the list. If an item is
+  selected, you can press Delete to delete it. If not, Delete is disabled. The
+  normal Windows way to implement this sort of thing is to put all the code in
+  the dialog. But as Jean-Louis observed, this is not reusable. If you want to
+  use the same combo box in another dialog, you have to copy and paste a lot of
+  code. That's gauche.&nbsp;<br />
+  <br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 13 ComboCombo</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">&nbsp;<strong>Figure 14</strong>&nbsp;shows how I implemented CComboCombo, a
+  self-contained combo box with Add and Delete buttons.&nbsp;<strong>Figure 15</strong>&nbsp;shows
+  the message flow.<br />
+  <br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>&nbsp;</td>
+
+
+ </tr>
+<tr>
+<td>
+<p align="left"><strong>Figure 15 Combo Box Message Flow</strong></p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="left">In CComboCombo, a new class, COwnedButton, represents the buttons.
+  COwnedButton overrides OnChildNotify to handle its own notifications (such as
+  BN_CLICKED): it sends them its owner window instead of its parent. A flag
+  prevents infinite recursion when the owner calls OnChildNotify again. I
+  could've created a new data member to store the owner, but it was expedient
+  and harmless to use MFC's m_hWndOwner. I didn't want to use SetParent,
+  because child windows are clipped by their parents and the buttons would
+  disappear.<br />
+  CComboCombo
+  contains two COwnedButtons, for Add and Delete. CComboCombo::SubclassControls
+  hooks everything up: it subclasses the combo box as well as the buttons, and
+  it assigns itself ownership of the buttons so the buttons send their
+  notifications to it. A dialog using CComboCombo must call SubclassControls
+  with the IDs of the combo box and both buttons.&nbsp;<br />
+  Once
+  CComboCombo hooks everything up, it calls UpdateButtons to update
+  (enable/disable) the dialog buttons. UpdateButtons is a helper function that
+  calls UpdateDialogControls for the parent dialog, using itself as the command
+  target&mdash;that is, its own message map&mdash;instead of the frame window or dialog.
+  CComboCombo calls UpdateButtons any time the buttons need updating, such as
+  after adding or deleting an item.<br />
+  CComboCombo
+  overrides its own OnChildNotify to handle a couple of notifications: when the
+  edit control changes (CBN_EDITCHANGE) or the selection changes
+  (CBN_SELCHANGE), the buttons need to be updated, so CComboCombo calls
+  UpdateButtons.<br />
+  CComboCombo
+  implements ON_ COMMAND_RANGE and ON_ UPDATE_COMMAND_UI_RANGE handlers for Add
+  and Delete. Since the IDs of these commands are not known until run time, the
+  range is 0 to 0xFFFF: in other words, all commands. The handlers look for IDs
+  equal to the IDs specified by SubclassControls.<br />
+  The
+  result of all this is an entirely self-contained class. To use CComboCombo,
+  all you have to do is include COMCOMBO.H, add a CComboCombo to your dialog,
+  and call CComboCombo::SubclassControls in OnInitDialog. See DLGCOMBO.H and
+  DLGCOMBO.CPP in the source code on any MSJ bulletin board. You can adopt the
+  CComboCombo approach any time you have a group of controls that you want to
+  act as a unit.<br />
+  Well,
+  that's it. Time to go. I hope you learned something besides what it's like to
+  eat elephant. If all this was too overwhelming, you might try reading MFC
+  Technical Note 6, "Message Maps," and 21, "Command and Message
+  Routing," as well as Bob Chiverton's C/C++ Q&amp;A column in the
+  November 1992 MSJ. If you understood everything, just go ahead and pronounce
+  yourself a Command Routing Guru. That and a buck twenty-five'll get you a
+  ride on the subway.<br />
+  </p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p align="center">&nbsp;</p>
+<div align="center">
+<table style="width: 181px;" border="1" cellspacing="0" cellpadding="0">
+<tbody>
+<tr>
+<td>
+<p align="center"><em>From the July 1995 issue of&nbsp;</em><a href="https://www.microsoft.com/msj/default.asp"><em>Microsoft Systems Journal</em></a><em>. Get it at your local newsstand, or better yet,&nbsp;</em><a href="https://www.microsoft.com/isapi/gomsdn.asp?TARGET=/msdnmag/subscribe.asp"><em>subscribe</em></a>.</p>
+
+
+  </td>
+
+
+ </tr>
+
+
+</tbody>
+
+</table>
+
+
+
+</div>
+<p>&nbsp;</p>

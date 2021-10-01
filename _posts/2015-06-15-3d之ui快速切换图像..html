@@ -1,0 +1,17 @@
+<p>Requirement</p>
+<p>canon相机continuous mode(Burst mode)&nbsp;抓图variation （230~320ms)</p>
+<p>&nbsp;</p>
+<p>1. python + opencv</p>
+<p>用cvWaitKey控制切换间隔(预期1s)，发现时间间隔会有 -30 ~ +90ms的variation</p>
+<p>分析：WaitKey里面会有消息循环，所以速度不可能很稳定。</p>
+<p>可行的方法是直接调用Bitblt之类的函数</p>
+<p>2. Qt</p>
+<p>linux下qt用啥函数呢？ (http://stackoverflow.com/questions/3384463/bitblt-in-qt4)</p>
+<p>有人说用&nbsp;</p>
+<p>&nbsp;</p>
+<pre class="lang-cpp prettyprint prettyprinted"><code><span class="typ">QPainter<span class="pln"> painter<span class="pun">(<span class="pln"> <span class="pun">&amp;<span class="pln">targetImage <span class="pun">);<span class="pln">
+
+painter<span class="pun">.<span class="pln">drawImage<span class="pun">(<span class="pln"> <span class="pun">...<span class="pln"> <span class="pun">);<br />QPainter&nbsp;p(widget);<br />p.drawPixmap(0,&nbsp;0,&nbsp;pm);<br /></span></span></span></span></span></span></span></span></span></span></span></span></span></span></span></code></pre>
+<p>&nbsp;</p>
+<p>俺照着</p>
+<pre>http://www.qtcentre.org/threads/6929-Any-fast-way(-lt-10ms)-to-display-640*480-QImage-on-QGraphicsScene试了一下，速度是够快， 但稳定型都有问题。<br />有时候会突然跳出一个很长时间的来<br /><br /><br /></pre>

@@ -1,0 +1,46 @@
+<P>k-d tree<BR></P>
+<P><BR></P>
+<P>Given a list of <I>n</I> points, the following <A title=Algorithm href="http://en.wikipedia.org/wiki/Algorithm">algorithm</A> will construct a balanced <I>k</I>d-tree containing those points.</P><PRE><B>function</B> kdtree (<I>list of points</I> pointList, <I>int</I> depth)
+{
+    <B>if</B> pointList <B>is empty</B>
+        <B>return</B> <B>nil</B>;
+    <B>else</B>
+    {
+        <I>// Select axis based on depth so that axis cycles through all valid values</I>
+        <B>var</B> <I>int</I> axis := depth <B>mod</B> k;
+
+        <I>// Sort point list and choose median as pivot element</I>
+        <B><A title="Selection algorithm" href="http://en.wikipedia.org/wiki/Selection_algorithm">select</A></B> median <B>from</B> pointList;
+
+        <I>// Create node and construct subtrees</I>
+        <B>var</B> <I>tree_node</I> node;
+        node.location := median;
+        node.leftChild := kdtree(points <B>in</B> pointList <B>before</B> median, depth+1);
+        node.rightChild := kdtree(points <B>in</B> pointList <B>after</B> median, depth+1);
+        <B>return</B> node;
+    }
+}
+<BR><BR>This algorithm implemented in the <A title="Python (programming language)" href="http://en.wikipedia.org/wiki/Python_%28programming_language%29">Python programming language</A> is as follows:</PRE>
+<DIV dir=ltr style="TEXT-ALIGN: left"><PRE class=source-python><SPAN class=kw1><STRONG><FONT color=#ff7700>class</FONT></STRONG></SPAN> Node:<SPAN class=kw1><STRONG><FONT color=#ff7700>pass</FONT></STRONG></SPAN>
+ 
+<SPAN class=kw1><STRONG><FONT color=#ff7700>def</FONT></STRONG></SPAN> kdtree<SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN>pointList, depth=<SPAN class=nu0><FONT color=#ff4500>0</FONT></SPAN><SPAN class=br0><FONT color=#66cc66>)</FONT></SPAN>:
+    <SPAN class=kw1><STRONG><FONT color=#ff7700>if</FONT></STRONG></SPAN> <SPAN class=kw1><STRONG><FONT color=#ff7700>not</FONT></STRONG></SPAN> pointList:
+        <SPAN class=kw1><STRONG><FONT color=#ff7700>return</FONT></STRONG></SPAN>
+ 
+    <SPAN class=co1><EM><FONT color=#808080># Select axis based on depth so that axis cycles through all valid values</FONT></EM></SPAN>
+    k = <SPAN class=kw2><FONT color=#008000>len</FONT></SPAN><SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN>pointList<SPAN class=br0><FONT color=#66cc66>[</FONT></SPAN><SPAN class=nu0><FONT color=#ff4500>0</FONT></SPAN><FONT color=#66cc66><SPAN class=br0>]</SPAN><SPAN class=br0>)</SPAN></FONT> <SPAN class=co1><EM><FONT color=#808080># assumes all points have the same dimension</FONT></EM></SPAN>
+    axis = depth % k
+ 
+    <SPAN class=co1><EM><FONT color=#808080># Sort point list and choose median as pivot element</FONT></EM></SPAN>
+    pointList.<SPAN class=me1>sort</SPAN><SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN><SPAN class=kw2><FONT color=#008000>cmp</FONT></SPAN>=<SPAN class=kw1><STRONG><FONT color=#ff7700>lambda</FONT></STRONG></SPAN> x,y:<SPAN class=kw2><FONT color=#008000>cmp</FONT></SPAN><SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN>x<SPAN class=br0><FONT color=#66cc66>[</FONT></SPAN>axis<SPAN class=br0><FONT color=#66cc66>]</FONT></SPAN>,y<SPAN class=br0><FONT color=#66cc66>[</FONT></SPAN>axis<FONT color=#66cc66><SPAN class=br0>]</SPAN><SPAN class=br0>)</SPAN><SPAN class=br0>)</SPAN></FONT>
+    median = <SPAN class=kw2><FONT color=#008000>len</FONT></SPAN><SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN>pointList<SPAN class=br0><FONT color=#66cc66>)</FONT></SPAN>/<SPAN class=nu0><FONT color=#ff4500>2</FONT></SPAN> <SPAN class=co1><EM><FONT color=#808080># choose median</FONT></EM></SPAN>
+ 
+    <SPAN class=co1><EM><FONT color=#808080># Create node and construct subtrees</FONT></EM></SPAN>
+    node = Node<FONT color=#66cc66><SPAN class=br0>(</SPAN><SPAN class=br0>)</SPAN></FONT>
+    node.<SPAN class=me1>location</SPAN> = pointList<SPAN class=br0><FONT color=#66cc66>[</FONT></SPAN>median<SPAN class=br0><FONT color=#66cc66>]</FONT></SPAN>
+    node.<SPAN class=me1>leftChild</SPAN> = kdtree<SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN>pointList<SPAN class=br0><FONT color=#66cc66>[</FONT></SPAN><SPAN class=nu0><FONT color=#ff4500>0</FONT></SPAN>:median<SPAN class=br0><FONT color=#66cc66>]</FONT></SPAN>, depth<SPAN class=nu0><FONT color=#ff4500>+1</FONT></SPAN><SPAN class=br0><FONT color=#66cc66>)</FONT></SPAN>
+    node.<SPAN class=me1>rightChild</SPAN> = kdtree<SPAN class=br0><FONT color=#66cc66>(</FONT></SPAN>pointList<SPAN class=br0><FONT color=#66cc66>[</FONT></SPAN>median<SPAN class=nu0><FONT color=#ff4500>+1</FONT></SPAN>:<SPAN class=br0><FONT color=#66cc66>]</FONT></SPAN>, depth<SPAN class=nu0><FONT color=#ff4500>+1</FONT></SPAN><SPAN class=br0><FONT color=#66cc66>)</FONT></SPAN>
+    <SPAN class=kw1><STRONG><FONT color=#ff7700>return</FONT></STRONG></SPAN> node
+example:<BR><BR><PRE>pointList = [(2,3), (5,4), (9,6), (4,7), (8,1), (7,2)]
+tree = kdtree(pointList)
+Balancing a kd-tree: <A href="http://en.wikipedia.org/wiki/Kd-tree">http://en.wikipedia.org/wiki/Kd-tree</A></PRE></PRE></DIV>

@@ -1,0 +1,73 @@
+<p>Finding:</p>
+<p>Thread 119:1f7c</p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://images2018.cnblogs.com/blog/23777/201803/23777-20180302175226505-1444604637.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://images2018.cnblogs.com/blog/23777/201803/23777-20180302175231882-502714735.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>Exception Code 0xE06D7363</p>
+<p>From <a href="https://support.microsoft.com/en-us/help/185294/prb-exception-code-0xe06d7363-when-calling-win32-seh-apis">https://support.microsoft.com/en-us/help/185294/prb-exception-code-0xe06d7363-when-calling-win32-seh-apis</a></p>
+<div>
+<p>This exception code will be used for any error that is raised by the Microsoft Visual C++ compiler through a call to "throw</p>
+</div>
+<p>From <a href="https://support.microsoft.com/en-us/help/313109/how-to-find-the-problem-exception-stack-when-you-receive-an-unhandlede">https://support.microsoft.com/en-us/help/313109/how-to-find-the-problem-exception-stack-when-you-receive-an-unhandlede</a> Step by step</p>
+<p>&nbsp;</p>
+<div>
+<p>0:119&gt; dd 0x3e43abbc</p>
+<p>3e43abbc&nbsp; <strong>3e43acbc 3e43acdc</strong> 77051288 00000001</p>
+<p>3e43abcc&nbsp; 0008e883 3e43abf4 770471b9 fffffffe</p>
+<p>3e43abdc&nbsp; 3e43ffc4 3e43acdc 3e43ac90 3e43b208</p>
+<p>3e43abec&nbsp; 770471cd 3e43ffc4 3e43aca4 7704718b</p>
+<p>3e43abfc&nbsp; 3e43acbc 3e43ffc4 3e43acdc 3e43ac90</p>
+<p>3e43ac0c&nbsp; 7701e0ed 00000000 3e43acbc 3e43ffc4</p>
+<p>3e43ac1c&nbsp; 7701f96f 3e43acbc 3e43ffc4 3e43acdc</p>
+<p>3e43ac2c&nbsp; 3e43ac90 7701e0ed 3e43b1b8 3e43acbc</p>
+<p>0:119&gt; dd <strong>3e43acbc</strong></p>
+<p>3e43acbc&nbsp; e06d7363 00000001 00000000 752bd36f</p>
+<p>3e43accc&nbsp; 00000003 19930520 3e43b1d4 7c047f0c</p>
+<p>3e43acdc&nbsp; 0001007f 00000000 00000000 00000000</p>
+<p>3e43acec&nbsp; 00000000 00000000 00000000 0000027f</p>
+<p>3e43acfc&nbsp; 00000129 0000ffff 1020961b 00000000</p>
+<p>3e43ad0c&nbsp; 3e43b1f0 00000000 00000000 00000000</p>
+<p>3e43ad1c&nbsp; 0000ffff 00000000 ffff0000 00000000</p>
+<p>3e43ad2c&nbsp; c0000000 0000ffff 00000000 ffffc000</p>
+<p>0:119&gt; u 752bd36f</p>
+<p>Loading symbols for 752b0000&nbsp;&nbsp; KERNELBASE.dll -&gt;&nbsp;&nbsp; KERNELBASE.dll</p>
+<p>*** ERROR: Symbol file could not be found.&nbsp; Defaulted to export symbols for KERNELBASE.dll -</p>
+<p>KERNELBASE!RaiseException+0x54:</p>
+<p>752bd36f c9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; leave</p>
+<p>752bd370 c21000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ret&nbsp;&nbsp;&nbsp;&nbsp; 10h</p>
+<p>752bd373 8945c0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; mov&nbsp;&nbsp;&nbsp;&nbsp; dword ptr [ebp-40h],eax</p>
+<p>752bd376 ebed&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; jmp&nbsp;&nbsp;&nbsp;&nbsp; KERNELBASE!RaiseException+0x4a (752bd365)</p>
+<p>752bd378 90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop</p>
+<p>752bd379 90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop</p>
+<p>752bd37a 90&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nop</p>
+<p>752bd37b 90&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;nop</p>
+<p>0:119&gt; .exr <strong>3e43acbc</strong></p>
+<p>ExceptionAddress: 752bd36f (KERNELBASE!RaiseException+0x00000054)</p>
+<p>&nbsp;&nbsp; ExceptionCode: e06d7363 (C++ EH exception)</p>
+<p>&nbsp; ExceptionFlags: 00000001</p>
+<p>NumberParameters: 3</p>
+<p>&nbsp;&nbsp; Parameter[0]: 19930520</p>
+<p>&nbsp;&nbsp; Parameter[1]: 3e43b1d4</p>
+<p>&nbsp;&nbsp; Parameter[2]: 7c047f0c</p>
+<p>&nbsp; pExceptionObject: 3e43b1d4</p>
+<p>&nbsp; _s_ThrowInfo&nbsp;&nbsp;&nbsp; : 7c047f0c</p>
+<p>&nbsp; Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : class __non_rtti_object</p>
+<p>&nbsp; Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : class bad_typeid</p>
+<p>&nbsp; Type&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; : class exception</p>
+<p>0:119&gt; .cxr 3e43acdc</p>
+<p>eax=3e43b128 ebx=3e43b208 ecx=00000003 edx=00000000 esi=7c03fdb4 edi=3e43b1b8</p>
+<p>eip=752bd36f esp=3e43b128 ebp=3e43b178 iopl=0&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nv up ei pl nz ac pe nc</p>
+<p>cs=001b&nbsp; ss=0023&nbsp; ds=0023&nbsp; es=0023&nbsp; fs=003b&nbsp; gs=0000&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; efl=00000216</p>
+<p>KERNELBASE!RaiseException+0x54:</p>
+<p>752bd36f c9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; leave</p>
+0:119&gt; kpn
+<p>&nbsp; *** Stack trace for last set context - .thread/.cxr resets it</p>
+<p>&nbsp;# ChildEBP RetAddr&nbsp;</p>
+<p>WARNING: Stack unwind information not available. Following frames may be wrong.</p>
+<p>00 3e43b178 7c01ba05 KERNELBASE!RaiseException+0x54</p>
+<p>01 3e43b1b8 7c01c20e MSVCR70!CxxThrowException+0x34</p>
+<p>02 3e43b218 052ab837 MSVCR70!_RTDynamicCast+0xdf</p>
+<p>03 3e43b230 04f18340 xxx!xxxshort wChID = 26679, unsigned long * pulStationID = 0x0f004c38, unsigned long * pulModuleID = 0x00000000)+0x27 [xxxi.c @ 76]----</p>
+</div>

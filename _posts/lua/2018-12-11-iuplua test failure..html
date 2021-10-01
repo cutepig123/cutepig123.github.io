@@ -1,0 +1,31 @@
+<p><strong>prepared&nbsp;<strong>SW&nbsp;</strong></strong></p>
+<p>Download from&nbsp;https://sourceforge.net/projects/iup</p>
+<p>zerobrane</p>
+<p>&nbsp;</p>
+<p><strong>Step</strong></p>
+<p>Write follwiing codes and run</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #ff00ff;">package.cpath</span> = <span style="color: #ff00ff;">package.cpath</span>.. <span style="color: #800000;">'</span><span style="color: #800000;">;G:/_codes/lua/iup/iup-3.25_Win32_dll15_lib/?.dll;G:/_codes/lua/iup/iup-3.25-Lua53_Win32_dll15_lib/?.dll</span><span style="color: #800000;">'</span>
+<span style="color: #ff00ff;">print</span>(<span style="color: #ff00ff;">package.cpath</span><span style="color: #000000;">)
+
+</span><span style="color: #ff00ff;">require</span>( <span style="color: #800000;">"</span><span style="color: #800000;">iuplua</span><span style="color: #800000;">"</span> )</pre>
+</div>
+<p>&nbsp;</p>
+<p>Test result fail! cannot understand why</p>
+<div class="cnblogs_code">
+<pre>Program starting as '"G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin\lua53.exe" -e "io.stdout:setvbuf('no')" "G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\myprograms\untitled.lua"'.
+Program 'lua53.exe' started in 'G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\myprograms' (pid: 9800).
+;G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin\?.dll;G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin\..\lib\lua\5.3\?.dll;G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin\loadall.dll;.\?.dll;G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin/?.dll;G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin/clibs53/?.dll;G:/_codes/lua/iup/iup-3.25_Win32_dll15_lib/?.dll;G:/_codes/lua/iup/iup-3.25-Lua53_Win32_dll15_lib/?.dll
+G:\_codes\lua\ZeroBraneStudioEduPack-1.40-win32\bin\lua53.exe: error loading module 'iuplua' from file 'G:/_codes/lua/iup/iup-3.25-Lua53_Win32_dll15_lib/iuplua.dll':
+	The specified module could not be found.
+
+
+stack traceback:
+	[C]: in ?
+	[C]: in function 'require'
+	...eroBraneStudioEduPack-1.40-win32\myprograms\untitled.lua:4: in main chunk
+	[C]: in ?
+Program completed in 0.11 seconds (pid: 9800).</pre>
+</div>
+<p>&nbsp;</p>

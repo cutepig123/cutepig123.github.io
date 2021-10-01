@@ -1,0 +1,619 @@
+<p>找最大重复字串</p>
+<p>http://www.chinaunix.net/jh/24/464277.html</p>
+<p>http://www.chinaunix.net 作者:bioinfor&nbsp; 发表于：2007-03-27 19:16:25 <br />
+【发表评论】【查看原文】【Shell讨论区】【关闭】&nbsp; </p>
+<p>1) Write a program to identify all the repetitive patterns in a string of <br />
+charaters (INPUT).&nbsp; The string is only composed of A,C,G,T characters.&nbsp; The <br />
+maximum length of string is 10000.&nbsp; The minimum length of repeat is 10 <br />
+characters.&nbsp;&nbsp; Output: position, size, and patterns.&nbsp; Here is an example: <br />
+1)写一个程序，识别字符串中所有的重复片段(重复模式)，字符串由A，C，G，T组成，字符串最长为10000，随机产生。重复的片段最小是10个符串。输出：位置，大小，和片段。如下： <br />
+String: <br />
+TAAAAACTCGGGGT AAAAACTCGGGGAAAA <br />
+Repeat: <br />
+Repeat: AAAAACTCGGGG, Size: 12, Start Positions: 2, 15 </p>
+<p>解释：如这就就有两个重复(空格格开了)：T&nbsp; AAAAACTCGGGG&nbsp; T AAAAACTCGGGG AAAA <br />
+这两个重复位置分别在字符串的2和15位，大小为12 </p>
+<p>&nbsp;</p>
+<p>2) Write a program to identify all the INVERTED repetitive patterns (e.g. <br />
+TAACCG =&gt; GCCAAT) in a string of character (INPUT).&nbsp; The string is only <br />
+composed of A,C,G,T characters.&nbsp; The maximum length of string is 10000.&nbsp; The <br />
+minimum length of repeat is 10 characters.&nbsp;&nbsp; Output: position, size, and <br />
+patterns.&nbsp;&nbsp; Here is an example: </p>
+<p>写一个程序识别所有的反向重复，如TAACCG =&gt; GCCAAT，也就是前面的反过来就是后面的字符串。和上面一样，字符串最长为10000，随机产生，最小反向重复片段为10，输出位置，大小，和片段，如下： <br />
+String: <br />
+CAAAAACGAGGGGTTTGGGGAGCAAAAA <br />
+Inverted Repeat: <br />
+Inverted Repeat: AAAAACGAGGGG, Size: 12, Start Positions: 17, 2 </p>
+<p>解释：如上面，C&nbsp; AAAAACGAGGGG&nbsp; TTT&nbsp;&nbsp; GGGGAGCAAAAA <br />
+AAAAACGAGGGG和GGGGAGCAAAAA分别是反向重复，分别在2和17位上，大小为12。<br />
+&nbsp;<br />
+&nbsp;<br />
+哈， 学生物的吧。 去 perl.com 有 total solution, 如 bioperl. </p>
+<p>或用 awk 自己写， 要讲效率的话， 还是 C 好。</p>
+<p>&nbsp;lightspeed 回复于：2004-12-12 12:26:33</p>
+<p>注意： 下面的例子中的 STR_MAX 及 STR_MIN 可根据需要设定。&nbsp; </p>
+<p>&nbsp;</p>
+<p>#!/bin/awk -f<br />
+#<br />
+# A script can be used to check any repeat pieces of nucleotide sequences.<br />
+#<br />
+# Design: lighspeed<br />
+# Date: Dec. 12, 2004<br />
+#<br />
+# Usage::&nbsp; $0 datafile<br />
+#<br />
+# Variables:<br />
+#<br />
+# left - a repeat string to be matched<br />
+# right - the right side string used to match any left in it <br />
+# rev_left - reverse string of left<br />
+# rev_right - the right side string used to match any rev_left in it<br />
+# flag[position] - an array element which will be set if the string in the position is matched<br />
+#</p>
+<p>{<br />
+&nbsp; L=length($0)<br />
+&nbsp; STR_MIN=10<br />
+#&nbsp; STR_MAX=int(L / 2)<br />
+&nbsp; STR_MAX=20<br />
+&nbsp; print "------------------- Line# "NR" --------------------\n"</p>
+<p>&nbsp; for ( Str_Len=STR_MIN; Str_Len &lt;= STR_MAX; Str_Len ++ ) {</p>
+<p>&nbsp;&nbsp;&nbsp; for ( i in flag )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delete flag</p>
+<p>&nbsp;&nbsp;&nbsp; for ( Position=1; Position &lt;= L - 2 * Str_Len + 1; Position ++ ) {</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( Position in flag )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count=0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pos=Position<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; offset=Position<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_offset=offset<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_count=0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_pos=""<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_left=""<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; left=substr($0,Position,Str_Len)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (index(left,"A")==0 || index(left,"C")==0 || index(left,"G")==0 || index(left,"T")==0 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; right=substr($0, Position + 1)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for ( i=length(left); i&gt;=1; i-- ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_left=rev_left""substr(left,i,1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_right=right</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ( Str_Len &lt;= length(right) ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i=index(right,left)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( i &gt; 0 ) {<br />
+&nbsp;&nbsp; count ++<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j=offset + i<br />
+&nbsp;&nbsp; pos=pos";"j<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flag[j]=1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; right=substr(right, i + 1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; offset+=i<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ( Str_Len &lt;= length(rev_right) ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i=index(rev_right,rev_left)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( i &gt; 0 ) {<br />
+&nbsp;&nbsp; rev_count ++<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j=rev_offset + i<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( rev_pos == "" ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp; rev_pos=j<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp; rev_pos=rev_pos";"j<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; flag[j]=1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_right=substr(rev_right, i + 1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_offset+=i<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (count &gt; 0 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; match_number[Str_Len] ++</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (rev_count &gt; 0 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; rev_number[Str_Len] ++</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (count &gt; 0 || rev_count &gt; 0) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print&nbsp; left, "Length="Str_Len, "Position="pos, (rev_count &gt;0) ? "Rev_Position="rev_pos : ""<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp; }<br />
+&nbsp; print ""<br />
+&nbsp; print "Summary of Line# "NR<br />
+&nbsp; print "------------------"<br />
+&nbsp;&nbsp; for ( i in match_number ) {<br />
+&nbsp;&nbsp;&nbsp; print "String length :: " i "&nbsp; Matched Strings :: " match_number<br />
+&nbsp;&nbsp;&nbsp; delete match_number<br />
+&nbsp; }<br />
+&nbsp; print ""<br />
+&nbsp; for ( i in rev_number ) {<br />
+&nbsp;&nbsp;&nbsp; print "String length :: " i "&nbsp; Matched Reverse Strings :: " rev_number<br />
+&nbsp;&nbsp;&nbsp; delete rev_number<br />
+&nbsp; }&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </p>
+<p>}<br />
+&nbsp;</p>
+<p>&nbsp;</p>
+<p><br />
+数据文件来自 DNA&nbsp; NCBI35 的片段。 处理成 10000 个字符的单行文件。 </p>
+<p><br />
+# cat datafile</p>
+<p>TAAAATGTGTAATCAACTAATACAAAGCAAGTTTTGTACTTTTTGTTGAATTTATTACTAAGTAT<br />
+TCTTTTTGATGCAATTGTAAGTAGAAATATTTATTTATTAAGAGATAGGGTCTTACTGTGTGGCC<br />
+CAGTATGGCCTTGAACTCCTGGGCTTAAGACATCCTCCTGCTGCAGCCTCCTGAGTAACTGAGAT<br />
+TACAGGTGTGCACCACCTCGCCTGGCTCAGAATGGTTTTCTTAACTTCATTTTTAGATTGTTCAC<br />
+TGTGAATATATCGAATTACAATAGTTTAGGCTGGGCATGGTGGCTCACGCCTGTAATCCTAGCAC<br />
+TTGGGGAGGCTGAGGTGGGTGGATAACTTGAGGCCAGGAGTTTCAGATCAGCCTGGCCATCACAG<br />
+AGAAACCTTGTCTTTACCAAAATCACAACAAATTAATTAGCTGGTTGTGGTGGTGCATGCTTGCA<br />
+ATCCCAGCTACTGGGGAGGCTGAGGTACGAGAATTACCTGAACCCAGGAGGTGGAGGTTGCAGTG<br />
+AACCGAGATAGTTCCACTGCACTCCAGCCTGGGCGACAGAACGGTTTTTGTATGCTTCAACCTTA<br />
+CTGAACTCATTTATTCATTCTGATATTTACTTTAGTGGATTCTGTATGATTTTCTATATGCAAGA<br />
+TGCTGTCATTTGCAAATAGAGATAGTTTTTCTTTTTTTGTTTCCAATCTGAATGTGTTTTATTTC<br />
+ATTTTCTTGCCTAATGCTCCTCATTAGTTTTCAATGTTGCATAGTATTTTATTGCATGGACGCAC<br />
+CATAATTACTTTTACCAATCTCTTATTGATGGACATGAAGGTTATTTCCAAACTCTTGTGGTTAT<br />
+AACAATGCTGTAATAGATAACCTATTACAAAGAACAGTTCTCAACTCTTTTGGTCTTGGGACTAC<br />
+TTTACCTATTTATGTATAAGTTTCAAGTTTGGGCTTAGAAAGAATTTAATAATCATGCTAATTTT<br />
+GTTTTGTTTTCTTTTTTTTTACTCCTGGACCCAAGCGGTCTTCCCACCTCAACCTCCCAAGTAGC<br />
+TGAGACTACAAGGGTGAACCATCACCCTGGGTAATTTTTAAATTGTTGGCTGGGCACAGTGGCTC<br />
+ACGCCTGTAATCCTAGCACTTTGGGAGGCTGAGACAGGCGGATTACCTGAGGTTGGGAGTTCAAG<br />
+ACCAGCCTGGCCAACATGGTGAAACCCTGTCTCTACTAAAAACACAAAAAATGAGCCAGGTGCAG<br />
+TGGTGCGTGCCTGTAATCCCAGCTACTCAGGAGGCTGAGGCAGGAGAATTGCTTGAATTCAGGAG<br />
+GTGGATGTTGCGGTGAGCTGAGATCGTGCCACTGAACTCCAGCCTGGGCGACAGAGCAAGATTTC<br />
+ATTTCAAAAAACAAAAAGAAAAAAATTTTTAAAAATTGTTTTGAAGAGATACGGTTTCCCTATGT<br />
+TGCCTAGGCTGGTCTCATGCGATTCTCCTGCCTTGGCCTCCCAAAGTGTTGGGATTATAGACATG<br />
+AGACACCACAAATTTAAACAAGGACTTTTTTTATTTTTTAAAGAGATTACTTTTTCTGAGTAAAC<br />
+AAGGACTTTTAAAACAAGGTACTAAAAATCTGGCTGGGCGTGGTGGCTCGCTCCTGTAATCCCAG<br />
+CACTTTGGGAGGCTGAGGTGGGCGGATCACGAGGTCAAGAGATCAAGACCATTCTGGCCAACATA<br />
+GTGAAACCCCGTCTCTGCTAAAAATACAAAAATTAGCTAGGTGTGGTGGTGCACGCCTGTAGTCC<br />
+CAGCTGCTCAGGAGGCTAAGGCAGGAGAATCACTTGAACCCGGGAGGCAGAGGTTGTAGTGAGCC<br />
+GAGATCTCACCACTGCACTCCAGCCTGGCAACAGAGTGAGATTCCGTCTCAAAAAAAAAATTTTT<br />
+TTTAATAAATAAATAAATAAAAATCTTGAAATTTTTATTAGGTCCTGGTGTTTCTAATTTTAATA<br />
+TGATTTAGTTCTCAAGTGCTAGTTAATACTTCATTAATCAGCCAGATGGAAGTGGGGATACTATG<br />
+GAAACAGCATAGGCAAAGCTTAAAGATAAATGAGACCATGGTTTGAAAATATAGGGTGGCATGCG<br />
+CTTTGGTTCAAGGCAATTTGATCATCACAACAATTTGGCTTAAACAGCACTTTGGTTGAAAATGA<br />
+ATATCCCCTAGTTATGTGTTTTTCAAGTATTGGTCATTTTGGTATATCATGAGTTGTTTTGCAAA<br />
+CTTTTGTGCCAAAGTTTTCAGGAAAACTTTCTAATATTTGCTTTTGTGTTTCTAACTGATTTTCA<br />
+GAGAAGTTGTAATTTTGATGTTTTTTCCTTTTAGTGAGCATGCTTTAACAAAAAACAATAACAGA<br />
+AACTGTGTCAAAGAAAAGGACCTGTAATCTTCAGGGTTTGTAGTCTTTTTCCTCTTAAAAAACCC<br />
+TTTTCCTAATTAATGGCAGTTACATCTGCATGGCTGGTTTGGGTAAGTCTTCATTTTGTTGTATT<br />
+GCTGAGTAACAGTCAACAAAGGTTTATCAACTCTTGGTTAAGGGTTCCTTTCATGTTGTGAGTAA<br />
+ACATGAACAATATAGGATCTTATCCTTTTAAGCTATCATGCAAGAAACATGTGAGGTCTCTTAAA<br />
+AATTCACTGTGCTGGCCGGGCATGGTGGCTCACGCTTGTAATCCTAGCACTTTGGGAGGCTGAGG<br />
+TGGGTGGATCACTTGAGGTCAGGAGTTCAAGACCAGCCTGGCCAACATGGTGAAACCCCGTCTCT<br />
+ACAAAAATACAAAAATCAGCCGGGCATGATGGCGGGCAGGTGCTTGTAATCCCAGCTACTTGGGA<br />
+GGCTGAGACAGGAGACTCGCTTGAACCCGGGAGGCGGAGGTTGTAGTGAGCCGAGATTGTGCCAC<br />
+TGCACTCCAGCCTGGATGACAGAGCAAGACTCCATCTCAAAAAAGAAAAAAAAAAAAAATTGTGC<br />
+TGGCTGGGCTCAGTGGCTCACACCTGTAATCCCAGCACTTTGGGAGGCCGAGGCGGGTGGATCAC<br />
+CTGAGGTCAGGAGTTCAAGACCAGCCTGGCCAACATGGTGAAACCCCATCTCTACAAAAATACAA<br />
+AAATTAGCCAGGCATAATGGCGAGTGCCTGTAATCCAAGCTACTTGGGAGGCTGAGGCAGGAGAA<br />
+TCGCTTGAACCCGGGAGTGAGCCGAGATGGCGCCACTGCACTCTAGCTTGGGTGACAACAGCAAG<br />
+ATTCTGTCTCAGAAAAAAAAAAAAAATTAACTGTGCTTATAAATGGGAGCTAAATTAGGAAAAAA<br />
+ATAAAAAGTAAAAAGAAAATGAAAATAAAAATTTAAAAAATATATTAACAAATTACCTGTCCTAA<br />
+GGTAAAATTCTTTTTTTTTTTCTTGAGACGGAGTCTCGCTCTGTCGCCCACTCGGAAAGGAGTGC<br />
+CAATCTCGGCGTGAAAATGTGTCTGATGCGTATGCACCTGAGCTAGAAAGCCCAAAGACTGCTAA<br />
+GAAGCATGTGAGGGCTCAGAAACAAACATGTTTGGGCTTCGAAAGCCTGTTTTTGGAACCACTTT<br />
+CCCTTGTCTGCAAGGCAGAGGGAGGGAGGTACTCTGTTATTTCTAAGTCTCTCTTGAGCTCTTAC<br />
+ACTGTGCAAGCCCATGAACGTATTTAATCGTGCATTAGACAATTGTTTTTAATCTATGCCCTGCC<br />
+TCTCCCAAGATCAACCTTTCCCTGAGATCGGGGCCCCCTCTGGGTGCACAGGGATATTTTTATTT<br />
+TTTGAGTTGGAGTTTTGCTCTTGTCACCCAGGCTGGAGTGCAATGGCATGATCTTGACTCACTGA<br />
+AACCTCTTCCTCCCGGCTTCCAGTGATTCTTCTGCCTCAGCCTCCCAAGCAGCTGAGATTACAGG<br />
+CATGCACCACCACACTTCGGTTAATTTTTGTATTTTTAGGAGAGATGGAGATTCACCATGTTGGC<br />
+CAGGCTGGTCTTGAACTCCTGACCTCAGGTGATCCTCCCGCCTTGGCCTCCCAAAATGCTGGGAT<br />
+TATAGGCGTGAGGCACCGTGCCCAGCCCATAGGGATATTTTTATATACTTTCCTGCCCCATGGGT<br />
+CAACTGTTCTTGAACCAAAGAAACAAGAGGCGGGGAAGTTATAGGAAGCTTTTAAAATATGCTTC<br />
+TGTGCAGCACTGCTCGCAGCGTGTCACAGATGTGCGGTATTGGAAGACGAAGGTGAAACTGCATG<br />
+GAGATGATTGTGTGGGGGATGAGGAGGTGGTGGGTAGGGGACTTGGCTTTCTTCACACAAAGACA<br />
+TCCAGGCAAATGGTAAGTCCAAAAGCCCTGTGACAGATAATGGCCATTGTTCCTGCAGGGTGACT<br />
+CTTTTCTCTTCTTTTTTTTCTTTTTGAGGCGGAGTCTCACTCTGTCATCTATGCTGGAGTGCAAT<br />
+GGTGCGATCTTGGCTCACTGCAACTTCCGCTTCCCGGGTTCAAAGTGATTTTTCTGCCTCAGCCC<br />
+TCCCGAGTAGCTGGGACTACAGGTGCGCGCCACCATGGCCAGCTAATTTTTATATTTTTAGTAGA<br />
+GACGGGGTTTCTCCATGTTAGCCAGGATGGTCTCGATCTCTTGATCTCGTGATCCACCCGCCTCA<br />
+GCCTCCCAAAGTGCTGGGATTACAGGCGTGAGCCACCGGCGCCCGGCCCTATACACATGATTTTG<br />
+AACATACTGACAGATGGAGAAAACCACTTTGGAAAAGATACTTCACATGTTCTAGAGACGATTTA<br />
+AACCATTAAGCATTCTATGAAGCTTCTGAAGGTCTGTCAGATTTTAAATGACAACAGTGAAATTT<br />
+TAAAACAAGAACAGAAGTCAGCACCAAAGCTAGTTTAACATTAATAATAAGTGAGCCAATAAATA<br />
+GGTCTATGTTTGCCCAGGCAGGTTTTGCTTATTATGTCAGTTGGAAAGCCAGAAGGAAACTGGTT<br />
+TTAACTCTTAATATAACCTGTATCATGACACCATCACTTTACCAGAAATGTAGCTGATGTCAGCA<br />
+TAAGACTGAGACAGTTTACATTTAAAACTGTTGTTTCCTTTCCAACTATTTTCATAATTCATTCA<br />
+TGGTATAGGATTGAGACTATTTCCTTAAACAGAAAAAAATGGGTAATTAACATTGAGAACTTTCC<br />
+ATGTGCCAGATACTGTATGAACTGTCTTAATTTTCATAGCCACCCTGCAAGATATTATCCTCATC<br />
+TTTTTAGAGGAAGAAACAAGTTTCAAGAAATGAAGTAGGTTTTCTAAGGCCACAGCTATAGTAAA<br />
+GAGGTGGAGCTGACATTCAAGCTTGGATATGAATTATTATAATTTCCACAGCACTACACAGCTGT<br />
+CATTTTCTCTACCTGCAAAACTAAATAAATACTGTTAAAAATAAAAGATGATCTCCAAGATCTCT<br />
+AAACATTAAAATTTTACAATAAACTGGTTGAGGTGACACATGCCTATATTTTCAGCTACTCAGGA<br />
+GTTTGAGACTGGCCTGGACAACATAGCAAGACCCTGTCTCTAAATTTAAAAAACAAATTACAATG<br />
+AGATAATCTTAGACCAGAGAAAGGAAAGTGAAATAGCTATTTGGATTATAAACTGTTTTAGTAAC<br />
+TCAAATGTAATGTGTGGTGGTGACAATATCTTTGATTCCTGGGAAGGTCATTGTGAAAGGGAATA<br />
+GAAAATGCCTTGAAGTCAAAATATAAGGCTCTCAAATAGAAAAATAAATATAACATTTAAGTATT<br />
+ATCAACAGAGAACCAAGTTAGAAAAAACTAGTTATAGTCTGAAACAATGCTGTTTAAAAGACTGC<br />
+AGTCACCAGTGTAAACTGACTCAGGCAACACTTCCCAGGGTCCATGCCGTGGACAACTGACTAAT<br />
+CTCTCTATAAACAATTCTTGACACTAGATAGGCCTTTACTAAGAGCAACCAGAGACAGAAATTAG<br />
+TATCGACAGTGGAGTTTTAAAATCACACTTAAAAAAATATTATTGGCTGGGCACAGTGGCTCACG<br />
+CCTGTAATCCCAGCACTTTGGGAGGCTGAGGCAGGCAGATCATGAGGTCAGGAGATCAAGGCTAT<br />
+CCTGGCCAACATGGTGAAACCCCGTCTCTATTAAAAATACAAAAATTAGCCGGGCGTGGCGGTGA<br />
+GTGCCTGTAGCCCCAGCTACTTGGGAGGGTGAGGCAGGAGAATTGCTTGAACCTGGGAGGCGGAG<br />
+GCTACAGTAAGCCGAGTTCGTGCCACTGCACTCCAGCCTCGGCGACGGAGCGAGACTCCCTCTCA<br />
+AAAAAAGAAAAAAAAAATGTAGATTATATTCTGTGAATATTACATCACAGAATAAAACTCTGGAT<br />
+ATAATACATGGGAGAGTTAATATCCAGAAAGACATTGTGCATTTTTGGTCTAAGTTTCATGAGAC<br />
+AAAATATTATTTTCTTTTCTGAGACTCAATTCTTTCCCAAAGGGATCAGTTCTCTTAAGTGGACC<br />
+TTTTTACAGCCTTTCAGCTGGCTCAAAAGATGAGTTTTGGCGAACAAGATTATCGATACTCACTG<br />
+AGCAAGTGGTAGTTAGAATCCCTTTCATATTTGAAGGTCAAACGGCCATAGCTGACATGATTTAG<br />
+ATTCTTCAGCCACTCAAAGTAAGATACTGTCACTCCTCCAGCATTCAAGTAGAGATCCTATGCAC<br />
+AAAAATAAGACAAAGAAATTAGAAGATGATGGTTTTCGTAAAAGCTGAAAATGAACCTAAGACCT<br />
+TAATTTCAATACCAAGGTAGACTGGACTTCAAATATCGCAAATATATTTTAGCCAGTATCAGGAA<br />
+TTTCACACTTAATTAACACTCCTTCCCATCCCACCCAATTCCATCTAAGGCTTTTTCTATTTAGG<br />
+AAAAAAAAAAATCATTTTTTGGCTTATTAATCAAGGAAAGTTAATAATCTTTGGTTAGAGCCTCT<br />
+TCTCTACCAGAAGTTAGTTCTCAGACTAAATGGCTTGCCCACCAACCAGTTGGACTGGACTGTCC<br />
+ACAGGGCCTCTCAGAAGACAGGATTCTTTCTCCTATTACCTAAGGGTAGCCCATTTCAGTTACAT<br />
+TAAATGTCTTAAGTGCTTTCAGCAAAGGGGGTTCTTTAAAATATATTCCAAGCCCACATTAATTT<br />
+CTAGTAACTTTTTGGTGTAGACTCATTTTTACTTGCTAAAAAACCTGAGCACGTGTTCCTCATAT<br />
+TAGTTTTCTGAGTAAAGCTGGAAAGGGCACTTGAAATGCATAAGGTTAGGAATCATATAGAAAAT<br />
+CTTAAGAGCTTTAGTTAGAATAGTGTTTCTAACACAGTACACATTTATATAACCAGACTCTTAGA<br />
+AGGCTAAAGACATTCAGTAAAGAGCCTGAAATTGGAATAAATGTTTCGATCAAAGTGAAAATTAA<br />
+CAGGCTTAGAATTAACCATGCTTCTACTATATTTTCTCAAAAGTGAAAAAGATGAATTCACTAGA<br />
+GCTTGGAGACTAATAATTCCTCTCTTCCTCCAAATTCCTTGCAAAAGACTATTATGATTCTAAGT<br />
+ACATATAAAGCCTAATAAATATAGATGACTTACTGGAATAACCATAATGTTTCTCTCCAGGAAGA<br />
+TCTTGTCAGCTTCTGGAGTTGTTGGCCCATTGGCACCTTCAGCAATGATCTGCAAGAGAGTCAGG<br />
+AACATAGAGAAATGCGAACACCACCGTCAAATCCCCTCCACTGAGGGCAAGAGATGTGCATATAT<br />
+GAACAAGGGGCTGTGGGGAGAAGCACAGTTTCAGTTAAAGTTAAATAGAGGTTATTTTTCTCTGC<br />
+CAAGTGTATAAAACTACCTTTCACTTTTCTATTTATCTAGGTTTTTTTTTTGTTTGCTTGTTTTT<br />
+TTTTTTTACAGGAGTGTCAGGCAGATGCGTTTGTTTTGGTAATGGTTGCACAACTCTGTGCCGGT<br />
+AGCTAAAAGCCATTAAATTATGTACCTTAAATGGGGGAACTGTATGGTATGTGCAGTATGTGCCA<br />
+ATAAAGCTGCTAAAAAGAAAGAGAAAACTCAATCAGACTCTTCTATGACCCCCCTAACGTCATTC<br />
+ACATTGATAATGTTGGTTCTGGTTTCTATAATGTTGTCACCTTGGCTTTGACTCTGGGTGCGTTG<br />
+GATTTGGTCAACTGCTTCTCACTGGCAGCTGGGATCAGTATGTCACAGTCGGCCTCCAAGATGCT<br />
+TCCTTCATAGGGCTTTGCCTTGGGGAAGCCCAGAATGGACCCATGTTGCTGCCATTGATTGAAAA<br />
+TCACAATTAATAGCTGCACCAGAGTTTTAAATATTTATATTTAGTGTCTATGCTATAAAAATGTA<br />
+TTAATACCAATTTGAAGTCTTCCAGTTCCTTTGGGTCAATACCATCTGGATTCCATATACTCCCA<br />
+TCAGACTCACCAACAGCAATACATTTAGCACCAAAACGATGTAAATATCTCATAGAGTGCAGGCC<br />
+CACATTACCAAATCCCTGTGAAGAACAATTACCCATAACACAAAAATTAAAGTCCTGGTATAGAC<br />
+AGCAAGAGTCATATTTTGACCAATGTAAATCCATACTCTGTTTATTTAGAAGCAATTCTCAAAAT<br />
+TCTTTTGCCAAAAGAAACAATGTACTAACTGGTTTCTCTTCAACAATAAAATTCTCTGTTTAAGA<br />
+ATGTGATGAGCGGGCATGGTGGCTCACGCTTGTAATTCCAGCACTTTGGGAGGCTGAGGCAGGTG<br />
+GATCACTTGAGGTCAGGAGTTCGAGATCAGCCATGGCCAACATGGTGAAACCCCGTCTCTACTAA<br />
+AAATACAAAAATTAGGCATGGGGTCCGTGCCTGTAATCCCAGCTACTTGGGAGAATGAGGTAGGA<br />
+GAATCACTTGAACCTGGGAGGTGGAGGTTGCAGTGAGCCGAGACTGCACTCCAGCCTGGGCAATA<br />
+GGGTGAGACTCCATCTCAATCAATCAATAAATGGCAGTGGTGTTAAGTACACCACCACTTTTTGC<br />
+TTTTTTTTTTTTTTTTTTTTTGATGGAGTTTTGCTCTTGTTGCCCAGGCTGGAGTGCAATAGCGG<br />
+AATCTCGGCTCACCACAATCTCTGCCTCCCAGGTTCAAGCAATTCTCCTGCCTCAGCCTCCTAAG<br />
+TAGCTGGGATTACAGGCATGCGCCACCTCGCCTGGCTAATTTTGTATTTTTAGTAGAGACAGGGT<br />
+TTCTCCATGTTGGTCAGGCTGGTCTCGAACTCCTGACCTCAGGTGATCCGCCACTTCAGTCTGCT<br />
+AAAGTGCTGGGATTACAGCTGTGAGCCACAGTGCCCGGACTTTCTTTTTTTTTTTTTTTTGCCAA<br />
+TTTGTATTTTATTTTTGCTAATTTAAAAAATAGTTAATAGAATATCAGAAATACTGAACATTATC<br />
+ATTTCCATAAATGCAAGAGTGTATACATTTTCCACACACTGAGTACTAGCTAGATTTTCTATGAT<br />
+AAACTCTGACCACTTCTTCAGGCAATTCATGTACTTACTTCAGCATTATCATTAATGATGAAGGT<br />
+TCTAGAACCATCATGAACAAGGGTCCCATCTTCACACAAGTTACTTAACTGCTGGGAGGCTCTAT<br />
+TTCATCTTATGTAAACTACAGATAATACCTACTCACCTCAAGGGTATATCAAGAGTTTATGTAAG<br />
+CTAAGTTTGTAGAAAGTAGTTAGCACAGTGCCAGGAAGGGTCCAAGAAGAAATGGTACTTACTAT<br />
+GAAATATTTGTACGTATATATGTATGCATGTTAATGAGCTCTTATTAGCTGTGTTCATTAAAGGT<br />
+TTTCTCTATCCTGTGATTTGCTTTTAGATTTTGGAATACATTTCATTGTGCACATTCCATTTGTA<br />
+TTATTAATATAACAATATTTATTACTATTATTATTATCATCATCAATTCAATCACATCTACTGTA<br />
+TCCCTGATGATGACCATGATTCCTTTAATAATCATAAAACTCTCTTCCCTTCATCACGGGGTAAA<br />
+TAACCTATCACAATGCTGTAAGTCTCCATCAGCACCCCAGGCTGCCCCTGCTGACTTACCAGATC<br />
+TGCTACTTCAGCCAGATCAATCATCATGTTAATGTCACACCCACATTCAATAATGGTGAGTCGGA<br />
+GCTTTTTACCTGTAAGTGAAAAAGATAAAAATTTTACTTTAAAAAGACCCTGAAA</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p><br />
+运行： </p>
+<p># time ./1 datafile &gt; report </p>
+<p>real&nbsp;&nbsp;&nbsp; 1m14.81s <br />
+user&nbsp;&nbsp;&nbsp; 0m50.65s <br />
+sys&nbsp;&nbsp;&nbsp;&nbsp; 0m0.13s </p>
+<p># wc -l report </p>
+<p>&nbsp;&nbsp;&nbsp; 3355 report </p>
+<p><br />
+下面是 report 文件中的部分内容: </p>
+<p>&nbsp;</p>
+<p># cat report</p>
+<p>------------------- Line# 1 --------------------</p>
+<p>TAATCAACTA Length=10 Position=10 Rev_Position=12<br />
+TTTATTACTA Length=10 Position=51;9703 <br />
+GGAGGCTGAG Length=10 Position=330;470;1129;1265;1633;2655;2793;3102;5936;8564 <br />
+AAAAAAAAAA Length=10 Position=1871;2906;2907;2908;2909;2910;3198;3199;3200;3201;3202;6183;6761;6762 Rev_Position=2906;2907;2908;2909;2910;3198;3199;3200;3201;3202;6183;6761;6762<br />
+GTAGTGAGCCGA Length=12 Position=1811;2838 <br />
+AATAAATAAATA Length=12 Position=1889;1893 Rev_Position=1890;1894<br />
+CCACTGCACTCCA Length=13 Position=534;1830;2857;6133 <br />
+GTTTTTCTTTTTT Length=13 Position=675 Rev_Position=4304<br />
+GTAATCCCAGCTAC Length=14 Position=1248;2776;8678 <br />
+CCTGTAATCCTAGCA Length=15 Position=310;1109 <br />
+GGATCACTTGAGGTCA Length=16 Position=2671;8580 <br />
+CGGGCATGGTGGCTCAC Length=17 Position=2617;8526 <br />
+CACTTGAGGTCAGGAGTT Length=18 Position=2675;8584 <br />
+CCAGCCTGGCCAACATGGT Length=19 Position=1172;2698;3011 <br />
+CTTTGGGAGGCTGAGGCAGG Length=20 Position=5931;8559 <br />
+TTTTTTTTTTTTTTTTTTTT Length=20 Position=8841;8842 Rev_Position=8842</p>
+<p>Summary of Line# 1<br />
+------------------<br />
+String length :: 10&nbsp; Matched Strings :: 541<br />
+String length :: 11&nbsp; Matched Strings :: 438<br />
+String length :: 12&nbsp; Matched Strings :: 372<br />
+String length :: 13&nbsp; Matched Strings :: 329<br />
+String length :: 14&nbsp; Matched Strings :: 293<br />
+String length :: 15&nbsp; Matched Strings :: 258<br />
+String length :: 16&nbsp; Matched Strings :: 226<br />
+String length :: 17&nbsp; Matched Strings :: 200<br />
+String length :: 18&nbsp; Matched Strings :: 171<br />
+String length :: 19&nbsp; Matched Strings :: 146<br />
+String length :: 20&nbsp; Matched Strings :: 124</p>
+<p>String length :: 10&nbsp; Matched Reverse Strings :: 142<br />
+String length :: 11&nbsp; Matched Reverse Strings :: 69<br />
+String length :: 12&nbsp; Matched Reverse Strings :: 40<br />
+String length :: 13&nbsp; Matched Reverse Strings :: 25<br />
+String length :: 14&nbsp; Matched Reverse Strings :: 15<br />
+String length :: 15&nbsp; Matched Reverse Strings :: 7<br />
+String length :: 16&nbsp; Matched Reverse Strings :: 5<br />
+String length :: 17&nbsp; Matched Reverse Strings :: 2<br />
+String length :: 18&nbsp; Matched Reverse Strings :: 1<br />
+String length :: 19&nbsp; Matched Reverse Strings :: 1<br />
+String length :: 20&nbsp; Matched Reverse Strings :: 1</p>
+<p>&nbsp;lightspeed 回复于：2004-12-16 23:39:29</p>
+<p>这里是 final version. </p>
+<p>1. 增加了二分查找最长匹配串并自动设置 STR_MAX 的代码。 <br />
+2. 改进了 reverse string 算法， 大大提高了运行效率。 </p>
+<p># time ./1 datafile &gt; report1 </p>
+<p>real&nbsp;&nbsp;&nbsp; 2m57.43s <br />
+user&nbsp;&nbsp;&nbsp; 2m29.33s <br />
+sys&nbsp;&nbsp;&nbsp;&nbsp; 0m0.08s </p>
+<p>$ time ./1 -v r=1 datafile &gt; report2 </p>
+<p>real&nbsp;&nbsp;&nbsp; 0m53.28s <br />
+user&nbsp;&nbsp;&nbsp; 0m46.03s <br />
+sys&nbsp;&nbsp;&nbsp;&nbsp; 0m0.03s&nbsp;&nbsp;&nbsp;&nbsp; </p>
+<p>&nbsp;</p>
+<p>#!/bin/awk -f<br />
+#<br />
+# A script can be used to check any repeat pieces of nucleotide sequences.<br />
+#<br />
+# Design: lighspeed<br />
+# Date: Dec. 16, 2004<br />
+#<br />
+# Repeat Match Usage::&nbsp; $0 datafile<br />
+# Reverted Repeat Match Usage::&nbsp; $0 -v r=1 datafile<br />
+# </p>
+<p># function is_overlap : check if a string (position=p, length=l) is overlap with <br />
+# matched strings which are stored in array record (position=i, length=record) </p>
+<p>function is_overlap(p, l) {<br />
+&nbsp; e = p + l - 1<br />
+&nbsp; for (i in record) {<br />
+&nbsp;&nbsp; a = i + record - 1<br />
+&nbsp;&nbsp; if (( i &gt;= p &amp;&amp; i &lt;= e ) || ( a &gt;= p &amp;&amp; a &lt;= e ) || ( p &gt;= i &amp;&amp; p &lt;= a ) || ( e &gt;= i &amp;&amp; e &lt;= a ))<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1<br />
+&nbsp; }<br />
+&nbsp; return 0<br />
+}</p>
+<p># flag=0 find the longest matched string and set STR_MAX<br />
+# flag=1 find all other matched strings</p>
+<p>function find_string(STR_MIN, STR_MAX, flag) {<br />
+&nbsp; <br />
+&nbsp; for (i in record)<br />
+&nbsp;&nbsp;&nbsp; delete record</p>
+<p>&nbsp; if ( flag == 1 ) {<br />
+&nbsp;&nbsp;&nbsp; if ( r == 1 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print "---------------Reverted Repeat Match Line# "NR" -----------------\n"<br />
+&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print "------------------Repeat Match Line# "NR" --------------------\n"<br />
+&nbsp; }</p>
+<p>&nbsp; for ( Str_Len=STR_MAX; Str_Len &gt;= STR_MIN; Str_Len -- ) {</p>
+<p>&nbsp;&nbsp;&nbsp; for ( Position=1; Position &lt;= L - 2 * Str_Len + 1; Position ++ ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( is_overlap(Position,Str_Len) == 1 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; count=0<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pos=Position<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; offset=Position + Str_Len - 1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; left=substr($0,Position,Str_Len)</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (index(left,"A")==0 || index(left,"C")==0 || index(left,"G")==0 || index(left,"T")==0 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; right=substr($0, Position + Str_Len)</p>
+<p># Reverse string left. The start position in reverse string is L -Position - Str_Len + 2</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( r == 1 ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; old_left=left<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; left=substr(REVERSE_STRING, L - Position - Str_Len + 2, Str_Len)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; while ( Str_Len &lt;= length(right) ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; i=index(right,left)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( i &gt; 0 ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( flag == 0 )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; j=offset + i<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( is_overlap(j,Str_Len) == 0 ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp; count ++<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; record[Position]=Str_Len<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; record[j]=Str_Len<br />
+&nbsp;&nbsp;&nbsp;&nbsp; pos=pos","j<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; right=substr(right, i + Str_Len)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; offset+=(i + Str_Len - 1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p><br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (count &gt; 0 &amp;&amp; flag == 1) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; match_number[Str_Len] ++<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if (r == 1)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print&nbsp; "Reverted Repeat: " old_left",", "Size: "Str_Len",", "Start Positions: "pos<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print&nbsp; "Repeat: " left",", "Size: "Str_Len",", "Start Positions: "pos<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp; }<br />
+&nbsp; if ( flag == 0 )<br />
+&nbsp;&nbsp;&nbsp; return 0<br />
+}</p>
+<p>{</p>
+<p>&nbsp; L=length($0)<br />
+&nbsp; if ( r == 1 ) {<br />
+&nbsp;&nbsp;&nbsp; REVERSE_STRING=""<br />
+# split($0, aaa, "") :&nbsp; Use null string "" to split every characters into array aaa<br />
+&nbsp;&nbsp;&nbsp; split($0, aaa, "")<br />
+&nbsp;&nbsp;&nbsp; for (i=L; i &gt;= 1; i -- ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; REVERSE_STRING=REVERSE_STRING""aaa<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delete aaa<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp; }</p>
+<p>&nbsp; STR_MIN=10<br />
+&nbsp; STR_MAX=0</p>
+<p># Find max matched string and set STR_MAX by binary search algorithm<br />
+&nbsp; low=STR_MIN - 1<br />
+&nbsp; high=int(L / 2) + 2<br />
+&nbsp; while ( low &lt; high ) {<br />
+&nbsp;&nbsp;&nbsp; if ( (high - low) == 1 ) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ( low &gt;= STR_MIN )<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; STR_MAX=low<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break<br />
+&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; mid=int((high + low) / 2)<br />
+&nbsp;&nbsp;&nbsp; status=find_string(mid, mid, 0)<br />
+&nbsp;&nbsp;&nbsp; if (status)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; low=mid<br />
+&nbsp;&nbsp;&nbsp; else<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; high=mid<br />
+&nbsp; }<br />
+&nbsp; if ( STR_MAX &gt;= STR_MIN )<br />
+&nbsp;&nbsp;&nbsp; find_string(STR_MIN, STR_MAX, 1)<br />
+}</p>
+<p>&nbsp;</p>
+<p><br />
+3. data2 (100000 字符) 的结果 </p>
+<p>当长度增加到 100000 时， 速度变的很慢， 我只测了正序， 而且没有完全 <br />
+完成， 但可以估计时间。 </p>
+<p>由于存在的重复匹配串的最大长度很小， 我采用二分查找首先找到重复匹配串的最大长度 <br />
+然后再循环至最小长度。 下面结果前面的 </p>
+<p>9 50002 0 <br />
+9 25005 0 <br />
+. </p>
+<p>就是显示查找的过程。 找到重复匹配串的最大长度为 43 用时 67 min. <br />
+然后， 从 43 循环至 10. 每个长度用时约 5 min </p>
+<p>总时间大约为 67 + 34 * 5 = 237 min 也就是大约 4 小时。 </p>
+<p><br />
+9 50002 0<br />
+9 25005 0<br />
+9 12507 0<br />
+9 6258 0<br />
+9 3133 0<br />
+9 1571 0<br />
+9 790 0<br />
+9 399 0<br />
+9 204 0<br />
+9 106 0<br />
+9 57 1<br />
+33 57 0<br />
+33 45 1<br />
+39 45 1<br />
+42 45 1<br />
+43 45 0</p>
+<p><br />
+Repeat: ATTGGATCATTGATCTAATCCAACCACATAACTATAATTACAG, Size: 43, Start Positions: 25161,25204<br />
+Repeat: TCGGCCTCCCAAAGTGCTGGGATTACAGGCGTGAGCCACCG, Size: 41, Start Positions: 26357,75092<br />
+Repeat: AGTCTTGCTCTGTCGCCCAGGCTGGAGTGCAGTGGCGCG, Size: 39, Start Positions: 31148,69805<br />
+.<br />
+. </p>
+<p>产生随机字符串<br />
+$ cat rand.pl<br />
+#!/usr/bin/perl -w<br />
+@array=("A","T","C","G");<br />
+for ($a=0;$a&lt;1000;$a++) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $rand=$array[int rand scalar @array];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; $out.=$rand;<br />
+}<br />
+print "$out\n";</p>
+<p>$ perl rand.pl&gt;datafile<br />
+$ cat datafile<br />
+ATACTCGTTGACTCTACTCATAACAGCATTAAAGACCGTAGGGTAGGCT...<br />
+riverfor 回复于：2004-12-18 03:18:35</p>
+<p><br />
+=======================repeat.py===========================<br />
+# !/usr/bin/pyton<br />
+# Just enjoy the programming, share your excellent code<br />
+# report bugs to email/ msn: riverfor@gmail.com<br />
+#<br />
+import string<br />
+import commands<br />
+import sys<br />
+## data for deamon<br />
+data = "1234567890112345678901234567890 1234567890989901234567890"<br />
+## call this functions to get the real data which was saved inthe filePath<br />
+def getSrcDataFromFile(filePath):<br />
+&nbsp;&nbsp;&nbsp; data = commands.getoutput("cat %s" % filePath)<br />
+##<br />
+result = []<br />
+## get all substrs used to check whether be fit for<br />
+def getAllSubStr(splitCode = " ", minDataLen = 10, maxDataLen = 10000):<br />
+&nbsp;&nbsp;&nbsp; dataLen = len(data) + 1<br />
+&nbsp;&nbsp;&nbsp; for x in range(dataLen):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for j in range(x, dataLen):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; seg, ilen = data[x:j], j - x<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # check whether to be fit for these conditions<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if seg.count(splitCode) == 0 :<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if ilen &gt;= minDataLen and ilen &lt;= maxDataLen:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if result.count(seg) &lt; 1:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; result.append(seg)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ## process<br />
+def process(filePath = ""):<br />
+&nbsp;&nbsp;&nbsp; if filePath != "":<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; getSrcDataFromFile(filePath)<br />
+&nbsp;&nbsp;&nbsp; getAllSubStr()<br />
+&nbsp;&nbsp;&nbsp; print "sub data\t repeat \t indexs"<br />
+&nbsp;&nbsp;&nbsp; for item in result:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; counts, itemlen = data.count(item), len(item)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if counts &gt; 1:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indexs, start, seg = [], 0, data<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for x in range(counts):<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if seg != "":<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start += seg.index(item)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indexs.append(start)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; start += itemlen<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; seg = seg[start:]<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print item, "\t" ,counts, "\t" ,indexs<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+if __name__ == "__main__":<br />
+&nbsp;&nbsp;&nbsp; print "source data: %s " % data<br />
+&nbsp;&nbsp;&nbsp; print "========result:========"<br />
+&nbsp;&nbsp;&nbsp; if len(sys.argv) &lt; 2:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; process()<br />
+&nbsp;&nbsp;&nbsp; else:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; proccess(sys.argv[1])<br />
+&nbsp; <br />
+================================================<br />
+This script only print the sub data repeats twice or more, which was with the condition of splitCode = " ", minDataLen = 10, maxDataLen = 10000.<br />
+Usage: python repeay.py [data file] [| awk / sed ....]</p>
+<p>第一次发贴,嘻嘻,没时间写注释啦,但python本来就是如此易读(不要笑话我程序中的英文注解的语法错误哦,因为很多系统的中文支持不好,习惯了).很纳闷为什么cu连php版面都有,却连python的论坛都没有呢,我用过php, java, c, python. 我觉得python绝对是值得我们关注的一门语言,它可以用做shell(远比sed awk易读), 网站脚本(mod_py), application语言(网络的twisted框架, tk的GUI, 各种数据库的支持)......</p>
+<p>用awk写了一下第一题， <br />
+用了最笨得办法，效率超低。处理这个datafile用了10s，而且只适用处理短一些的串。。。 </p>
+<p>&nbsp;</p>
+<p>BEGIN {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; _MIN_LEN=10;<br />
+}<br />
+function find_max_str()<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(i=length($0)/2;i&gt;=_MIN_LEN;i--) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(j=0;j&lt;length($0)-i;j++) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; k=substr($0,j,i);</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if((index(k," ")&gt;0)||!((index(k,"A")&gt;0 &amp;&amp; index(k,"C")&gt;0 &amp;&amp; index(k,"G")&gt;0 &amp;&amp; index(k,"T")&gt;0))) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; continue;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }</p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; if((a[k]++)==2) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("%d:%d:%d:%d:%s\n",NR,b[k],j,length(k),k);<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 0;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; else {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; b[k]=j;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(idx1 in a) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delete a[idx1];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; for(idx2 in b) {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; delete b[idx2];<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return 1;<br />
+}<br />
+{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; find_max_str();<br />
+}</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;zhl1979 回复于：2007-03-27 19:16:25</p>
+<p>awk '{ for (l=10;l&lt;50;l++){for(i=1;i&lt;(10001-l);i++){a=substr($0,i,l) ;hash[a]++&nbsp; ;&nbsp;&nbsp; t=hashb[a]; t=i" "t; hashb[a]=t }}}END{for(a&nbsp; in hash ){ if (hash[a]&gt;1){ print a ,hash[a], hashb[a] }}}</p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

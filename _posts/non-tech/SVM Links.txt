@@ -1,0 +1,215 @@
+Computer-aided detection and classification of microcalcifications in mammograms: a survey - 所有 3 个版本 ?
+HD Cheng, X Cai, X Chen, L Hu, X Lou - Pattern Recognition, 2003 - Elsevier
+Breast cancer continues to be a significant public health problem in the world. Approximately, 182,000 new cases of 
+breast cancer are diagnosed and 46,000 women die of breast cancer each year in the United States. Even more ... 
+被引用次数：56 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+SVM and Neural Networks comparison in mammographic CAD - 所有 2 个版本 ?
+CJ Garcia-Orellana, R Gallardo-Caballero, M Macias … - Engineering in Medicine and Biology Society, 2007. EMBS 2007 …, 2007 - ieeexplore.ieee.org
+... [3] HP Chan, K. Doi, CJ Vyborny, KL Lam, and RA Schmidt. Computer-aided detection
+of microcalcifications in mammograms – methodology and preliminary clinical study.
+Invest. Radiol., 23(9):664–671, 1988. [4] EA Sickles. Mammographic features ... 
+相关文章 - 网页搜索 
+
+
+A Computer Aided Detection System for Digital Mammograms Based on Radial Basis Functions and Feature … - 所有 2 个版本 ?
+M Jirari - Engineering in Medicine and Biology Society, 2005. IEEE-EMBS …, 2005 - ieeexplore.ieee.org
+... 10, No. 6, pp. 369-375. [15] Chitre Y, Dhawan A and Moskowtz M. Artificial Neural
+Network Based Classification of Mammographic Microcalcifications Using Image Structure
+Features in State In The Art of Digital Mammographic Image Analysis. World ... 
+被引用次数：1 - 相关文章 - 网页搜索 
+
+Features selection analysis for pattern classification
+R Piriyakul, P Piamsa-nga - Communications, 2007. APCC 2007. Asia-Pacific Conference on, 2007 - ieeexplore.ieee.org
+... The first stage was looking for the suspected microcalcification and the second
+stage was the classifier which depends on 61 features. [1] GRNN and SVM (Supervised
+Machine Learning) were used to investigate the discriminatory power of the features ... 
+相关文章 - 网页搜索 
+
+Shape-based and texture-based feature extraction for classification of microcalcifications in … - 所有 6 个版本 ?
+H Soltanian-Zadeh, S Pourabdollah-Nezhad, F Rafiee … - PROC SPIE INT SOC OPT ENG, 2001 - radiologyresearch.org
+This paper presents and compares two image processing methods for differentiating benign from malignant 
+microcalcifications in mammograms. The gold standard method for differentiating benign from malignant ... 
+被引用次数：7 - 相关文章 - 网页搜索 
+
+Mammographic masses characterization based on localized texture and dataset fractal analysis using … - 所有 4 个版本 ?
+ME Mavroforakis, HV Georgiou, N Dimitropoulos, D … - Artificial Intelligence In Medicine, 2006 - Elsevier
+Localized texture analysis of breast tissue on mammograms is an issue of major importance in mass characterization. 
+However, in contrast to other mammographic diagnostic approaches, it has not been investigated in depth, due to its ... 
+被引用次数：6 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+Characterization of clustered microcalcifications in digitized mammograms using neural networks and … - 所有 4 个版本 ?
+A Papadopoulos, DI Fotiadis, A Likas - Artificial Intelligence In Medicine, 2005 - Elsevier
+... Although the obtained high classification performance can be successfully applied
+to microcalcification clusters characterization, further studies must be carried
+out ... it would be interesting to experiment with image fusion techniques to combine ... 
+被引用次数：15 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+Automated detection of microcalcification clusters for digital breast tomosynthesis using projection …
+I Reiser, RM Nishikawa, AV Edwards, DB Kopans, RA … - Medical Physics, 2008 - link.aip.org
+... MF.Salfity, RM.Nishikawa, Y.Jiang, and J.Papaioannou, “The use of a priori information
+in the detection of mammographic microcalcifications to improve their classification,”
+“The use of a priori information in the detection of mammographic ... 
+相关文章 - 网页搜索 
+
+Detection of microcalcifications clusters in mammograms through TS-MRF segmentation and SVM-based … - 所有 6 个版本 ?
+TOC View - Pattern Recognition, 2004. ICPR 2004. Proceedings of the …, 2004 - ieeexplore.ieee.org
+... projections of the two n-dimensional vectors u and v in the feature space F. It
+is worth noting that f(z) provides the signed distance of the point ... It contains 40
+digitized mammographic images composed of both oblique and craniocaudal views ... 
+被引用次数：6 - 相关文章 - 网页搜索 
+
+
+A CAD system for the detection of mammography microcalcifications based on Gabor transform
+E Catanzariti, G Forni, A Lauria, R Prevete, M … - Nuclear Science Symposium Conference Record, 2004 IEEE, 2004 - ieeexplore.ieee.org
+Abstract— Breast cancer is the first cause of death among women in Europe. Many studies have shown that the early 
+diagnosis is the most efficient way to fight this disease. With this in mind, Computer Aided Detection (CAD) ... 
+被引用次数：2 - 相关文章 - 网页搜索 
+
+Analysis of mammographic microcalcifications using acomputationally efficient filter bank - 所有 9 个版本 ?
+TO Gulsrud - Acoustics, Speech, and Signal Processing, 2001. Proceedings. …, 2001 - ieeexplore.ieee.org
+ABSTRACT We present a new method for classification of malignant and be- nign clusters of microcalcifications in digital 
+mammograms. A computationally efficient infinite impulse response (IIR) quadra- ture mirror filter (QMF) bank is ... 
+被引用次数：2 - 相关文章 - 网页搜索 
+
+Method and system for segmentation and detection of microcalcifications from digital mammograms - 所有 4 个版本 ?
+SK Rogers, P Amburn, TS Berkey, RP Broussard, MP … - US Patent 6,167,146, 2000 - freepatentsonline.com
+A method and system for detecting and displaying clustered microcalcifications in a digital mammogram, wherein a single 
+digital mammogram is first automatically cropped to a breast area sub-image which is then processed by means of an ... 
+被引用次数：3 - 相关文章 - 网页快照 - 网页搜索 
+
+Shape analysis of microcalcifications using Radon transform - 所有 2 个版本 ?
+L Bocchi, J Nori - Medical Engineering and Physics, 2007 - Elsevier
+Microcalcifications are one of the early signs of breast cancer, and they are of great importance for an early 
+diagnosis. Moreover, the spatial distribution and the shape of the microcalcifications have a significant impact in ... 
+被引用次数：1 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+Mammography Feature Selection using Rough set Theory
+A Pethalakshmi, K Thangavel, P Jaganathan - Advanced Computing and Communications, 2006. ADCOM 2006. …, 2006 - ieeexplore.ieee.org
+Microcalcification on x-ray mammogram is a significant mark for early detection of breast cancer. Texture analysis 
+methods can be applied to detect clustered microcalcification in digitized mammograms. In order to improve the ... 
+相关文章 - 网页搜索 
+
+Method for determining features from detections in a digital image using a bauer-fisher ratio - 所有 2 个版本 ?
+SK Rogers, MP DeSimio - US Patent 6,757,415, 2004 - freepatentsonline.com
+A computer aided detection method and system to assist radiologists in the reading of medical images. The method and 
+system has particular application to the area of mammography including detection of clustered microcalcifications ... 
+相关文章 - 网页快照 - 网页搜索 
+
+A Feature Analysis Approach to Mass Detection in Mammography Based on RF-SVM
+Y Wang, X Gao, J Li - Image Processing, 2007. ICIP 2007. IEEE International …, 2007 - ieeexplore.ieee.org
+A new approach to mass detection in mammography is presented. The main obstacle of building a mass detection system is 
+the similar appearance between masses and density tissues in breast. Hence, the various features of the extracted ... 
+相关文章 - 网页搜索 
+
+Characterization of mammographic masses based on level set segmentation with new image features and … - 所有 2 个版本 ?
+J Shi, B Sahiner, HP Chan, J Ge, L Hadjiiski, MA … - Medical Physics, 2008 - link.aip.org
+... compare the effect of new features, we designed classifiers in three feature spaces:
+(1) the previous mammographic feature space that contained the morphological, RLS,
+and spiculation features, (2) the new mammographic feature space that contained ... 
+被引用次数：1 - 相关文章 - 网页搜索 
+
+Image segmentation feature selection and pattern classification for mammographic microcalcifications - 所有 5 个版本 ?
+JC Fu, SK Lee, STC Wong, JY Yeh, AH Wang, HK Wu - Computerized Medical Imaging and Graphics, 2005 - Elsevier
+... doi:10.1016/j.compmedimag.2005.03.002 How to Cite or Link Using DOI (Opens New Window)
+Copyright ? 2005 Elsevier Ltd All rights reserved. Image segmentation feature selection
+and pattern classification for mammographic microcalcifications. ... 
+被引用次数：7 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+… , wavelet, Haralick, and shape features for microcalcification classification in mammograms - 所有 2 个版本 ?
+H Soltanian-Zadeh, F Rafiee-Rad, S Pourabdollah- … - Pattern Recognition, 2004 - Elsevier
+... Wavelet transform has been used for mammographic image compression [19], image
+enhancement [20 and 21], microcalcification detection [22], and feature extraction
+[23]. ... Before extracting the shape features, microcalcifications should be segmented ... 
+被引用次数：18 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+Effect of Computer-Aided Detection on Mammographic Performance: Experimental Study on Readers with … - 所有 7 个版本 ?
+K Hukkinen, T Vehmas, M Pamilo, L Kivisaari - Acta Radiologica, 2006 - ingentaconnect.com
+... 4 comprised 2 novice radiologists and 2 residents who had experience in clinical
+mammography ranging from ... area and character of suspected pathological lesions: stellate
+mass, circular mass, microcalcification, or architectural ... The right feature ... 
+被引用次数：5 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+Eliminating false-positive microcalcification clusters in a mammography CAD scheme using a Bayesian … - 所有 2 个版本 ?
+DC Edwards, J Papaioannou, Y Jiang, MA Kupinski, … - Proceedings of SPIE, 2004 - link.aip.org
+Eliminating false-positive microcalcification clusters in a mammography CAD scheme
+using a Bayesian neural ... clusters in a computer-aided diagnosis (CAD) scheme for
+detecting clustered microcalcifications in mammograms ... Eight cluster-based features ... 
+被引用次数：7 - 相关文章 - 网页搜索 
+
+
+
+
+
+New Particle Swarm Optimization for Feature Selection and Classification of Microcalcifications in …
+E Courses, T Surveys - Signal Processing, Communications and Networking, 2008. …, 2008 - ieeexplore.ieee.org
+... II. SEGMENTATION OF MICROCALCIFICATIONS Feature Selection Before extracting the
+texture features, GA NPSO microcalcifications should be segmented from the GA
+background of the mammographic images [15,17]. In X __ this paper, microcalcifications ... 
+网页搜索 
+
+Relevance vector machine for automatic detection of clustered microcalcifications - 所有 3 个版本 ?
+L Wei, Y Yang, RM Nishikawa, MN Wernick, A Edwards - Medical Imaging, IEEE Transactions on, 2005 - ieeexplore.ieee.org
+... RVM is based on Bayesian estimation theory, of which a distinctive feature is that
+it can yield a sparse decision function that is defined by only a very small number
+of so ... Index Terms—Breast cancer detection, computer-aided di- agnosis, mammography ... 
+被引用次数：16 - 相关文章 - 网页搜索 
+
+
+Mammographic masses characterization based on localized texture and dataset fractal analysis using … - 所有 4 个版本 ?
+ME Mavroforakis, HV Georgiou, N Dimitropoulos, D … - Artificial Intelligence In Medicine, 2006 - Elsevier
+... Many studies have been focused on the general issue of texture analysis on mammographic
+images, in ... 19] and [20], since the task of localization of tumors or microcalcifications
+is, apart ... difficulty, the selection of optimal parameters and configuration ... 
+被引用次数：6 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+A neural-genetic algorithm for feature selection and breast abnormality classification in digital … - 所有 3 个版本 ?
+P Zhang, B Verma, K Kumar - Neural Networks, 2004. Proceedings. 2004 IEEE International …, 2004 - ieeexplore.ieee.org
+... The obtained results show that different types of breast abnormality should use
+different features for classification. ... In mammography breast abnormalities can be
+easily divided into exhibiting microcalcification, and other lesions. ... 
+被引用次数：9 - 相关文章 - 网页搜索 
+
+SVM Based System for classification of Microcalcifications in Digital Mammograms - 所有 3 个版本 ?
+S Singh, V Kumar, HK Verma, D Singh - Engineering in Medicine and Biology Society, 2006. EMBS'06. …, 2006 - ieeexplore.ieee.org
+... 589–597, 1996. [16] AP Dhawan, Y. Chitre, M. Moskowitz, and E. Gruenstein,
+“Classification of mammographic microcalcification and structural features using
+an artificial neural network,” Annual International Conference of the IEEE Engineering ... 
+相关文章 - 网页搜索 
+
+
+
+Automatic detection of clustered microcalcifications in digital mammograms using mathematical … - 所有 2 个版本 ?
+S Halkiotis, T Botsis, M Rangoussi - Signal Processing, 2007 - Elsevier
+... Each candidate object is marked as such, using a binary image. The original mammogram
+is used for the final feature extraction step. ... Keywords: Microcalcifications;
+Mammography; Mathematical morphology; Dynamics; Neural networks; Radial basis ... 
+被引用次数：1 - 相关文章 - 网页搜索 - 图书馆搜索 
+
+An Approach Based on Immune Algorithm and SVM for Detection and Classification of …
+T Yang, S Guo, X Wu, X Wu - Bioinformatics and Biomedical Engineering, 2007. ICBBE 2007. …, 2007 - ieeexplore.ieee.org
+... Meanwhile, an IA based MCs’ features selector is provided to select an optimal feature
+subset, which can ... Keywords-computer aided diagnose; immune algorithm; mammogram;
+microcalcification; support vector machine ... Mammography is one of the most ... 
+相关文章 - 网页搜索 
+
+A Novel Wavelet-Statistics Based Feature Detection System for Detecting Microcalcifications
+KL Lee, M Orr, B Lithgow - Engineering in Medicine and Biology Society, 2005. IEEE-EMBS …, 2005 - ieeexplore.ieee.org
+... [5] Zheng, B., Qian, W. and Clarke, LP, Digital Mammography: Mixed Feature Neural
+Network with Spectral Entropy Decision for ... [9] Song, Dansheng, Qian, Wei and Clarke,
+Laurence P., Digital Mammography: Hybrid M-Channel Wavelet Transform for ... 
+网页搜索 
+
+
+Ant colony Optimization for Feature Selection and Classification of Microcalcifications in Digital …
+M Karnan, K Thangavel, R Sivakuar, K Geetha - Advanced Computing and Communications, 2006. ADCOM 2006. …, 2006 - ieeexplore.ieee.org
+... 2. Segmentation of Microcalcifications Before extracting the texture features,
+microcalcifications should be segmented from the background of the mammographic
+images [25]. In this paper, microcalcifications are segmented using Ant Colony ... 
+网页搜索 
+
+
+
+
+
+

@@ -1,0 +1,21 @@
+<div class="cnblogs_code">
+<pre>#include &lt;windows.h&gt;<span style="color: #000000;">
+#include </span><span style="color: #800000;">"</span><span style="color: #800000;">lauxlib.h</span><span style="color: #800000;">"</span>
+
+<span style="color: #008000;">/*</span><span style="color: #008000;"> Pop-up a Windows message box with your choice of message and caption </span><span style="color: #008000;">*/</span>
+<span style="color: #0000ff;">int</span> lua_msgbox(lua_State*<span style="color: #000000;"> L)
+{
+    </span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span>* message = luaL_checkstring(L, <span style="color: #800080;">1</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">const</span> <span style="color: #0000ff;">char</span>* caption = luaL_optstring(L, <span style="color: #800080;">2</span>, <span style="color: #800000;">""</span><span style="color: #000000;">);
+    </span><span style="color: #0000ff;">int</span> result =<span style="color: #000000;"> MessageBoxA(NULL, message, caption, MB_OK);
+    lua_pushnumber(L, result);
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+}
+
+</span><span style="color: #0000ff;">int</span> __declspec(dllexport) libinit(lua_State*<span style="color: #000000;"> L)
+{
+    lua_register(L, </span><span style="color: #800000;">"</span><span style="color: #800000;">msgbox</span><span style="color: #800000;">"</span><span style="color: #000000;">, lua_msgbox);
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<p>&nbsp;</p>

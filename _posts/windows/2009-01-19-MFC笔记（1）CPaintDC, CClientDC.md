@@ -1,0 +1,4 @@
+---
+categories: windows
+---
+http://imcc.blogbus.com/logs/1962781.html<br><b><br>1.CClientDC</b><br><br>CClientDC（客户区设备上下文）用于客户区的输出，它在构造函数中封装了GetDC()，在析构函数中封装了ReleaseDC()函数。一般在响应非窗口重画消息（如键盘输入时绘制文本、鼠标绘图）绘图时要用到它。用法是：<br><br>CClientDC dc(this);//this一般指向本窗口或当前活动视图<br><br>dc.TextOut(10,10,str,str.GetLength());<br><br>//利用dc输出文本，如果是在CScrollView中使用，还要注意调<br><br>//用OnPrepareDC(&amp;dc)调整设备上下文的坐标。<br><br><b>2.CPaintDC</b><br><br>CPaintDC 用于响应窗口重绘消息（WM_PAINT）是的绘图输出。CPaintDC在构造函数中调用BeginPaint()取得设备上下文，在析构函数中调用 EndPaint()释放设备上下文。EndPaint()除了释放设备上下文外，还负责从消息队列中清除WM_PAINT消息。因此，在处理窗口重画时，必须使用CPaintDC，否则WM_PAINT消息无法从消息队列中清除，将引起不断的窗口重画。CPaintDC也只能用在WM_PAINT消息处理之中。<br><br><b>3.CDC</b><br><br>直接使用CDC的例子是内存设备上下文，例如：<br><br>CDC dcMem; //声明一个CDC对象<br><br>dcMem.CreateCompatibleDC(&amp;dc); //创建设备描述表<br><br>pbmOld = dcMem.SelectObject(&amp;m_bmBall);//更改设备描述表属性<br><br>…//作一些绘制操作<br><br><br>dcMem.SelectObject(pbmOld);//恢复设备描述表的属性<br><br>dcMem.DeleteDC(); //可以不调用，而让析构函数去删除设备描述表<br><br>

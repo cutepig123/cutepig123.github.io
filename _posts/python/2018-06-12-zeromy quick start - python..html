@@ -1,0 +1,15 @@
+<p>软件：</p>
+<p>pip install pyzmq</p>
+<p>&nbsp;</p>
+<p>代码：</p>
+<p>==server.py</p>
+<p># &nbsp;<br />#&nbsp;&nbsp; Hello World server in Python &nbsp;<br />#&nbsp;&nbsp; Binds REP socket to tcp://*:5555 &nbsp;<br />#&nbsp;&nbsp; Expects "Hello" from client, replies with "World" &nbsp;<br /># &nbsp;<br />import zmq &nbsp;<br />import time &nbsp;<br />&nbsp; <br />context = zmq.Context() &nbsp;<br />socket = context.socket(zmq.REP) &nbsp;<br />socket.bind("tcp://*:5555") &nbsp;<br />&nbsp; <br />while True: &nbsp;<br />&nbsp;&nbsp;&nbsp; #&nbsp; Wait for next request from client &nbsp;<br />&nbsp;&nbsp;&nbsp; message = socket.recv() &nbsp;<br />&nbsp;&nbsp;&nbsp; print ("Received request: ", message)<br />&nbsp; <br />&nbsp;&nbsp;&nbsp; #&nbsp; Do some 'work' &nbsp;<br />&nbsp;&nbsp;&nbsp; time.sleep (1)&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #&nbsp;&nbsp; Do some 'work' &nbsp;<br />&nbsp; <br />&nbsp;&nbsp;&nbsp; #&nbsp; Send reply back to client &nbsp;<br />&nbsp;&nbsp;&nbsp; socket.send_string("World") &nbsp;<br /><br /></p>
+<p>==client.py</p>
+<p># &nbsp;<br />#&nbsp;&nbsp; Hello World client in Python &nbsp;<br />#&nbsp;&nbsp; Connects REQ socket to tcp://localhost:5555 &nbsp;<br />#&nbsp;&nbsp; Sends "Hello" to server, expects "World" back &nbsp;<br /># &nbsp;<br />import zmq &nbsp;<br />&nbsp; <br />context = zmq.Context() &nbsp;<br />&nbsp; <br />#&nbsp; Socket to talk to server &nbsp;<br />print ("Connecting to hello world server..."&nbsp; )<br />socket = context.socket(zmq.REQ) &nbsp;<br />socket.connect ("tcp://localhost:5555") &nbsp;<br />&nbsp; <br />#&nbsp; Do 10 requests, waiting each time for a response &nbsp;<br />for request in range (1,10): &nbsp;<br />&nbsp;&nbsp;&nbsp; print ("Sending request ", request,"..."&nbsp; )<br />&nbsp;&nbsp;&nbsp; socket.send_string ("Hello") &nbsp;<br />&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;<br />&nbsp;&nbsp;&nbsp; #&nbsp; Get the reply. &nbsp;<br />&nbsp;&nbsp;&nbsp; message = socket.recv() &nbsp;<br />&nbsp;&nbsp;&nbsp; print ("Received reply ", request, "[", message, "]"&nbsp; )<br /><br /></p>
+<p>步骤</p>
+<p>打开一个命令行，执行python server.py</p>
+<p>打开一个命令行，执行python client.py</p>
+<p>&nbsp;</p>
+<p>参考：</p>
+<p>https://blog.csdn.net/kent45/article/details/10397917</p>
+<p>&nbsp;</p>

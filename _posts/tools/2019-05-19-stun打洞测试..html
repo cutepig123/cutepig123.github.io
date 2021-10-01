@@ -1,0 +1,83 @@
+<p>nat穿透<strong>步骤</strong><br />代码</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:python;gutter:true;">import stun
+import json
+from pymemcache.client import base
+import socket
+
+# json.loads	json -&gt; python
+# json.dumps	python -&gt; json
+
+port = 54320
+memcached_server_ip = '119.247.42.174'
+
+def client(ip):
+	address = (ip, port)
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+	while True:
+		msg = input()
+		if not msg:
+			break
+		s.sendto(msg.encode(), address)
+
+def server():
+	address = ('0.0.0.0', port)
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.bind(address)
+
+	while True:
+		data, addr = s.recvfrom(2048)
+		if not data:
+			print( "client has exist")
+			break
+		print ("received:", data, "from", addr)
+
+	s.close()
+
+choices = {"1":"connect to stun server", "2":"connect to peer (ip, port)", "3":"listen at port %s"%port}
+choice = input(choices)
+choice = choice.split(' ')
+if choice[0]=='1':
+	nat_type, external_ip, external_port = stun.get_ip_info()
+	
+	client = base.Client((memcached_server_ip, 11212))
+
+	peers_json = client.get('nat_peers',{})
+	peers = json.loads(peers_json)
+	peers[external_ip] = [nat_type, external_ip, external_port]
+	peers_json = json.dumps(peers)
+	client.set('nat_peers', peers_json)
+	
+	print(peers)
+elif choice[0]=='2':
+	ip = choice[1]
+	client(ip)
+elif choice[0]=='3':
+	server()
+</pre>
+</div>
+<p>　　</p>
+<p><br /><strong>q: memcached如何设置？</strong><br />ref https://realpython.com/python-memcache-efficient-caching/<br />安装服务端<br />apt-get install memcached<br />sudo memcached -l 0.0.0.0:11212 &amp;<br />安装客户端<br />pip install pymemcache<br />测试<br />from pymemcache.client import base</p>
+<p># Don't forget to run `memcached' before running this next line:<br />client = base.Client(('192.168.1.115', 11212))</p>
+<p># Once the client is instantiated, you can access the cache:<br />client.set('some_key', 'some value')</p>
+<p># Retrieve previously set data again:<br />print(client.get('some_key'))</p>
+<p><strong>q：如何安装pystun？</strong><br />ref： https://github.com/talkiq/pystun3<br />pip install pystun3<br />测试<br />import stun<br />nat_type, external_ip, external_port = stun.get_ip_info()</p>
+<p><strong>q：python实现socket通讯(UDP) ？</strong><br />https://blog.csdn.net/ithomer/article/details/5969442</p>
+<p>server</p>
+<p>import socket</p>
+<p>address = ('127.0.0.1', 31500)<br />s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)<br />s.bind(address)</p>
+<p>while True:<br />&nbsp;&nbsp;&nbsp; data, addr = s.recvfrom(2048)<br />&nbsp;&nbsp;&nbsp; if not data:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; print "client has exist"<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break<br />&nbsp;&nbsp;&nbsp; print "received:", data, "from", addr</p>
+<p>s.close()</p>
+<p>client</p>
+<p>import socket</p>
+<p>address = ('127.0.0.1', 31500)<br />s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</p>
+<p>while True:<br />&nbsp;&nbsp;&nbsp; msg = raw_input()<br />&nbsp;&nbsp;&nbsp; if not msg:<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; break<br />&nbsp;&nbsp;&nbsp; s.sendto(msg.encode(), address)</p>
+<p>s.close()</p>
+<p><strong>q：如何打开stun调试选项查看详细通讯？</strong></p>
+<p>手机网络<br />G:\pytest&gt;python F:\Users\cutep\AppData\Local\Programs\Python\Python37-32\Lib\site-packages\stun\cli.py -d<br />DEBUG:pystun3:Do Test1<br />DEBUG:pystun3:Trying STUN host: stun.ekiga.net<br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:recvfrom: ('216.93.246.18', 3478)<br />DEBUG:pystun3:Result: {'Resp': True, 'ExternalIP': '203.160.80.141', 'ExternalPort': 52869, 'SourceIP': '216.93.246.18', 'SourcePort': 3478, 'ChangedIP': '216.93.246.17', 'ChangedPort': 3479}<br />DEBUG:pystun3:<strong>Do Test2</strong><br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:Result: {'Resp': False, 'ExternalIP': None, 'ExternalPort': None, 'SourceIP': None, 'SourcePort': None, 'ChangedIP': None,<br />'ChangedPort': None}<br />DEBUG:pystun3:Do Test1<br />DEBUG:pystun3:sendto: ('216.93.246.17', 3479)<br />DEBUG:pystun3:recvfrom: ('216.93.246.17', 3479)<br />DEBUG:pystun3:Result: {'Resp': True, 'ExternalIP': '203.160.80.141', 'ExternalPort': 7758, 'SourceIP': '216.93.246.17', 'SourcePort': 3479, 'ChangedIP': '216.93.246.18', 'ChangedPort': 3478}<br />NAT Type: Symmetric NAT<br />External IP: 203.160.80.141<br />External Port: 7758<br />Press any key to continue</p>
+<p>家庭网络<br />G:\pytest&gt;python F:\Users\cutep\AppData\Local\Programs\Python\Python37-32\Lib\site-packages\stun\cli.py -d<br />DEBUG:pystun3:Do Test1<br />DEBUG:pystun3:Trying STUN host: stun.ekiga.net<br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:recvfrom: ('216.93.246.18', 3478)<br />DEBUG:pystun3:Result: {'Resp': True, 'ExternalIP': '119.247.42.174', 'ExternalPort': 54320, 'SourceIP': '216.93.246.18', 'SourcePort': 3478, 'ChangedIP': '216.93.246.17', 'ChangedPort': 3479}<br />DEBUG:pystun3:<strong>Do Test2</strong><br />DEBUG:pystun3:sendto: ('stun.ekiga.net', 3478)<br />DEBUG:pystun3:recvfrom: ('216.93.246.17', 3479)<br />DEBUG:pystun3:Result: {'Resp': True, 'ExternalIP': '119.247.42.174', 'ExternalPort': 54320, 'SourceIP': '216.93.246.17', 'SourcePort': 3479, 'ChangedIP': '216.93.246.17', 'ChangedPort': 3479}<br />NAT Type: Full Cone<br />External IP: 119.247.42.174<br />External Port: 54320<br />Press any key to continue</p>
+<p>分析，</p>
+<p>Test2是向一个ip发消息，但是从另外一个ip收消息，查看能否收到消息，以及消息显示的ip和端口和test1是否一样</p>
+<p>如果收不到消息，说明不是full cone nat</p>
+<p>&nbsp;</p>

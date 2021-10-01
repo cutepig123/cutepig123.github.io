@@ -1,0 +1,20 @@
+<p>看了一段时间的actor model，goroutine之类的东东，最近在github上写了个简单的框架，</p>
+<p>注：未做大量测试，仅供学习用，勿用于生产用途</p>
+<p>&nbsp;</p>
+<p>链接： https://github.com/hetest/SimpleActorModel</p>
+<p>里面有几个例子</p>
+<ul>
+<li>example_actor_singlethread.cpp 单线程actor框架</li>
+<li>example_actor_thread.cpp 每个actor一个线程</li>
+<li>example_lift.cpp 电梯调度程序，使用每个actor一个线程</li>
+<li>example_actor_coroutine.cpp 使用coroutine做单线程调度的actor框架</li>
+<li>example_actor_coroutine_ring.cpp 环形队列测试</li>
+<li>actor_threadpool.cpp 基于线程池的actor框架</li>
+<li>example_actor_coroutine_yield.cpp yield测试</li>
+<li>example_lift.cpp 电梯调度例子（注：未做详细测试）</li>
+<li>example_task.cpp 利用actor model实现的task框架</li>
+<li>testLibTask-channel.cpp task框架channel测试，该框架支持coroutine+基于work sharing的多线程调度</li>
+<li>testLibTask-channel2.cpp task框架channel测试</li>
+<li>testLibTask-skynet.cpp boost::fiber里的skynet测试</li>
+<li>testLibTask-sleep.cpp sleep测试</li>
+</ul>

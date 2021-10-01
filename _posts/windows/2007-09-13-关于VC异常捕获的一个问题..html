@@ -1,0 +1,40 @@
+<p>关于VC异常捕获的一个问题:<br />
+发信站: 水木社区 (Thu Sep 13 18:25:57 2007), 站内</p>
+<p>关于VC异常捕获的一个问题:<br />
+在MFC中如何用一个函数捕获所有异常，在有异常的时候能转到自己的处理程序，比如显示程序的当前堆栈及寄存器信息。<br />
+现在的问题是：<br />
+1.我发现try语句会漏掉一些异常<br />
+2.MFC中异常我只知道在每个相关函数中加入异常捕获的代码，感觉这种方式太麻烦了。<br />
+我就想就修改一处地方便可以捕获所有异常，请问该怎么做呢？<br />
+多谢！</p>
+<p>处理结构化异常SetUnhandledExceptionFilter&nbsp;&nbsp;&nbsp;&nbsp; <br />
+先在程序初始化的时候 设置 回调函数，回调函数对应有处理程序，处理程序会把dump到的内存堆栈保存下来。</p>
+<p>然后用该堆栈就可调试了。</p>
+<p>int APIENTRY WinMain(HINSTANCE hInstance,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; HINSTANCE hPrevInstance,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; LPTSTR&nbsp;&nbsp;&nbsp; lpCmdLine,<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; int&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; nCmdShow)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; hInst = hInstance;<br />
+&nbsp;&nbsp;&nbsp; ::SetUnhandledExceptionFilter(UEFilter);<br />
+}</p>
+<p>LONG WINAPI UEFilter(PEXCEPTION_POINTERS ExceptionInfo)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; // make up crash handler app name<br />
+&nbsp;&nbsp;&nbsp; char szFileName[_MAX_PATH];<br />
+&nbsp;&nbsp;&nbsp; ::GetModuleFileName(NULL, szFileName, _MAX_PATH);</p>
+<p>&nbsp;&nbsp;&nbsp; std::string strFileName;<br />
+&nbsp;&nbsp;&nbsp; std::string strFilePath;<br />
+&nbsp;&nbsp;&nbsp; ::SplitFileName(szFileName, strFileName, strFilePath);</p>
+<p>&nbsp;&nbsp;&nbsp; strFilePath += "CrashHandler.exe";</p>
+<p>&nbsp;&nbsp;&nbsp; // make up share memory name</p>
+<p>&nbsp;&nbsp;&nbsp; DWORD dwTick = ::GetTickCount();<br />
+&nbsp;&nbsp;&nbsp; char szMapFileName[256];<br />
+&nbsp;&nbsp;&nbsp; _snprintf(szMapFileName, 256, "%s%d", strFileName.c_str(), dwTick);</p>
+<p>&nbsp;&nbsp;&nbsp; CrashAdapter::Handle(strFilePath.c_str(), szMapFileName, ExceptionInfo);</p>
+<p>&nbsp;&nbsp;&nbsp; return EXCEPTION_EXECUTE_HANDLER;<br />
+} </p>
+<p>&nbsp;</p>
+<p><br />
+Trackback: http://tb.blog.csdn.net/TrackBack.aspx?PostId=1566035</p>
+<p>&nbsp;</p>

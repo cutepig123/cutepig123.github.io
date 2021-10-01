@@ -1,0 +1,95 @@
+<p>1）lua coroutine使用方法<br />http://timyang.net/lua/lua-coroutine/<br /><br /></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('fa7654c2-f305-4949-b9e0-9136ccc0facd')"><img id="code_img_closed_fa7654c2-f305-4949-b9e0-9136ccc0facd" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_fa7654c2-f305-4949-b9e0-9136ccc0facd" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('fa7654c2-f305-4949-b9e0-9136ccc0facd',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_fa7654c2-f305-4949-b9e0-9136ccc0facd" class="cnblogs_code_hide">
+<pre>co =<span style="color: #000000;"> coroutine.create(function ()
+        </span><span style="color: #0000ff;">for</span> i=1,10<span style="color: #000000;"> do
+            </span><span style="color: #0000ff;">print</span>(<span style="color: #800000;">"</span><span style="color: #800000;">co</span><span style="color: #800000;">"</span><span style="color: #000000;">, i)
+            coroutine.</span><span style="color: #0000ff;">yield</span><span style="color: #000000;">()
+        end
+    end)
+
+从主线程调用
+coroutine.resume(co)
+会依次打印1到10</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>说明<br />&nbsp;LUA提供lua_newthread用于手工创建一个coroutine<br />&nbsp;lua_yield用于挂起一个coroutine，不过该函数只能用于coroutine内部<br />&nbsp;lua_resume用于启动一个coroutine，它可以用于coroutine没有运行时启动之，也可以用于coroutine挂起时重新启动<br />之。lua_resume在两种情况下返回：coroutine挂起或者执行完毕，否则lua_resume不返回<br />2）为什么要用coroutine？<br /><br />&nbsp;&nbsp;&nbsp; 每个coroutine有自己私有的stack及局部变量。<br />&nbsp;&nbsp;&nbsp; 同一时间只有一个coroutine在执行，无需对全局变量加锁。<br />&nbsp;&nbsp;&nbsp; 顺序可控，完全由程序控制执行的顺序。而通常的多线程一旦启动，它的运行时序是没法预测的，因此通常会给测试所有的情况带来困难。所以能用coroutine解决的场合应当优先使用coroutine。<br /><br />&nbsp;&nbsp; &nbsp;协程最大的应用是取代回调机制，当需要异步执行的时候，启动一个协程，然后当前协程挂起去处理其他事务。异步结果完成后再继续执行，看上去是阻塞但实际上不会影响其他应用，另外一个作用是实现复杂跌代器。<br /><br />3） 如何实现coroutine？<br />a）云风大师有一个实现 http://blog.codingnow.com/2012/07/c_coroutine.html<br />其主要原理是使用c posix函数setcontext来修改context（http://en.wikipedia.org/wiki/Setcontext）<br />b) 对应于windows下的函数是SetThreadContext <br />codeproject下有一个帖子Unix ucontext_t Operations on Windows Platforms基于windows api实现了setcontext函数<br />http://www.codeproject.com/Articles/4225/Unix-ucontext_t-Operations-on-Windows-Platforms<br />示例代码</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('230e4f5b-f44c-414d-9c70-4e3b1f90d17d')"><img id="code_img_closed_230e4f5b-f44c-414d-9c70-4e3b1f90d17d" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_230e4f5b-f44c-414d-9c70-4e3b1f90d17d" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('230e4f5b-f44c-414d-9c70-4e3b1f90d17d',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_230e4f5b-f44c-414d-9c70-4e3b1f90d17d" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;"> testcontext.c : demo of ucontex_t operations </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+#include </span>&lt;stdio.h&gt;<span style="color: #000000;">
+#include </span>&lt;stdlib.h&gt;<span style="color: #000000;">
+#include </span>&lt;ucontext.h&gt;<span style="color: #000000;">
+
+ucontext_t auc,buc,mainuc;
+
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> a()
+{
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i;
+
+    </span><span style="color: #0000ff;">for</span> (i = <span style="color: #800080;">0</span>; i &lt; <span style="color: #800080;">10</span>; i++<span style="color: #000000;">)
+    {
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">a</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        swapcontext(</span>&amp;auc, &amp;buc);        <span style="color: #008000;">/*</span><span style="color: #008000;"> switch to thread B </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    }
+
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">\nswitching to main\n</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+    swapcontext(</span>&amp;auc, &amp;mainuc);         <span style="color: #008000;">/*</span><span style="color: #008000;"> switch to main thread </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+}
+
+</span><span style="color: #0000ff;">void</span><span style="color: #000000;"> b()
+{
+    </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> i;
+
+    </span><span style="color: #0000ff;">for</span> (i = <span style="color: #800080;">0</span>; i &lt; <span style="color: #800080;">10</span>; i++<span style="color: #000000;">)
+    {
+        printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">b</span><span style="color: #800000;">"</span><span style="color: #000000;">);
+        swapcontext(</span>&amp;buc, &amp;auc);        <span style="color: #008000;">/*</span><span style="color: #008000;"> switch to thread A </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    }
+}
+
+</span><span style="color: #0000ff;">int</span> main(<span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">start\n</span><span style="color: #800000;">"</span>);                  <span style="color: #008000;">/*</span><span style="color: #008000;"> main thread starts </span><span style="color: #008000;">*/</span>
+
+    <span style="color: #008000;">/*</span><span style="color: #008000;"> Set up context for thread A (Unix code, see manpages) </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    getcontext(</span>&amp;<span style="color: #000000;">auc);
+    auc.uc_stack.ss_size </span>= <span style="color: #800080;">16</span> * <span style="color: #800080;">1024</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">if</span> ((auc.uc_stack.ss_sp = malloc(auc.uc_stack.ss_size)) ==<span style="color: #000000;"> NULL)
+        perror(</span><span style="color: #800000;">"</span><span style="color: #800000;">malloc</span><span style="color: #800000;">"</span>), exit(<span style="color: #800080;">1</span><span style="color: #000000;">);
+
+    auc.uc_stack.ss_flags </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    makecontext(</span>&amp;auc, a, <span style="color: #800080;">0</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">/*</span><span style="color: #008000;"> Set up context for thread B </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    getcontext(</span>&amp;<span style="color: #000000;">buc);
+    buc.uc_stack.ss_size </span>= <span style="color: #800080;">16</span> * <span style="color: #800080;">1024</span><span style="color: #000000;">;
+
+    </span><span style="color: #0000ff;">if</span> ((buc.uc_stack.ss_sp = malloc(buc.uc_stack.ss_size)) ==<span style="color: #000000;"> NULL)
+        perror(</span><span style="color: #800000;">"</span><span style="color: #800000;">malloc</span><span style="color: #800000;">"</span>), exit(<span style="color: #800080;">1</span><span style="color: #000000;">);
+
+    buc.uc_stack.ss_flags </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+    makecontext(</span>&amp;buc, b, <span style="color: #800080;">0</span><span style="color: #000000;">);
+
+    </span><span style="color: #008000;">/*</span><span style="color: #008000;"> Switch to A </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    getcontext(</span>&amp;mainuc);           <span style="color: #008000;">/*</span><span style="color: #008000;"> Save the context of main thread </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+    swapcontext(</span>&amp;mainuc, &amp;auc);    <span style="color: #008000;">/*</span><span style="color: #008000;"> Switch to thread A </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+    printf(</span><span style="color: #800000;">"</span><span style="color: #800000;">\ndone\n</span><span style="color: #800000;">"</span>);  <span style="color: #008000;">/*</span><span style="color: #008000;"> Execution control returned to main thread </span><span style="color: #008000;">*/</span>
+    <span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+运行结果
+C:\</span>&gt;<span style="color: #000000;">testcontext.exe
+start
+abababababababababab
+switching to main
+
+done
+C:\</span>&gt;</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>c）context之类api的实现<br />在FreeBSD上你可以参考libc里的makecontext的实现：<br />/usr/src/lib/libc/i386/gen/makecontext.c<br /><br /></p>
+<p>4）俺在github上的测试代码</p>
+<p><a href="https://github.com/cutepig123/TestCoroutine/">https://github.com/cutepig123/TestCoroutine/</a></p>
+<p><br /><br /></p>

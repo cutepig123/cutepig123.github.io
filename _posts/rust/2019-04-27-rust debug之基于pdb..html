@@ -1,0 +1,33 @@
+<p>方法一：</p>
+<p>用visual studio</p>
+<p>&nbsp;</p>
+<p>步骤：</p>
+<p>安装msvc工具链&nbsp;rustup toolchain install stable-x86_64-pc-windows-msvc</p>
+<p>切换到该工具链&nbsp;rustup default stable-x86_64-pc-windows-msvc</p>
+<p>编译代码&nbsp;F:\rust_test\t1&gt;cargo build<br />&nbsp;&nbsp; Compiling t1 v0.1.0 (F:\rust_test\t1)<br />&nbsp;&nbsp;&nbsp; Finished dev [unoptimized + debuginfo] target(s) in 1.71s</p>
+<p>&nbsp;</p>
+<p>调试F:\rust_test\t1&gt;"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\IDE\devenv.exe" F:\rust_test\t1\target\debug\t1.exe</p>
+<p>然后你就可以下断电了</p>
+<p>&nbsp;</p>
+<p>方法二：用vscode</p>
+<p>参考链接&nbsp;<a href="https://www.brycevandyk.com/debug-rust-on-windows-with-visual-studio-code-and-the-msvc-debugger/">https://www.brycevandyk.com/debug-rust-on-windows-with-visual-studio-code-and-the-msvc-debugger/</a></p>
+<p>步骤</p>
+<p>安装拓展&nbsp;</p>
+<ul>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=ms-vscode.cpptools">C/C++</a>: Brings in support for debugging MSVC applications. Since we're using MSVC behind the scenes, this gives us some debugging support for our Rust programs.</li>
+<li><a href="https://marketplace.visualstudio.com/items?itemName=webfreak.debug">Native Debug</a>: Allows us to set breakpoints by clicking next to line numbers.</li>
+
+
+
+</ul>
+<p>配置</p>
+<p><img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190427121015522-1812968090.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/23777/201904/23777-20190427121033757-1053899579.png" alt="" /></p>
+<p>&nbsp;</p>
+<p>遗留问题</p>
+<p>在debug的时候vscode总是找不到代码</p>
+<p>但是goto definition是对的</p>
+<p>&nbsp;暂时解决方案：&nbsp;xcopy /c/d/e C:\Users\cutep\.rustup\toolchains\stable-x86_64-pc-windows-msvc\lib\rustlib\src\rust g:\rustc\fc50f328b0353b285421b8ff5d4100966387a997</p>
+<p>&nbsp;</p>

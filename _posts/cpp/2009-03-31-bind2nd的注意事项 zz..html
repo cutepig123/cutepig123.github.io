@@ -1,0 +1,4 @@
+<div id="content"><p>http://blog.pfan.cn/akey307/40759.html</p><p>bind2nd 的第一参数是一个函数 (假设为f), 那么 f 的参数不可以为引用， 比如，</p>
+<p>class Stock<br>{<br>...<br>public:<br>&nbsp;&nbsp;&nbsp; hasName(string);<br>&nbsp;&nbsp;&nbsp; hasName_2(string &amp;);<br>};</p>
+<p><br>list &lt;Stock&gt; l;<br>l.push_back(...);<br>...<br>find_if(l.begin(), l.end(), bind2nd(mem_fun_ref(&amp;Stock::hasName), "Shell")); // 这个是正确的<br>find_if(l.begin(), l.end(), bind2nd(mem_fun_ref(&amp;Stock::hasName_2), "Shell")); // 这个是错误的， 不能通过编译</p>
+<p>这是因为 bind2nd 第二个参数也是引用， 如果 f 的参数也是引用， 那么在 bind2nd 的内部， 就会出现引用的引用， 所以会产生编译错误。</p></div>

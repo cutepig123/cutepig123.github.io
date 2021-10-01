@@ -1,0 +1,32 @@
+<p>问题：</p>
+<p>google translate对于大文件不支持，咋办？</p>
+<p>&nbsp;</p>
+<p>思路：自己写个函数把的文件拆成小文件，再用google translate！</p>
+<p>&nbsp;</p>
+<p>code：</p>
+<p>&nbsp;</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">from</span><span style="color: #000000;"> googletrans import Translator
+import sys
+translator </span>=<span style="color: #000000;"> Translator()
+fname</span>=sys.argv[<span style="color: #800080;">1</span><span style="color: #000000;">]
+foname</span>=fname + <span style="color: #800000;">'</span><span style="color: #800000;">-cn.txt</span><span style="color: #800000;">'</span><span style="color: #000000;">
+cont</span>=<span style="color: #000000;">open(fname).read()
+fdes </span>= open(foname,<span style="color: #800000;">'</span><span style="color: #800000;">w</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+N</span>=<span style="color: #800080;">5000</span><span style="color: #000000;">
+i</span>=<span style="color: #800080;">0</span><span style="color: #000000;">
+L</span>=<span style="color: #000000;">len(cont)
+</span><span style="color: #0000ff;">while</span> i&lt;<span style="color: #000000;">L:
+    print (</span><span style="color: #800080;">1.0</span>*i/<span style="color: #000000;">L)
+    i2 </span>= min(i+<span style="color: #000000;">N, L)
+    subCont </span>=<span style="color: #000000;"> cont[i:i2]
+    s</span>=(translator.translate(subCont, src=<span style="color: #800000;">'</span><span style="color: #800000;">en</span><span style="color: #800000;">'</span>, dest=<span style="color: #800000;">'</span><span style="color: #800000;">zh-cn</span><span style="color: #800000;">'</span><span style="color: #000000;">))
+    </span><span style="color: #0000ff;">try</span><span style="color: #000000;">:
+        fdes.write(str(s.text))
+    except:
+        pass
+    i </span>= i+<span style="color: #000000;">N
+fdes.close()
+    </span></pre>
+</div>
+<p>&nbsp;</p>

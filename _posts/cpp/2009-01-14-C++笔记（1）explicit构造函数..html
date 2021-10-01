@@ -1,0 +1,44 @@
+<h1><a href="http://blog.csdn.net/smilelance/archive/2007/03/14/1528737.aspx">Explicit Constructors(显式构造函数)</a><cite class="fav_csdnstylebykimi"><a href="javascript:d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(saveit=window.open('http://wz.csdn.net/storeit.aspx?t='+escape(d.title)+'&amp;u='+escape(d.location.href)+'&amp;c='+escape(t),'saveit','scrollbars=no,width=590,height=300,left=75,top=20,status=no,resizable=yes'));saveit.focus();" class="fav_csdnstylebykimi" title="收藏到我的网摘中，并分享给我的朋友">收藏</a></cite></h1>
+<div class="blogstory"><br>&nbsp;
+<div><strong>按照默认规定，只有一个参数的构造函数也定义了一个隐式转换，将该构造函数对应数据类型的数据转换为该类对象，如下面所示：</strong></div>
+<div>class String {</div>
+<div>String ( const char* p );&nbsp;<span style="font-size: 9pt;">// </span>用C风格的字符串p作为初始化值</div>
+<div>//…</div>
+<div>}</div>
+<div>String s1 = “hello”;&nbsp;//OK 隐式转换，等价于String s1 = String（“hello”）;</div>
+<div>&nbsp;</div>
+<div><strong>但是有的时候可能会不需要这种隐式转换，如下：</strong></div>
+<div>class String {</div>
+<div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; String ( int n );&nbsp;//</span>本意是预先分配n个字节给字符串</div>
+<div>String ( const char* p );&nbsp;<span style="font-size: 9pt;">// </span>用C风格的字符串p作为初始化值</div>
+<div>//…</div>
+<div style="text-indent: 21pt;">}</div>
+<div style="text-indent: 21pt;">&nbsp;</div>
+<div>下面两种写法比较正常：</div>
+<div style="text-indent: 21pt;">String s2 ( 10 );<span>&nbsp;&nbsp; //OK&nbsp;</span>分配10个字节的空字符串</div>
+<div style="text-indent: 21pt;">String s3 = String ( 10 );&nbsp;//OK&nbsp;分配10个字节的空字符串</div>
+<div style="text-indent: 21pt;">&nbsp;</div>
+<div>下面两种写法就比较疑惑了：</div>
+<div style="text-indent: 21pt;">String s4 = 10;&nbsp;//编译通过，也是分配10个字节的空字符串</div>
+<div style="text-indent: 21pt;">String s5 = ‘a’;&nbsp;//编译通过，分配int（‘a’）个字节的空字符串</div>
+<div style="text-indent: 21pt;">&nbsp;</div>
+<div>s4 和s5 分别把一个int型和char型，隐式转换成了分配若干字节的空字符串，容易令人误解。</div>
+<div>为了避免这种错误的发生，我们可以声明显示的转换，使用<strong>explicit</strong> 关键字：</div>
+<div>class String {</div>
+<div><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>explicit</strong> String ( int n );&nbsp;//</span>本意是预先分配n个字节给字符串</div>
+<div>String ( const char* p );&nbsp;<span style="font-size: 9pt;">// </span>用C风格的字符串p作为初始化值</div>
+<div>//…</div>
+<div style="text-indent: 21pt;">}</div>
+<div>加上<strong>explicit</strong><strong>，</strong>就抑制了String ( int n )的隐式转换，</div>
+<div>&nbsp;</div>
+<div>下面两种写法仍然正确：</div>
+<div style="text-indent: 21pt;">String s2 ( 10 );<span>&nbsp;&nbsp; //OK&nbsp;</span>分配10个字节的空字符串</div>
+<div style="text-indent: 21pt;">String s3 = String ( 10 );&nbsp;//OK&nbsp;分配10个字节的空字符串</div>
+<div style="text-indent: 21pt;">&nbsp;</div>
+<div>下面两种写法就不允许了：</div>
+<div style="text-indent: 21pt;">String s4 = 10;&nbsp;//编译不通过，不允许隐式的转换</div>
+<div style="text-indent: 21pt;">String s5 = ‘a’;&nbsp;//编译不通过，不允许隐式的转换</div>
+<div style="text-indent: 21pt;">&nbsp;</div>
+<div>因此，某些时候，<strong>explicit</strong> 可以有效得防止构造函数的隐式转换带来的错误或者误解<br><br>----------------------------------------------------------<br>explicit &nbsp; 只对构造函数起作用，用来抑制隐式转换。如： &nbsp; <br> &nbsp; class &nbsp; A &nbsp; { &nbsp; <br> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; A(int &nbsp; a); &nbsp; <br> &nbsp; }; &nbsp; <br> &nbsp; int &nbsp; Function(A &nbsp; a); &nbsp; <br> &nbsp;  &nbsp; <br> &nbsp; 当调用 &nbsp; Function(2) &nbsp; 的时候，2 &nbsp; 会隐式转换为 &nbsp; A &nbsp; 类型。这种情况常常不是程序员想要的结果，所以，要避免之，就可以这样写： &nbsp; <br> &nbsp;  &nbsp; <br> &nbsp; class &nbsp; A &nbsp; { &nbsp; <br> &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; explicit &nbsp; A(int &nbsp; a); &nbsp; <br> &nbsp; }; &nbsp; <br> &nbsp; int &nbsp; Function(A &nbsp; a); &nbsp; <br> &nbsp;  &nbsp; <br> &nbsp; 这样，当调用 &nbsp; Function(2) &nbsp; 的时候，编译器会给出错误信息（除非 &nbsp; Function &nbsp; 有个以 &nbsp; int &nbsp; 为参数的重载形式），这就避免了在程序员毫不知情的情况下出现错误。<br><br>
+    <span id="Post.ascx_ViewPost_PreviousAndNextEntriesUp"></span>
+    <script>function StorePage(){d=document;t=d.selection?(d.selection.type!='None'?d.selection.createRange().text:''):(d.getSelection?d.getSelection():'');void(keyit=window.open('http://www.365key.com/storeit.aspx?t='+escape(d.title)+'&u='+escape(d.location.href)+'&c='+escape(t),'keyit','scrollbars=no,width=475,height=575,left=75,top=20,status=no,resizable=yes'));keyit.focus();}</script><font color="#ff1493">总结：explicit &nbsp; 只对构造函数起作用，用来抑制隐式转换。</font><br><br>参考：<br>http://blog.csdn.net/smilelance/archive/2007/03/14/1528737.aspx<br>http://topic.csdn.net/t/20040509/15/3046021.html<br></div></div>

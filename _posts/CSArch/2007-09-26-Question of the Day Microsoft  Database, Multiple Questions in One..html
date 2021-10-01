@@ -1,0 +1,105 @@
+<p>Question of the Day: Microsoft | Database, Multiple Questions in One<br />
+from CareerCup by Jason Yip<br />
+HR: SQL What is an index? Explain cluster index. What are the different types of joins. Explain. Explain normalizatiion. What is a foreign key? What is the difference between a primary key and a foreign key? Other basic SQL concepts.</p>
+<p>问:<span style="color: red">Cluster Index和Noncluster Index的区别</span>,主要是使用上的区别</p>
+<p>Cluster Index和Noncluster Index的结构都是平衡树。它们的主要区别是Cluster Index的叶子节点是DATA PAGE而Noncluster Index的叶子节点是数据在DATA PAGE中的指针</p>
+<p>Cluster Index使表记录按物理地址排序,唯一(一般被主键占用)<br />
+Noncluster Index使表记录按逻辑地址排序,多个</p>
+<p>Cluster Index 在表中只能有一个，而Noncluster Index在表中可以有多个，<br />
+通常下面情况可以考虑设置为Cluster Index ：<br />
+1含数量有限的唯一值的列. <br />
+2用下列运算符返回一个范围值的查询：BETWEEN、&gt;、&gt;=、&lt; 和 &lt;=。 <br />
+3回大结果集的查询。</p>
+<p>可考虑将聚集索引用于： </p>
+<p>包含大量非重复值的列。</p>
+<p><br />
+使用下列运算符返回一个范围值的查询：BETWEEN、&gt;、&gt;=、&lt; 和 &lt;=。</p>
+<p><br />
+被连续访问的列。</p>
+<p><br />
+返回大型结果集的查询。</p>
+<p><br />
+经常被使用联接或 GROUP BY 子句的查询访问的列；一般来说，这些是外键列。对 ORDER BY 或 GROUP BY 子句中指定的列进行索引，可以使 SQL Server 不必对数据进行排序，因为这些行已经排序。这样可以提高查询性能。</p>
+<p><br />
+OLTP 类型的应用程序，这些程序要求进行非常快速的单行查找（一般通过主键）。应在主键上创建聚集索引。 <br />
+聚集索引不适用于： </p>
+<p>频繁更改的列 <br />
+这将导致整行移动（因为 SQL Server 必须按物理顺序保留行中的数据值）。这一点要特别注意，因为在大数据量事务处理系统中数据是易失的。</p>
+<p>宽键 <br />
+来自聚集索引的键值由所有非聚集索引作为查找键使用，因此存储在每个非聚集索引的叶条目内。</p>
+<p>每个表中只能创建一个聚集索引,每个表可以创建的非聚集索引最多为 249 个</p>
+<p>索引是在数据库表或者视图上创建的对象，目的是为了加快对表或视图的查询的速度</p>
+<p>按照存储方式分为：聚集与非聚集索引<br />
+按照维护与管理索引角度分为：唯一索引、复合索引和系统自动创建的索引</p>
+<p>索引的结构是由：根节点---&gt;非叶节点---&gt;非叶节点---&gt;叶节点</p>
+<p><br />
+1、聚集索引:表中存储的数据按照索引的顺序存储,检索效率比普通索引高,但对数据新增/修改/删除的影响比较大<br />
+特点：<br />
+　 <br />
+　 (1) 一个表可以最多可以创建249个索引<br />
+　 (2) 先建聚集索引才能创建非聚集索引<br />
+&nbsp;&nbsp; (3) 非聚集索引数据与索引不同序<br />
+&nbsp;&nbsp; (4) 数据与索引在不同位置<br />
+&nbsp;&nbsp; (5) 索引在叶节点上存储,在叶节点上有一个＂指针＂直接指向要查询的数据区域<br />
+&nbsp;&nbsp; (6) 数据不会根据索引键的顺序重新排列数据<br />
+&nbsp;&nbsp; <br />
+　创建聚集索引的语法：<br />
+&nbsp; create NONCLUSTERED INDEX idximpID ON EMP(empID)<br />
+２、非聚集索引:不影响表中的数据存储顺序,检索效率比聚集索引低,对数据新增/修改/删除的影响很少<br />
+特点：<br />
+&nbsp; (1) 无索引，数据无序<br />
+&nbsp; (2) 有索引，数据与索引同序 <br />
+&nbsp; (3) 数据会根据索引键的顺序重新排列数据<br />
+&nbsp; (4) 一个表只能有一个索引<br />
+&nbsp; (5) 叶节点的指针指向的数据也在同一位置存储<br />
+语法：<br />
+create CLUSTERED INDEX idxempID on emp(empID)<br />
+３、惟一索引：惟一索引可以确保索引列不包含重复的值.<br />
+可以用多个列，但是索引可以确保索引列中每个值组合都是唯一的<br />
+姓&nbsp; 名<br />
+李&nbsp; 二<br />
+张&nbsp; 三<br />
+王&nbsp; 五<br />
+语法： create unique index idxempid on emp(姓，名)</p>
+<p>4、复合索引：如果在两上以上的列上创建一个索引，则称为复合索引。<br />
+那么，不可能有两行的姓和名是重复的<br />
+语法：<br />
+create index indxfullname on addressbook(firstname,lastname)</p>
+<p>5、系统自建的索引:在使用T_sql语句创建表的时候使用PRIMARY KEY或UNIQUE约束时，会在表上自动创建一个惟一索引<br />
+自动创建的索引是无法删除的<br />
+语法：<br />
+create table ABc<br />
+( empID int primary key,<br />
+&nbsp; firstname varchar(50)UNIQUE,<br />
+&nbsp; lastname&nbsp; varchar(50)UNIQUE,<br />
+)<br />
+这样的结果就出来了三个索引，但只有一个聚集索引哦</p>
+<p><br />
+６、创建索引的方法：<br />
+1、企业管理器中<br />
+&nbsp;&nbsp; (1)右击某个表，所有任务---管理索引，打开管理索引，单击&#8220;新建&#8221;就可以创建索引<br />
+&nbsp;&nbsp; (2)在设计表中进行设计表，管理索引/键<br />
+&nbsp;&nbsp; (3)在关系图中，添加表后右击关系图中的某个表，就有&#8220;索引/键&#8221;<br />
+&nbsp;&nbsp; (4)通过向导,数据库---创建索引向导<br />
+&nbsp;&nbsp; (5)通过T-SQL语句<br />
+2、能过&#8220;索引优化向导&#8221;来优化索引的向导，通过它可以决定选择哪些列做为索引列<br />
+　</p>
+<p>&nbsp;</p>
+<p>实验的流程：<br />
+1、先创建一个表，然后查看一下他的占用资源情况及select * from 表<br />
+&nbsp;&nbsp;&nbsp; 看一下排序<br />
+2、然后创建索引，在观看一下占用资源的情况，及排序情况，看看聚集与非聚集的排序是<br />
+　　否用变化<br />
+　答案是：聚集的有变化，非聚集的排序与未创建索引之前一样 </p>
+<p><br />
+<span style="color: red">内联结、外联结、左联结、右联结 </span><br />
+Posted on 2007-09-11 20:49 水清木华 阅读(18) 评论(0)&nbsp; 编辑&nbsp; 收藏&nbsp; <br />
+1． 内联结：将两个表中存在联结关系的字段符合联结关系的那些记录形成记录集的联结。</p>
+<p>2． 外联结：分为外左联结和外右联结。</p>
+<p>左联结A、B表的意思就是将表A中的全部记录和表B中联结的字段与表A的联结字段符合联结条件的那些记录形成的记录集的联结，这里注意的是最后出来的记录集会包括表A的全部记录。</p>
+<p>右联结A、B表的结果和左联结B、A的结果是一样的，也就是说：</p>
+<p>Select A.name B.name From A Left Join B On A.id=B.id </p>
+<p>和Select A.name B.name From B Right Join A on B.id=A.id执行后的结果是一样的。</p>
+<p>3．全联结：将两个表中存在联结关系的字段的所有记录取出形成记录集的联结（这个不需要记忆，只要是查询中提到了的表的字段都会取出，无论是否符合联结条件，因此意义不大）。</p>
+<p>4．无联结：不用解释了吧，就是没有使用联结功能呗，也有自联结的说法<br />
+</p>

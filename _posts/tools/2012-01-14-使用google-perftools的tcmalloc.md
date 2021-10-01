@@ -1,0 +1,4 @@
+---
+categories: tools
+---
+<p>使用google-perftools的tcmalloc<br />安装<br />使用<br /><strong>export LD_PRELOAD="/usr/local/lib/libtcmalloc.so"</strong><br /><br /><strong>cat testMalloc.cpp &amp; g++ testMalloc.cpp &amp; ./a.out</strong><br /><br />#include &lt;stdio.h&gt;<br />#include &lt;memory.h&gt;<br />#include &lt;stdlib.h&gt;<br /><br />int main()<br />{<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; void *p=malloc(100);<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; printf("stop here\n");<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; getchar();<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; free(p);<br />}<br /><br />使用lsof命令查看tcmalloc是否起效<br />cutepig@ubuntu:~$<strong> lsof -n |grep tcmalloc</strong><br />a.out&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 5501&nbsp;&nbsp;&nbsp; cutepig&nbsp; mem&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; REG&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 8,1&nbsp; 1645060&nbsp;&nbsp;&nbsp;&nbsp; 206764 /usr/local/lib/libtcmalloc.so<br /><br /></p>

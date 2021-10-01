@@ -1,0 +1,25 @@
+<p><a href="http://www.nlpr.ia.ac.cn/english/rv/">http://www.nlpr.ia.ac.cn/english/rv/</a><br>系统硬件说明：<br><font face="Bookman Old Style">The system consists of a pan-tilt-translation camera platform, an omni-directional vehicle and a Sunsparc10 workstation. The camera platform has two CCD cameras, each one of which has five degrees of freedom. </font></p>
+<p><font face="Bookman Old Style">要达到的目标：<br>Based on only the images from the two cameras, the vehicle moves to a predefined destination in a cluttered laboratory environment. A real navigation system must at least has the following units: modelling, camera calibration path planning, robot self-location, (static and moving) obstacle detection and avoidance, local re-planning and re-modelling. </font></p>
+<p><font face="Bookman Old Style">当前已作的工作：<br>However, this project concerns only 3 of these units which are considered closely related to the vision research. These 3 units are:<br>&nbsp;</font> </p>
+<ul>
+    <li>
+    <p align=left><strong><font face="Bookman Old Style">Camera calibration:</font></strong> <font face="Bookman Old Style">We thoroughly studied previous methods in the literature and proposed an Active Vision Based Camera calibration method [1], a Non-Parametric Calibration approach [2] and a Two Planes method[3].</font> </p>
+    <li>
+    <p align=left><font face="Bookman Old Style"><strong>Robot Self-Location:</strong> The window frames in this system are used as landmarks to determine robot's position and orientation. The process was carried out in two stages: Firstly, four straight lines are extracted by an RHT-like approach. Secondly, based on the recorded approximative information of the robot's odometers, a fuzzy approach was used to match the window frame to its stored model[4].</font> </p>
+    <li>
+    <p align=left><font face="Bookman Old Style"><strong>Obstacle detection and avoidance:</strong> The principles of the used method in our system are similar to those proposed by Mallot et al.in [5]. i.e., by re-projecting the two images from a well calibrated stereo rim onto the ground, and comparing the two reprojected images, if the two images are not identical, which means there are some things above the ground and can be considered as potential obstacles of the robot.</font> </p>
+    </li>
+</ul>
+<ul>
+    <li>
+    <p align=left><font face="Bookman Old Style">[1] S. D. Ma, An Self Camera Calibration Method for Active Vision System, IEEE-T on Robotics and Automation, Vol.2, 1996.</font> </p>
+    <li>
+    <p align=left><font face="Bookman Old Style">[2] M.L.Qiu and S.D.Ma, "A non-parametric approach for camera calibration", in proc. ICCV 1995, MIT, USA, pp.224-229, 1995.</font> </p>
+    <li>
+    <p align=left><font face="Bookman Old Style">[3] G. Q. Wei and S. D. Ma, "Implicit and explicit camera calibration: Theory and experiments", IEEE-T PAMI 16, No.5, 1995.</font> </p>
+    <li>
+    <p align=left><font face="Bookman Old Style">[4] L. Zhao, Fuzzy Theory Application in Robot Self-Location, M.S. thesis, National Laboratory of Pattern Recognition, Institute of Automation, Chinese Academy of Sciences, 1995.</font> </p>
+    <li>
+    <p align=left><font face="Bookman Old Style">[5] H.A.Mallot, H. H. Bulthoff, J.J.Little, and S. Bohrer, Inverse Perspective Mapping Simplifies Optical Flow Computation and Obstacle Detection, Biological. Cybernetics 64, pp.177-185, 1991.</font> </p>
+    </li>
+</ul>

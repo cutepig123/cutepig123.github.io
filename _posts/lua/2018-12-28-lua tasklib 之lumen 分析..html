@@ -1,0 +1,48 @@
+<div class="cnblogs_code">
+<pre>sched.sleep分析
+
+sleep会填充M.running_task.waitds数据表示当前task需要等待，最后yield出去到主线程
+
+M.sleep = function (timeout)
+	local sleep_waitd = M.running_task.sleep_waitd
+	sleep_waitd.timeout=timeout
+	M.wait(sleep_waitd)
+end
+	
+M.wait = function ( waitd )
+  assert(M.running_task)
+  if waitd then 
+    --in case passed a non created or joined waitd
+    if not M.running_task.waitds[waitd] then
+      waitd=M.new_waitd(waitd)
+      M.running_task.waitds[waitd] = true
+    end
+。。。
+	return coroutine.yield( M.running_task.co )
+	
+
+主线程不断调用step函数，该函数不断扫描是否有空闲的task，如果有就执行
+
+M.step = function ()
+  。。。
+  
+  --register all ready&amp;not waiting to run
+  --if find one waiting&amp;timeouting, wake it --and finish
+	for taskd, _ in pairs (M.tasks) do
+		if taskd.status=='ready' then
+			if taskd.waitingfor then
+				local waketime = taskd.waketime
+				if waketime then
+					next_waketime = next_waketime or waketime
+					if waketime &lt;= M.get_time() then
+						--emit_timeout
+						taskd.waketime, taskd.waitingfor = nil, nil
+						step_task(taskd, nil, 'timeout')
+						--return 0
+					end
+。。。</pre>
+</div>
+<p>socket封装分析？？</p>
+<p>&nbsp;</p>
+<p>如何把callback改装成coroutine？？</p>
+<p>&nbsp;</p>

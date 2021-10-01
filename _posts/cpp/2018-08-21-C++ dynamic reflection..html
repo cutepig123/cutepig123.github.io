@@ -1,0 +1,20 @@
+<p><strong>相关想法以及lib</strong></p>
+<p>Lua 有想过用reflection实现lua binding，但没想过反过来<br /> moc依赖于qt的lib，不考虑了<br />https://github.com/rttrorg/rttr  VS2013 build ok<br />http://preshing.com/20180116/a-primitive-reflection-system-in-cpp-part-1/<br />https://github.com/chakaz/reflang<br />http://www.extreme.indiana.edu/reflcpp/<br />http://preshing.com/20180124/a-flexible-reflection-system-in-cpp-part-2/<br />http://www.cs.sjsu.edu/faculty/pearce/modules/lectures/oop/types/reflection/prototype.htm<br />Dispatch COM<br />https://chinbilly.blogspot.com/2016/03/ponder-c-reflection.html<br />http://cpgf.org/document/index.html<br />http://donw.io/post/reflection-cpp-1/<br />http://www.vollmann.com/en/pubs/meta/meta/meta.html<br />https://github.com/Manu343726/siplasplas uses a libclang based script to generate C++ code with all the metadata.<br />https://svn.boost.org/svn/boost/sandbox/mirror/doc/html/mirror.html#mirror.intro</p>
+<p>&nbsp;</p>
+<p><strong>相关测试</strong>：</p>
+<p>类型转换测试rttr</p>
+<div class="cnblogs_code">
+<pre><span style="color: #0000ff;">class</span><span style="color: #000000;"> string_wrapper {
+    std::</span><span style="color: #0000ff;">string</span><span style="color: #000000;"> s_;
+</span><span style="color: #0000ff;">public</span><span style="color: #000000;">:
+    string_wrapper(std::</span><span style="color: #0000ff;">string</span> s=<span style="color: #800000;">""</span><span style="color: #000000;">) :s_(s) {
+    }
+};
+
+    variant aa </span>= <span style="color: #800080;">123</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">bool</span><span style="color: #000000;"> ok;
+    std::</span><span style="color: #0000ff;">string</span> aaa = aa.convert&lt;std::<span style="color: #0000ff;">string</span>&gt;(&amp;ok);    <span style="color: #008000;">//</span><span style="color: #008000;"> OK</span>
+<span style="color: #000000;">
+    string_wrapper bbb </span>= aa.convert&lt;string_wrapper&gt;(&amp;ok);    <span style="color: #008000;">//</span><span style="color: #008000;">Fail</span></pre>
+</div>
+<p>&nbsp;</p>

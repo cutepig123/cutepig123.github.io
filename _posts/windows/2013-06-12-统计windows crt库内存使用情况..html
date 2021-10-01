@@ -1,0 +1,240 @@
+<p>1. 关于heap类型</p>
+<p>From http://msdn.microsoft.com/en-us/library/wc28wkas%28v=vs.80%29.aspx<br />有如下几种heap block： _NORMAL_BLOCK, _CLIENT_BLOCK, _FREE_BLOCK,<br />关于不同heap block区别 http://msdn.microsoft.com/en-us/library/htdyz80k%28v=vs.80%29.aspx</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('1d27aed8-5f8f-4d15-ae8d-3c6a58bc56a5')"><img id="code_img_closed_1d27aed8-5f8f-4d15-ae8d-3c6a58bc56a5" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_1d27aed8-5f8f-4d15-ae8d-3c6a58bc56a5" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('1d27aed8-5f8f-4d15-ae8d-3c6a58bc56a5',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_1d27aed8-5f8f-4d15-ae8d-3c6a58bc56a5" class="cnblogs_code_hide">
+<pre>   A normal block <span style="color: #0000ff;">is</span><span style="color: #000000;"> ordinary memory allocated by your program.
+
+    A client block </span><span style="color: #0000ff;">is</span> a special type of memory block used by MFC programs <span style="color: #0000ff;">for</span> objects that require a destructor. The MFC <span style="color: #0000ff;">new</span> operation creates either a normal block or a client block, <span style="color: #0000ff;">as</span> appropriate <span style="color: #0000ff;">for</span> the <span style="color: #0000ff;">object</span><span style="color: #000000;"> being created.
+
+    A CRT block </span><span style="color: #0000ff;">is</span> a block of memory allocated by the CRT library <span style="color: #0000ff;">for</span> its own use. The CRT library handles the deallocation <span style="color: #0000ff;">for</span> these blocks, so it <span style="color: #0000ff;">is</span> unlikely you will see these <span style="color: #0000ff;">in</span> the memory leak report unless something <span style="color: #0000ff;">is</span> seriously wrong (<span style="color: #0000ff;">for</span> example, the CRT library <span style="color: #0000ff;">is</span><span style="color: #000000;"> corrupted).
+
+    A free block </span><span style="color: #0000ff;">is</span><span style="color: #000000;"> a block of memory that has been released.
+
+    An ignore block </span><span style="color: #0000ff;">is</span> a block that you have specifically marked so it doesn<span style="color: #800000;">'</span><span style="color: #800000;">t appear in the memory leak report.</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>2. 打印当前crt heap使用情况的一段代码</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('88de3783-2dc3-4630-8dea-6dd2eb9f8c51')"><img id="code_img_closed_88de3783-2dc3-4630-8dea-6dd2eb9f8c51" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_88de3783-2dc3-4630-8dea-6dd2eb9f8c51" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('88de3783-2dc3-4630-8dea-6dd2eb9f8c51',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_88de3783-2dc3-4630-8dea-6dd2eb9f8c51" class="cnblogs_code_hide">
+<pre>inline unsigned <span style="color: #0000ff;">long</span> asm_getmemallocsize(<span style="color: #0000ff;">void</span><span style="color: #000000;">)
+{
+            _CrtMemState stMemState;
+ 
+            memset( </span>&amp;stMemState, <span style="color: #800080;">0</span>, <span style="color: #0000ff;">sizeof</span><span style="color: #000000;">(stMemState));
+            </span><span style="color: #008000;">//</span><span style="color: #008000;"> Get the allocated size</span>
+            _CrtMemCheckpoint( &amp;<span style="color: #000000;">stMemState );
+            </span><span style="color: #0000ff;">return</span> stMemState.lSizes[<span style="color: #800080;">1</span>];      <span style="color: #008000;">//</span><span style="color: #008000;"> 1 means Normal Blocks</span>
+}</pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>3. 关于_CrtMemState中一个属性lTotalCount有bug<br />http://www.flounder.com/bugincrtmemcheckpoint.htm</p>
+<p>4. 使用_heapwalk打印当前heap使用大小（俺比较奇怪跟2有啥不同？）</p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('4db1c0b4-f62d-4c1b-83b2-bd700cc8a37c')"><img id="code_img_closed_4db1c0b4-f62d-4c1b-83b2-bd700cc8a37c" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_4db1c0b4-f62d-4c1b-83b2-bd700cc8a37c" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('4db1c0b4-f62d-4c1b-83b2-bd700cc8a37c',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_4db1c0b4-f62d-4c1b-83b2-bd700cc8a37c" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">/*</span><span style="color: #008000;">***************************************************************************
+*                                  CountWalk
+* Result: UINT
+*       Amount of space allocated as revealed by _heapwalk
+***************************************************************************</span><span style="color: #008000;">*/</span><span style="color: #000000;">
+
+UINT CountWalk()
+    {
+     </span><span style="color: #0000ff;">int</span><span style="color: #000000;"> HeapStatus;
+     BOOL running </span>=<span style="color: #000000;"> TRUE;
+     _HEAPINFO info;
+     info._pentry </span>=<span style="color: #000000;"> NULL;
+     UINT UsedBytes </span>= <span style="color: #800080;">0</span><span style="color: #000000;">;
+     
+     </span><span style="color: #0000ff;">while</span><span style="color: #000000;">(running)
+        { </span><span style="color: #008000;">/*</span><span style="color: #008000;"> scan heap </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+         HeapStatus </span>= _heapwalk(&amp;<span style="color: #000000;">info);
+         </span><span style="color: #0000ff;">switch</span><span style="color: #000000;">(HeapStatus)
+            { </span><span style="color: #008000;">/*</span><span style="color: #008000;"> check status </span><span style="color: #008000;">*/</span>
+             <span style="color: #0000ff;">case</span><span style="color: #000000;"> _HEAPOK:
+                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+             </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> _HEAPEND:
+                running </span>=<span style="color: #000000;"> FALSE;
+                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+             </span><span style="color: #0000ff;">default</span><span style="color: #000000;">:
+                ASSERT(FALSE);
+                running </span>=<span style="color: #000000;"> FALSE;
+                </span><span style="color: #0000ff;">continue</span><span style="color: #000000;">;
+            } </span><span style="color: #008000;">/*</span><span style="color: #008000;"> check status </span><span style="color: #008000;">*/</span>
+
+         <span style="color: #0000ff;">if</span>(info._useflag ==<span style="color: #000000;"> _USEDENTRY)
+            { </span><span style="color: #008000;">/*</span><span style="color: #008000;"> used block </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+             UsedBytes </span>+=<span style="color: #000000;"> info._size;
+            } </span><span style="color: #008000;">/*</span><span style="color: #008000;"> used block </span><span style="color: #008000;">*/</span><span style="color: #000000;">
+        } </span><span style="color: #008000;">/*</span><span style="color: #008000;"> scan heap </span><span style="color: #008000;">*/</span>
+     <span style="color: #0000ff;">return</span><span style="color: #000000;"> UsedBytes;
+    } </span><span style="color: #008000;">//</span><span style="color: #008000;"> CountWalk</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;5. 从windows系统角度，有如下几种heap类型： standard， look-aside， low-fragmentation （LFH）<br />msdn提供了一些函数来获取heap信息，包括有几个heap，每个heap是什么类型<br /><br /></p>
+<div class="cnblogs_code" onclick="cnblogs_code_show('6645c5d7-751f-48be-afe0-c3d016e4aadd')"><img id="code_img_closed_6645c5d7-751f-48be-afe0-c3d016e4aadd" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_6645c5d7-751f-48be-afe0-c3d016e4aadd" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('6645c5d7-751f-48be-afe0-c3d016e4aadd',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_6645c5d7-751f-48be-afe0-c3d016e4aadd" class="cnblogs_code_hide">
+<pre><span style="color: #008000;">//</span><span style="color: #008000;"> From </span><span style="color: #008000; text-decoration: underline;">http://msdn.microsoft.com/en-us/library/windows/desktop/ee175820%28v=vs.85%29.aspx</span>
+<span style="color: #000000;">
+#include </span>&lt;windows.h&gt;<span style="color: #000000;">
+#include </span>&lt;tchar.h&gt;<span style="color: #000000;">
+#include </span>&lt;stdio.h&gt;<span style="color: #000000;">
+#include </span>&lt;intsafe.h&gt;
+
+<span style="color: #0000ff;">int</span><span style="color: #000000;"> HeapInfo(HANDLE hHeap);
+
+</span><span style="color: #0000ff;">int</span><span style="color: #000000;"> __cdecl _tmain()
+{
+    DWORD NumberOfHeaps;
+    DWORD HeapsIndex;
+    DWORD HeapsLength;
+    HANDLE hDefaultProcessHeap;
+    HRESULT Result;
+    PHANDLE aHeaps;
+    SIZE_T BytesToAllocate;
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Retrieve the number of active heaps for the current process
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> so we can calculate the buffer size needed for the heap handles.
+    </span><span style="color: #008000;">//
+</span>    NumberOfHeaps = GetProcessHeaps(<span style="color: #800080;">0</span><span style="color: #000000;">, NULL);
+    </span><span style="color: #0000ff;">if</span> (NumberOfHeaps == <span style="color: #800080;">0</span><span style="color: #000000;">) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to retrieve the number of heaps with LastError %d.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+                 GetLastError());
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Calculate the buffer size.
+    </span><span style="color: #008000;">//
+</span>    Result = SIZETMult(NumberOfHeaps, <span style="color: #0000ff;">sizeof</span>(*aHeaps), &amp;<span style="color: #000000;">BytesToAllocate);
+    </span><span style="color: #0000ff;">if</span> (Result !=<span style="color: #000000;"> S_OK) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">SIZETMult failed with HR %d.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">), Result);
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Get a handle to the default process heap.
+    </span><span style="color: #008000;">//
+</span>    hDefaultProcessHeap =<span style="color: #000000;"> GetProcessHeap();
+    </span><span style="color: #0000ff;">if</span> (hDefaultProcessHeap ==<span style="color: #000000;"> NULL) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to retrieve the default process heap with LastError %d.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+                 GetLastError());
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Allocate the buffer from the default process heap.
+    </span><span style="color: #008000;">//
+</span>    aHeaps = (PHANDLE)HeapAlloc(hDefaultProcessHeap, <span style="color: #800080;">0</span><span style="color: #000000;">, BytesToAllocate);
+    </span><span style="color: #0000ff;">if</span> (aHeaps ==<span style="color: #000000;"> NULL) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">HeapAlloc failed to allocate %d bytes.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+                 BytesToAllocate);
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span> 
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Save the original number of heaps because we are going to compare it
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> to the return value of the next GetProcessHeaps call.
+    </span><span style="color: #008000;">//
+</span>    HeapsLength =<span style="color: #000000;"> NumberOfHeaps;
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Retrieve handles to the process heaps and print them to stdout. 
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> Note that heap functions should be called only on the default heap of the process
+    </span><span style="color: #008000;">//</span><span style="color: #008000;"> or on private heaps that your component creates by calling HeapCreate.
+    </span><span style="color: #008000;">//
+</span>    NumberOfHeaps =<span style="color: #000000;"> GetProcessHeaps(HeapsLength, aHeaps);
+    </span><span style="color: #0000ff;">if</span> (NumberOfHeaps == <span style="color: #800080;">0</span><span style="color: #000000;">) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to retrieve heaps with LastError %d.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+                 GetLastError());
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+    </span><span style="color: #0000ff;">else</span> <span style="color: #0000ff;">if</span> (NumberOfHeaps &gt;<span style="color: #000000;"> HeapsLength) {
+
+        </span><span style="color: #008000;">//</span>
+        <span style="color: #008000;">//</span><span style="color: #008000;"> Compare the latest number of heaps with the original number of heaps.
+        </span><span style="color: #008000;">//</span><span style="color: #008000;"> If the latest number is larger than the original number, another
+        </span><span style="color: #008000;">//</span><span style="color: #008000;"> component has created a new heap and the buffer is too small.
+        </span><span style="color: #008000;">//
+</span>        _tprintf(TEXT(<span style="color: #800000;">"</span><span style="color: #800000;">Another component created a heap between calls. </span><span style="color: #800000;">"</span><span style="color: #000000;">) \
+                 TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Please try again.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Process has %d heaps.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">), HeapsLength);
+    </span><span style="color: #0000ff;">for</span> (HeapsIndex = <span style="color: #800080;">0</span>; HeapsIndex &lt; HeapsLength; ++<span style="color: #000000;">HeapsIndex) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Heap %d at address: %#p.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+                 HeapsIndex,
+                 aHeaps[HeapsIndex]);
+
+        HeapInfo(aHeaps[HeapsIndex]);
+    }
+  
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Release memory allocated from default process heap.
+    </span><span style="color: #008000;">//
+</span>    <span style="color: #0000ff;">if</span> (HeapFree(hDefaultProcessHeap, <span style="color: #800080;">0</span>, aHeaps) ==<span style="color: #000000;"> FALSE) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to free allocation from default process heap.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+    }
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}
+
+
+</span><span style="color: #008000;">//</span><span style="color: #008000;">  From </span><span style="color: #008000; text-decoration: underline;">http://msdn.microsoft.com/en-us/library/windows/desktop/aa366703%28v=vs.85%29.aspx</span>
+<span style="color: #008000;">//</span><span style="color: #008000;">#include &lt;windows.h&gt;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">#include &lt;tchar.h&gt;
+</span><span style="color: #008000;">//</span><span style="color: #008000;">#include &lt;stdio.h&gt;</span>
+
+<span style="color: #0000ff;">#define</span> HEAP_STANDARD 0
+<span style="color: #0000ff;">#define</span> HEAP_LAL 1
+<span style="color: #0000ff;">#define</span> HEAP_LFH 2
+
+<span style="color: #0000ff;">int</span><span style="color: #000000;"> HeapInfo(HANDLE hHeap)
+{
+     ULONG HeapInformation;
+
+     _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">heap at address: %#p.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">), hHeap);
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Query heap features that are enabled.
+    </span><span style="color: #008000;">//
+</span>    BOOL bResult =<span style="color: #000000;"> HeapQueryInformation(hHeap,
+                                   HeapCompatibilityInformation,
+                                   </span>&amp;<span style="color: #000000;">HeapInformation,
+                                   </span><span style="color: #0000ff;">sizeof</span><span style="color: #000000;">(HeapInformation),
+                                   NULL);
+    </span><span style="color: #0000ff;">if</span> (bResult ==<span style="color: #000000;"> FALSE) {
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Failed to retrieve heap features with LastError %d.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">),
+                 GetLastError());
+        </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">1</span><span style="color: #000000;">;
+    }
+
+    </span><span style="color: #008000;">//</span>
+    <span style="color: #008000;">//</span><span style="color: #008000;"> Print results of the query.
+    </span><span style="color: #008000;">//
+</span>    _tprintf(TEXT(<span style="color: #800000;">"</span><span style="color: #800000;">HeapCompatibilityInformation is %d.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">), HeapInformation);
+    </span><span style="color: #0000ff;">switch</span><span style="color: #000000;">(HeapInformation)
+    {
+    </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> HEAP_STANDARD:
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">The default process heap is a standard heap.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> HEAP_LAL:
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">The default process heap supports look-aside lists.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">case</span><span style="color: #000000;"> HEAP_LFH:
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">The default process heap has the low-fragmentation </span><span style="color: #800000;">"</span><span style="color: #000000;">) \
+                 TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">heap enabled.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+    </span><span style="color: #0000ff;">default</span><span style="color: #000000;">:
+        _tprintf(TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">Unrecognized HeapInformation reported for the default </span><span style="color: #800000;">"</span><span style="color: #000000;">) \
+                 TEXT(</span><span style="color: #800000;">"</span><span style="color: #800000;">process heap.\n</span><span style="color: #800000;">"</span><span style="color: #000000;">));
+        </span><span style="color: #0000ff;">break</span><span style="color: #000000;">;
+     }
+
+    </span><span style="color: #0000ff;">return</span> <span style="color: #800080;">0</span><span style="color: #000000;">;
+}</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>
+<p>&nbsp;</p>

@@ -1,0 +1,108 @@
+<div class="cnblogs_code" onclick="cnblogs_code_show('d89da5fd-8c38-4c25-bdc0-b11fe050791d')">写了一个python脚本，简单粗暴</div>
+<div class="cnblogs_code" onclick="cnblogs_code_show('d89da5fd-8c38-4c25-bdc0-b11fe050791d')"><img id="code_img_closed_d89da5fd-8c38-4c25-bdc0-b11fe050791d" class="code_img_closed" src="http://images.cnblogs.com/OutliningIndicators/ContractedBlock.gif" alt="" /><img id="code_img_opened_d89da5fd-8c38-4c25-bdc0-b11fe050791d" class="code_img_opened" style="display: none;" onclick="cnblogs_code_hide('d89da5fd-8c38-4c25-bdc0-b11fe050791d',event)" src="http://images.cnblogs.com/OutliningIndicators/ExpandedBlockStart.gif" alt="" />
+<div id="cnblogs_code_open_d89da5fd-8c38-4c25-bdc0-b11fe050791d" class="cnblogs_code_hide">
+<pre><span style="color: #0000ff;">import</span><span style="color: #000000;"> urllib,os,sys
+
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> getUrlContent(url):
+    fp </span>=<span style="color: #000000;">urllib.urlopen(url)
+    cont </span>=<span style="color: #000000;">fp.read()
+    fp.close()
+    </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> cont
+    
+</span><span style="color: #008000;">#</span><span style="color: #008000;"> to read blog urls in one page    </span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> findBlog:
+    </span><span style="color: #0000ff;">def</span> <span style="color: #800080;">__init__</span><span style="color: #000000;">(self,cont):
+        self.p</span>=<span style="color: #000000;">0
+        self.cont </span>=<span style="color: #000000;">cont
+    </span><span style="color: #0000ff;">def</span><span style="color: #000000;"> get(self):
+        p1 </span>=self.cont.find(<span style="color: #800000;">'</span><span style="color: #800000;">&lt;div class="post"&gt;</span><span style="color: #800000;">'</span><span style="color: #000000;">,self.p)
+        </span><span style="color: #0000ff;">if</span> p1&gt;<span style="color: #000000;">0:
+            p2 </span>=self.cont.find(<span style="color: #800000;">'</span><span style="color: #800000;">&lt;h2&gt;&lt;a id="homepage1_HomePageDays</span><span style="color: #800000;">'</span><span style="color: #000000;">,p1)
+            </span><span style="color: #0000ff;">if</span> p2&gt;<span style="color: #000000;">0:
+                p3 </span>=self.cont.find(<span style="color: #800000;">'</span><span style="color: #800000;">href="</span><span style="color: #800000;">'</span><span style="color: #000000;">,p2)
+                </span><span style="color: #0000ff;">if</span> p3&gt;<span style="color: #000000;">0:
+                    p4 </span>=self.cont.find(<span style="color: #800000;">'</span><span style="color: #800000;">"&gt;</span><span style="color: #800000;">'</span><span style="color: #000000;">,p3)
+                    </span><span style="color: #0000ff;">if</span> p4&gt;<span style="color: #000000;">0:
+                        url </span>=self.cont[(p3+len(<span style="color: #800000;">'</span><span style="color: #800000;">href="</span><span style="color: #800000;">'</span><span style="color: #000000;">)):p4]
+                        p5 </span>=self.cont.find(<span style="color: #800000;">'</span><span style="color: #800000;">&lt;/a&gt;</span><span style="color: #800000;">'</span><span style="color: #000000;">,p4)
+                        </span><span style="color: #0000ff;">if</span> p5&gt;<span style="color: #000000;">0:
+                            title </span>=self.cont[(p4+len(<span style="color: #800000;">'</span><span style="color: #800000;">"&gt;</span><span style="color: #800000;">'</span><span style="color: #000000;">)):p5]
+                            self.p </span>=<span style="color: #000000;">p5
+                            </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> [url, title]
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> None
+
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> logFile(fname, cont):
+    </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> os.path.isfile(fname):
+        </span><span style="color: #0000ff;">print</span> fname, <span style="color: #800000;">'</span><span style="color: #800000;">esist!</span><span style="color: #800000;">'</span>
+    <span style="color: #008000;">#</span><span style="color: #008000;">    return</span>
+    fp=open(fname,<span style="color: #800000;">'</span><span style="color: #800000;">w</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    fp.write(cont)
+    fp.close()
+    
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> appendFile(fname, cont):
+    fp</span>=open(fname,<span style="color: #800000;">'</span><span style="color: #800000;">a</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+    fp.write(cont)
+    fp.close()
+    
+</span><span style="color: #0000ff;">def</span><span style="color: #000000;"> MyCmd(x):
+    </span><span style="color: #0000ff;">print</span><span style="color: #000000;"> x
+    os.system(x)
+    
+</span><span style="color: #008000;">#</span><span style="color: #008000;">to read all blog contents in all pages</span>
+<span style="color: #0000ff;">class</span><span style="color: #000000;"> blogReader:
+    </span><span style="color: #0000ff;">def</span> <span style="color: #800080;">__init__</span><span style="color: #000000;">(self):
+        self.is_latest_written </span>=<span style="color: #000000;">0
+        self.latest_url </span>=<span style="color: #800000;">''</span>
+        
+        <span style="color: #008000;">#</span><span style="color: #008000;">update self.latest_url </span>
+        fname =<span style="color: #800000;">'</span><span style="color: #800000;">cfg.txt</span><span style="color: #800000;">'</span>
+        <span style="color: #0000ff;">if</span><span style="color: #000000;"> os.path.isfile(fname):
+            fp </span>=open(fname,<span style="color: #800000;">'</span><span style="color: #800000;">r</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+            self.latest_url </span>=<span style="color: #000000;">fp.readline().strip()
+            fp.close()
+            
+        </span><span style="color: #0000ff;">print</span> <span style="color: #800000;">'</span><span style="color: #800000;">latest_url</span><span style="color: #800000;">'</span><span style="color: #000000;">, self.latest_url
+    </span><span style="color: #0000ff;">def</span><span style="color: #000000;"> readPage(self,pid):
+        is_latest </span>=<span style="color: #000000;">0
+        cont </span>=getUrlContent(<span style="color: #800000;">'</span><span style="color: #800000;">http://www.cnblogs.com/cutepig/default.html?page=%d&amp;OnlyTitle=1</span><span style="color: #800000;">'</span>%<span style="color: #000000;">pid)
+        fpLog </span>=open(<span style="color: #800000;">'</span><span style="color: #800000;">log.txt</span><span style="color: #800000;">'</span>,<span style="color: #800000;">'</span><span style="color: #800000;">a</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        fb </span>=<span style="color: #000000;">findBlog(cont)
+        </span><span style="color: #0000ff;">print</span> &gt;&gt;fpLog, <span style="color: #800000;">'</span><span style="color: #800000;">--------page</span><span style="color: #800000;">'</span><span style="color: #000000;">, pid
+        </span><span style="color: #0000ff;">print</span> <span style="color: #800000;">'</span><span style="color: #800000;">--------page</span><span style="color: #800000;">'</span><span style="color: #000000;">, pid
+        </span><span style="color: #0000ff;">while</span> 1<span style="color: #000000;">:
+            ret </span>=<span style="color: #000000;">fb.get()
+            </span><span style="color: #0000ff;">if</span> ret <span style="color: #0000ff;">is</span> None: <span style="color: #0000ff;">break</span><span style="color: #000000;">
+            [url, title] </span>=<span style="color: #000000;">ret
+            </span><span style="color: #0000ff;">print</span> &gt;&gt;<span style="color: #000000;">fpLog, ret
+            </span><span style="color: #008000;">#</span><span style="color: #008000;">print ret    #why cannot print chinses?</span>
+            <span style="color: #0000ff;">if</span> <span style="color: #0000ff;">not</span><span style="color: #000000;"> self.is_latest_written:
+                logFile(</span><span style="color: #800000;">'</span><span style="color: #800000;">cfg.txt</span><span style="color: #800000;">'</span><span style="color: #000000;">, url)
+                self.is_latest_written </span>=1
+                
+            <span style="color: #0000ff;">print</span> title.decode(<span style="color: #800000;">'</span><span style="color: #800000;">utf-8</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+            
+            </span><span style="color: #0000ff;">if</span> url==<span style="color: #000000;">self.latest_url:
+                is_latest </span>=1
+                <span style="color: #0000ff;">break</span><span style="color: #000000;">
+                
+            blogFname </span>=url.replace(<span style="color: #800000;">'</span><span style="color: #800000;">;</span><span style="color: #800000;">'</span>,<span style="color: #800000;">''</span>).replace(<span style="color: #800000;">'</span><span style="color: #800000;">&amp;</span><span style="color: #800000;">'</span>,<span style="color: #800000;">''</span>).replace(<span style="color: #800000;">'</span><span style="color: #800000;">?</span><span style="color: #800000;">'</span>,<span style="color: #800000;">''</span>).replace(<span style="color: #800000;">'</span><span style="color: #800000;">:</span><span style="color: #800000;">'</span>,<span style="color: #800000;">''</span>).replace(<span style="color: #800000;">'</span><span style="color: #800000;">/</span><span style="color: #800000;">'</span>,<span style="color: #800000;">''</span>)+<span style="color: #800000;">'</span><span style="color: #800000;">.htm</span><span style="color: #800000;">'</span><span style="color: #000000;">
+            logFile( blogFname, getUrlContent(url))
+            appendFile( </span><span style="color: #800000;">'</span><span style="color: #800000;">index2.htm</span><span style="color: #800000;">'</span>, <span style="color: #800000;">'</span><span style="color: #800000;">&lt;a href=%s&gt;%s&lt;/a&gt;&lt;br&gt;\n</span><span style="color: #800000;">'</span>%<span style="color: #000000;">(blogFname, title))
+            
+        fpLog.close()
+        MyCmd(</span><span style="color: #800000;">'</span><span style="color: #800000;">copy /y index2.htm+index.htm index.htm</span><span style="color: #800000;">'</span><span style="color: #000000;">)
+        </span><span style="color: #0000ff;">return</span><span style="color: #000000;"> is_latest
+        
+    </span><span style="color: #0000ff;">def</span><span style="color: #000000;"> read_all(self):
+        pid </span>=1
+        <span style="color: #0000ff;">while</span> 1<span style="color: #000000;">:
+            is_latest </span>=<span style="color: #000000;">self.readPage(pid)
+            </span><span style="color: #0000ff;">if</span><span style="color: #000000;"> is_latest:
+                </span><span style="color: #0000ff;">break</span><span style="color: #000000;">
+            pid </span>=pid+1<span style="color: #000000;">
+        
+br </span>=<span style="color: #000000;">blogReader()
+br.read_all()</span></pre>
+</div>
+<span class="cnblogs_code_collapse">View Code </span></div>
+<p>&nbsp;</p>

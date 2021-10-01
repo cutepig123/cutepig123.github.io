@@ -1,0 +1,166 @@
+<br><h1 id="artibodyTitle">C++箴言：谨慎使用多继承</h1>
+    <div id="conauthor"><span>2005-11-28 08:47</span><span>作者：fatalerror99</span><span>出处：BLOG</span><span>责任编辑：方舟</span></div>
+<div class="topadbg"><span id="ad9">
+<div id="ad9ad">
+<script language="JavaScript1.1" src="http://ucpn.yesky.com/js.ng/site=yesky&amp;node_yesky=324&amp;page=cont&amp;area=y_inner_under_banner&amp;format=banner&amp;num=1"></script>
+<script language="JavaScript1.1" src="http://ucpn.yesky.com/js.ng/site=yesky&amp;node_yesky=324&amp;page=cont&amp;area=y_inner_under_banner&amp;format=banner&amp;num=2"></script>
+</div>
+</span></div>
+<!--正文开始-->
+<span id="ad3"></span>
+
+<!-- Error --> 
+ 
+ <div class="guanggao"><span id="contentAdv"> 
+<script language="JavaScript1.1" src="http://ucpn.yesky.com/js.ng/site=yesky&amp;node_yesky=324&amp;page=cont&amp;area=yesky_inner_pip&amp;format=picinpic&amp;num=1"></script>
+</span></div>　　触及 multiple inheritance (MI)（多继承）的时候，C++
+社区就会鲜明地分裂为两个基本的阵营。一个阵营认为如果 single inheritance (SI)（单继承）是有好处的，multiple
+inheritance（多继承）一定更有好处。另一个阵营认为 single
+inheritance（单继承）有好处，但是多继承引起的麻烦使它得不偿失。在本文中，我们的主要目的是理解在 MI 问题上的这两种看法。 <br><br>　　首要的事情之一是要承认当将 MI 引入设计领域时，就有可能从多于一个的 base class（基类）中继承相同的名字（例如，函数，typedef，等等）。这就为歧义性提供了新的时机。例如：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>class BorrowableItem { // something a library lets you borrow<br>public:<br>　void checkOut(); // check the item out from the library<br>　..<br>};<br><br>class ElectronicGadget {<br>private:<br>　bool checkOut() const; // perform self-test, return whether<br>　... // test succeeds<br>};<br><br>class MP3Player: // note MI here<br>public BorrowableItem, // (some libraries loan MP3 players)<br>public ElectronicGadget<br>{ ... }; // class definition is unimportant<br><br>MP3Player mp;<br><br>mp.checkOut(); // ambiguous! which checkOut?</td></tr></tbody></table><br>　
+　注意这个例子，即使两个函数中只有一个是可访问的，对 checkOut 的调用也是有歧义的。（checkOut 在
+BorrowableItem 中是 public（公有）的，但在 ElectronicGadget 中是 private（私有）的。）这与
+C++ 解析 overloaded functions（重载函数）调用的规则是一致的：在看到一个函数的是否可访问之前，C++
+首先确定与调用匹配最好的那个函数。只有在确定了 best-match
+function（最佳匹配函数）之后，才检查可访问性。这目前的情况下，两个 checkOuts
+具有相同的匹配程度，所以就不存在最佳匹配。因此永远也不会检查到 ElectronicGadget::checkOut 的可访问性。<br><br>　　为了消除歧义性，你必须指定哪一个 base class（基类）的函数被调用：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>mp.BorrowableItem::checkOut(); // ah, that checkOut...</td></tr></tbody></table><br>　　当然，你也可以尝试显式调用 ElectronicGadget::checkOut，但这样做会有一个 "you're trying to call a private member function"（你试图调用一个私有成员函数）错误代替歧义性错误。<br><br>　
+　multiple inheritance（多继承）仅仅意味着从多于一个的 base class（基类）继承，但是在还有
+higher-level base classes（更高层次基类）的 hierarchies（继承体系）中出现 MI
+也并不罕见。这会导致有时被称为 "deadly MI diamond"（致命的多继承菱形）的后果。<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>class File { ... };<br>class InputFile: public File { ... };<br>class OutputFile: public File { ... };<br>class IOFile: public InputFile,<br>public OutputFile<br>{ ... };</td></tr></tbody></table><br>
+<table width="90%" align="center" border="0">
+<tbody>
+<tr>
+<td>
+<div align="center"><font size="2">&nbsp;<img alt="" src="http://soft.yesky.com/imagelist/05/11/o1oc19fd49b6.gif"></font></div></td></tr></tbody></table><br>　
+　在一个“在一个 base class（基类）和一个 derived class（派生类）之间有多于一条路径的 inheritance
+hierarchy（继承体系）”（就像上面在 File 和 IOFile 之间，有通过 InputFile 和 OutputFile
+的两条路径）的任何时候，你都必须面对是否需要为每一条路径复制 base class（基类）中的 data
+members（数据成员）的问题。例如，假设 File class 有一个 data members（数据成员）fileName。IOFile
+中应该有这个 field（字段）的多少个拷贝呢？一方面，它从它的每一个 base classes（基类）继承一个拷贝，这就暗示 IOFile
+应该有两个 fileName data members（数据成员）。另一方面，简单的逻辑告诉我们一个 IOFile
+object（对象）应该仅有一个 file name（文件名），所以通过它的两个 base classes（基类）继承来的 fileName
+field（字段）不应该被复制。<br><br>　　C++
+在这个争议上没有自己的立场。它恰当地支持两种选项，虽然它的缺省方式是执行复制。如果那不是你想要的，你必须让这个 class（类）带有一个
+virtual base class（虚拟基类）的数据（也就是 File）。为了做到这一点，你要让从它直接继承的所有的
+classes（类）使用 virtual inheritance（虚拟继承）：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>class File { ... };<br>class InputFile: virtual public File { ... };<br>class OutputFile: virtual public File { ... };<br>class IOFile: public InputFile,<br>public OutputFile<br>{ ... };</td></tr></tbody></table><br>　
+　标准 C++ 库包含一个和此类似的 MI hierarchy（继承体系），只是那个 classes（类）是 class
+templates（类模板），名字是 basic_ios，basic_istream，basic_ostream 和
+basic_iostream，而不是 File，InputFile，OutputFile 和 IOFile。<br><br>　　从正确行为的观点
+看，public inheritance（公有继承）应该总是 virtual（虚拟）的。如果这是唯一的观点，规则就变得简单了：你使用
+public inheritance（公有继承）的任何时候，都使用 virtual public
+inheritance（虚拟公有继承）。唉，正确性不是唯一的视角。避免 inherited
+fields（继承来的字段）复制需要在编译器的一部分做一些 behind-the-scenes
+legerdemain（幕后的戏法），而结果是从使用 virtual inheritance（虚拟继承）的 classes（类）创建的
+objects（对象）通常比不使用 virtual inheritance（虚拟继承）的要大。访问 virtual base
+classes（虚拟基类）中的 data members（数据成员）也比那些 non-virtual base
+classes（非虚拟基类）中的要慢。编译器与编译器之间有一些细节不同，但基本的要点很清楚：virtual inheritance
+costs（虚拟继承要付出成本）。<br><br>　　它也有一些其它方面的成本。支配 initialization of virtual
+base classes（虚拟基类初始化）的规则比 non-virtual bases（非虚拟基类）的更加复杂而且更不直观。初始化一个
+virtual base（虚拟基）的职责由 hierarchy（继承体系）中 most derived
+class（层次最低的派生类）承担。这个规则中包括的含义：<br><br>　　（1） 从需要 initialization（初始化）的 virtual bases（虚拟基）派生的 classes（类）必须知道它们的 virtual bases（虚拟基），无论它距离那个 bases（基）有多远；<br><br>　　（2） 当一个新的 derived class（派生类）被加入继承体系时，它必须为它的 virtual bases（虚拟基）（包括直接的和间接的）承担 initialization responsibilities（初始化职责）。<br><br>　
+　我对于 virtual base classes（虚拟基类）（也就是 virtual
+inheritance（虚拟继承））的建议很简单。首先，除非必需，否则不要使用 virtual bases（虚拟基）。缺省情况下，使用
+non-virtual inheritance（非虚拟继承）。第二，如果你必须使用 virtual base
+classes（虚拟基类），试着避免在其中放置数据。这样你就不必在意它的 initialization（初始化）（以及它的 turns
+out（清空），assignment（赋值））规则中的一些怪癖。值得一提的是 Java 和 .NET 中的
+Interfaces（接口）不允许包含任何数据，它们在很多方面可以和 C++ 中的 virtual base classes（虚拟基类）相比照。<br><br>　　现在我们使用下面的 C++ Interface class（接口类）（参见《<a href="http://dev.yesky.com/130/2101130.shtml" target="_blank"><font color="#0033ff">C++箴言：最小化文件之间的编译依赖</font></a>》）来为 persons（人）建模：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>class IPerson {<br>public:<br>　virtual ~IPerson();<br><br>　virtual std::string name() const = 0;<br>　virtual std::string birthDate() const = 0;<br>};</td></tr></tbody></table><br>　
+　IPerson 的客户只能使用 IPerson 的 pointers（指针）和 references（引用）进行编程，因为 abstract
+classes（抽象类）不能被实例化。为了创建能被当作 IPerson objects（对象）使用的 objects（对象），IPerson
+的客户使用 factory functions（工厂函数）（再次参见 Item 31）instantiate（实例化）从 IPerson
+派生的 concrete classes（具体类）：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>// factory function to create a Person object from a unique database ID;<br>// see Item 18 for why the return type isn't a raw pointer<br>std::tr1::shared_ptr&lt;IPerson&gt; makePerson(DatabaseID personIdentifier);<br><br>// function to get a database ID from the user<br>DatabaseID askUserForDatabaseID();<br><br><br>DatabaseID id(askUserForDatabaseID());<br>std::tr1::shared_ptr&lt;IPerson&gt; pp(makePerson(id)); // create an object<br>// supporting the<br>// IPerson interface<br><br>... // manipulate *pp via<br>// IPerson's member<br>// functions</td></tr></tbody></table><br>　　但是 makePerson 怎样创建它返回的 pointers（指针）所指向的 objects（对象）呢？显然，必须有一些 makePerson 可以实例化的从 IPerson 派生的 concrete class（具体类）。<br><br>　
+　假设这个 class（类）叫做 CPerson。作为一个 concrete class（具体类），CPerson 必须提供它从
+IPerson 继承来的 pure virtual functions（纯虚拟函数）的
+implementations（实现）。它可以从头开始写，但利用包含大多数或全部必需品的现有组件更好一些。例如，假设一个老式的
+database-specific class（老式的数据库专用类）PersonInfo 提供了 CPerson 所需要的基本要素：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>class PersonInfo {<br>public:<br>　explicit PersonInfo(DatabaseID pid);<br>　virtual ~PersonInfo();<br><br>　virtual const char * theName() const;<br>　virtual const char * theBirthDate() const;<br>　...<br><br>private:<br>　virtual const char * valueDelimOpen() const; // see<br>　virtual const char * valueDelimClose() const; // below<br>　...<br>};</td></tr></tbody></table><br>　
+　你可以看出这是一个老式的 class（类），因为 member functions（成员函数）返回 const char*s 而不是
+string objects（对象）。尽管如此，如果鞋子合适，为什么不穿呢？这个 class（类）的 member
+functions（成员函数）的名字暗示结果很可能会非常合适。<br><br>　　你突然发现 PersonInfo
+是设计用来帮助以不同的格式打印 database
+fields（数据库字段）的，每一个字段的值的开始和结尾通过指定的字符串定界。缺省情况下，字段值开始和结尾定界符是方括号，所以字段值
+"Ring-tailed Lemur" 很可能被安排成这种格式：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>[Ring-tailed Lemur]</td></tr></tbody></table><br>　　根据方括号并非满足
+PersonInfo 的全体客户的期望的事实，virtual functions（虚拟函数）valueDelimOpen 和
+valueDelimClose 允许 derived classes（派生类）指定它们自己的开始和结尾定界字符串。PersonInfo 的
+member functions（成员函数）的 implementations（实现）调用这些 virtual
+functions（虚拟函数）在它们返回的值上加上适当的定界符。作为一个例子使用 PersonInfo::theName，代码如下：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>const char * PersonInfo::valueDelimOpen() const<br>{<br>　return "["; // default opening delimiter<br>}<br><br>const char * PersonInfo::valueDelimClose() const<br>{<br>　return "]"; // default closing delimiter<br>}<br><br>const char * PersonInfo::theName() const<br>{<br>　// reserve buffer for return value; because this is<br>　// static, it's automatically initialized to all zeros<br>　static char value[Max_Formatted_Field_Value_Length];<br><br>　// write opening delimiter<br>　std::strcpy(value, valueDelimOpen());<br><br>　append to the string in value this object's name field (being careful to avoid buffer overruns!)<br><br>　// write closing delimiter<br>　std::strcat(value, valueDelimClose());<br><br>　return value;<br>}</td></tr></tbody></table><br>　
+　有人可能会质疑 PersonInfo::theName 的陈旧的设计（特别是一个 fixed-size static
+buffer（固定大小静态缓冲区）的使用，这样的东西发生 overrun（越界）和 threading（线程）问题是比较普遍的——参见《<a href="http://soft.yesky.com/440/2052440.shtml" target="_blank"><font color="#0066ff">C++箴言：必须返回对象时别返回引用</font></a>》），但是请把这样的问题放到一边而注意这里：theName 调用 valueDelimOpen 生成它要返回的 string（字符串）的开始定界符，然后它生成名字值本身，然后它调用 valueDelimClose。<br><br>　　因为 valueDelimOpen 和 valueDelimClose 是 virtual functions（虚拟函数），theName 返回的结果不仅依赖于 PersonInfo，也依赖于从 PersonInfo 派生的 classes（类）。<br><br>　
+　对于 CPerson 的实现者，这是好消息，因为当细读 IPerson documentation（文档）中的 fine
+print（晦涩的条文）时，你发现 name 和 birthDate
+需要返回未经修饰的值，也就是，不允许有定界符。换句话说，如果一个人的名字叫 Homer，对那个人的 name 函数的一次调用应该返回
+"Homer"，而不是 "[Homer]"。<br><br>　　CPerson 和 PersonInfo 之间的关系是 PersonInfo
+碰巧有一些函数使得 CPerson 更容易实现。这就是全部。因而它们的关系就是
+is-implemented-in-terms-of，而我们知道有两种方法可以表现这一点：经由 composition（复合）（参见《<a href="http://dev.yesky.com/276/2200276.shtml" target="_blank"><font color="#0033ff">C++箴言：通过composition模拟“has-a”</font></a>》）和经由 private inheritance（私有继承）（参见《<a href="http://dev.yesky.com/123/2208123.shtml?412" target="_blank"><font color="#2222dd">C++箴言：谨慎使用私有继承</font></a>》）。《<a href="http://dev.yesky.com/123/2208123.shtml?412" target="_blank"><font color="#1a1ae6">C++箴言：谨慎使用私有继承</font></a>》
+指出 composition（复合）是通常的首选方法，但如果 virtual
+functions（虚拟函数）要被重定义，inheritance（继承）就是必不可少的。在当前情况下，CPerson 需要重定义
+valueDelimOpen 和 valueDelimClose，所以简单的 composition（复合）做不到。最直截了当的解决方案是让
+CPerson 从 PersonInfo privately inherit（私有继承），虽然 《<a href="http://dev.yesky.com/123/2208123.shtml?412" target="_blank"><font color="#1111ee">C++箴言：谨慎使用私有继承</font></a>》
+说过只要多做一点工作，则 CPerson 也能用 composition（复合）和 inheritance（继承）的组合有效地重定义
+PersonInfo 的 virtuals（虚拟函数）。这里，我们用 private inheritance（私有继承）。<br><br>　　但
+是 CPerson 还必须实现 IPerson interface（接口），而这被称为 public
+inheritance（公有继承）。这就引出一个 multiple inheritance（多继承）的合理应用：组合 public
+inheritance of an interface（一个接口的公有继承）和 private inheritance of an
+implementation（一个实现的私有继承）：<br><br>
+<table width="90%" align="center" bgcolor="#e3e3e3" border="1" bordercolor="#cccccc">
+<tbody>
+<tr>
+<td>class IPerson { // this class specifies the<br>public: // interface to be implemented<br>　virtual ~IPerson();<br><br>　virtual std::string name() const = 0;<br>　virtual std::string birthDate() const = 0;<br>};<br><br>class DatabaseID { ... }; // used below; details are<br>// unimportant<br><br>class PersonInfo { // this class has functions<br>public: // useful in implementing<br>　explicit PersonInfo(DatabaseID pid); // the IPerson interface<br>　virtual ~PersonInfo();<br><br>　virtual const char * theName() const;<br>　virtual const char * theBirthDate() const;<br><br>　virtual const char * valueDelimOpen() const;<br>　virtual const char * valueDelimClose() const;<br>　...<br>};<br><br>class CPerson: public IPerson, private PersonInfo { // note use of MI<br>public:<br>　explicit CPerson( DatabaseID pid): PersonInfo(pid) {}<br>　virtual std::string name() const // implementations<br>　{ return PersonInfo::theName(); } // of the required<br>　// IPerson member<br>　virtual std::string birthDate() const // functions<br>　{ return PersonInfo::theBirthDate(); }<br>private: // redefinitions of<br>　const char * valueDelimOpen() const { return ""; } // inherited virtual<br>　const char * valueDelimClose() const { return ""; } // delimiter<br>}; // functions</td></tr></tbody></table><br>　　在 UML 中，这个设计看起来像这样：<br><br>
+<table width="90%" align="center" border="0">
+<tbody>
+<tr>
+<td>
+<div align="center"><img alt="" src="http://soft.yesky.com/imagelist/05/11/vaf4vin1w8ow.gif"></div></td></tr></tbody></table><br>　　这个例子证明 MI 既是有用的，也是可理解的。<br><br>　
+　时至今日，multiple inheritance（多继承）不过是 object-oriented
+toolbox（面向对象工具箱）里的又一种工具而已，典型情况下，它的使用和理解更加复杂，所以如果你得到一个或多或少等同于一个 MI 设计的
+SI 设计，则 SI 设计总是更加可取。如果你能拿出来的仅有的设计包含 MI，你应该更加用心地考虑一下——总会有一些方法使得 SI
+也能做到。但同时，MI 有时是最清晰的，最易于维护的，最合理的完成工作的方法。在这种情况下，毫不畏惧地使用它。只是要确保谨慎地使用它。<br><br>　　Things to Remember<br><br>　　·multiple inheritance（多继承）比 single inheritance（单继承）更复杂。它能导致新的歧义问题和对 virtual inheritance（虚拟继承）的需要。<br><br>　
+　·virtual inheritance（虚拟继承）增加了 size（大小）和 speed（速度）成本，以及
+initialization（初始化）和 assignment（赋值）的复杂度。当 virtual base
+classes（虚拟基类）没有数据时它是最适用的。<br><br>　　·multiple
+inheritance（多继承）有合理的用途。一种方案涉及组合从一个 Interface class（接口类）的 public
+inheritance（公有继承）和从一个有助于实现的 class（类）的 private inheritance（私有继承）。<br><br><h1 style="display: inline; font-size: 24px;">关于虚拟继承的思考</h1><br>虚拟继承在一般的应用中很少用到，所以也往往被忽视，这也主要是因为在C++中，<zmkey style="border-bottom: 2px dotted rgb(255, 108, 0); font-weight: bold; margin-right: 3px; cursor: pointer; float: none;" class="zoomino-searchword">多重继承<img src="http://www.zoomino.cn/static-ox/images/z-keyword.gif" style="border: medium none ; margin: 0pt; background: transparent none repeat scroll 0% 0%; float: none; height: 14px; width: 12px; display: inline; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" class="zoominoBgImage"></zmkey>是不推荐的，而一旦离开了多重继承，虚拟继承就完全失去了存在的必要（因为这样只会降低效率和占用更多的空间，实在是一无是处）。<br>　　以下面的一个例子为例：<br>　　#include &lt;iostream.h&gt;<br>　　#include &lt;memory.h&gt;<br>　　class CA<br>　　{<br>　　   int k; //为了便于说明后面的内存结构特别添加<br>　　public:<br>　　   void f() {cout &lt;&lt; "CA::f" &lt;&lt; endl;}<br>　　};<br>　　class CB :  public CA<br>　　{<br>　　};<br>　　class CC :  public CA<br>　　{<br>　　};<br>　　class CD : public CB, public CC<br>　　{<br>　　};<br>　　void main()<br>　　{<br>　　   CD d;<br>　　   d.f();<br>　　}<br>　　当编译上述代码时，我们会收到如下的错误提示：<br>　　error C2385: 'CD::f' is ambiguous<br>　　即<zmkey style="border-bottom: 2px dotted rgb(255, 108, 0); font-weight: bold; margin-right: 3px; cursor: pointer; float: none;" class="zoomino-searchword">编译器<img src="http://www.zoomino.cn/static-ox/images/z-keyword.gif" style="border: medium none ; margin: 0pt; background: transparent none repeat scroll 0% 0%; float: none; height: 14px; width: 12px; display: inline; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" class="zoominoBgImage"></zmkey>无法确定你在d.f()中要调用的<zmkey style="border-bottom: 2px dotted rgb(255, 108, 0); font-weight: bold; margin-right: 3px; cursor: pointer; float: none;" class="zoomino-searchword">函数<img src="http://www.zoomino.cn/static-ox/images/z-keyword.gif" style="border: medium none ; margin: 0pt; background: transparent none repeat scroll 0% 0%; float: none; height: 14px; width: 12px; display: inline; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" class="zoominoBgImage"></zmkey>f到底是哪一个。这里可能会让人觉得有些奇怪，命名只定义了一个CA::f，既然大家都派生自CA，那自然就是调用的CA::f，为什么还无法确定呢？<br>　　这是因为编译器在进行编译的时候，需要确定子类的函数定义，如CA::f是确定的，那么在编译CB、CC时还需要在编译器的语法树中生成CB::f，CC::f等<zmkey style="border-bottom: 2px dotted rgb(255, 108, 0); font-weight: bold; margin-right: 3px; cursor: pointer; float: none;" class="zoomino-searchword">标识<img src="http://www.zoomino.cn/static-ox/images/z-keyword.gif" style="border: medium none ; margin: 0pt; background: transparent none repeat scroll 0% 0%; float: none; height: 14px; width: 12px; display: inline; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" class="zoominoBgImage"></zmkey>，那么，在编译CD的时候，由于CB、CC都有一个函数f，此时，编译器将试图生成两个CD::f标识，显然这时就要报错了。（当我们不使用CD::f的时候，以上标识都不会生成，所以，如果去掉d.f()一句，程序将顺利通过编译）<br>　　要解决这个问题，有两个方法：<br>　　1、重载函数f()：此时由于我们明确定义了CD::f，编译器检查到CD::f()调用时就无需再像上面一样去逐级生成CD::f标识了；<br>　　此时CD的<zmkey style="border-bottom: 2px dotted rgb(255, 108, 0); font-weight: bold; margin-right: 3px; cursor: pointer; float: none;" class="zoomino-searchword">元素<img src="http://www.zoomino.cn/static-ox/images/z-keyword.gif" style="border: medium none ; margin: 0pt; background: transparent none repeat scroll 0% 0%; float: none; height: 14px; width: 12px; display: inline; -moz-background-clip: -moz-initial; -moz-background-origin: -moz-initial; -moz-background-inline-policy: -moz-initial;" class="zoominoBgImage"></zmkey>结构如下：<br>　　--------<br>　　|CB(CA)|<br>　　|CC(CA)|<br>　　--------<br>　　故此时的sizeof(CD) = 8;（CB、CC各有一个元素k）<br>　　2、使用虚拟继承：虚拟继承又称作共享继承，这种共享其实也是编译期间实现的，当使用虚拟继承时，上面的程序将变成下面的形式：<br>　　#include &lt;iostream.h&gt;<br>　　#include &lt;memory.h&gt;<br>　　class CA<br>　　{<br>　　   int k;<br>　　public:<br>　　   void f() {cout &lt;&lt; "CA::f" &lt;&lt; endl;}<br>　　};<br>　　class CB :  virtual public CA<br>　　{<br>　　};<br>　　class CC :  virtual public CA<br>　　{<br>　　};<br>　　class CD : public CB, public CC<br>　　{<br>　　};<br>　　void main()<br>　　{<br>　　   CD d;<br>　　   d.f();<br>　　}<br>　　此时，当编译器确定d.f()调用的具体含义时，将生成如下的CD结构：<br>　　----<br>　　|CB|<br>　　|CC|<br>　　|CA|<br>　　----<br>　　同时，在CB、CC中都分别包含了一个指向CA的vbptr（virtual base table pointer），其中记录的是从CB、CC的元素到CA的元素之间的偏移量。此时，不会生成各子类的函数f标识，除非子类重载了该函数，从而达到“共享”的目的。<br>　　也正因此，此时的sizeof(CD) = 12（两个vbptr + sizoef(int)）;<br>　　所有这一切都是编译期间决定的，只是编译器为了提供这样一个新的语法功能为我们多作了一些事情而已。<br>　　注：以上讨论限MS Visual C++编译器。<br>
+<table width="90%" align="center" border="0">
+<tbody>
+<tr>
+<td>
+<div align="center"><b>编辑推荐：<a href="http://dev.yesky.com/292/2196292.shtml" target="_blank"><font color="#cc3333">C++箴言：绝不重定义继承的非虚拟函数</font></a></b></div></td></tr></tbody></table>
+  
+ <div id="textpage1"> 
+          <!-- Error --> 
+        </div>
+		<span id="advTailValue"> 
+<script language="JavaScript1.1" src="http://media.yesky.com/adjs/column/yesky-inner-js-1.js"></script><table width="400" align="center" border="0" cellpadding="5" cellspacing="0"><tbody><tr><td><div align="center"><a href="http://it2008.yesky.com/" target="_blank"><b>参与天极网2008年度IT消费调查 大奖等你拿</b></a></div></td><td><div align="center"><a href="http://ju.atpanel.com/?url=http://www.taobao.com/vertical/digital/index.php?ad_id=&amp;am_id=&amp;cm_id=&amp;pm_id=15000681571769b45e18" target="_blank"><b><font color="red">淘宝网购买</font></b></a><br>\<br></div></td></tr></tbody></table></span>

@@ -1,0 +1,39 @@
+<p>首先定义一个模板类</p>
+<p>tamplate &lt;typename T&gt; <br />
+</p>
+<p>class A</p>
+<p>{<br />
+</p>
+<p>　　void foo() {}</p>
+<p>　　voif bar(){} </p>
+<p>} ;<br />
+</p>
+<p>下面是一个偏特化版本</p>
+<p>&nbsp;tamplate &lt;&gt; <br />
+</p>
+<p>class A &lt;int&gt;<br />
+</p>
+<p>{<br />
+</p>
+<p>　　void foo() {}</p>
+<p>} ;</p>
+<p>&nbsp;</p>
+<p>然后如果我们这么调用，就会失败</p>
+<p>A &lt;int&gt;&nbsp; a;<br />
+</p>
+<p>a.bar()</p>
+<p>编译器会说bar没有实现<br />
+</p>
+<p>&nbsp;</p>
+<p>&nbsp;而如果 我们这么实现片特化<br />
+</p>
+<p>typedef&nbsp; class A &lt;int&gt; AInt;<br />
+</p>
+<p>void AInt::foo(){}<br />
+</p>
+<p>&nbsp;</p>
+<p>如上调用的时候，却没有问题</p>
+<p>&nbsp;</p>
+<p>测试是在vc7.1版本<br />
+</p>
+<p>&nbsp;</p>

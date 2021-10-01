@@ -1,0 +1,24 @@
+<p>基本功能</p>
+<p>能够从文件load图像 --》显示图像--》在图像上方显示graphics，比如几条线--》鼠标移动，显示鼠标位置的灰度</p>
+<p>&nbsp;</p>
+<p>load-display-image之c#版</p>
+<p>&nbsp;</p>
+<p>load-display-image之c++ qt版</p>
+<p>F:\wamp\www\git_repos\GitHub\GeneralUtility\TestQt\testLoadImage</p>
+<p>load显示图像很简单</p>
+<div class="cnblogs_Highlighter">
+<pre class="brush:cpp;gutter:true;">Widget::Widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Widget)
+{
+    ui-&gt;setupUi(this);
+
+    //http://stackoverflow.com/questions/1357960/qt-jpg-image-display
+    image = new QPixmap("F:\\wamp\\www\\git_repos\\GitHub\\GeneralUtility\\TestQt\\testFastPaint\\pattern\\0.bmp");
+
+    ui-&gt;label-&gt;setPixmap(*image);
+}
+</pre>
+</div>
+<p>&nbsp;鼠标操作貌似很复杂</p>
+<p>&nbsp;</p>

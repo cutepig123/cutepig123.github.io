@@ -1,0 +1,177 @@
+<p><span style="color: red">例子：<br />
+使用python<br />
+</span>import re&nbsp; <br />
+# lookaround&nbsp;&nbsp; <br />
+str = '1234567890'&nbsp;&nbsp; <br />
+regex = re.compile('(?&lt;=\d)(?=(\d\d\d)+$)')&nbsp;&nbsp; <br />
+str = regex.sub(',', str)&nbsp;&nbsp; <br />
+print str&nbsp; <br />
+# backreference&nbsp;&nbsp; <br />
+str = 'section{First} section{second}'&nbsp;&nbsp; <br />
+regex = re.compile('section{ ( [^}]* ) }', re.VERBOSE)&nbsp;&nbsp; <br />
+str = regex.sub(r'subsection{\1}', str)&nbsp;&nbsp; <br />
+print str&nbsp; <br />
+# *&nbsp;&nbsp; <br />
+str ='abxd'&nbsp;&nbsp; <br />
+regex = re.compile('x*')&nbsp;&nbsp; <br />
+str = regex.sub('-', str)&nbsp;&nbsp; <br />
+print str&nbsp; <br />
+# raw string&nbsp;&nbsp; <br />
+str = r'\n'&nbsp;&nbsp; <br />
+print str&nbsp; <br />
+# greedy and !greedy&nbsp;&nbsp; <br />
+str = '&lt;html&gt;&lt;head&gt;'&nbsp;&nbsp; <br />
+print re.match('&lt;.*&gt;', str).group()&nbsp;&nbsp; <br />
+print re.match('&lt;.*?&gt;', str).group() </p>
+<p><span style="color: red">使用perl</span><br />
+#!/usr/bin/perl&nbsp;&nbsp; <br />
+undef $/;&nbsp;&nbsp; # Enter "file-slurp" mode&nbsp;&nbsp; <br />
+$text = &lt;&gt;; # Slurp up the first file given on the command line.&nbsp;&nbsp;&nbsp; <br />
+$text =~ s/&amp;/&amp;/g;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Make the basic HTML . . .&nbsp;&nbsp; <br />
+$text =~ s/&lt;/&lt;/g;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # . . . characters &amp;, &lt;, and &gt; . . .&nbsp;&nbsp; <br />
+$text =~ s/&gt;/&gt;/g;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # . . . HTML safe.&nbsp;&nbsp; <br />
+$text =~ s/ / /g;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # handle blankspace&nbsp;&nbsp; <br />
+$text =~ s/(?=\n)/&lt;br \/&gt;/g;&nbsp;&nbsp;&nbsp; # handle \n&nbsp;&nbsp; <br />
+$hostnameregex = qr/[-a-z0-9]+(\.[-a-z0-9]+)*\.(com|edu|cn)/i;&nbsp;&nbsp; <br />
+# Turn email addresses into links . . .&nbsp;&nbsp; <br />
+$text =~ s{&nbsp;&nbsp; <br />
+&nbsp;&nbsp; \b&nbsp;&nbsp; <br />
+&nbsp;&nbsp; # Capture the address to $1 . . .&nbsp;&nbsp; <br />
+&nbsp;&nbsp; (&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; \w[-.\w]*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # username&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; \@&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; $hostnameregex # hostname&nbsp;&nbsp; <br />
+&nbsp;&nbsp; )&nbsp;&nbsp; <br />
+&nbsp;&nbsp; \b&nbsp;&nbsp; <br />
+}{&lt;a href="mailto:$1"&gt;$1&lt;/a&gt;}gix;&nbsp;&nbsp;&nbsp; <br />
+# Turn HTTP URLs into links . . .&nbsp;&nbsp; <br />
+$text =~ s{&nbsp;&nbsp; <br />
+&nbsp;&nbsp; \b&nbsp;&nbsp; <br />
+&nbsp;&nbsp; # Capture the URL to $1 . . .&nbsp;&nbsp; <br />
+&nbsp;&nbsp; (&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; http:// $hostnameregex \b&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # hostname&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; (&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; / [-a-z0-9_:\@&amp;?=+,.!/~*'%\$]*&nbsp;&nbsp; # Optional path&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (?&lt;![.,?!])&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; # Not allowed to end with [.,?!]&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp; )?&nbsp;&nbsp; <br />
+&nbsp;&nbsp; )&nbsp;&nbsp; <br />
+}{&lt;a href="$1"&gt;$1&lt;/a&gt;}gix;&nbsp;&nbsp;&nbsp; <br />
+print $text;&nbsp;&nbsp;&nbsp;&nbsp; # Finally, display the HTML-ized text.&nbsp;&nbsp; </p>
+<p><span style="color: red">使用VB</span><br />
+...<br />
+<span style="color: red">使用C#<br />
+</span>using System.Text.RegularExpressions;<br />
+Match m = Regex.Match(str, @"&lt;\$Loop\$&gt;(.*?)&lt;\$LoopEnd\$&gt;", RegexOptions.IgnoreCase);<br />
+if (m.Success)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; MessageBox.Show(m.Result("$1"));<br />
+}<br />
+<span style="color: red">javascript(匹配1-100以内的数字)<br />
+</span></p>
+<p>&lt;html&gt;<br />
+&lt;body&gt;</p>
+<p>&lt;script language='javascript'&gt;<br />
+function check()<br />
+{<br />
+var aa=document.getElementById('textbox');<br />
+var ValidateExp = /^([1-9][0-9]|[1-9]|100)$/g;<br />
+//var ValidateExp = /^([1-100])$/g;//ERROR</p>
+<p>//&nbsp; if(!aa.value.match(ValidateExp))&nbsp; //可以<br />
+if(!/^([1-9][0-9]|[1-9]|100)$/g.test(aa.value))<br />
+&nbsp;{<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lblValBP.innerText = "*";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lblValBP.style.color="red";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; alert("请输入1-100");<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return false;<br />
+&nbsp;}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp; else<br />
+&nbsp; {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lblValBP.innerText = "&#8730;";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; lblValBP.style.color="green";<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; return true;<br />
+&nbsp; }//end else<br />
+}//end function <br />
+&lt;/script&gt;</p>
+<p>&lt;form name='myfrom'&gt;<br />
+&lt;p id='lblValBP'&gt;&lt;/p&gt;<br />
+&lt;input type='text' id='textbox' &gt;<br />
+&lt;input type='button' value='提交' onclick='check()'&gt;<br />
+&lt;/form&gt;<br />
+&lt;/body&gt;<br />
+&lt;/html&gt;</p>
+<p><span style="color: red">regexp教程:</span><br />
+<a href="http://wiki.ubuntu.org.cn/Python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97#.E7.BC.96.E8.AF.91.E6.A0.87.E5.BF.97">http://wiki.ubuntu.org.cn/Python%E6%AD%A3%E5%88%99%E8%A1%A8%E8%BE%BE%E5%BC%8F%E6%93%8D%E4%BD%9C%E6%8C%87%E5%8D%97#.E7.BC.96.E8.AF.91.E6.A0.87.E5.BF.97</a></p>
+<p><br />
+&nbsp;</p>
+<p>http://community.csdn.net/Expert/topic/5763/5763178.xml?temp=.3836481<br />
+<span style="color: red">求一个超难的正则表达式 <br />
+</span>-0113--0-310-1<br />
+-1101-1-10--00<br />
+10-1--1--30000<br />
+3--3110-00-1-3<br />
+301--10-1-00-1</p>
+<p>条件1： 长度为14个字符<br />
+条件2： 其中任意9个位置为数字，并且数字只能是(0,1,3)<br />
+条件3： 其余的位置全部为"-"符号</p>
+<p>------------------------------------------ 求一个正则表达式<br />
+有点意思，问题本身不难，要说有点难度那是在思路上，先给答案，慢慢说思路</p>
+<p>^(?!(.*?-){6,})(?!(.*?\d){10,})[013-]{14}$<br />
+可以这样拆开来理解：</p>
+<p>1：^和$分别是开始符和结束符；<br />
+2：(?!(.*?-){6,}) 表示不匹配有大于等于6个'-'的对象<br />
+3：(?!(.*?\d){10,}) 表示不匹配有大于等于10个数字的对象<br />
+4：[013-]{14} 表示只能含有这些字符,0,1,3,-，并且长度为14个<br />
+好像这样写也可以哈</p>
+<p>^(?=(.*?-){5})(?=(.*?\d){9})[013-]{14}$<br />
+－－－－－－－－－－－－－－－－－－－－<br />
+这样写在.NET中没问题，但不通用，在验证控件或javascript中不可以<br />
+原因主要是javascript对(?=Exp)支持不稳定，但对(?!Exp)的支持没问题</p>
+<p>^(?!(.*?-){6,})(?!(.*?\d){10,})[013-]{14}$，在服务器端和客户端都通过；<br />
+^(?=(.*?-){5})(?=(.*?\d){9})[013-]{14}$，在服务器端验证通过，客户端失败；<br />
+^(?=(.*?-){5})[013-]{14}$，在服务器和客户端都测试失败</p>
+<p>其实看不出这道题目有多高级。而且这类型的题目从理论上来说，应该是正则比较慢。</p>
+<p>无论是.NET还是JS都可以用一个简单的方法来解决：</p>
+<p>1、判断字符串长度是否为14位。<br />
+2、s = s.Replace( "-", "" );//JS有类似方法<br />
+3、判断Replace后的字符串是否为9位。<br />
+4、判断这个9位的字符串是否全部由0、1、3组成。无论是遍历还是其他方法，都很简单。</p>
+<p><br />
+当然，正则的代码更简洁。不过，代码却让VMM一眼之下无法理解，何况没有效率上的优势。孰优孰劣，大家自行判断。<br />
+</p>
+<p><span style="color: red">正则表达式之道</span><br />
+原著：Steve Mansour <br />
+sman@scruznet.com <br />
+Revised: June 5, 1999<br />
+(copied by jm /at/ jmason.org from http://www.scruz.net/%7esman/regexp.htm, after the original disappeared! ) </p>
+<p>翻译：Neo Lee</p>
+<p>http://net.pku.edu.cn/~yhf/tao_regexps_zh.html</p>
+<p><span style="color: red">正则表达式30分钟入门教程</span><br />
+版本：v2.21 (2007-8-3) 作者：deerchao 来源:unibetter大学生社区 转载请注明来源</p>
+<p>目录<br />
+本文目标 <br />
+如何使用本教程 <br />
+正则表达式到底是什么？ <br />
+入门 <br />
+测试正则表达式 <br />
+元字符 <br />
+字符转义 <br />
+重复 <br />
+字符类 <br />
+反义 <br />
+替换 <br />
+分组 <br />
+后向引用 <br />
+零宽断言 <br />
+负向零宽断言 <br />
+注释 <br />
+贪婪与懒惰 <br />
+处理选项 <br />
+平衡组/递归匹配 <br />
+还有些什么东西没提到 <br />
+联系作者 <br />
+一些我认为你可能已经知道的术语的参考 <br />
+网上的资源及本文参考文献 <br />
+更新说明 <br />
+http://www.unibetter.com/deerchao/zhengzhe-biaodashi-jiaocheng-se.htm</p>

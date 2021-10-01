@@ -1,0 +1,27 @@
+<p>&nbsp;</p>
+<p><strong>callback</strong> function as a dependency of the object that it is being passed into. <strong>DI</strong> is the process of providing the callback (the dependency) to the object. (For example: by giving it to the object via its constructor, a method call, a setter, etc.).</p>
+<p>翻译： callback是具体的依赖， DI是注入依赖的过程</p>
+<p>&nbsp;</p>
+<p><span><span>DI是IoC的子集</span></span></p>
+<ul>
+<li><strong><span><span>IoC</span></span></strong><span><span>意味着对象不会创建他们依赖的其他对象来完成他们的工作。</span><span>相反，他们从外部服务（例如，xml文件或单个应用程序服务）获取他们需要的对象。</span><span>我使用的IoC的2个实现是DI和ServiceLocator。</span></span></li>
+<li><strong><span><span>DI</span></span></strong><span><span>意味着在不使用具体对象而是使用抽象（接口）的情况下完成获取依赖对象的IoC原则。</span><span>这使得所有组件链可测试，导致更高级别的组件不依赖于更低级别的组件，仅来自接口。</span><span>Mocks实现了这些接口。</span></span></li>
+</ul>
+<p>&nbsp;<img src="https://img2018.cnblogs.com/blog/23777/201901/23777-20190117234109221-1597572080.png" alt="" /></p>
+<p><strong><span><span>IoC</span></span></strong><span><span>（</span></span><strong><span><span>I</span></span></strong><span><span>&nbsp;nversion&nbsp;</span></span><strong><span><span>o</span></span></strong><span><span>&nbsp;f&nbsp;</span></span><strong><span><span>C</span></span></strong><span><span>&nbsp;ontrol&nbsp;</span><span>）： - 这是一个通用术语，以多种方式实现（事件，</span><span>代理</span><span>等）。</span></span></p>
+<p><strong><span><span>DI</span></span></strong><span><span>（</span></span><strong><span><span>D</span></span></strong><span><span>&nbsp;ependency&nbsp;</span></span><strong><span><span>I</span></span></strong><span><span>&nbsp;njection）： - DI是IoC的子类型，通过</span></span><em><span><span>构造函数注入，setter注入或接口注入实现</span></span></em><span><span>。</span></span></p>
+<p><span><span>但是，Spring仅支持以下两种类型：</span></span></p>
+<ul>
+<li><strong><span><span>二传手注射</span></span></strong>
+<ul>
+<li><span><span>基于setter的DI是通过在调用无参数构造函数或无参数静态工厂方法来实例化其bean之后调用用户bean上的setter方法来实现的。</span></span></li>
+</ul>
+</li>
+<li><strong><span><span>构造函数注入</span></span></strong>
+<ul>
+<li><span><span>基于构造函数的DI是通过调用具有多个参数的构造函数来实现的，每个参数代表一个协作者。使用这个我们可以验证注入的bean不是null并且快速失败（编译时失败而不是运行时），所以我们得到了启动应用程序本身</span></span><code>NullPointerException: bean does not exist</code><span><span>。</span><span>构造函数注入是注入依赖项的最佳实践。</span></span></li>
+</ul>
+</li>
+<li></li>
+</ul>
+<p>&nbsp;</p>

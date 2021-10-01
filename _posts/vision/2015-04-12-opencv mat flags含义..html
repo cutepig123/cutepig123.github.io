@@ -1,0 +1,6 @@
+<p><br /><br />f:\opencv\opencv\sources\modules\core\src\matrix.cpp:<br />&nbsp; flags = (_type &amp; CV_MAT_TYPE_MASK) | MAGIC_VAL;<br />&nbsp; <br />&nbsp; CV_MAT_TYPE_MASK: =8*4-1=31, 5bits<br />&nbsp; #define CV_MAT_TYPE_MASK&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (CV_DEPTH_MAX*CV_CN_MAX - 1)<br />&nbsp; <br />&nbsp; MAGIC_VAL:<br />&nbsp; MAGIC_VAL&nbsp; = 0x42FF0000<br />&nbsp; <br />&nbsp; _type:<br />&nbsp; #define CV_32SC1 CV_MAKETYPE(CV_32S,1)<br />&nbsp; #define CV_MAKETYPE(depth,cn) (CV_MAT_DEPTH(depth) + (((cn)-1) &lt;&lt; CV_CN_SHIFT))<br />&nbsp; <br />&nbsp; CV_32SC1 = CV_32S &amp;7 | (1-1)&lt;&lt;3 =4</p>
+<p>&nbsp;</p>
+<p><strong>已知Mat，如何获取她的dewpth, channel?</strong></p>
+<p>f:\opencv\opencv\sources\modules\core\src\arithm.cpp:</p>
+<p>int type1 = psrc1-&gt;type(), depth1 = CV_MAT_DEPTH(type1), cn = CV_MAT_CN(type1);</p>
+<p>&nbsp;</p>

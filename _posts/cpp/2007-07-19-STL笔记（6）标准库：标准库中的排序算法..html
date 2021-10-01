@@ -1,0 +1,360 @@
+<p>标准库：标准库中的排序算法<br>The Standard Librarian: Sorting in the Standard Library <br>Matthew Austern <br><a href="http://www.cuj.com/experts/1908/austern.htm?topic=experts">http://www.cuj.com/experts/1908/austern.htm?topic=experts</a> </p>
+<p><br><span style="BACKGROUND-COLOR: yellow">用泛型算法进行排序</span><br>&nbsp;&nbsp;&nbsp; C++标准24章有一个小节叫&#8220;Sorting and related operations&#8221;。它包含了很多对已序区间进行的操作，和<span style="COLOR: red">三个排序用泛型算法：sort()，stable_sort()，和partial_sort()。</span> </p>
+<p>&nbsp;&nbsp;&nbsp; 前两个，sort()和stable_sort()，本质上有相同的接口：同通常的STL泛型算法一样，传入指明了需要排序的区间的Random Access Iterator。 同样，作为可选项，你也能提供第三个参数以指明如何比较元素：第三个参数是一个functor，接受两个参数（x和y），在x应该位于y之前时返回true。所以，举例来说，如果v是一个int的vector： </p>
+<p>&nbsp;&nbsp;&nbsp; std::sort(v.begin(), v.end());</p>
+<p>将以升序来排序它。要改为降序，你需要提供应该不同的比较方法： </p>
+<p>&nbsp;&nbsp;&nbsp; std::sort(v.begin(), v.end(), <span style="COLOR: red">std::greater&lt;int&gt;()</span>); </p>
+<p>&nbsp;&nbsp;&nbsp; <span style="COLOR: red">注意，我们正在以greater作为第三参数，而不是greater_equal。这很重要，它是所有STL排序算法的前提条件：比较函数必须在两个参数相同时返回false（WQ注：参看《Effective STL》Item 21）。在某种程度上，这太武断了：看起来完全可以随便使用&#8220;&lt;&#8221;或者&#8220;&lt;=&#8221;这样形式的比较函数来表达一个排序算法的。然而，作出明确的选择是必需的，并且要始终坚持这个选择。标准C++运行库选择了前者。如果你传给sort()一个对等价的参数返回true的functor，你将得到不可预知的、完全依赖于具体实现的结果；在某些系统下，它看起来能工作，而在另外一些系统下可能导致无限循环或内存保护错误</span>。 </p>
+<p>&nbsp;&nbsp;&nbsp; 对于比较简单的场合，使用stable_sort()代替sort()，你不会看出很多差异。与sort()一样，stable_sort()对[first, last)区间进行排序，默认是升序，并且，同样你可以提供一个比较函数以改变顺序。如果你读过C++标准，你将会看到<span style="BACKGROUND-COLOR: yellow">sort()和stable_sort()的两个不同</span>： </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 如名字所示，stable_sort()是稳定的。如果两个元素比较结果为等价，stable_sort()不改变它们的相对顺序。 </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 性能上的承诺是不同的。 </p>
+<p>第一点，稳定，比较容易懂。它对int类型通常无所谓(一个&#8220;42&#8221;和另外一个&#8220;42&#8221;完全相同)，但有时对其它数据类型就非常重要了。比如，你正对task根据优先级排序，你或许期望高优先级的task被提到低优先级的task之前，但相同优先级的任务保持它们原来的先后顺序。sort()没有这个承诺，而stable_sort()承诺了这一点。 </p>
+<p>&nbsp;&nbsp;&nbsp; <span style="BACKGROUND-COLOR: yellow">标准对性能的描述就不怎么直观了</span>：sort()和stable_sort()的承诺都很复杂，并且都不完备。标准说sort()的&#8220;平均&#8221;复杂度是O(N log N)，而没有说最坏的情况；stable_sort()的复杂度是O(N (log N)2)，但在有足够额外内存时同样是O( N log N)。 </p>
+<p>&nbsp;&nbsp;&nbsp; 怎样搞清楚所有这些不同情况？ </p>
+<p>&nbsp;&nbsp;&nbsp; 性能的承诺是和特殊的实现技巧联系在一起的，而如果你知道这些技巧是什么的话，这个承诺就更明白了。允许sort()以快速排序（递归分割区间）来实现，而stable_sort()以归并排序（递归归并已序子区间）来实现[注1]。快速排序是已知的最快速排序算法之一，复杂度几乎总是O(N log N)，但对一些特殊序列是O(N2)；如果标准总要求sort()是O(N log N)，将不能使用快速排序。同样，归并两个子区间在有额外缓冲区以拷贝结果时将很容易实现；归并排序在可以使用与原始区间同样大的辅助缓冲区时是O(N log N)，如果不能获得任何辅助缓冲区时是O(N (log N)2)。如果它只能使用一个较小的辅助缓冲区，复杂度将在两者之间－－但，在现实中，更接近于O(N log N)。 </p>
+<p>&nbsp;&nbsp;&nbsp; 这解释了标准中说的东西，但还不全。标准说&#8220;如果最坏情况时的行为很重要&#8221;，你就不该使用sort()。然而，事实并不象标准第一次写下这条建议时那样。许多标准运行库的实作，包括GNU g++和Microsoft Visual C++，现在使用快速排序的一个新的变种，称为introsort[注2]（WQ注：参看侯捷《STL源码剖析》）。Introsort一般说来和快速排序同样快，但它的复杂度总是O(N log N)。 除非你顾虑老的标准库的实作，最差情况时的行为不再成为避免使用sort()的理由。并且，虽然stable_sort (通常)也是O(N log N)，这个O掩盖了很多细节。 </p>
+<p>&nbsp;&nbsp;&nbsp; 在绝大多数情况下，stable_sort()比sort()慢很多，因为它必须对每个元素作更多操作；这就是你要为&#8220;稳定&#8221;付出的代价。使用stable_sort()应付等价元素维持原来的相对顺序很重要的情况（比如，根据优先级进行排序，但要对相同优先级的条目保持先来先处理的顺序），而使用sort()处理其它情况。 </p>
+<p>&nbsp;&nbsp;&nbsp; 另一个泛型排序算法是partial_sort()（包括一个小变种，partial_sort_copy()）。它的功能稍有不同，语法也稍有区别：它查找并排序区间内的前n名元素。和其它情况一样，默认是通过&#8220;&lt;&#8221;比较进行升序排列，但能提供一个functor来改变它。于是，举例来说，如果你只对序列的前10名的元素感兴趣，可以这样找到它们： </p>
+<p>&nbsp;&nbsp;&nbsp; partial_sort(first, first+10, last, greater&lt;T&gt;()); </p>
+<p>然后，最大的10个元素将被容纳在[first, fist + 10)(降序排列)， 其余元素容纳在[first + 10, last)。 </p>
+<p>&nbsp;&nbsp;&nbsp; 这儿有一个明显的受限情况：如果你写partial_sort(first, last, last)，那么你正要求partial_sort()排序整个[first, last)区间。于是，虽然语法稍有不同，你能仍然能以使用sort()的同样的方法使用partial_sort()。有理由这么做吗？实际是没有。查看一下C++标准对复杂度的描述，你将看到partial_sort()和sort一样，也是O(N&nbsp; log N)，但是，再一次，这是不完全的描述。两个O(N log N)的运算不必然有同样的速度；对此例，sort()通常快得多。 </p>
+<p>&nbsp;&nbsp;&nbsp; partial_sort()的存在是为了部分排序。假如你有一个一百万个名字的列表，而你需要找前一千个，按字母排序。通过对整个列表排序并忽略后面的部分，你可以得到这一千个名字，但那会非常浪费。使用partial_sort()或partial_sort_copy()会快得多： </p>
+<p>&nbsp;&nbsp;&nbsp; vector&lt;string&gt; result(1000); </p>
+<p>&nbsp;&nbsp;&nbsp; partial_sort_copy(names.begin(), names.end(), result.begin(), result.end()); </p>
+<p>&nbsp;&nbsp;&nbsp; 当你只对已序区间的前面部分感兴趣时，使用partial_sort()，而在需要排序整个区间时使用sort()。 </p>
+<p>&nbsp;&nbsp; 如对sort()和stable_sort()所做过的，考查一下partial_sort()是如何实现的将会有帮助。通常的实现，也是C++标准制订者建议的，是使用堆排序：输入区间在一个称为heap的数据结构中重新整理，heap本质上是一个用数组实现的二叉树，它很容易找到最大的元素，并且很容易在移除最大元素时仍然保持为一个有效heap。如果我们连续地将元素从一个heap中移开，那么将会留下最小的n个元素：正是我们想从partial_sort获得的。如果从heap中移除所有元素，将会得到一个已序区间。 </p>
+<p>&nbsp;&nbsp;&nbsp; 标准C++运行库包含了直接操纵heap的泛型算法，所以，代替使用 partial_sort()，要排序一个区间可以写： </p>
+<p>&nbsp;&nbsp;&nbsp; make_heap(first, last); </p>
+<p>&nbsp;&nbsp;&nbsp; sort_heap(first, last); </p>
+<p>这看起来和 </p>
+<p>&nbsp;&nbsp;&nbsp; partial_sort(first, last, last);</p>
+<p>不同，但其实不是这样。两种情况下，你都使用了堆排序；两种形式应该具有完全相同的速度。 </p>
+<p>&nbsp;&nbsp;&nbsp; 最后，还有最后一个&#8220;泛型&#8221;排序算法，从C语言继承而来：qsort()。 对&#8220;泛型&#8221;加引号，是因为qsort()实际上不象sort()、stable_sort()和partial_sort()那样通用。不能用它排序具有构造函数、虚函数、基类或私有数据成员的对象。C语言不知道这些特性；qsort()假设它可以按位拷贝对象，而这只对最简单的class才成立。也很难在模板中使用qsort()，因为你必须传给它一个参数是void *类型的比较函数，并且在这个函数内部知道要排序的对象的精确类型。 </p>
+<p>&nbsp;&nbsp;&nbsp; C语言标准没有对qsort()作出性能承诺。在可以使用qsort()的场合，通常表现得比sort()慢很多。(主要是因为一个简单的原因：sort()的接口被设计得可以将比较函数内联，而qsort()的接口做不到这一点。)除非是遗留代码，你应该避免使用qsort()；sort()具有一个更简单并且更安全的接口，它的限制比较少，而且更快。 </p>
+<p>对特别的容器进行排序<br>&nbsp;&nbsp;&nbsp; 我以讨论泛型算法开始，是因为标准C++运行库的基本原则是解耦不必要耦合的事物。算法被从容器中分离出来。在对容器的需求中，没有提到排序；排序一个vector是使用一个独立于std::vector的泛型算法： </p>
+<p>&nbsp;&nbsp;&nbsp; sort(v.begin(), v.end()); </p>
+<p>&nbsp;&nbsp;&nbsp; 然而，任何对C++中的排序的完备讨论都必须包括容器。通常，容器没有提供排序方法，但一些特殊的容器提供了。 </p>
+<p>&nbsp;&nbsp;&nbsp; 你不能通过写v.sort()来排序一个vector，因为std::vector没有这样的成员函数，但你可以通过写l.sort()来排序一个list。和往常一样，你可以显式地提供一个不同的比较函数：如果l是一个int型的list，那么l.sort(greater&lt;int&gt;())将按降序排序它。 </p>
+<p>&nbsp;&nbsp;&nbsp; 事实上，list::sort()是排序一个list的唯一的容易方法：std::list只提供了Bidirectional Iterator，但独立的泛型排序算法（sort()、stable_sort()和partial_sort()）要求更强大的Random Access Iterators[注3]。这个特别的成员函数list::sort()不使用iterator，于是暴露了list是以相互连接的节点来实现的事实。它使用归并排序的一个变种，通过连接和解连节点来工作，而不是拷贝list中的元素。 </p>
+<p>&nbsp;&nbsp;&nbsp; 最后，排序一个set(或一个multiset，如果你需要拥有重复元素)是最简单的：它本来就是已排序的！你不能写sort(s.begin(),s.end())，但你也从不需要这么做。set的一个基本特性是它的元素按顺序排列的。当你insert()一个新元素时，它自动将它放置在适当的位置以维持排序状态。在其内部，set使用一个能提供快速（O(log N)）的查找和插入的数据结构（通常是某种平衡树）。 </p>
+<p><span style="BACKGROUND-COLOR: yellow">时间测试</span><br>这将我们置身何处？我已经对时间作了一些论断，而且我们还能作些更直觉的预测：比如，在set中插入一个元素将比排序一个vector慢，因为set是一个复杂的数据结构，它需要使用动态内存分配；或者，排序一个list应该和使用stable_sort差不多快，它们都是归并排序的变种。然而，直觉不能取代时间测试。测量很困难 (更精确地说，你要测量什么，又如何测量？)，但这是有必要的。 </p>
+<p><span style="BACKGROUND-COLOR: yellow">&nbsp;&nbsp;&nbsp; Listing 1的程序构造了一个vector&lt;double&gt;，其中的元素乱序排列</span>，然后用我们讨论过的每个方法（除了qsort()（WQ注：原文如此））反复对它进行排序。在将vector传给每个测试用例时，我们故意使用传值：我们不想让任何一个测试用例得到一个已排序的vector！ </p>
+<p>&nbsp;&nbsp;&nbsp; 用Microsoft Visual C++ 7 beta编译程序(结果和g++相似)，在500M的Pentium 3上进行，结果如下： </p>
+<p>&nbsp;&nbsp;&nbsp; Sorting a vector of 700000 doubles.</p>
+<p>&nbsp;&nbsp;&nbsp; sorting method&nbsp;&nbsp;&nbsp; t (sec) </p>
+<p>&nbsp;&nbsp;&nbsp; sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.971 </p>
+<p>&nbsp;&nbsp;&nbsp; qsort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.732 </p>
+<p>&nbsp;&nbsp;&nbsp; stable_sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.402 </p>
+<p>&nbsp;&nbsp;&nbsp; heap sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.282 </p>
+<p>&nbsp;&nbsp;&nbsp; list sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 1.993 </p>
+<p>&nbsp;&nbsp;&nbsp; set sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 3.194 </p>
+<p>&nbsp;&nbsp;&nbsp; 这和期望相符：sort()最快；stable_sort()、堆排序和qsort()稍慢；排序一个list和set（它使用动态内存分配，并且是个复杂的数据结构），更加慢。 (实际上，qsort()有一个不寻常的好成绩：在g++和VC的老版本上，qsort()仅比sort()慢。) </p>
+<p>&nbsp;&nbsp;&nbsp; 但这不足以称为排序基准测试－－太不具有说服力了。我在一个特定的系统上，使用一个特定的（乱序）初始化，来测试排序一个vector&lt;double&gt;。只有实践能决定这些结果有多大的普遍性。至少，我们应该在double以外再作些测试。 </p>
+<p>&nbsp;&nbsp;&nbsp; <span style="BACKGROUND-COLOR: yellow">Listing 2排序一个vector&lt;string&gt;：</span>它打开一个文件并将每一行拷贝进一个独立的string。因为qsort()不能处理具有构造函数的元素，所以这个测试中不再包括qsort()。以Project Gutenberg的免费电子文本《Anna Karenina》[注4]作为输入，结果是： </p>
+<p>&nbsp;&nbsp;&nbsp; Sorting a file of 42731 lines.</p>
+<p>&nbsp;&nbsp;&nbsp; sorting method&nbsp; t (sec) </p>
+<p>&nbsp;&nbsp;&nbsp; sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.431 </p>
+<p>&nbsp;&nbsp;&nbsp; stable_sort&nbsp;&nbsp;&nbsp;&nbsp; 1.322 </p>
+<p>&nbsp;&nbsp;&nbsp; heap sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.751 </p>
+<p>&nbsp;&nbsp;&nbsp; list sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.25</p>
+<p>&nbsp;&nbsp;&nbsp; set sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.43 </p>
+<p>&nbsp;&nbsp;&nbsp; 突然之间，事情发生了变化。我们仍然看到sort()比stable_sort()和堆排序快得多，但list和set的结果发生了戏剧性的变化。使用set的速度几乎和sort()一样，而list实际上更快。发生了什么？ </p>
+<p>&nbsp;&nbsp;&nbsp; 变化是double是原生类型，而std::sting是一个复杂的class。拷贝一个string或将它赋值给另一个，意味着要调用一个函数－－甚至意味着需要使用动态内存分配或创建一个mutex锁。平衡点被改变了；排序string比排序double时，赋值的次数将有更多的影响。排序一个list时，根本没有调用赋值运算：定义一个特别的list::sort()成员函数的全部理由就是它通过操纵指向list的内部节点的指针来工作的。重连接一些list的node的指针比拷贝一个string快。 </p>
+<p>&nbsp;&nbsp;&nbsp; 我们再度发现一个老的至理名言：如果你正在处理大的记录，你绝不要排序记录本身，排序指向它们的指针。使用list使得这一点成为自动，但你也能很容易地显式做到这一点：不是排序原始的vector&lt;string&gt;，取而代之，创建一个索引vector，其元素类型是vector&lt;string&gt;::const_iterator，然后排序这个索引vector。你必须告诉sort()如何比较索引vector的元素(你必须确保比较的是iterator所指的值而不是iterator本身)，不过这只是个小问题。我们只需提供一个合适的比较函数对象： </p>
+<p>&nbsp;&nbsp;&nbsp; template &lt;class Iterator&gt; </p>
+<p>&nbsp;&nbsp;&nbsp; struct indirect_lt { </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; bool operator()(Iterator x, Iterator y) const </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; { return *x &lt; *y; } </p>
+<p>&nbsp;&nbsp;&nbsp; }; </p>
+<p>&nbsp;&nbsp;&nbsp; <span style="BACKGROUND-COLOR: yellow">Listing 3展示了如何使用indirect_lt，并对比了直接排序和间接排序时的速度</span>。速度的提升是显著的。 </p>
+<p>&nbsp;&nbsp;&nbsp; Sorting a file of 42731 lines.</p>
+<p>&nbsp;&nbsp;&nbsp; sorting method&nbsp;&nbsp; t (sec)</p>
+<p>&nbsp;&nbsp;&nbsp; indirect sort&nbsp;&nbsp;&nbsp; 0.29</p>
+<p>&nbsp;&nbsp;&nbsp; sort&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 0.401 </p>
+<p><span style="BACKGROUND-COLOR: yellow">建议</span><br>&nbsp;&nbsp;&nbsp; 标准C++运行库提供了<span style="COLOR: red">六个排序方法：qsort()，sort()，stable_sort()，partial_sort()，lsit::sort()，和set/multiset</span>。 </p>
+<p>&nbsp;&nbsp;&nbsp; 你不应该在新代码中使用qsort()。它比sort()慢。它的接口丑陋，因为它需要类型转换，并易于用错。写一个比较函数以传给qsort()可能很麻烦，尤其是在泛型代码中。你不能使用qsort()排序有构造函数或虚函数的东西，或排序C语言的数组以外的任何数据结构。虽然qsort()没有正式说不推荐使用，但它唯一真正的用处是对C语言的向后兼容。 </p>
+<p>&nbsp;&nbsp;&nbsp; 在其它五个排序方法中，前三个是泛型算法，后两个则使用了某些容器的特别特性。所有这些方法默认都使用operator&lt;()来比较对象，但允许在必要时指定用户自己的比较函数。每个都提供了一些特别的特征： </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; sort()通常最快。 </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; stable_sort()保证了等价元素在顺序上的稳定。 </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; partial_sort()允许只排序出前N个元素。 </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; list::sort()操纵指针，而不是拷贝元素。 </p>
+<p>l&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; set允许在一个已序区间快速的插入和删除 </p>
+<p>&nbsp;&nbsp;&nbsp; 如果你不需要其它四个方法的特别特征，首选通常应该是sort()。 </p>
+<p>&nbsp; </p>
+<p>Listing 1: Measurements - sorting a vector&lt;double&gt; <br>#include &lt;iostream&gt;</p>
+<p>#include &lt;iomanip&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;utility&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>#include &lt;list&gt; </p>
+<p>#include &lt;set&gt; </p>
+<p>#include &lt;algorithm&gt;</p>
+<p>#include &lt;assert.h&gt;</p>
+<p>#include &lt;time.h&gt;</p>
+<p>#include &lt;stdlib.h&gt;</p>
+<p>&nbsp; </p>
+<p>using std::pair;</p>
+<p>using std::vector;</p>
+<p>using std::string;</p>
+<p>&nbsp; </p>
+<p>struct timer { </p>
+<p>&nbsp; clock_t start;</p>
+<p>&nbsp; </p>
+<p>&nbsp; timer() { start = clock(); } </p>
+<p>&nbsp; double time() const { </p>
+<p>&nbsp;&nbsp;&nbsp; return double(clock() - start) / CLOCKS_PER_SEC; </p>
+<p>&nbsp; } </p>
+<p>}; </p>
+<p>&nbsp; </p>
+<p>template &lt;class Container&gt; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_sort(Container c)</p>
+<p>{ </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; std::sort(c.begin(), c.end()); </p>
+<p>&nbsp; return std::make_pair(string("sort"), t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>extern "C" int </p>
+<p>dcompare(const void* px, const void* py) </p>
+<p>{ </p>
+<p>&nbsp; double x = *static_cast&lt;const double*&gt;(px); </p>
+<p>&nbsp; double y = *static_cast&lt;const double*&gt;(py); </p>
+<p>&nbsp; return x &lt; y ? -1 : x &gt; y ? 1 : 0; </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_qsort(vector&lt;double&gt; v) </p>
+<p>{ </p>
+<p>&nbsp; double* a = new double[v.size()]; </p>
+<p>&nbsp; std::copy(v.begin(), v.end(), a); </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; </p>
+<p>&nbsp; qsort(a, v.size(), sizeof(double), &amp;dcompare); </p>
+<p>&nbsp; double elapsed = t.time(); </p>
+<p>&nbsp; delete[] a;</p>
+<p>&nbsp; return std::make_pair(string("qsort"), elapsed); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>&nbsp; </p>
+<p>template &lt;class Container&gt; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_stable_sort(Container c) </p>
+<p>{ </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; std::stable_sort(c.begin(), c.end()); </p>
+<p>&nbsp; return std::make_pair(string("stable_sort"), t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>template &lt;class Container&gt; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_heap_sort(Container c) </p>
+<p>{ </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; std::make_heap(c.begin(), c.end()); </p>
+<p>&nbsp; std::sort_heap(c.begin(), c.end()); </p>
+<p>&nbsp; return std::make_pair(string("heap sort"), t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>template &lt;class Container&gt; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_list_sort(Container c) </p>
+<p>{ </p>
+<p>&nbsp; typedef typename Container::value_type T; </p>
+<p>&nbsp; std::list&lt;T&gt; L(c.begin(), c.end()); </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; L.sort();</p>
+<p>&nbsp; return std::make_pair(string("list sort"), t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>template &lt;class Container&gt; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_set_sort(Container c) </p>
+<p>{ </p>
+<p>&nbsp; typedef typename Container::value_type T; </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; std::multiset&lt;T&gt; S(c.begin(), c.end()); </p>
+<p>&nbsp; return std::make_pair(string("set sort"), t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>void report(vector&lt;pair&lt;string, double&gt; &gt; v, </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::ostream&amp; os) </p>
+<p>{ </p>
+<p>&nbsp; typedef vector&lt;pair&lt;string, double&gt; &gt; Vect; </p>
+<p>&nbsp; </p>
+<p>&nbsp; os &lt;&lt; std::setw(20) &lt;&lt; "sorting method" &lt;&lt; "&nbsp;&nbsp;&nbsp; " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; "t (sec)" &lt;&lt; std::endl; </p>
+<p>&nbsp; for (Vect::iterator i = v.begin(); i != v.end(); ++i) </p>
+<p>&nbsp;&nbsp;&nbsp; os &lt;&lt; std::setw(20) &lt;&lt; i-&gt;first &lt;&lt; "&nbsp;&nbsp;&nbsp; " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; i-&gt;second &lt;&lt; std::endl; </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>int main(int argc, const char** </p>
+<p>argv) </p>
+<p>{ </p>
+<p>&nbsp; int N = 0;</p>
+<p>&nbsp; if (argc == 2)</p>
+<p>&nbsp;&nbsp;&nbsp; N = atoi(argv[1]); </p>
+<p>&nbsp; if (N &lt;= 0) {</p>
+<p>&nbsp;&nbsp;&nbsp; std::cerr &lt;&lt; "Usage: " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; argv[0] &lt;&lt; " &lt;positive number&gt;" </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; std::endl; </p>
+<p>&nbsp;&nbsp;&nbsp; return 1; </p>
+<p>&nbsp; } </p>
+<p>&nbsp; </p>
+<p>&nbsp; vector&lt;double&gt; v(N); </p>
+<p>&nbsp; for (int i = 0; i &lt; N; ++i) </p>
+<p>&nbsp;&nbsp;&nbsp; v[i] = i; </p>
+<p>&nbsp; std::random_shuffle(v.begin(), v.end()); </p>
+<p>&nbsp; </p>
+<p>&nbsp; std::cout &lt;&lt; "Sorting a vector of " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; v.size() &lt;&lt; " doubles." &lt;&lt; std::endl; </p>
+<p>&nbsp; vector&lt;pair&lt;string, double&gt; &gt; results; </p>
+<p>&nbsp; results.push_back(do_sort(v)); </p>
+<p>&nbsp; results.push_back(do_qsort(v)); </p>
+<p>&nbsp; results.push_back(do_stable_sort(v)); </p>
+<p>&nbsp; results.push_back(do_heap_sort(v)); </p>
+<p>&nbsp; results.push_back(do_list_sort(v)); </p>
+<p>&nbsp; results.push_back(do_set_sort(v)); </p>
+<p>&nbsp; </p>
+<p>&nbsp; report(results, std::cout); </p>
+<p>&nbsp; </p>
+<p>&nbsp; return 0;</p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>&nbsp; </p>
+<p>Listing 2: Measurements — Sorting a vector&lt;string&gt; (only main is shown; everything else is the same as in Listing 1) <br>int main(int argc, const char** argv) </p>
+<p>{ </p>
+<p>&nbsp; if (argc != 2) { </p>
+<p>&nbsp;&nbsp;&nbsp; std::cerr &lt;&lt; "Usage: " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; argv[0] &lt;&lt; " &lt;file&gt;" </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; std::endl; </p>
+<p>&nbsp;&nbsp;&nbsp; return 1; </p>
+<p>&nbsp; } </p>
+<p>&nbsp; </p>
+<p>&nbsp; std::ifstream in(argv[1]); </p>
+<p>&nbsp; if (!in) {</p>
+<p>&nbsp;&nbsp;&nbsp; std::cerr &lt;&lt; "Can't open " &lt;&lt; argv[1] &lt;&lt; std::endl; </p>
+<p>&nbsp;&nbsp;&nbsp; return 1; </p>
+<p>&nbsp; } </p>
+<p>&nbsp; vector&lt;string&gt; v; </p>
+<p>&nbsp; string str;</p>
+<p>&nbsp; while (std::getline(in, str)) </p>
+<p>&nbsp;&nbsp;&nbsp; v.push_back(str); </p>
+<p>&nbsp; std::cout &lt;&lt; "Sorting a file of " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; v.size() &lt;&lt; " lines." </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; std::endl; </p>
+<p>&nbsp; vector&lt;pair&lt;string, double&gt; &gt; results; </p>
+<p>&nbsp; results.push_back(do_sort(v)); </p>
+<p>&nbsp; results.push_back(do_stable_sort(v)); </p>
+<p>&nbsp; results.push_back(do_heap_sort(v)); </p>
+<p>&nbsp; results.push_back(do_list_sort(v)); </p>
+<p>&nbsp; results.push_back(do_set_sort(v)); </p>
+<p>&nbsp; report(results, std::cout); </p>
+<p>&nbsp; return 0;</p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>Listing 3: Measurements — Comparing direct and indirect sort <br>#include &lt;utility&gt;</p>
+<p>#include &lt;vector&gt;</p>
+<p>#include &lt;string&gt;</p>
+<p>#include &lt;algorithm&gt;</p>
+<p>#include &lt;iostream&gt;</p>
+<p>#include &lt;iomanip&gt;</p>
+<p>#include &lt;fstream&gt;</p>
+<p>#include &lt;time.h&gt;</p>
+<p>&nbsp; </p>
+<p>using std::vector;</p>
+<p>using std::string;</p>
+<p>using std::pair;</p>
+<p>&nbsp; </p>
+<p>template &lt;class Iterator&gt; </p>
+<p>struct indirect_lt {</p>
+<p>&nbsp; bool operator()(Iterator x, Iterator y) const </p>
+<p>&nbsp;&nbsp;&nbsp; { return *x &lt; *y; } </p>
+<p>}; </p>
+<p>&nbsp; </p>
+<p>struct timer { </p>
+<p>&nbsp; clock_t start;</p>
+<p>&nbsp; timer() { start = clock(); } </p>
+<p>&nbsp; double time() const { </p>
+<p>&nbsp;&nbsp;&nbsp; return double(clock() - start) / CLOCKS_PER_SEC; </p>
+<p>&nbsp; } </p>
+<p>}; </p>
+<p>&nbsp; </p>
+<p>void </p>
+<p>report(vector&lt;pair&lt;string, double&gt; &gt; v, </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; std::ostream&amp; os) </p>
+<p>{ </p>
+<p>&nbsp; typedef vector&lt;pair&lt;string, double&gt; &gt; Vect; </p>
+<p>&nbsp; </p>
+<p>&nbsp; os &lt;&lt; std::setw(20) &lt;&lt; "sorting method" &lt;&lt; "&nbsp;&nbsp;&nbsp; " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; "t (sec)" &lt;&lt; std::endl; </p>
+<p>&nbsp; for (Vect::iterator i = v.begin(); i != v.end(); ++i) </p>
+<p>&nbsp;&nbsp;&nbsp; os &lt;&lt; std::setw(20) &lt;&lt; i-&gt;first &lt;&lt; "&nbsp;&nbsp;&nbsp; " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; i-&gt;second &lt;&lt; std::endl; </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_sort(vector&lt;string&gt; c) </p>
+<p>{ </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; std::sort(c.begin(), c.end()); </p>
+<p>&nbsp; return std::make_pair(string("sort"), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>pair&lt;string, double&gt;</p>
+<p>do_indirect_sort(vector&lt;std::vector&lt;std::string&gt; </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ::const_iterator&gt; c) </p>
+<p>{ </p>
+<p>&nbsp; timer t; </p>
+<p>&nbsp; std::sort(c.begin(), c.end(), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; indirect_lt&lt;std::vector&lt;std::string&gt; </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ::const_iterator&gt;()); </p>
+<p>&nbsp; return std::make_pair(string("indirect sort"), </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; t.time()); </p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>int main(int argc, const char** argv) </p>
+<p>{ </p>
+<p>&nbsp; if (argc != 2) { </p>
+<p>&nbsp;&nbsp;&nbsp; std::cerr &lt;&lt; "Usage: " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; argv[0] &lt;&lt; " &lt;file&gt;" </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; std::endl; </p>
+<p>&nbsp;&nbsp;&nbsp; return 1; </p>
+<p>&nbsp; } </p>
+<p>&nbsp; </p>
+<p>&nbsp; std::ifstream in(argv[1]); </p>
+<p>&nbsp; if (!in) {</p>
+<p>&nbsp;&nbsp;&nbsp; std::cerr &lt;&lt; "Can't open " &lt;&lt; argv[1] &lt;&lt; std::endl; </p>
+<p>&nbsp;&nbsp;&nbsp; return 1; </p>
+<p>&nbsp; } </p>
+<p>&nbsp; </p>
+<p>&nbsp; vector&lt;string&gt; v; </p>
+<p>&nbsp; string str;</p>
+<p>&nbsp; while (std::getline(in, str)) </p>
+<p>&nbsp;&nbsp;&nbsp; v.push_back(str); </p>
+<p>&nbsp; </p>
+<p>&nbsp; std::cout &lt;&lt; "Sorting a file of " </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; v.size() &lt;&lt; " lines." </p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &lt;&lt; std::endl; </p>
+<p>&nbsp; </p>
+<p>&nbsp; typedef std::vector&lt;std::string&gt;::const_iterator iter; </p>
+<p>&nbsp; std::vector&lt;iter&gt; iv; </p>
+<p>&nbsp; for (iter i = v.begin(); i != v.end(); ++i) </p>
+<p>&nbsp;&nbsp;&nbsp; iv.push_back(i); </p>
+<p>&nbsp; </p>
+<p>&nbsp; vector&lt;pair&lt;string, double&gt; &gt; results; </p>
+<p>&nbsp; results.push_back(do_indirect_sort(iv)); </p>
+<p>&nbsp; results.push_back(do_sort(v)); </p>
+<p>&nbsp; report(results, std::cout); </p>
+<p>&nbsp; </p>
+<p>&nbsp; return 0;</p>
+<p>} </p>
+<p>&nbsp; </p>
+<p>注<br>[1] For more details on quicksort and merge sort, and other sorting algorithms, see D. E. Knuth, The Art of Computer Programming, vol. 2, 1998. </p>
+<p>[2] D. R. Musser. "Introspective sorting and selection algorithms," Software Practice and Experience, 27(8):983, 1997. </p>
+<p>[3] This restriction is partly artificial: it is possible to implement quicksort and merge sort in terms of Forward Iterators, albeit at the cost of some complexity. Artificial or not, however, it's what the Standard requires. </p>
+<p>[4] See &lt;<a href="http://sailor.gutenberg.org/by-author/to2.html">http://sailor.gutenberg.org/by-author/to2.html</a>&gt;.</p>
+<p>About the <br></p>

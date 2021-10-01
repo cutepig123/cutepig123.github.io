@@ -1,0 +1,94 @@
+
+
+title: cutepig's blog
+email: NA
+description: >- # this means to ignore newlines until "baseurl:"
+  专注于计算机视觉，和C++
+  CP程序员在香港。
+  内容介绍：软件开发，软件工具的用法等视频教程
+  youtube频道 https://www.youtube.com/channel/UCpAl4ajgAWBepDA1UjMC8CA
+  blog http://cutepig.cnblogs.com/
+  blog https://cutepig123.github.io/
+  github https://github.com/cutepig123
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://cutepig123.github.io/" # the base hostname & protocol for your site, e.g. http://example.com
+twitter_username: NA
+github_username:  cutepig123
+
+permalink: /posts/:year-:month-:day-:title.html
+#permalink: /:categories/:year/:month/:day/:title:output_ext
+#exclude: [images]
+ 
+
+        
+# Exclude from processing.
+# The following items will not be processed, by default.
+# Any item listed under the `exclude:` key here will be automatically added to
+# the internal "default list".
+#
+# Excluded items can be processed by explicitly listing the directories or
+# their entries' file path in the `include:` list.
+#
+# exclude:
+#   - .sass-cache/
+#   - .jekyll-cache/
+#   - gemfiles/
+#   - Gemfile
+#   - Gemfile.lock
+#   - node_modules/
+#   - vendor/bundle/
+#   - vendor/cache/
+#   - vendor/gems/
+#   - vendor/ruby/
+
+# ---------------- #
+#      Jekyll      #
+# ---------------- #
+markdown: kramdown
+kramdown:
+    input: GFM
+paginate: 300
+#permalink: /:year/:month/:day/:title/
+plugins:
+    - jekyll-paginate
+    - jekyll-sitemap
+    - jekyll-feed
+    - jemoji
+collections:
+    wiki:
+        output: true
+        permalink: /wiki/:path/
+
+# ---------------- #
+#      Comments    #
+# ---------------- #
+# support provider: disqus, gitment, gitalk
+comments_provider: gitalk
+# !!!重要!!! 请修改下面这些信息为你自己申请的
+# !!!Important!!! Please modify infos below to yours
+# https://disqus.com
+
+disqus:
+    username: cutepig123
+# https://imsun.net/posts/gitment-introduction/
+gitment:
+    owner: cutepig123
+    repo: cutepig123.github.io
+    oauth:
+        client_id: bfff3360008ed43da40e
+        client_secret: 74aba0e8140d66b51b4301d39893ba143833ab94
+# https://github.com/gitalk/gitalk#install
+gitalk:
+    owner: cutepig123
+    repo: cutepig123.github.io
+    clientID: bfff3360008ed43da40e
+    clientSecret: 74aba0e8140d66b51b4301d39893ba143833ab94 
+# 在使用其它评论组件时可点击显示 Disqus
+lazy_load_disqus : false
+
+defaults:
+  -
+    scope:
+      path: "" # an empty string here means all files in the project
+    values:
+      layout: "post"

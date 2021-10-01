@@ -1,0 +1,82 @@
+<p>Bloomberg LP | Algorithm<br />
+from CareerCup by Stranger<br />
+Had a phone interview with Bloomberg... some time back. These were the questions.... <br />
+1) Difference between delete and free. <br />
+2) Why cant one throw exception from destructor. <br />
+http://hi.baidu.com/lxwpp/blog/item/f85497dd5c6fbd345982ddc7.html<br />
+http://hi.baidu.com/pangbanme/blog/item/c3cf1717765c42004b90a770.html<br />
+析构函数中抛出异常时概括性总结</p>
+<p>　　（1） C++中析构函数的执行不应该抛出异常；<br />
+　　（2） 假如析构函数中抛出了异常，那么你的系统将变得非常危险，也许很长时间什么错误也不会发生；但也许你的系统有时就会莫名奇妙地崩溃而退出了，而且什么迹象也没有，崩得你满地找牙也很难发现问题究竟出现在什么地方；<br />
+　　（3） 当在某一个析构函数中会有一些可能（哪怕是一点点可能）发生异常时，那么就必须要把这种可能发生的异常完全封装在析构函数内部，决不能让它抛出函数之外（这招简直是绝杀！呵呵！）；<br />
+　　（4） 主人公阿愚吐血地提醒朋友们，一定要切记上面这几条总结，析构函数中抛出异常导致程序不明原因的崩溃是许多系统的致命内伤！ <br />
+Why cant one throw exception from destructor<br />
+C++异常处理模型是为C++语言量身设计的，更进一步的说，它实际上也是为C++语言中面向对象而服务的，我们在前面的文章中多次不厌其烦的声明到，C++异常处理模型最大的特点和优势就是对C++中的面向对象提供了最强大的无缝支持。好的，既然如此！那么如果对象在运行期间出现了异常，C++异常处理模型有责任清除那些由于出现异常所导致的已经失效了的对象（也即对象超出了它原来的作用域），并释放对象原来所分配的资源，这就是调用这些对象的析构函数来完成释放资源的任务，所以从这个意义上说，析构函数已经变成了异常处理的一部分。不知大家是否明白了这段话所蕴含的真正内在涵义没有，那就是上面的论述C++异常处理模型它其实是有一个前提假设——析构函数中是不应该再有异常抛出的。试想！如果对象出了异常，现在异常处理模块为了维护系统对象数据的一致性，避免资源泄漏，有责任释放这个对象的资源，调用对象的析构函数，可现在假如析构过程又再出现异常，那么请问由谁来保证这个对象的资源释放呢？而且这新出现的异常又由谁来处理呢？不要忘记前面的一个异常目前都还没有处理结束，因此这就陷入了一个矛盾之中，或者说无限的递归嵌套之中。所以C++标准就做出了这种假设，当然这种假设也是完全合理的，在对象的构造过程中，或许由于系统资源有限而致使对象需要的资源无法得到满足，从而导致异常的出现，但析构函数完全是可以做得到避免异常的发生，毕竟你是在释放资源呀！好比你在与公司续签合同的时候向公司申请加薪，也许公司由于种种其它原因而无法满足你的要求；但如果你主动申请不要薪水完全义务工作，公司能不乐意地答应你吗？</p>
+<p>&nbsp;</p>
+<p>3) How is exception handling implemented in C++ </p>
+<p>http://www.51cto.com/art/200511/11258.htm<br />
+3a)What is stack unwinding in exception handling. <br />
+http://blog.csdn.net/owl2008/archive/2005/03/10/316580.aspx</p>
+<p>关于析构函数在stack-unwinding中扔出异常的代码分析 <br />
+根据,MECPP 的条款11。开头一段：</p>
+<p>在有两种情况下会调用析构函数。第一种是在正常情况下删除一个对象，例如对象超出了作用域或被显式地delete。第二种是异常传递的堆栈辗转开解（stack-unwinding）过程中，由异常处理系统删除一个对象。<br />
+&nbsp;&nbsp;&nbsp; 在上述两种情况下，调用析构函数时异常可能处于激活状态也可能没有处于激活状态。遗憾的是没有办法在析构函数内部区分出这两种情况。因此在写析构函数时你必须保守地假设有异常被激活。因为如果在一个异常被激活的同时，析构函数也抛出异常，并导致程序控制权转移到析构函数外，C++将调用terminate函数。这个函数的作用正如其名字所表示的：它终止你程序的运行，而且是立即终止，甚至连局部对象都没有被释放。</p>
+<p>几乎让人很费解，所以写了下面这段code以帮助理解：</p>
+<p>#include &lt;iostream&gt; <br />
+#include &lt;exception&gt; <br />
+using namespace std; </p>
+<p>class class_test {<br />
+&nbsp;&nbsp;&nbsp; public:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; class_test(void){}<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ~class_test(void)<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; // throw bad_alloc();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; //如果此处扔出异常将会调用terminate() <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cout &lt;&lt; "~class_test()....." &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; cin.get();<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; }<br />
+&nbsp;&nbsp;&nbsp; private:<br />
+};<br />
+void funtest0(void)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; class_test obj;<br />
+&nbsp;&nbsp;&nbsp; cout &lt;&lt; "f0......" &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp; throw bad_alloc();<br />
+&nbsp;&nbsp;&nbsp; cout &lt;&lt; "funtest0()......" &lt;&lt; endl;<br />
+} <br />
+void funtest1(void)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; class_test obj;<br />
+&nbsp;&nbsp;&nbsp; cout &lt;&lt; "f1....." &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp; funtest0();<br />
+&nbsp;&nbsp;&nbsp; cout &lt;&lt; "funtest1()......" &lt;&lt; endl;<br />
+}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br />
+int main() <br />
+try<br />
+{<br />
+&nbsp;&nbsp;&nbsp; class_test obj;<br />
+&nbsp;&nbsp;&nbsp; funtest1();<br />
+&nbsp;&nbsp;&nbsp; cin.get(); <br />
+&nbsp;&nbsp;&nbsp; return 0; <br />
+} <br />
+catch(bad_alloc &amp;e)<br />
+{<br />
+&nbsp;&nbsp;&nbsp; cout &lt;&lt; e.what() &lt;&lt; endl;<br />
+&nbsp;&nbsp;&nbsp; cin.get();<br />
+&nbsp;&nbsp;&nbsp; <br />
+} </p>
+<p>4) Given two files find the intersection of it in O(n). What if files are too large, i.e. memory constraint. <br />
+5) How is fork and exec different <br />
+fork()是创建子进程。exec()是执行其它可执行程序。<br />
+fork()创建的子进程与父进程代码一摸一样。你可以在子进程中调用exec()去执行其它的程序。一旦调用exec()则本进程的代码将被替换掉而去执行调入程序的代码。<br />
+6) How is background and foreground process implemented in unix shell <br />
+管道用pipe()就可以。&nbsp;&nbsp; <br />
+要让新进程变为后台进程，需要fork一个子进程，让它脱离控制终端，就成了后台进程了。原进程退出即可。 </p>
+<p>7) How to bring some process in foreground. <br />
+8) How to find if some process is leaking memory.<br />
+9) Given a code, where are static, object cretead by new and automatic members stored. <br />
+10) What is memory leak and why. <br />
+11) What is auto-ptr and how is it implemented. <br />
+12) What happens in fork .. expalain.</p>
+<p>&nbsp;</p>

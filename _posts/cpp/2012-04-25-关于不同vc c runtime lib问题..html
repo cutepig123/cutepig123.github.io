@@ -1,0 +1,277 @@
+<h1 class="title">C Run-Time Libraries&nbsp;</h1>
+<div class="lw_vs">
+<div id="curversion"><strong> Visual Studio 2005</strong></div>
+<div id="versionclick" style="visibility: visible;">
+<div id="versionclick_c2">
+<div><a id="vsLink"> Other Versions </a></div>
+<div class="cl_vs_arrow clip10x10"><img id="vsArrow" class="cl_lw_vs_arrow" src="http://i.msdn.microsoft.com/Areas/Brand/Content/Msdn_ImageSprite.png" alt="" /></div>
+</div>
+</div>
+<ul id="vsPanel">
+<li><a title="" href="http://msdn.microsoft.com/en-us/library/abx4dbyh%28v=vs.110%29.aspx">Visual Studio 11</a></li>
+<li><a title="" href="http://msdn.microsoft.com/en-us/library/abx4dbyh%28v=vs.100%29.aspx">Visual Studio 2010</a></li>
+<li><a title="" href="http://msdn.microsoft.com/en-us/library/abx4dbyh%28v=vs.90%29.aspx">Visual Studio 2008</a></li>
+<li><a title="" href="http://msdn.microsoft.com/en-us/library/abx4dbyh%28v=vs.71%29.aspx">Visual Studio .NET 2003</a></li>
+</ul>
+<div id="ratingCounter" style="margin: 0px 0px 0px 13px;"><span id="rcA" class="ratingText"> 38 out of 150 rated this helpful <a id="rateThisTopic" title="Rate this topic" href="http://msdn.microsoft.com/en-us/library/abx4dbyh%28v=vs.80%29.aspx#feedback">-&nbsp;Rate this topic</a> </span></div>
+</div>
+<p>&nbsp;</p>
+<p>This topic discusses the various .lib files that comprise the C run-time libraries as well as their associated compiler options and preprocessor directives.</p>
+<div>
+<div class="LW_CollapsibleArea_TitleDiv">
+<div><a class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" src="http://i.msdn.microsoft.com/Areas/Global/Content/clear.gif" alt="" /><span class="LW_CollapsibleArea_Title">C Run-Time Libraries (CRT)</span></a>
+<div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div>
+</div>
+</div>
+<div class="sectionblock"><a name="sectionToggle0"></a>
+<p>The following libraries contain the C run-time library functions.</p>
+<div class="tableSection">
+<table style="width: 100%;">
+<tbody>
+<tr><th>C run-time library (without iostream or standard C++ library)</th><th>Associated DLL</th><th>Characteristics</th><th>Option</th><th>Preprocessor directives</th></tr>
+<tr>
+<td>
+<p>libcmt.lib</p>
+</td>
+<td>
+<p>None, static link.</p>
+</td>
+<td>
+<p>Multithreaded, static link</p>
+</td>
+<td>
+<p><a href="http://msdn.microsoft.com/en-us/library/2kzt1wy3%28v=vs.80%29.aspx">/MT</a></p>
+</td>
+<td>
+<p>_MT</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>msvcrt.lib</p>
+</td>
+<td>
+<p>msvcr80.dll</p>
+</td>
+<td>
+<p>Multithreaded, dynamic link (import library for MSVCR80.DLL). Be aware that if you use the Standard C++ Library, your program will need MSVCP80.DLL to run.</p>
+</td>
+<td>
+<p><a href="http://msdn.microsoft.com/en-us/library/2kzt1wy3%28v=vs.80%29.aspx">/MD</a></p>
+</td>
+<td>
+<p>_MT, _DLL</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>libcmtd.lib</p>
+</td>
+<td>
+<p>None, static link</p>
+</td>
+<td>
+<p>Multithreaded, static link (debug)</p>
+</td>
+<td>
+<p><strong>/MTd</strong></p>
+</td>
+<td>
+<p>_DEBUG, _MT</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>msvcrtd.lib</p>
+</td>
+<td>
+<p>msvcr80d.dll</p>
+</td>
+<td>
+<p>Multithreaded, dynamic link (import library for MSVCR80D.DLL) (debug).</p>
+</td>
+<td>
+<p><strong>/MDd</strong></p>
+</td>
+<td>
+<p>_DEBUG, _MT, _DLL</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>msvcmrt.lib</p>
+</td>
+<td>
+<p>msvcm80.dll</p>
+</td>
+<td>
+<p>C Runtime import library. Used for mixed managed/native code.</p>
+</td>
+<td>
+<p><strong>/clr</strong></p>
+</td>
+<td>
+<p>&nbsp;</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>msvcurt.lib</p>
+</td>
+<td>
+<p>msvcm80.dll</p>
+</td>
+<td>
+<p>C Runtime import library compiled as 100% pure MSIL code. All code complies with the ECMA URT spec for MSIL.</p>
+</td>
+<td>
+<p><strong>/clr:pure</strong></p>
+</td>
+<td>
+<p>&nbsp;</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert">
+<table style="width: 100%;">
+<tbody>
+<tr><th align="left"><img class="note" src="http://i.msdn.microsoft.com/dynimg/IC103139.gif" alt="Note" />Note</th></tr>
+<tr>
+<td>
+<p>The single-threaded CRT (libc.lib, libcd.lib) (formerly the <strong>/ML</strong> or <strong>/MLd</strong> options) is no longer available. Instead, use the multithreaded CRT. See <span class="linkTerms"><a href="http://msdn.microsoft.com/en-us/library/ms235505%28v=vs.80%29.aspx">Multithreaded Libraries Performance</a></span>.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>If you link your program from the command line without a compiler option that specifies a C run-time library, the linker will use LIBCMT.LIB. This is different from previous versions of Visual C++ which used LIBC.LIB, the single-threaded library, instead.</p>
+<p>Using the statically linked CRT implies that any state information saved by the C runtime library will be local to that instance of the CRT. For example, if you use <span class="linkTerms"><a href="http://msdn.microsoft.com/en-us/library/2c8d19sb%28v=vs.80%29.aspx">strtok, _strtok_l, wcstok, _wcstok_l, _mbstok, _mbstok_l</a></span> when using a statically linked CRT, the position of the <strong>strtok</strong> parser is unrelated to the <strong>strtok</strong> state used in code in the same process (but in a different DLL or EXE) that is linked to another instance of the static CRT. In contrast, the dynamically linked CRT shares state for all code within a process that is dynamically linked to the CRT. This concern does not apply if you use the new more secure versions of these functions; for example, <strong>strtok_s</strong> does not have this problem.</p>
+<p>Because a DLL built by linking to a static CRT will have its own CRT state, it is not recommended to link statically to the CRT in a DLL unless the consequences of this are specifically desired and understood. For example, if you call <a href="http://msdn.microsoft.com/en-us/library/5z4bw5h5%28v=vs.80%29.aspx">_set_se_translator</a> in an executable that loads the DLL linked to its own static CRT, any hardware exceptions generated by the code in the DLL will not be caught by the translator, but hardware exceptions generated by code in the main executable will be caught.</p>
+<p>If you are using the <strong>/clr</strong> compiler switch, your code will be linked with an import library, msvcmrt.lib. The import library references a new library, msvcm80.dll, which provides a proxy between your managed code and the native CRT. You cannot use the statically linked CRT ( <strong>/MT</strong> or <strong>/MTd</strong> options) with <strong>/clr</strong>. Use the dynamically-linked libraries (<strong>/MD</strong> or <strong>/MDd</strong>) instead.</p>
+<p>If you are using the <strong>/clr:pure</strong> compiler switch, your code will be linked with the import library msvcurt.lib, which also references msvcm80.dll. As with <strong>/clr</strong>, you cannot link with the statically linked library.</p>
+<p>For more information on using the CRT with <strong>/clr</strong>, see <span class="linkTerms"><a href="http://msdn.microsoft.com/en-us/library/x0w2664k%28v=vs.80%29.aspx">Mixed (Native and Managed) Assemblies</a></span>; for <strong>/clr:pure</strong>, see <span class="linkTerms"><a href="http://msdn.microsoft.com/en-us/library/85344whh%28v=vs.80%29.aspx">Pure and Verifiable Code</a></span>.</p>
+<p>To build a debug version of your application, the <a href="http://msdn.microsoft.com/en-us/library/0b98s6w8%28v=vs.80%29.aspx">_DEBUG</a> flag must be defined and the application must be linked with a debug version of one of these libraries. For more information about using the debug versions of the library files, see <a href="http://msdn.microsoft.com/en-us/library/zh712wwf%28v=vs.80%29.aspx">CRT Debugging Techniques</a>.</p>
+<p>This version of Visual C++ is not conformant with the C99 standard.</p>
+</div>
+</div>
+<div>
+<div class="LW_CollapsibleArea_TitleDiv">
+<div><a class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" src="http://i.msdn.microsoft.com/Areas/Global/Content/clear.gif" alt="" /><span class="LW_CollapsibleArea_Title">Standard C++ Library</span></a>
+<div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div>
+</div>
+</div>
+<div class="sectionblock"><a name="sectionToggle1"></a>
+<div class="tableSection">
+<table style="width: 100%;">
+<tbody>
+<tr><th>Standard C++ Library</th><th>Characteristics</th><th>Option</th><th>Preprocessor directives</th></tr>
+<tr>
+<td>
+<p>LIBCPMT.LIB</p>
+</td>
+<td>
+<p>Multithreaded, static link</p>
+</td>
+<td>
+<p><strong>/MT</strong></p>
+</td>
+<td>
+<p>_MT</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MSVCPRT.LIB</p>
+</td>
+<td>
+<p>Multithreaded, dynamic link (import library for MSVCP80.dll)</p>
+</td>
+<td>
+<p><strong>/MD</strong></p>
+</td>
+<td>
+<p>_MT, _DLL</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>LIBCPMTD.LIB</p>
+</td>
+<td>
+<p>Multithreaded, static link</p>
+</td>
+<td>
+<p><strong>/MTd</strong></p>
+</td>
+<td>
+<p>_DEBUG, _MT</p>
+</td>
+</tr>
+<tr>
+<td>
+<p>MSVCPRTD.LIB</p>
+</td>
+<td>
+<p>Multithreaded, dynamic link (import library for MSVCP80D.DLL)</p>
+</td>
+<td>
+<p><strong>/MDd</strong></p>
+</td>
+<td>
+<p>_DEBUG, _MT, _DLL</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Note&nbsp;&nbsp;&nbsp;Starting in Visual C++ 2005, LIBCP.LIB and LIBCPD.LIB (via the old <strong>/ML</strong> and <strong>/MLd</strong> options) have been removed. Use LIBCPMT.LIB and LIBCPMTD.LIB instead via the <strong>/MT</strong> and <strong>/MTd</strong> options.</p>
+<p>When you build a release version of your project, one of the basic C run-time libraries (LIBCMT.LIB, MSVCMRT.LIB, MSVCRT.LIB) is linked by default, depending on the compiler option you choose (multithreaded, DLL, /clr). If you include one of the <span class="linkTerms"><a href="http://msdn.microsoft.com/en-us/library/a7tkse1h%28v=vs.80%29.aspx">Standard C++ Library Header Files</a></span> in your code, a Standard C++ Library will be linked in automatically by Visual C++ at compile time. For example:</p>
+<div class="codeSnippetContainer">
+<div class="codeSnippetContainerTabs">&nbsp;</div>
+<div class="codeSnippetContainerCodeContainer">
+<div class="codeSnippetToolBar">
+<div class="codeSnippetToolBarText"><a title="Copy to clipboard." name="CodeSnippetCopyLink"></a>Copy</div>
+</div>
+<div id="CodeSnippetContainerCode_ae320ab5-9f2f-41b5-b906-7d6aa8a1341c" class="codeSnippetContainerCode" dir="ltr">
+<div style="color: black;">
+<pre>#include &lt;ios&gt; </pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div>
+<div class="LW_CollapsibleArea_TitleDiv">
+<div><a class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" src="http://i.msdn.microsoft.com/Areas/Global/Content/clear.gif" alt="" /><span class="LW_CollapsibleArea_Title">What is the difference between msvcrt.dll and msvcr80.dll?</span></a>
+<div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div>
+</div>
+</div>
+<div class="sectionblock"><a name="sectionToggle2"></a>
+<p>The msvcrt.dll is now a "<a href="http://msdn.microsoft.com/en-us/library/ms811694.aspx">known DLL</a>," meaning that it is a system component owned and built by Windows. It is intended for future use only by system-level components.</p>
+</div>
+</div>
+<div>
+<div class="LW_CollapsibleArea_TitleDiv">
+<div><a class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" src="http://i.msdn.microsoft.com/Areas/Global/Content/clear.gif" alt="" /><span class="LW_CollapsibleArea_Title">What problems exist if an application uses both msvcrt.dll and msvcr80.dll?</span></a>
+<div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div>
+</div>
+</div>
+<div class="sectionblock"><a name="sectionToggle3"></a>
+<p>If you have a .lib or .obj file that needs to link to msvcrt.lib, then you should not have to recompile it to work with the new msvcrt.lib in Visual C++ 2005. The .lib or .obj file may rely on the sizes, field offsets, or member function names of various CRT classes or variables, and those should all still exist in a compatible way. When you relink against msvcrt.lib, your final EXE and DLL image will now have a dependency on msvcr80.dll instead of msvcrt.dll.</p>
+<p>If you have more than one DLL or EXE, then you may have more than one CRT, whether or not you are using different versions of Visual C++. For example, statically linking the CRT into multiple DLLs can present the same problem. Developers encountering this problem with static CRTs have been instructed to compile with <strong>/MD</strong> to use the CRT DLL. Now that the CRT DLL has been renamed to msvcr80.dll, applications may have some components linked to msvcrt.dll and others to msvcr80.dll. If your DLLs pass CRT resources across the msvcrt.dll and msvcr80.dll boundary, you will encounter issues with mismatched CRTs and need to recompile your project with Visual C++ 2005.</p>
+<p>If your program is using more than one version of the CRT, some care is needed when passing certain CRT objects (such as file handles, locales and environment variables) across DLL boundaries. For more information on the issues involved and how to resolve them, see <span class="linkTerms"><a href="http://msdn.microsoft.com/en-us/library/ms235460%28v=vs.80%29.aspx">Potential Errors Passing CRT Objects Across DLL Boundaries</a></span>.</p>
+</div>
+</div>
+<div>
+<div class="LW_CollapsibleArea_TitleDiv">
+<div><a class="LW_CollapsibleArea_TitleAhref" title="Collapse"><img class="cl_CollapsibleArea_expanding LW_CollapsibleArea_Img" src="http://i.msdn.microsoft.com/Areas/Global/Content/clear.gif" alt="" /><span class="LW_CollapsibleArea_Title">Standard Libraries in WinSxS Global Assembly Cache</span></a>
+<div class="LW_CollapsibleArea_HrDiv"><hr class="LW_CollapsibleArea_Hr" /></div>
+</div>
+</div>
+<div class="sectionblock"><a name="sectionToggle4"></a>
+<p>In Visual C++ 2005, the C and C++ runtime libraries (e.g. msvcm80.dll, msvcm80d.dll) are stored in the global assembly cache.</p>
+</div>
+</div>

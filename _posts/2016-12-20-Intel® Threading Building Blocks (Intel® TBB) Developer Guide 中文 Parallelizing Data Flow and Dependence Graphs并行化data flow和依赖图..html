@@ -1,0 +1,148 @@
+<p>https://www.threadingbuildingblocks.org/docs/help/index.htm</p>
+<h1 class="topictitle1">Parallelizing Data Flow and Dependency Graphs</h1>
+<div>
+<p>In addition to loop parallelism, the Intel&reg; Threading Building Blocks (Intel&reg; TBB) library also supports graph parallelism. It's possible to create graphs that are highly scalable, but it is also possible to create graphs that are completely sequential.</p>
+<p>除了循环并行化，tbb还支持图并行化。这使得创建高度扩展性的图有了可能，同时也能都创建完全顺序执行的图</p>
+<p>Using graph parallelism, computations are represented by nodes and the communication channels between these computations are represented by edges. When a node in the graph receives a message, a task is spawned to execute its body object on the incoming message. Messages flow through the graph across the edges that connect the nodes. The following sections present two examples of applications that can be expressed as graphs. For more information on tasks, see the&nbsp;<strong>See Also</strong>&nbsp;section below.</p>
+<p>图并行化中，计算被表示为节点，计算之间的通讯通道被表达为边。当一个节点收到消息，一个任务会被执行。消息通过连接节点的边来流过图。下面有两个例子</p>
+<p>The following figure shows a&nbsp;<em>streaming</em>&nbsp;or&nbsp;<em>data flow</em>&nbsp;application where a sequence of values is processed as each value passes through the nodes in the graph. In this example, the sequence is created by a function&nbsp;<span class="keyword">F. For each value in the sequence,&nbsp;<span class="keyword">G&nbsp;squares the value and&nbsp;<span class="keyword">H&nbsp;cubes the value.&nbsp;<span class="keyword">J&nbsp;then takes each of the squared and cubed values and adds them to a global&nbsp;<span class="keyword">sum. After all values in the sequence are completely processed,&nbsp;<span class="keyword">sum&nbsp;is equal to the sum of the sequence of squares and cubes from 1 to 10. In a streaming or data flow graph, the values actually flow across the edges; the output of one node becomes the input of its successor(s).</span></span></span></span></span></span></p>
+<p><span class="keyword"><span class="keyword"><span class="keyword"><span class="keyword"><span class="keyword"><span class="keyword">下图是一个<em>streaming</em>&nbsp;or&nbsp;<em>data flow</em>&nbsp;的应用</span></span></span></span></span></span></p>
+<div id="simple_data_flow_title" class="fignone"><span class="figcap"><span class="figcap">Simple Data Flow Graph&nbsp;<br /></span></span>
+<div class="imagecenter"><img src="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Images/flow_graph.jpg" alt="Simple data flow graph" align="center" /></div>
+
+
+
+</div>
+<p>The following graphic shows a different form of graph application. In this example, a dependence graph is used to establish a partial ordering among the steps for making a peanut butter and jelly sandwich. In this partial ordering, you must first get the bread before spreading the peanut butter or jelly on the bread. You must spread on the peanut butter before you put away the peanut butter jar, and likewise spread on the jelly before you put away the jelly jar. And, you need to spread on both the peanut butter and jelly before putting the two slices of bread together. This is a partial ordering because, for example, it doesn't matter if you spread on the peanut butter first or the jelly first. It also doesn't matter if you finish making the sandwich before putting away the jars.</p>
+<p>下图是另外一种图的应用，以dependence graph 的形式表达任务的步骤执行</p>
+<div id="dependence_graph_make_sandwitch" class="fignone"><span class="figcap"><span class="figcap">Dependence Graph for Making a Sandwich&nbsp;<br /></span></span>
+<div class="imagecenter"><img src="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Images/flow_graph_complex.jpg" alt="" width="440" height="337" align="center" /></div>
+
+
+
+</div>
+<p>&nbsp;</p>
+<p>While it can be inferred that resources, such as the bread, or the jelly jar, are shared between ordered steps, it is not explicit in the graph. Instead, only the required ordering of steps is explicit in a dependence graph. For example, you must "Put jelly on 1 slice"&nbsp;<strong><em>before</em>&nbsp;</strong>you "Put away jelly jar".</p>
+<p>The flow graph interface in the Intel TBB library allows you to express data flow and dependence graphs such as these, as well as more complicated graphs that include cycles, conditionals, buffering and more. If you express your application using the flow graph interface, the runtime library spawns tasks to exploit the parallelism that is present in the graph. For example, in the first example above, perhaps two different values might be squared in parallel, or the same value might be squared and cubed in parallel. Likewise in the second example, the peanut butter might be spread on one slice of bread in parallel with the jelly being spread on the other slice. The interface expresses what is legal to execute in parallel, but allows the runtime library to choose at runtime what will be executed in parallel.</p>
+<p>tbb允许你表达data flow and dependence graphs。以及更复杂的图，比如包含cycle，条件，缓冲。。</p>
+<p>The support for graph parallelism is contained within the namespace&nbsp;<span class="keyword">tbb::flow&nbsp;and is defined in the&nbsp;<span class="filepath">flow_graph.h&nbsp;header file.</span></span></p>
+
+
+
+</div>
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong>&nbsp;<a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Flow_Graph.html">Parallelizing Data Flow and Dependence Graphs</a></div>
+
+
+
+</div>
+<div class="See Also">
+<h2>See Also</h2>
+<div class="linklist">
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Task-Based_Programming.html#tutorial_Task-Based_Programming">Task-Based Programming</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Basic_Flow_Graph_concepts.html#Basic_Flow_Graph_Concepts">Basic Flow Graph Concepts</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Graph_Main_Categories.html#graph_categories">Graph Application Categories</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Flow_Graph_Tips.html#flow_graph_tips">Flow Graph Tips and Tricks</a></div>
+<div>&nbsp;</div>
+<div>
+<h1 class="topictitle1">Basic Flow Graph Concepts</h1>
+<h1 class="topictitle1">基本的概念</h1>
+<h1 class="topictitle1">Flow Graph Basics: Graph Object 图</h1>
+<div>
+<p>Conceptually a flow graph is a collection of nodes and edges. Each node belongs to exactly one graph and edges are made only between nodes in the same graph. In the flow graph interface, a graph object represents this collection of nodes and edges, and is used for invoking whole graph operations such as waiting for all tasks related to the graph to complete, resetting the state of all nodes in the graph, and canceling the execution of all nodes in the graph.</p>
+<p>The code below creates a graph object and then waits for all tasks spawned by the graph to complete. The call to&nbsp;<span class="keyword">wait_for_all&nbsp;in this example returns immediately since this is a trivial graph with no nodes or edges, and therefore no tasks are spawned.</span></p>
+<pre>graph g;
+g.wait_for_all();<br /><br /></pre>
+<h1 class="topictitle1">Flow Graph Basics: Nodes 节点</h1>
+<div>
+<p>A node is a class that inherits from<strong>&nbsp;</strong><span class="keyword"><strong>tbb::flow::graph_node</strong>&nbsp;and also typically inherits from&nbsp;<span class="keyword">tbb::flow::sender&lt;T&gt;&nbsp;,&nbsp;<span class="keyword">tbb::flow::receiver&lt;T&gt;&nbsp;or both. A node performs some operation, usually on an incoming message and may generate zero or more output messages. Some nodes require more than one input message or generate more than one output message.</span></span></span></p>
+<p><span class="keyword"><span class="keyword"><span class="keyword">节点用来做计算</span></span></span></p>
+<p>While it is possible to define your own node types by inheriting from&nbsp;<span class="keyword">graph_node,&nbsp;<span class="keyword">sender&nbsp;and&nbsp;<span class="keyword">receiver, it is more typical that predefined node types are used to construct a graph. The list of predefined nodes is available from the&nbsp;<strong>See Also</strong>&nbsp;section below.</span></span></span></p>
+<p>A&nbsp;<span class="keyword"><strong>function_node</strong>&nbsp;is a predefined type available in&nbsp;<span class="keyword">flow_graph.h&nbsp;and represents a simple function with one input and one output. The constructor for a<span class="keyword">function_node&nbsp;takes three arguments:</span></span></span></p>
+<pre>template&lt; typename <em>Body</em>&gt; function_node(graph &amp;<em>g</em>, size_t <em>concurrency</em>, Body <em>body</em>)</pre>
+<div class="tablenoborder">
+<table summary="" border="1" frame="border" rules="all" cellspacing="0" cellpadding="4">
+<thead align="left">
+<tr><th id="d103185e99" class="cellrowborder" valign="top" width="22.727272727272727%">Parameter</th><th id="d103185e102" class="cellrowborder" valign="top" width="77.27272727272727%">Description</th></tr>
+</thead>
+<tbody>
+<tr>
+<td class="cellrowborder" headers="d103185e99 " valign="top" width="22.727272727272727%"><span class="keyword">Body</span></td>
+<td class="cellrowborder" headers="d103185e102 " valign="top" width="77.27272727272727%">
+<p>Type of the body object.</p>
+</td>
+</tr>
+<tr>
+<td class="cellrowborder" headers="d103185e99 " valign="top" width="22.727272727272727%"><span class="keyword">g</span></td>
+<td class="cellrowborder" headers="d103185e102 " valign="top" width="77.27272727272727%">
+<p>The graph the node belongs to.</p>
+</td>
+</tr>
+<tr>
+<td class="cellrowborder" headers="d103185e99 " valign="top" width="22.727272727272727%"><span class="keyword">concurrency</span></td>
+<td class="cellrowborder" headers="d103185e102 " valign="top" width="77.27272727272727%">
+<p>The concurrency limit for the node. You can use the concurrency limit to control how many invocations of the node are allowed to proceed concurrently, from 1 (serial) to an unlimited number.</p>
+</td>
+</tr>
+<tr>
+<td class="cellrowborder" headers="d103185e99 " valign="top" width="22.727272727272727%"><span class="keyword">body</span></td>
+<td class="cellrowborder" headers="d103185e102 " valign="top" width="77.27272727272727%">
+<p>User defined function object, or lambda expression, that is applied to the incoming message to generate the outgoing message.</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Below is code for creating a simple graph that contains a single&nbsp;<span class="keyword">function_node. In this example, a node&nbsp;<span class="keyword">n&nbsp;is constructed that belongs to graph&nbsp;<span class="keyword">g, and has a second argument of 1, which allows at most 1 invocation of the node to occur concurrently. The body is a lambda expression that prints each value&nbsp;<span class="keyword">v&nbsp;that it receives, spins for&nbsp;<span class="keyword">v&nbsp;seconds, prints the value again, and then returns&nbsp;<span class="keyword">v&nbsp;unmodified. The code for the function&nbsp;<span class="keyword">spin_for&nbsp;is not provided.</span></span></span></span></span></span></span></p>
+<pre>    graph g;
+    function_node&lt; int, int &gt; n( g, 1, []( int v ) -&gt; int { 
+        cout &lt;&lt; v;
+        spin_for( v );
+        cout &lt;&lt; v;
+        return v;
+    } );
+</pre>
+<p>After the node is constructed in the example above, you can pass messages to it, either by connecting it to other nodes using edges or by invoking its function&nbsp;<span class="keyword">try_put. Using edges is described in the next section.</span></p>
+<pre>    n.try_put( 1 );
+    n.try_put( 2 );
+    n.try_put( 3 );
+</pre>
+<p>You can then wait for the messages to be processed by calling&nbsp;<span class="keyword">wait_for_all&nbsp;on the graph object:</span></p>
+<pre>    g.wait_for_all(); </pre>
+<p>In the above example code, the&nbsp;<span class="keyword">function_node n&nbsp;was created with a concurrency limit of 1. When it receives the message sequence 1, 2 and 3, the node&nbsp;<span class="keyword">n&nbsp;will spawn a task to apply the body to the first input, 1. When that task is complete, it will then spawn another task to apply the body to 2. And likewise, the node will wait for that task to complete before spawning a third task to apply the body to 3. The calls to&nbsp;<span class="keyword">try_put&nbsp;do not block until a task is spawned; if a node cannot immediately spawn a task to process the message, the message will be buffered in the node. When it is legal, based on concurrency limits, a task will be spawned to process the next buffered message.</span></span></span></p>
+<p>In the above graph, each message is processed sequentially. If however, you construct the node with a different concurrency limit, parallelism can be achieved:</p>
+<pre>    function_node&lt; int, int &gt; n( g, tbb::flow::unlimited, []( int v ) -&gt; int { 
+        cout &lt;&lt; v;
+        spin_for( v );
+        cout &lt;&lt; v;
+        return v;
+    } );
+</pre>
+<p>You can use&nbsp;<span class="keyword">unlimited&nbsp;as the concurrency limit to instruct the library to spawn a task as soon as a message arrives, regardless of how many other tasks have been spawned. You can also use any specific value, such as 4 or 8, to limit concurrency to at most 4 or 8, respectively. It is important to remember that spawning a task does not mean creating a thread. So while a graph may spawn many tasks, only the number of threads available in the library's thread pool will be used to execute these tasks.</span></p>
+<p>Suppose you use&nbsp;<span class="keyword">unlimited&nbsp;in the&nbsp;<span class="keyword">function_node&nbsp;constructor instead and call&nbsp;<span class="keyword">try_put&nbsp;on the node:</span></span></span></p>
+<pre>    n.try_put( 1 );
+    n.try_put( 2 );
+    n.try_put( 3 );
+    g.wait_for_all(); 
+</pre>
+<p>The library spawns three tasks, each one applying&nbsp;<span class="keyword">n's lambda expression to one of the messages. If you have a sufficient number of threads available on your system, then all three invocations of the body will occur in parallel. If however, you have only one thread in the system, they execute sequentially.</span></p>
+</div>
+<div class="familylinks">
+<div class="parentlink"><strong>Parent topic:</strong>&nbsp;<a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Basic_Flow_Graph_concepts.html">Basic Flow Graph Concepts</a></div>
+</div>
+<div class="See Also">
+<h2>See Also</h2>
+<div class="linklist">
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/reference/task_scheduler.html#task_scheduler">Task Scheduler</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Edges.html#Edges">Edges</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Graph_Object.html#Graph_Object">Graph Object</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Mapping_Nodes2Tasks.html#Mapping_Nodes2Tasks">Mapping Nodes to Tasks</a></div>
+<div><a href="https://www.threadingbuildingblocks.org/docs/help/tbb_userguide/Predifined_Node_Types.html#predefined_node_types">Predefined Node Types</a></div>
+<div>&nbsp;</div>
+</div>
+</div>
+<pre><br /><br /></pre>
+</div>
+</div>
+</div>
+</div>
