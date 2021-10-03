@@ -1,0 +1,17 @@
+
+参考boost python实现一个cpgf
+参考luabind实现一个xpfg
+名人訪談
+陳春花
+就业创业自由职业
+mba
+qr code識別原理
+
+研究那个python跳一跳程序
+gacui架構
+史记
+诗经
+参考boost python实现一个cpgf
+参考luabind实现一个xpfg
+
+CI目标：每天一上班就看redmine，上面登记了要做的所有事情。test issue，kw issue，fiele issue

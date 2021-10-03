@@ -1,0 +1,16 @@
+清理电脑垃圾步骤
+	删除账户，检查账户目录是否删除
+	删除无用目录
+	删除无用程序
+	
+	清理浏览记录，文件记录。PrivaZer, ccleaner，cipher/sdelete/bcwipe
+	用wisedata测试数据
+	
+一般注意事项
+	不用chrome，因为他没有密码保护，可以直接用WebBrowserPassView看到密码
+	firefox一定要设置主密码
+	
+家里电脑快速设置步骤
+	重置系统
+	安装sandboxie, chocolatry
+	根据列表安装其他软件G:\sw\choco.bat
