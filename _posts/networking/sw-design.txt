@@ -1,0 +1,30 @@
+模块：transport,
+功能：封装消息传递媒介，比如tcp，dpr
+api：
+	make_tcp_server(port)
+		make_conn
+	make_tcp_client_conn
+	make_dpr_connection
+	基类connection
+		nSend = send(buffer, nExpect)
+		nRecv = recv(buffer, nExpect)
+	
+实现	
+-------------------------------------------	
+模块：payload
+功能: 
+	把整段消息转化为多个packet,或者把多个packet转化为一个消息
+	消息的完整性
+	在消息外围加上校验。转化为packet，比如packet开头的magic num，data长度，版本
+api：
+	send(buffer)
+	buffer = recv()
+	
+-------------------------------------------
+模块：serialize	
+功能：
+	把一个消息转化为buffer，消息只需要注册pu操作
+	
+api：
+	serialze<T>
+	
