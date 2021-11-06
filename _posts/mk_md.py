@@ -20,4 +20,4 @@ else:
     fp.close()
     print('created file', file)
 
-os.system('start "%s"'%file)
+os.system('"%s"'%file)
