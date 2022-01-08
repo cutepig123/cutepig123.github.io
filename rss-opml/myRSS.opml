@@ -1,0 +1,471 @@
+<opml version="1.1">
+  <head>
+    <title>FeedDemon Subscriptions</title>
+    <dateModified>Mon, 20 May 2013 16:00:37 GMT</dateModified>
+  </head>
+  <body>
+    <outline text="Google 资讯 中国版" title="Google 资讯 中国版" type="rss" xmlUrl="http://news.google.com/nwshp?hl=zh-CN&amp;tab=wn&amp;output=rss" htmlUrl="http://news.google.com/news?pz=1&amp;ned=cn&amp;hl=zh-CN"/>
+    <outline text="支持向量机| 兰叶春葳蕤,桂华秋皎洁|大风堂" title="支持向量机| 兰叶春葳蕤,桂华秋皎洁|大风堂" type="rss" xmlUrl="http://www.zhenv5.com/feed/" htmlUrl="http://www.zhenv5.com"/>
+    <outline text="kernelchina" title="kernelchina" type="rss" xmlUrl="http://www.kernelchina.org/rss.xml" htmlUrl="http://www.kernelchina.org"/>
+    <outline text="C++博客-loop_in_codes" title="C++博客-loop_in_codes" type="rss" xmlUrl="http://www.cppblog.com/kevinlynx/rss.aspx" htmlUrl="http://www.cppblog.com/kevinlynx/"/>
+    <outline text="CSDN社区 → 社区首页 → 版主推荐技术热贴" title="CSDN社区 → 社区首页 → 版主推荐技术热贴" type="rss" xmlUrl="http://bbs.csdn.net/ASCX/NewHomePage/ModeratorRecommend/ModeratorRecommendTech.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fbbs.csdn.net%2FASCX%2FNewHomePage%2FModeratorRecommend%2FModeratorRecommendTech.xml"/>
+    <outline text="支持向量机svm中由decision value到probability的转化是怎么实现的 ..." title="支持向量机svm中由decision value到probability的转化是怎么实现的 ..." type="rss" xmlUrl="http://cos.name/cn/rss/topic/105231" htmlUrl="http://cos.name/cn/topic/105231"/>
+    <outline text="蔡學鏞【言程序】部落格" title="蔡學鏞【言程序】部落格" type="rss" xmlUrl="http://www.jerry-tsai.com/feeds/posts/default" htmlUrl="http://www.jerry-tsai.com/"/>
+    <outline text="Hacker News Daily" title="Hacker News Daily" type="rss" xmlUrl="http://www.daemonology.net/hn-daily/index.rss" htmlUrl="http://www.daemonology.net/hn-daily/"/>
+    <outline text="fcamel 技術隨手記" title="fcamel 技術隨手記" type="rss" xmlUrl="http://fcamel-life.blogspot.com/feeds/posts/default" htmlUrl="http://fcamel-life.blogspot.com/"/>
+    <outline text="最科技官方博客" title="最科技官方博客" type="rss" xmlUrl="http://zuitech.blog.techweb.com.cn/feed" htmlUrl="http://zuitech.blog.techweb.com.cn"/>
+    <outline text="intel s/w Blogs" title="intel s/w Blogs" type="rss" xmlUrl="http://software.intel.com/en-us/blogs/feed/" htmlUrl="http://software.intel.com/en-us/blogs/list"/>
+    <outline text="结构之法 算法之道" title="结构之法 算法之道" type="rss" xmlUrl="http://blog.csdn.net/v_JULY_v/rss/list" htmlUrl="http://blog.csdn.net/v_july_v"/>
+    <outline text="腾讯CDC" title="腾讯CDC" type="rss" xmlUrl="http://cdc.tencent.com/?feed=rss2" htmlUrl="http://cdc.tencent.com"/>
+    <outline text="IT牛人博客聚合网站" title="IT牛人博客聚合网站" type="rss" xmlUrl="http://www.udpwork.com/feed" htmlUrl="http://www.udpwork.com/"/>
+    <outline text="微风实验室" title="微风实验室" type="rss" xmlUrl="http://dev.meettea.com/rss.php" htmlUrl="http://dev.meettea.com/"/>
+    <outline text="DBA Notes" title="DBA Notes" type="rss" xmlUrl="http://feeds.feedburner.com/webarch" htmlUrl="http://dbanotes.net"/>
+    <outline text="ITPUB技术论坛_MS SQLServer_Oracle数据库管理与优化_中国最专业的IT技术社区" title="ITPUB技术论坛_MS SQLServer_Oracle数据库管理与优化_中国最专业的IT技术社区" type="rss" xmlUrl="http://www.itpub.net/forum.php?mod=articlerss&amp;auth=20111" htmlUrl="http://www.itpub.net/forum.php?mod=forumdisplay&amp;fid="/>
+    <outline text="董的博客" title="董的博客" type="rss" xmlUrl="http://dongxicheng.org/feed/" htmlUrl="http://dongxicheng.org"/>
+    <outline text="C++博客-厚积薄发" title="C++博客-厚积薄发" type="rss" xmlUrl="http://www.cppblog.com/weiym/rss.aspx" htmlUrl="http://www.cppblog.com/weiym/"/>
+    <outline text="七度黑光" title="七度黑光" type="rss" xmlUrl="http://zhwen.org/xlog/?feed=rss2" htmlUrl="http://zhwen.org/xlog"/>
+    <outline text="博客园_Flier's Sky" title="博客园_Flier's Sky" type="rss" xmlUrl="http://www.cnblogs.com/flier/rss" htmlUrl="http://www.cnblogs.com/flier/"/>
+    <outline text="PROGRAMMING INTERVIEWS" title="PROGRAMMING INTERVIEWS" type="rss" xmlUrl="http://feeds.feedburner.com/tech-queries" htmlUrl="http://tech-queries.blogspot.com/"/>
+    <outline text="Eddy@Joomla!藏經閣" title="Eddy@Joomla!藏經閣" type="rss" xmlUrl="http://blog.joomla.org.tw/index.php?format=feed&amp;type=rss" htmlUrl="http://blog.joomla.org.tw/component/content/frontpage.html"/>
+    <outline text="云、linux内核、分布式技术讨论高级群132730585" title="云、linux内核、分布式技术讨论高级群132730585" type="rss" xmlUrl="http://blog.csdn.net/z2007b/rss/list" htmlUrl="http://blog.csdn.net/z2007b"/>
+    <outline text="http://www.yinwang.org" title="http://www.yinwang.org" type="rss" xmlUrl="http://www.yinwang.org/atom.xml" htmlUrl="http://www.yinwang.org/"/>
+    <outline text="idv2" title="idv2" type="rss" xmlUrl="http://tech.idv2.com/feed/" htmlUrl="http://tech.idv2.com"/>
+    <outline text="编程随想的博客" title="编程随想的博客" type="rss" xmlUrl="http://program-think.blogspot.com/feeds/posts/default" htmlUrl="http://program-think.blogspot.com/"/>
+    <outline text="负暄琐话" title="负暄琐话" type="rss" xmlUrl="http://blog.csdn.net/g9yuayon/rss/list" htmlUrl="http://blog.csdn.net/g9yuayon"/>
+    <outline text="個人心得筆記" title="個人心得筆記" type="rss" xmlUrl="http://winson111.blogspot.com/feeds/posts/default" htmlUrl="http://winson111.blogspot.com/"/>
+    <outline text="《程序员》杂志官网" title="《程序员》杂志官网" type="rss" xmlUrl="http://feed.feedsky.com/programmer" htmlUrl="http://programmer.csdn.net"/>
+    <outline text="High Scalability" title="High Scalability" type="rss" xmlUrl="http://feeds.feedburner.com/HighScalability" htmlUrl="http://highscalability.com/blog/"/>
+    <outline text="博客园_专注WebGame" title="博客园_专注WebGame" type="rss" xmlUrl="http://www.cnblogs.com/yourihua/rss" htmlUrl="http://www.cnblogs.com/yourihua/"/>
+    <outline text="关于支持向量机» 格物堂" title="关于支持向量机» 格物堂" type="rss" xmlUrl="http://yishuo.org/feed/" htmlUrl="http://yishuo.org"/>
+    <outline text="(新闻)资讯-首页推荐" title="(新闻)资讯-首页推荐" type="rss" xmlUrl="http://temp.csdn.net/Feed.aspx?Column=df5147d1-1fb4-434c-be66-2293268d8920" htmlUrl="http://temp.csdn.net/Feed.aspx?Column=df5147d1-1fb4-434c-be66-2293268d8920"/>
+    <outline text="It Talks-魏武挥的blog" title="It Talks-魏武挥的blog" type="rss" xmlUrl="http://feed.feedsky.com/ittalks" htmlUrl="http://weiwuhui.com"/>
+    <outline text="江淼的Blog" title="江淼的Blog" type="rss" xmlUrl="http://feed.feedsky.com/jiangmiao" htmlUrl="http://www.jiangmiao.org/blog"/>
+    <outline text="南方周末-热点新闻" title="南方周末-热点新闻" type="rss" xmlUrl="http://www.infzm.com/rss/home/rss2.0.xml" htmlUrl="http://www.infzm.com/"/>
+    <outline text="keakon的涂鸦馆" title="keakon的涂鸦馆" type="rss" xmlUrl="http://www.keakon.net/feed" htmlUrl="http://www.keakon.net/"/>
+    <outline text="思考的芦苇" title="思考的芦苇" type="rss" xmlUrl="http://sunrisewoo.com/feed/" htmlUrl="http://sunrisewoo.com"/>
+    <outline text="RoBa's Blog" title="RoBa's Blog" type="rss" xmlUrl="http://roba.rushcj.com/?feed=rss2" htmlUrl="http://roba.rushcj.com"/>
+    <outline text="ChinaUnix.net" title="ChinaUnix.net" type="rss" xmlUrl="http://bbs.chinaunix.net/forum.php?mod=rss&amp;auth=0" htmlUrl="http://bbs.chinaunix.net/forum.php"/>
+    <outline text="啃饼的博客" title="啃饼的博客" type="rss" xmlUrl="http://blog.sina.com.cn/rss/1736173915.xml" htmlUrl="http://blog.sina.com.cn/kenbinzhang"/>
+    <outline text="善用佳软" title="善用佳软" type="rss" xmlUrl="http://feed.xbeta.info/" htmlUrl="http://xbeta.info"/>
+    <outline text="      阿舍的隨手記記、隨手寫寫..." title="      阿舍的隨手記記、隨手寫寫..." type="rss" xmlUrl="http://www.arthurtoday.com/feeds/posts/default" htmlUrl="http://www.arthurtoday.com/"/>
+    <outline text="搜索研发部官方博客" title="搜索研发部官方博客" type="rss" xmlUrl="http://stblog.baidu-tech.com/?feed=rss2" htmlUrl="http://stblog.baidu-tech.com"/>
+    <outline text="BlogJava-Jasper's Java Jacal" title="BlogJava-Jasper's Java Jacal" type="rss" xmlUrl="http://www.blogjava.net/zhenandaci/rss.aspx" htmlUrl="http://www.blogjava.net/zhenandaci/"/>
+    <outline text="搜索技术博客－淘宝" title="搜索技术博客－淘宝" type="rss" xmlUrl="http://www.searchtb.com/feed" htmlUrl="http://www.searchtb.com"/>
+    <outline text="4G spaces" title="4G spaces" type="rss" xmlUrl="http://blog.youxu.info/feed/" htmlUrl="http://blog.youxu.info"/>
+    <outline text="不敢流泪" title="不敢流泪" type="rss" xmlUrl="http://www.boluor.com/feed" htmlUrl="http://www.boluor.com"/>
+    <outline text="瘋人院院長院內消息" title="瘋人院院長院內消息" type="rss" xmlUrl="http://feeds.feedburner.com/onlinemad-blog" htmlUrl="http://blog.ianwu.tw/"/>
+    <outline text="宇宙论坛--计算机世界最新20篇论坛主题" title="宇宙论坛--计算机世界最新20篇论坛主题" type="rss" xmlUrl="http://www.zjchess.com/bbs/rssfeed.asp?boardid=12&amp;rssid=4" htmlUrl="http://www.zjchess.com/"/>
+    <outline text="看雪安全论坛" title="看雪安全论坛" type="rss" xmlUrl="http://bbs.pediy.com/external.php?type=RSS2" htmlUrl="http://bbs.pediy.com/"/>
+    <outline text="刘未鹏|C++的罗浮宫" title="刘未鹏|C++的罗浮宫" type="rss" xmlUrl="http://blog.csdn.net/pongba/rss/list" htmlUrl="http://blog.csdn.net/pongba"/>
+    <outline text="编码者说" title="编码者说" type="rss" xmlUrl="http://blog.webshuo.com/feed/" htmlUrl="http://blog.webshuo.com"/>
+    <outline text="关于编程之美的最新评论" title="关于编程之美的最新评论" type="rss" xmlUrl="http://book.douban.com/feed/subject/3004255/reviews" htmlUrl="http://book.douban.com/subject/3004255/reviews"/>
+    <outline text="支持向量机导论(豆瓣)" title="支持向量机导论(豆瓣)" type="rss" xmlUrl="http://book.douban.com/feed/subject/1152129/reviews" htmlUrl="http://book.douban.com/subject/1152129/reviews"/>
+    <outline text="Román Cortés" title="Román Cortés" type="rss" xmlUrl="http://www.romancortes.com/blog/feed/" htmlUrl="http://www.romancortes.com/blog"/>
+    <outline text="Erlang非业余研究" title="Erlang非业余研究" type="rss" xmlUrl="http://blog.yufeng.info/feed" htmlUrl="http://blog.yufeng.info"/>
+    <outline text="sswangqing" title="sswangqing" type="rss" xmlUrl="http://hi.baidu.com/sswangqing/rss" htmlUrl="http://hi.baidu.com/sswangqing"/>
+    <outline text="est's blog" title="est's blog" type="rss" xmlUrl="http://feeds.feedburner.com/initiative" htmlUrl="http://blog.est.im/"/>
+    <outline text="ITeye博客" title="ITeye博客" type="rss" xmlUrl="http://www.iteye.com/rss/blogs" htmlUrl="http://www.iteye.com"/>
+    <outline text="Code for Concinnity" title="Code for Concinnity" type="rss" xmlUrl="http://cfc.kizzx2.com/index.php/feed/" htmlUrl="http://cfc.kizzx2.com"/>
+    <outline text="程式設計 遇上 小提琴" title="程式設計 遇上 小提琴" type="rss" xmlUrl="http://blog.ez2learn.com/feed/" htmlUrl="http://blog.ez2learn.com"/>
+    <outline text="C++博客-那谁的技术博客" title="C++博客-那谁的技术博客" type="rss" xmlUrl="http://www.cppblog.com/converse/rss.aspx" htmlUrl="http://www.cppblog.com/converse/"/>
+    <outline text="到哪里都是主场" title="到哪里都是主场" type="rss" xmlUrl="http://feed.feedsky.com/duowang" htmlUrl="http://duowang.info"/>
+    <outline text="阮一峰的网络日志" title="阮一峰的网络日志" type="rss" xmlUrl="http://feeds.feedburner.com/ruanyifeng" htmlUrl="http://www.ruanyifeng.com/blog/"/>
+    <outline text="刘洪涛的专栏" title="刘洪涛的专栏" type="rss" xmlUrl="http://blog.csdn.net/hongtao_liu/rss/list" htmlUrl="http://blog.csdn.net/hongtao_liu"/>
+    <outline text="机器学习中的算法(2)-支持向量机(SVM)基础- LeftNotEasy - 博客园" title="机器学习中的算法(2)-支持向量机(SVM)基础- LeftNotEasy - 博客园" type="rss" xmlUrl="http://www.cnblogs.com/LeftNotEasy/rss" htmlUrl="http://www.cnblogs.com/LeftNotEasy/"/>
+    <outline text="刘未鹏 | Mind Hacks" title="刘未鹏 | Mind Hacks" type="rss" xmlUrl="http://mindhacks.cn/feed/" htmlUrl="http://mindhacks.cn"/>
+    <outline text="The Hacker News [ THN ]" title="The Hacker News [ THN ]" type="rss" xmlUrl="http://thehackernews.com/feeds/posts/default" htmlUrl="http://thehackernews.com/"/>
+    <outline text="Xeye Team" title="Xeye Team" type="rss" xmlUrl="http://xeyeteam.appspot.com/feed" htmlUrl="http://xeyeteam.appspot.com"/>
+    <outline text="司维的思维" title="司维的思维" type="rss" xmlUrl="http://wei.si/blog/feed/" htmlUrl="http://wei.si/blog"/>
+    <outline text="Free Mind" title="Free Mind" type="rss" xmlUrl="http://freemind.pluskid.org/rss.xml" htmlUrl="http://freemind.pluskid.org"/>
+    <outline text="Today's the day" title="Today's the day" type="rss" xmlUrl="http://galeki.is-programmer.com/posts.rss" htmlUrl="http://galeki.is-programmer.com/"/>
+    <outline text="UED TEAM,用户体验设计,web前端开发" title="UED TEAM,用户体验设计,web前端开发" type="rss" xmlUrl="http://www.ued163.com/?feed=rss2" htmlUrl="http://www.ued163.com"/>
+    <outline text="百度泛用户体验" title="百度泛用户体验" type="rss" xmlUrl="http://www.baiduux.com/blog/feed/" htmlUrl="http://www.baiduux.com/blog"/>
+    <outline text="Code Commit" title="Code Commit" type="rss" xmlUrl="http://feeds.codecommit.com/codecommit" htmlUrl="http://www.codecommit.com/blog"/>
+    <outline text="Effective Programming" title="Effective Programming" type="rss" xmlUrl="http://feeds.feedburner.com/EffectiveProgramming" htmlUrl="http://effprog.blogspot.com/"/>
+    <outline text="外刊IT评论网" title="外刊IT评论网" type="rss" xmlUrl="http://www.aqee.net/feed/" htmlUrl="http://www.aqee.net"/>
+    <outline text="酷壳 - CoolShell.cn" title="酷壳 - CoolShell.cn" type="rss" xmlUrl="http://coolshell.cn/feed" htmlUrl="http://coolshell.cn"/>
+    <outline text="eoeAndroid开发者社区 - Android 底层开发" title="eoeAndroid开发者社区 - Android 底层开发" type="rss" xmlUrl="http://www.eoeandroid.com/forum.php?mod=rss&amp;fid=48&amp;auth=0" htmlUrl="http://www.eoeandroid.com/forum-48-1.html"/>
+    <outline text="水之编程世界" title="水之编程世界" type="rss" xmlUrl="http://www.waterpg.com/?feed=rss2" htmlUrl="http://www.waterpg.com"/>
+    <outline text="财新博客-新世纪的常识传播者-财新网»简直" title="财新博客-新世纪的常识传播者-财新网»简直" type="rss" xmlUrl="http://jianzhi.blog.caixin.com/feed" htmlUrl="http://jianzhi.blog.caixin.com"/>
+    <outline text="iPhone 軟體開發筆記" title="iPhone 軟體開發筆記" type="rss" xmlUrl="http://ipdevelop.blogspot.com/feeds/posts/default" htmlUrl="http://ipdevelop.blogspot.com/"/>
+    <outline text="Bella de 左心房" title="Bella de 左心房" type="rss" xmlUrl="http://blog.sina.com.cn/rss/1983332462.xml" htmlUrl="http://blog.sina.com.cn/bella20110904"/>
+    <outline text="奇迹园" title="奇迹园" type="rss" xmlUrl="http://blog.csdn.net/yangliuy/rss/list" htmlUrl="http://blog.csdn.net/yangliuy"/>
+    <outline text="CSDN社区 → 社区首页 → 版主推荐生活热贴" title="CSDN社区 → 社区首页 → 版主推荐生活热贴" type="rss" xmlUrl="http://bbs.csdn.net/ASCX/NewHomePage/ModeratorRecommend/ModeratorRecommendLife.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fbbs.csdn.net%2FASCX%2FNewHomePage%2FModeratorRecommend%2FModeratorRecommendLife.xml"/>
+    <outline text="A盾电脑防护" title="A盾电脑防护" type="rss" xmlUrl="http://www.3600safe.com/rss.php" htmlUrl="http://www.3600safe.com/"/>
+    <outline text="江边潮未尽，枫红一季秋" title="江边潮未尽，枫红一季秋" type="rss" xmlUrl="http://www.ningoo.net/feed" htmlUrl="http://www.ningoo.net"/>
+    <outline text="C++博客-首页原创精华区" title="C++博客-首页原创精华区" type="rss" xmlUrl="http://www.cppblog.com/rss.aspx" htmlUrl="http://www.cppblog.com/"/>
+    <outline text="Max的Android心得筆記" title="Max的Android心得筆記" type="rss" xmlUrl="http://imax-live.blogspot.com/feeds/posts/default" htmlUrl="http://imax-live.blogspot.com/"/>
+    <outline text="数据挖掘中的新方法：支持向量机(豆瓣)" title="数据挖掘中的新方法：支持向量机(豆瓣)" type="rss" xmlUrl="http://book.douban.com/feed/subject/1172178/reviews" htmlUrl="http://book.douban.com/subject/1172178/reviews"/>
+    <outline text="TopLanguage Google Group" title="TopLanguage Google Group" type="rss" xmlUrl="http://groups.google.com/group/pongba/feed/rss_v2_0_msgs.xml" htmlUrl="http://groups.google.com/group/pongba"/>
+    <outline text="iGFW" title="iGFW" type="rss" xmlUrl="http://igfw.net/feed" htmlUrl="http://igfw.net"/>
+    <outline text="C++博客-溪流漫话" title="C++博客-溪流漫话" type="rss" xmlUrl="http://www.cppblog.com/Streamlet/rss.aspx" htmlUrl="http://www.cppblog.com/Streamlet/"/>
+    <outline text="小眾計算學" title="小眾計算學" type="rss" xmlUrl="http://www.iis.sinica.edu.tw/~scm/ncs/feed/" htmlUrl="http://www.iis.sinica.edu.tw/~scm/ncs"/>
+    <outline text="IBM developerWorks 中国 : 文档库" title="IBM developerWorks 中国 : 文档库" type="rss" xmlUrl="http://www.ibm.com/developerworks/cn/views/rss/customrssatom.jsp?zone_type=AllZones&amp;content_type=AllTypes&amp;search_by=&amp;day=1&amp;month=01&amp;year=1997&amp;max_entries=20&amp;feed_by=rss&amp;ibm-submit=%E6%8F%90%E4%BA%A4" htmlUrl="http://www.ibm.com/developerworks/cn/"/>
+    <outline text="博客园_Venus神庙" title="博客园_Venus神庙" type="rss" xmlUrl="http://www.cnblogs.com/duguguiyu/rss" htmlUrl="http://www.cnblogs.com/duguguiyu/"/>
+    <outline text="Site Home" title="Site Home" type="rss" xmlUrl="http://blogs.msdn.com/rss.aspx" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fblogs.msdn.com%2Frss.aspx"/>
+    <outline text="TimeHandle&amp;#39;s Blog" title="TimeHandle&amp;#39;s Blog" type="rss" xmlUrl="http://hi.baidu.com/timehandle/rss" htmlUrl="http://hi.baidu.com/timehandle"/>
+    <outline text="神经网络与支持向量机的故事_李航博士_新浪博客" title="神经网络与支持向量机的故事_李航博士_新浪博客" type="rss" xmlUrl="http://blog.sina.com.cn/rss/2060750830.xml" htmlUrl="http://blog.sina.com.cn/u/2060750830"/>
+    <outline text="阿里巴巴（中国站）用户体验设计部博客" title="阿里巴巴（中国站）用户体验设计部博客" type="rss" xmlUrl="http://www.aliued.cn/?feed=rss2" htmlUrl="http://www.aliued.cn"/>
+    <outline text="电子商务系统教程" title="电子商务系统教程" type="rss" xmlUrl="http://www.btoc.cc/?feed=rss2" htmlUrl="http://www.btoc.cc"/>
+    <outline text="赖勇浩的编程私伙局" title="赖勇浩的编程私伙局" type="rss" xmlUrl="http://blog.csdn.net/lanphaday/Rss.aspx" htmlUrl="http://blog.csdn.net/lanphaday"/>
+    <outline text="刘未鹏(pongba) 的收藏" title="刘未鹏(pongba) 的收藏" type="rss" xmlUrl="http://www.douban.com/feed/people/pongba/interests" htmlUrl="http://www.douban.com/people/pongba/"/>
+    <outline text="tzang.ms" title="tzang.ms" type="rss" xmlUrl="http://feeds.feedburner.com/tzangms" htmlUrl="http://tzang.ms"/>
+    <outline text="博客园_xia xi" title="博客园_xia xi" type="rss" xmlUrl="http://www.cnblogs.com/xiaxi/rss" htmlUrl="http://www.cnblogs.com/xiaxi/"/>
+    <outline text="cnBeta.COM" title="cnBeta.COM" type="rss" xmlUrl="http://www.cnbeta.com/backend.php" htmlUrl="http://www.cnbeta.com"/>
+    <outline text="Qt Labs Blog" title="Qt Labs Blog" type="rss" xmlUrl="http://labs.qt.nokia.com/feed/" htmlUrl="http://blog.qt.digia.com"/>
+    <outline text="C++博客-λ-calculus（惊愕到手了欧耶，BlogExportFull.aspx）" title="C++博客-λ-calculus（惊愕到手了欧耶，BlogExportFull.aspx）" type="rss" xmlUrl="http://www.cppblog.com/vczh/rss.aspx" htmlUrl="http://www.cppblog.com/vczh/"/>
+    <outline text="何宗键@blog" title="何宗键@blog" type="rss" xmlUrl="http://hezongjian.com/blog/?feed=rss2" htmlUrl="http://hezongjian.com/blog"/>
+    <outline text="vpsee.com" title="vpsee.com" type="rss" xmlUrl="http://www.vpsee.com/feed/" htmlUrl="http://www.vpsee.com"/>
+    <outline text="车东[Blog^2]" title="车东[Blog^2]" type="rss" xmlUrl="http://feed.feedsky.com/chedong" htmlUrl="http://www.chedong.com/blog/"/>
+    <outline text="bugcx's blog | 关注网络安全" title="bugcx's blog | 关注网络安全" type="rss" xmlUrl="http://blog.bug.cx/feed/" htmlUrl="http://blog.bug.cx"/>
+    <outline text="平凡的世界" title="平凡的世界" type="rss" xmlUrl="http://feed.ccvita.com/" htmlUrl="http://www.ccvita.com/"/>
+    <outline text="C++博客-万星星@完美世界" title="C++博客-万星星@完美世界" type="rss" xmlUrl="http://www.cppblog.com/wlwlxj/rss.aspx" htmlUrl="http://www.cppblog.com/wlwlxj/"/>
+    <outline text="猫窝" title="猫窝" type="rss" xmlUrl="http://blog.wangjunyu.net/feed" htmlUrl="http://blog.wangjunyu.net"/>
+    <outline text="aifreedom" title="aifreedom" type="rss" xmlUrl="http://feed.aifreedom.com/" htmlUrl="http://aifreedom.com"/>
+    <outline text="不许联想" title="不许联想" type="rss" xmlUrl="http://feeds.feedburner.com/wangxiaofeng" htmlUrl="http://www.wangxiaofeng.net"/>
+    <outline text="云风的 BLOG" title="云风的 BLOG" type="rss" xmlUrl="http://blog.codingnow.com/atom.xml" htmlUrl="http://blog.codingnow.com/"/>
+    <outline text="QBox/Golang/CERL/StdExt/TPL/WinxGui - 许式伟的专栏" title="QBox/Golang/CERL/StdExt/TPL/WinxGui - 许式伟的专栏" type="rss" xmlUrl="http://blog.csdn.net/xushiweizh/rss/list" htmlUrl="http://blog.csdn.net/xushiweizh"/>
+    <outline text="Hitripod" title="Hitripod" type="rss" xmlUrl="http://www.hitripod.com/blog/feed/" htmlUrl="http://www.hitripod.com/blog"/>
+    <outline text="月光博客" title="月光博客" type="rss" xmlUrl="http://feed.williamlong.info/" htmlUrl="http://www.williamlong.info/"/>
+    <outline text="i, Claud" title="i, Claud" type="rss" xmlUrl="http://blog.claudxiao.net/feed/" htmlUrl="http://www.claudxiao.net"/>
+    <outline text="Free Mind：支持向量机: Support Vector | 丕子" title="Free Mind：支持向量机: Support Vector | 丕子" type="rss" xmlUrl="http://www.zhizhihu.com/feed" htmlUrl="http://www.zhizhihu.com"/>
+    <outline text="C++博客-关注编辑器的制作" title="C++博客-关注编辑器的制作" type="rss" xmlUrl="http://www.cppblog.com/megax/rss.aspx" htmlUrl="http://www.cppblog.com/megax/"/>
+    <outline text="SVM（支持向量机）初探- yhchuan - 博客园" title="SVM（支持向量机）初探- yhchuan - 博客园" type="rss" xmlUrl="http://www.cnblogs.com/yhchuan/rss" htmlUrl="http://www.cnblogs.com/yhchuan/"/>
+    <outline text="fleuria lee" title="fleuria lee" type="rss" xmlUrl="http://fleurer-lee.com/atom.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffleurer-lee.com%2Fatom.xml"/>
+    <outline text="Tim[后端技术]" title="Tim[后端技术]" type="rss" xmlUrl="http://timyang.net/feed/atom/" htmlUrl="http://timyang.net/"/>
+    <outline text="ISUX 腾讯社交用户体验设计" title="ISUX 腾讯社交用户体验设计" type="rss" xmlUrl="http://isux.tencent.com/feed" htmlUrl="http://isux.tencent.com"/>
+    <outline text="The Code Project Latest Articles" title="The Code Project Latest Articles" type="rss" xmlUrl="http://www.codeproject.com/WebServices/ArticleRSS.aspx?cat=1" htmlUrl="http://www.codeproject.com"/>
+    <outline text="皮皮书屋" title="皮皮书屋" type="rss" xmlUrl="http://www.ppurl.com/feed" htmlUrl="http://www.ppurl.com"/>
+    <outline text="snnn的blog" title="snnn的blog" type="rss" xmlUrl="http://www.sunchangming.com/blog/?feed=rss2" htmlUrl="http://blog.sunchangming.com/"/>
+    <outline text="MATLAB技术论坛" title="MATLAB技术论坛" type="rss" xmlUrl="http://www.matlabsky.com/forum.php?mod=rss&amp;auth=0" htmlUrl="http://www.matlabsky.com/forum.php"/>
+    <outline text="36氪" title="36氪" type="rss" xmlUrl="http://www.36kr.com/feed" htmlUrl="http://www.36kr.com/"/>
+    <outline text="reality" title="reality" type="rss" xmlUrl="http://reality.hk/atom.xml" htmlUrl="http://reality.hk/"/>
+    <outline text="支持向量机系列« Free Mind" title="支持向量机系列« Free Mind" type="rss" xmlUrl="http://blog.pluskid.org/?feed=rss2" htmlUrl="http://blog.pluskid.org"/>
+    <outline text="Ken Yang 筆記" title="Ken Yang 筆記" type="rss" xmlUrl="http://blog.kenyang.net/feeds/posts/default" htmlUrl="http://blog.kenyang.net/"/>
+    <outline text="淘宝网综合业务平台团队博客" title="淘宝网综合业务平台团队博客" type="rss" xmlUrl="http://rdc.taobao.com/team/jm/feed" htmlUrl="http://rdc.taobao.com/team/jm"/>
+    <outline text="Sina App Engine Blog" title="Sina App Engine Blog" type="rss" xmlUrl="http://blog.sae.sina.com.cn/feed" htmlUrl="http://blog.sae.sina.com.cn"/>
+    <outline text="学习和实践" title="学习和实践" type="rss" xmlUrl="http://hi.baidu.com/uniqcmt/rss" htmlUrl="http://hi.baidu.com/uniqcmt"/>
+    <outline text="开源中国社区最新讨论话题" title="开源中国社区最新讨论话题" type="rss" xmlUrl="http://www.oschina.net/question/rss" htmlUrl="http://www.oschina.net?from=rss"/>
+    <outline text="网站那些事 | 网站点兵" title="网站那些事 | 网站点兵" type="rss" xmlUrl="http://www.xiuwz.com/feed/" htmlUrl="http://www.xiuwz.com"/>
+    <outline text="World of My Own" title="World of My Own" type="rss" xmlUrl="http://feed.niye.name/" htmlUrl="http://niye.name"/>
+    <outline text="fudan_abc的Linux内核专栏" title="fudan_abc的Linux内核专栏" type="rss" xmlUrl="http://blog.csdn.net/fudan_abc/rss/list" htmlUrl="http://blog.csdn.net/fudan_abc"/>
+    <outline text="关于Windows用户态程序高效排错的最新评论" title="关于Windows用户态程序高效排错的最新评论" type="rss" xmlUrl="http://book.douban.com/feed/subject/2302201/reviews" htmlUrl="http://book.douban.com/subject/2302201/reviews"/>
+    <outline text="Abyss" title="Abyss" type="rss" xmlUrl="http://abyss.ylen.me/feed" htmlUrl="http://abyss.ylen.me"/>
+    <outline text="loop in codes" title="loop in codes" type="rss" xmlUrl="http://codemacro.com/atom.xml" htmlUrl="http://codemacro.com/"/>
+    <outline text="淘宝核心系统团队博客" title="淘宝核心系统团队博客" type="rss" xmlUrl="http://rdc.taobao.com/blog/cs/?feed=rss2" htmlUrl="http://rdc.taobao.com/blog/cs"/>
+    <outline text="CSDN博客推荐文章" title="CSDN博客推荐文章" type="rss" xmlUrl="http://blog.csdn.net/rss.html" htmlUrl="http://blog.csdn.net"/>
+    <outline text="Engadget 中文版" title="Engadget 中文版" type="rss" xmlUrl="http://chinese.engadget.com/rss.xml" htmlUrl="http://chinese.engadget.com"/>
+    <outline text="一升" title="一升" type="rss" xmlUrl="http://desheng.me/feed/" htmlUrl="http://desheng.me"/>
+    <outline text="base">
+      <outline text="欢子的小木屋" title="欢子的小木屋" type="rss" xmlUrl="http://joyousprince.spaces.live.com/feed.rss" htmlUrl="http://joyousprince.wordpress.com"/>
+      <outline text="紫丁香社区 社会信息区十大热门话题" title="紫丁香社区 社会信息区十大热门话题" type="rss" xmlUrl="http://edu.lilacbbs.com/rssi.php?h=2&amp;s=10" htmlUrl="http://lilacbbs.com/frames.html"/>
+      <outline text="行者" title="行者" type="rss" xmlUrl="http://pindao.blogbus.com/rss/channel9.rdf" htmlUrl="http://pindao.blogbus.com/xingzhe"/>
+      <outline text="美国《时代》杂志中文版（博主翻译）" title="美国《时代》杂志中文版（博主翻译）" type="rss" xmlUrl="http://www1.tianyablog.com/blogger/rss.asp?BlogID=534653" htmlUrl="http://timeweekly.blog.tianya.cn/"/>
+      <outline text="VeryCD - eMule资源更新订阅" title="VeryCD - eMule资源更新订阅" type="rss" xmlUrl="http://lib.verycd.com/feeds/rss.xml" htmlUrl="http://www.verycd.com/sto/"/>
+      <outline text="紫丁香社区 今日十大热门话题" title="紫丁香社区 今日十大热门话题" type="rss" xmlUrl="http://edu.lilacbbs.com/rssi.php?h=1" htmlUrl="http://lilacbbs.com/frames.html"/>
+      <outline text="老徐" title="老徐" type="rss" xmlUrl="http://blog.sina.com.cn/myblog/index_rss.php?uid=1190363061" htmlUrl="http://blog.sina.com.cn/xujinglei"/>
+      <outline text="Let the game begin..." title="Let the game begin..." type="rss" xmlUrl="http://jcshadowx.spaces.live.com/feed.rss" htmlUrl="http://jcshadowx.spaces.live.com/"/>
+      <outline text="laurel" title="laurel" type="rss" xmlUrl="http://lrxiao.spaces.live.com/feed.rss" htmlUrl="http://lrxiao.spaces.live.com/"/>
+      <outline text="新闻中心-新闻要闻" title="新闻中心-新闻要闻" type="rss" xmlUrl="http://rss.sina.com.cn/news/marquee/ddt.xml" htmlUrl="http://roll.news.sina.com.cn/s/"/>
+      <outline text="Google 新聞 香港版" title="Google 新聞 香港版" type="rss" xmlUrl="http://news.google.com/news?ned=hk&amp;output=rss" htmlUrl="http://news.google.com/news?ned=hk&amp;hl=zh-TW"/>
+      <outline text="韩寒" title="韩寒" type="rss" xmlUrl="http://blog.sina.com.cn/myblog/index_rss.php?uid=1191258123" htmlUrl="http://blog.sina.com.cn/twocold"/>
+      <outline text="Learn to be a crepehanger" title="Learn to be a crepehanger" type="rss" xmlUrl="http://caoliangliang.spaces.live.com/feed.rss" htmlUrl="http://caoliangliang.spaces.live.com/"/>
+      <outline text="新华网-国内新闻" title="新华网-国内新闻" type="rss" xmlUrl="http://rss.xinhuanet.com/rss/native.xml" htmlUrl="http://www.xinhuanet.com/"/>
+      <outline text="生活帮-LifeBang" title="生活帮-LifeBang" type="rss" xmlUrl="http://feeds.feedburner.com/lifebang" htmlUrl="http://www.lifebang.com"/>
+      <outline text="赐勋" title="赐勋" type="rss" xmlUrl="http://cixunzhang.spaces.live.com/feed.rss" htmlUrl="http://cixunzhang.spaces.live.com/"/>
+      <outline text="Shannon" title="Shannon" type="rss" xmlUrl="http://maxiaonan.spaces.live.com/feed.rss" htmlUrl="http://maxiaonan.spaces.live.com/"/>
+      <outline text="我的cnblogs" title="我的cnblogs" type="rss" xmlUrl="http://www.cnblogs.com/cutepig/Rss.aspx" htmlUrl="http://www.cnblogs.com/cutepig/"/>
+      <outline text="eNet硅谷动力-网络学院" title="eNet硅谷动力-网络学院" type="rss" xmlUrl="http://rss.enet.com.cn/rss/eschool/all.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Frss.enet.com.cn%2Frss%2Feschool%2Fall.xml"/>
+      <outline text="开源中国社区最新软件" title="开源中国社区最新软件" type="rss" xmlUrl="http://www.oschina.net/project/rss" htmlUrl="http://www.oschina.net/?from=rss"/>
+      <outline text="豆瓣最受欢迎的评论" title="豆瓣最受欢迎的评论" type="rss" xmlUrl="http://www.douban.com/feed/review/latest" htmlUrl="http://www.douban.com/review/best/"/>
+      <outline text="糗事百科" title="糗事百科" type="rss" xmlUrl="http://feeds.feedburner.com/qiushibaike" htmlUrl="http://www.qiushibaike.com/"/>
+      <outline text="笑对人生，傲立寰宇" title="笑对人生，傲立寰宇" type="rss" xmlUrl="http://dahua.spaces.live.com/feed.rss" htmlUrl="http://dahua.spaces.live.com/"/>
+      <outline text="要闻" title="要闻" type="rss" xmlUrl="http://chinese.wsj.com/gb/rss01.xml" htmlUrl="http://cn.wsj.com"/>
+      <outline text="水木社区 学术科学区十大热门话题" title="水木社区 学术科学区十大热门话题" type="rss" xmlUrl="http://www.newsmth.net/rssi.php?h=2&amp;s=8" htmlUrl="http://www.newsmth.net/frames.html"/>
+      <outline text="瑶瑶" title="瑶瑶" type="rss" xmlUrl="http://xieyao.spaces.live.com/feed.rss" htmlUrl="http://xieyao.spaces.live.com/"/>
+    </outline>
+    <outline text="bbs">
+      <outline text="水木社区 休闲娱乐区十大热门话题" title="水木社区 休闲娱乐区十大热门话题" type="rss" xmlUrl="http://www.newsmth.net/rssi.php?h=2&amp;s=2" htmlUrl="http://www.newsmth.net/frames.html"/>
+      <outline text="水木社区 今日十大热门话题" title="水木社区 今日十大热门话题" type="rss" xmlUrl="http://www.newsmth.net/rssi.php?h=1" htmlUrl="http://www.newsmth.net/frames.html"/>
+      <outline text="紫丁香社区 电脑技术区十大热门话题" title="紫丁香社区 电脑技术区十大热门话题" type="rss" xmlUrl="http://edu.lilacbbs.com/rssi.php?h=2&amp;s=3" htmlUrl="http://lilacbbs.com/frames.html"/>
+    </outline>
+    <outline text="blogs">
+      <outline text="张盛浩" title="张盛浩" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=94380270" htmlUrl="http://94380270.qzone.qq.com"/>
+      <outline text="wangqun" title="wangqun" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=187347437" htmlUrl="http://187347437.qzone.qq.com"/>
+      <outline text="孙福" title="孙福" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=24186608" htmlUrl="http://24186608.qzone.qq.com"/>
+      <outline text="天使在人间" title="天使在人间" type="rss" xmlUrl="http://runfengzhang.blog.sohu.com/rss" htmlUrl="http://runfengzhang.blog.sohu.com/"/>
+      <outline text="阅微堂" title="阅微堂" type="rss" xmlUrl="http://feeds.feedburner.com/zhiqiang" htmlUrl="http://zhiqiang.org/blog"/>
+      <outline text="周磊南京" title="周磊南京" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=54807004" htmlUrl="http://54807004.qzone.qq.com"/>
+      <outline text="马莉明" title="马莉明" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=452728565" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D452728565"/>
+      <outline text="06C" title="06C" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=611198435" htmlUrl="http://611198435.qzone.qq.com"/>
+      <outline text="It\'s me" title="It\'s me" type="rss" xmlUrl="http://cbir.spaces.live.com/feed.rss" htmlUrl="http://cbir.spaces.live.com/"/>
+      <outline text="崔雷电气" title="崔雷电气" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=65222159" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D65222159"/>
+      <outline text="Beyond Paradise" title="Beyond Paradise" type="rss" xmlUrl="http://dribblejj.spaces.live.com/feed.rss" htmlUrl="http://dribblejj.wordpress.com"/>
+      <outline text="薛国伟" title="薛国伟" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=125883744" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D125883744"/>
+      <outline text="hhjjss" title="hhjjss" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=791249761" htmlUrl="http://791249761.qzone.qq.com"/>
+      <outline text="梅子的写食日记" title="梅子的写食日记" type="rss" xmlUrl="http://plum.blog.sohu.com/rss" htmlUrl="http://plum.blog.sohu.com/"/>
+      <outline text="任明俊" title="任明俊" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=76031947" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D76031947"/>
+      <outline text="CeKong" title="CeKong" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=93689307" htmlUrl="http://93689307.qzone.qq.com"/>
+      <outline text="信天~非翁" title="信天~非翁" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=47223448" htmlUrl="http://47223448.qzone.qq.com"/>
+      <outline text="丁晓玲" title="丁晓玲" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=407754582" htmlUrl="http://407754582.qzone.qq.com"/>
+      <outline text="段" title="段" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=37228423" htmlUrl="http://37228423.qzone.qq.com"/>
+      <outline text="张真" title="张真" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=93661396" htmlUrl="http://93661396.qzone.qq.com"/>
+      <outline text="冯卫东" title="冯卫东" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=41228170" htmlUrl="http://41228170.qzone.qq.com"/>
+      <outline text="音乐种子" title="音乐种子" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=108201535" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D108201535"/>
+      <outline text="天天天蓝" title="天天天蓝" type="rss" xmlUrl="http://zhangjialin.spaces.live.com/feed.rss" htmlUrl="http://zhangjialin.spaces.live.com/"/>
+      <outline text="孙南翔" title="孙南翔" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=359262683" htmlUrl="http://359262683.qzone.qq.com"/>
+      <outline text="王小燕" title="王小燕" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=61173727" htmlUrl="http://61173727.qzone.qq.com"/>
+      <outline text="葛敬嘉" title="葛敬嘉" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=308546968" htmlUrl="http://308546968.qzone.qq.com"/>
+      <outline text="计算机视觉下载" title="计算机视觉下载" type="rss" xmlUrl="http://cn.freefileszone.com/rss/freefileszone.rss" htmlUrl="http://cn.freefileszone.com/"/>
+      <outline text="sz1" title="sz1" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=157943615" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D157943615"/>
+      <outline text="I  believe" title="I  believe" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=23185036" htmlUrl="http://23185036.qzone.qq.com"/>
+      <outline text="吕尚征" title="吕尚征" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=273846231" htmlUrl="http://273846231.qzone.qq.com"/>
+      <outline text="Converstations" title="Converstations" type="rss" xmlUrl="http://feeds.feedburner.com/Converstations" htmlUrl="http://www.converstations.com"/>
+      <outline text="乔大鸟" title="乔大鸟" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=66371800" htmlUrl="http://66371800.qzone.qq.com"/>
+      <outline text="饶" title="饶" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=36230333" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D36230333"/>
+      <outline text="高欣" title="高欣" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=89089980" htmlUrl="http://89089980.qzone.qq.com"/>
+      <outline text="Blue" title="Blue" type="rss" xmlUrl="http://joyxiangblue.spaces.live.com/feed.rss" htmlUrl="http://joyxiangblue.spaces.live.com/"/>
+      <outline text="金怪的BLOG" title="金怪的BLOG" type="rss" xmlUrl="http://blog.sina.com.cn/myblog/index_rss.php?uid=1262592044" htmlUrl="http://blog.sina.com.cn/jged"/>
+      <outline text="阿☆★炳" title="阿☆★炳" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=187185942" htmlUrl="http://187185942.qzone.qq.com"/>
+      <outline text="海涛" title="海涛" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=30456736" htmlUrl="http://30456736.qzone.qq.com"/>
+      <outline text="CareerCup" title="CareerCup" type="rss" xmlUrl="http://www.careercup.com/rss.xml" htmlUrl="http://www.careercup.com/"/>
+      <outline text="徒弟男男的博客" title="徒弟男男的博客" type="rss" xmlUrl="http://yinanalways.spaces.live.com/feed.rss" htmlUrl="http://yinanalways.wordpress.com"/>
+      <outline text="朱晓霞" title="朱晓霞" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=55338973" htmlUrl="http://55338973.qzone.qq.com"/>
+      <outline text="殷晓岚" title="殷晓岚" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=553440863" htmlUrl="http://553440863.qzone.qq.com"/>
+      <outline text="陈老师" title="陈老师" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=34126081" htmlUrl="http://34126081.qzone.qq.com"/>
+      <outline text="孔祥杲" title="孔祥杲" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=5093135" htmlUrl="http://5093135.qzone.qq.com"/>
+      <outline text="空间" title="空间" type="rss" xmlUrl="http://lupinyan.spaces.live.com/feed.rss" htmlUrl="http://lupinyan.spaces.live.com/"/>
+      <outline text="崔慧琳" title="崔慧琳" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=29857515" htmlUrl="http://29857515.qzone.qq.com"/>
+      <outline text="孙树人" title="孙树人" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=84094619" htmlUrl="http://84094619.qzone.qq.com"/>
+      <outline text="小磊" title="小磊" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=122038733" htmlUrl="http://122038733.qzone.qq.com"/>
+      <outline text="工大深圳" title="工大深圳" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=4748160" htmlUrl="http://4748160.qzone.qq.com"/>
+      <outline text="刘汉星" title="刘汉星" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=441308458" htmlUrl="http://441308458.qzone.qq.com"/>
+      <outline text="哥哥" title="哥哥" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=10750475" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D10750475"/>
+      <outline text="晓燕" title="晓燕" type="rss" xmlUrl="http://maomaobjm.spaces.live.com/feed.rss" htmlUrl="http://maomaobjm.spaces.live.com/"/>
+      <outline text="杨广禄" title="杨广禄" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=383002664" htmlUrl="http://383002664.qzone.qq.com"/>
+      <outline text="高明" title="高明" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=157459251" htmlUrl="http://157459251.qzone.qq.com"/>
+      <outline text="心成" title="心成" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=110019336" htmlUrl="http://110019336.qzone.qq.com"/>
+      <outline text="VISION, PASSION and LOVE: 上班一周" title="VISION, PASSION and LOVE: 上班一周" type="rss" xmlUrl="http://terrencewang81.spaces.live.com/feed.rss" htmlUrl="http://terrencewang81.spaces.live.com/"/>
+      <outline text="瑛儿" title="瑛儿" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=66408871" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D66408871"/>
+      <outline text="党永飞" title="党永飞" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=85469294" htmlUrl="http://85469294.qzone.qq.com"/>
+      <outline text="何峰" title="何峰" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=546178602" htmlUrl="http://546178602.qzone.qq.com"/>
+      <outline text="黄小琼" title="黄小琼" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=15885676" htmlUrl="http://15885676.qzone.qq.com"/>
+      <outline text="创新智慧资讯系统实验室» Blog Archive » 计算机视觉Computer Vision" title="创新智慧资讯系统实验室» Blog Archive » 计算机视觉Computer Vision" type="rss" xmlUrl="http://edith.cse.nsysu.edu.tw/wordpress/?feed=rss2" htmlUrl="http://edith.cse.nsysu.edu.tw/wordpress"/>
+      <outline text="赵志萍" title="赵志萍" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=9516494" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D9516494"/>
+      <outline text="譚智" title="譚智" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=77793782" htmlUrl="http://77793782.qzone.qq.com"/>
+      <outline text="李继刚" title="李继刚" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=187305362" htmlUrl="http://187305362.qzone.qq.com"/>
+      <outline text="曾昊" title="曾昊" type="rss" xmlUrl="http://largebeach.spaces.live.com/feed.rss" htmlUrl="http://largebeach.spaces.live.com/"/>
+      <outline text="刘瑞" title="刘瑞" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=33861544" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D33861544"/>
+      <outline text="许建" title="许建" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=52493654" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D52493654"/>
+      <outline text="☆徐进波" title="☆徐进波" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=76319338" htmlUrl="http://76319338.qzone.qq.com"/>
+      <outline text="吴大海" title="吴大海" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=77188019" htmlUrl="http://77188019.qzone.qq.com"/>
+      <outline text="小马" title="小马" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=68729415" htmlUrl="http://68729415.qzone.qq.com"/>
+      <outline text="孙宁" title="孙宁" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=151762567" htmlUrl="http://151762567.qzone.qq.com"/>
+      <outline text="83609" title="83609" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=83609" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D83609"/>
+      <outline text="海风" title="海风" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=86373537" htmlUrl="http://86373537.qzone.qq.com"/>
+      <outline text="徐健" title="徐健" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=15916136" htmlUrl="http://15916136.qzone.qq.com"/>
+      <outline text="小星河/o" title="小星河/o" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=23474034" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D23474034"/>
+      <outline text="100218836" title="100218836" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=100218836" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D100218836"/>
+      <outline text="邓辅秦" title="邓辅秦" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=519726155" htmlUrl="http://519726155.qzone.qq.com"/>
+      <outline text="笔记" title="笔记" type="rss" xmlUrl="http://sasilin.spaces.live.com/feed.rss" htmlUrl="http://sasilin.spaces.live.com/"/>
+      <outline text="田野" title="田野" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=13932668" htmlUrl="http://13932668.qzone.qq.com"/>
+      <outline text="28#242" title="28#242" type="rss" xmlUrl="http://weimy.spaces.live.com/feed.rss" htmlUrl="http://weimy.spaces.live.com/"/>
+      <outline text="wangqiju" title="wangqiju" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=250158614" htmlUrl="http://250158614.qzone.qq.com"/>
+      <outline text="张瑞" title="张瑞" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=218836" htmlUrl="http://218836.qzone.qq.com"/>
+      <outline text="寒夜风" title="寒夜风" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=157993885" htmlUrl="http://157993885.qzone.qq.com"/>
+      <outline text="什么是计算机视觉？ - 成长编程考研- DonewsBlog" title="什么是计算机视觉？ - 成长编程考研- DonewsBlog" type="rss" xmlUrl="http://blog.donews.com/xulb597/rss.aspx" htmlUrl="http://blog.donews.com/xulb597"/>
+      <outline text="超政" title="超政" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=94051004" htmlUrl="http://94051004.qzone.qq.com"/>
+      <outline text="胡丹" title="胡丹" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=14997896" htmlUrl="http://14997896.qzone.qq.com"/>
+      <outline text="盖滢泓" title="盖滢泓" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=43697015" htmlUrl="http://43697015.qzone.qq.com"/>
+      <outline text="于文龙" title="于文龙" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=59868120" htmlUrl="http://59868120.qzone.qq.com"/>
+      <outline text="陈泉泉" title="陈泉泉" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=20414560" htmlUrl="http://20414560.qzone.qq.com"/>
+      <outline text="张振铎" title="张振铎" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=46981374" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D46981374"/>
+      <outline text="Brain Record: CVPR 2007 at Minneapolis" title="Brain Record: CVPR 2007 at Minneapolis" type="rss" xmlUrl="http://mingkong98.spaces.live.com/feed.rss" htmlUrl="http://mingkong98.wordpress.com"/>
+      <outline text="陈翔宇" title="陈翔宇" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=99121696" htmlUrl="http://99121696.qzone.qq.com"/>
+      <outline text="胜？" title="胜？" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=153704695" htmlUrl="http://153704695.qzone.qq.com"/>
+      <outline text="一沙一世界" title="一沙一世界" type="rss" xmlUrl="http://changhuwang.spaces.live.com/feed.rss" htmlUrl="http://wchtiger.wordpress.com"/>
+      <outline text="李英祥" title="李英祥" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=48507982" htmlUrl="http://48507982.qzone.qq.com"/>
+      <outline text="李金金" title="李金金" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=45213179" htmlUrl="http://45213179.qzone.qq.com"/>
+      <outline text="单宝灯" title="单宝灯" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=672778641" htmlUrl="http://672778641.qzone.qq.com"/>
+      <outline text="谢常耀" title="谢常耀" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=19087192" htmlUrl="http://19087192.qzone.qq.com"/>
+      <outline text="D*A*Y" title="D*A*Y" type="rss" xmlUrl="http://jessieday.spaces.live.com/feed.rss" htmlUrl="http://JessieDay.spaces.live.com/"/>
+      <outline text="计算机视觉- 多媒体开发专栏- CSDNBlog" title="计算机视觉- 多媒体开发专栏- CSDNBlog" type="rss" xmlUrl="http://blog.csdn.net/winne_ll/rss.aspx" htmlUrl="http://blog.csdn.net/winne_ll/"/>
+      <outline text="姐姐" title="姐姐" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=759906293" htmlUrl="http://759906293.qzone.qq.com"/>
+      <outline text="青蛙池塘" title="青蛙池塘" type="rss" xmlUrl="http://purpleoleander.spaces.live.com/feed.rss" htmlUrl="http://purpleoleander.spaces.live.com/"/>
+      <outline text="sogsblog" title="sogsblog" type="rss" xmlUrl="http://sogwhite.spaces.live.com/feed.rss" htmlUrl="http://sogwhite.spaces.live.com/"/>
+      <outline text="GIRLS,CUTE AS ME！" title="GIRLS,CUTE AS ME！" type="rss" xmlUrl="http://zeniazhao.blog.sohu.com/rss" htmlUrl="http://zeniazhao.blog.sohu.com/"/>
+      <outline text="马岩" title="马岩" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=120685901" htmlUrl="http://120685901.qzone.qq.com"/>
+      <outline text="郑久寿" title="郑久寿" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=95620648" htmlUrl="http://95620648.qzone.qq.com"/>
+      <outline text="阳光路" title="阳光路" type="rss" xmlUrl="http://sunshineroad.blog.sohu.com/rss" htmlUrl="http://sunshineroad.blog.sohu.com/"/>
+      <outline text="23517996" title="23517996" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=23517996" htmlUrl="http://23517996.qzone.qq.com"/>
+      <outline text="Now and then, here and there: 结婚了" title="Now and then, here and there: 结婚了" type="rss" xmlUrl="http://davidconan.spaces.live.com/feed.rss" htmlUrl="http://davidconan.spaces.live.com/"/>
+      <outline text="迷失的BLOG" title="迷失的BLOG" type="rss" xmlUrl="http://blog.sina.com.cn/rss/hnuhefeng.xml" htmlUrl="http://blog.sina.com.cn/hnuhefeng"/>
+      <outline text="郭宗本" title="郭宗本" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=121312471" htmlUrl="http://121312471.qzone.qq.com"/>
+      <outline text="许建" title="许建" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=263832800" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D263832800"/>
+      <outline text="Dedian" title="Dedian" type="rss" xmlUrl="http://feeds.feedburner.com/Dedian" htmlUrl="http://dedian.blog.sohu.com/"/>
+      <outline text="院师兄" title="院师兄" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=45146257" htmlUrl="http://45146257.qzone.qq.com"/>
+      <outline text="邪恶的天使" title="邪恶的天使" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=123687321" htmlUrl="http://123687321.qzone.qq.com"/>
+      <outline text="苗伟" title="苗伟" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=49423119" htmlUrl="http://49423119.qzone.qq.com"/>
+      <outline text="cutepig's home" title="cutepig's home" type="rss" xmlUrl="http://hejinshou.blog.sohu.com/rss" htmlUrl="http://hejinshou.blog.sohu.com/"/>
+      <outline text="郝" title="郝" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=69192027" htmlUrl="http://69192027.qzone.qq.com"/>
+      <outline text="周 Lei" title="周 Lei" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=94718766" htmlUrl="http://94718766.qzone.qq.com"/>
+      <outline text="王秀娜" title="王秀娜" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=459476373" htmlUrl="http://459476373.qzone.qq.com"/>
+      <outline text="一旦开始，事已成半" title="一旦开始，事已成半" type="rss" xmlUrl="http://xsyangping.blog.sohu.com/rss" htmlUrl="http://xsyangping.blog.sohu.com/"/>
+      <outline text="？？" title="？？" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=23503226" htmlUrl="http://23503226.qzone.qq.com"/>
+      <outline text="耿驴" title="耿驴" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=33789826" htmlUrl="http://33789826.qzone.qq.com"/>
+      <outline text="刘辉" title="刘辉" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=375313550" htmlUrl="http://375313550.qzone.qq.com"/>
+      <outline text="屠" title="屠" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=75951345" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D75951345"/>
+      <outline text="卢红缯" title="卢红缯" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=39056940" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D39056940"/>
+      <outline text="买我书" title="买我书" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=33290911" htmlUrl="http://33290911.qzone.qq.com"/>
+      <outline text="何朝笋" title="何朝笋" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=36637941" htmlUrl="http://36637941.qzone.qq.com"/>
+      <outline text="王忠民" title="王忠民" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=499986709" htmlUrl="http://499986709.qzone.qq.com"/>
+      <outline text="谷宇dq" title="谷宇dq" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=76762539" htmlUrl="http://76762539.qzone.qq.com"/>
+      <outline text="仰视飞鸟的人" title="仰视飞鸟的人" type="rss" xmlUrl="http://landbird2006.spaces.live.com/feed.rss" htmlUrl="http://landbird2006.spaces.live.com/"/>
+      <outline text="调味咖啡" title="调味咖啡" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=156566436" htmlUrl="http://156566436.qzone.qq.com"/>
+      <outline text="检波" title="检波" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=88487937" htmlUrl="http://88487937.qzone.qq.com"/>
+      <outline text="王佳" title="王佳" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=93635462" htmlUrl="http://93635462.qzone.qq.com"/>
+      <outline text="袁绍钧" title="袁绍钧" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=64529463" htmlUrl="http://64529463.qzone.qq.com"/>
+      <outline text="崔小雷" title="崔小雷" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=185781967" htmlUrl="http://185781967.qzone.qq.com"/>
+      <outline text="张瑞" title="张瑞" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=366681929" htmlUrl="http://366681929.qzone.qq.com"/>
+      <outline text="陈捷" title="陈捷" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=179968049" htmlUrl="http://179968049.qzone.qq.com"/>
+      <outline text="张丽丽" title="张丽丽" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=95376839" htmlUrl="http://95376839.qzone.qq.com"/>
+      <outline text="斌斌" title="斌斌" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=123478669" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D123478669"/>
+      <outline text="图像处理/计算机视觉资源- 智能机器的家园... - IT博客网" title="图像处理/计算机视觉资源- 智能机器的家园... - IT博客网" type="rss" xmlUrl="http://www.cnitblog.com/IntelligentMachine/rss.aspx" htmlUrl="http://www.cnitblog.com/IntelligentMachine/"/>
+      <outline text="宋本嘉" title="宋本嘉" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=52707759" htmlUrl="http://52707759.qzone.qq.com"/>
+      <outline text="HeartOnRails" title="HeartOnRails" type="rss" xmlUrl="http://kofsky.blog.sohu.com/rss" htmlUrl="http://kofsky.blog.sohu.com/"/>
+      <outline text="周莉" title="周莉" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=331372082" htmlUrl="http://331372082.qzone.qq.com"/>
+      <outline text="河清海" title="河清海" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=80948251" htmlUrl="http://80948251.qzone.qq.com"/>
+      <outline text="Love is eternal" title="Love is eternal" type="rss" xmlUrl="http://shuicheng.spaces.live.com/feed.rss" htmlUrl="http://shuicheng.spaces.live.com/"/>
+      <outline text="孔斌" title="孔斌" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=124117931" htmlUrl="http://124117931.qzone.qq.com"/>
+      <outline text="杨平" title="杨平" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=187129687" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D187129687"/>
+      <outline text="王志刚" title="王志刚" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=9099065" htmlUrl="http://9099065.qzone.qq.com"/>
+      <outline text="悲伤/aiq恋歌" title="悲伤/aiq恋歌" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=455484313" htmlUrl="http://455484313.qzone.qq.com"/>
+      <outline text="东北南人" title="东北南人" type="rss" xmlUrl="http://dongbeinanren.spaces.live.com/feed.rss" htmlUrl="http://dongbeinanren.spaces.live.com/"/>
+      <outline text="李丹丹" title="李丹丹" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=18705822" htmlUrl="http://18705822.qzone.qq.com"/>
+      <outline text="《槽边往事》---比特海日志" title="《槽边往事》---比特海日志" type="rss" xmlUrl="http://feeds.feedburner.com/caitou" htmlUrl="http://www.hecaitou.net"/>
+      <outline text="张安东" title="张安东" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=16910775" htmlUrl="http://16910775.qzone.qq.com"/>
+      <outline text="王洪亮" title="王洪亮" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=57374595" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D57374595"/>
+      <outline text="赵冬梅" title="赵冬梅" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=56020834" htmlUrl="http://56020834.qzone.qq.com"/>
+      <outline text="小磊" title="小磊" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=314340324" htmlUrl="http://314340324.qzone.qq.com"/>
+      <outline text="孙光胜" title="孙光胜" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=107850622" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Ffeeds.qzone.qq.com%2Fcgi-bin%2Fcgi_rss_out%3Fuin%3D107850622"/>
+      <outline text="史也" title="史也" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=5986763" htmlUrl="http://5986763.qzone.qq.com"/>
+      <outline text="CutePig" title="CutePig" type="rss" xmlUrl="http://feeds.qzone.qq.com/cgi-bin/cgi_rss_out?uin=178066707" htmlUrl="http://178066707.qzone.qq.com"/>
+    </outline>
+    <outline text="iportant">
+      <outline text="未注册用户的 InfoQ 个性化 RSS Feed - 请注册后升级！" title="未注册用户的 InfoQ 个性化 RSS Feed - 请注册后升级！" type="rss" xmlUrl="http://www.infoq.com/cn/rss/rss.action?token=0U8MDofIbJ4RLN491gyFEMLQ7K3mW1Co" htmlUrl="http://www.infoq.com/cn/"/>
+      <outline text="DBA@Taobao" title="DBA@Taobao" type="rss" xmlUrl="http://feed.feedsky.com/taobaodba" htmlUrl="http://rdc.taobao.com/blog/dba"/>
+      <outline text="Engadget RSS Feed" title="Engadget RSS Feed" type="rss" xmlUrl="http://www.engadget.com/rss.xml" htmlUrl="http://www.engadget.com"/>
+      <outline text="Matrix67: My Blog" title="Matrix67: My Blog" type="rss" xmlUrl="http://www.matrix67.com/blog/feed.asp" htmlUrl="http://www.matrix67.com/blog"/>
+    </outline>
+    <outline text="news">
+      <outline text="凤凰周刊" title="凤凰周刊" type="rss" xmlUrl="http://blog.sina.com.cn/myblog/index_rss.php?uid=1267454277" htmlUrl="http://blog.sina.com.cn/phoenixweekly"/>
+      <outline text="BBCChinese.com | 中国报道" title="BBCChinese.com | 中国报道" type="rss" xmlUrl="http://newsrss.bbc.co.uk/rss/chinese/simp/china_news/rss.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fnewsrss.bbc.co.uk%2Frss%2Fchinese%2Fsimp%2Fchina_news%2Frss.xml"/>
+      <outline text="网易财经阅读:《南方周末》" title="网易财经阅读:《南方周末》" type="rss" xmlUrl="http://stock.163.com/special/n/00251HO9/nfzm.xml" htmlUrl="http://finance.163.com/"/>
+      <outline text="联合早报网 zaobao.com - 中国新闻" title="联合早报网 zaobao.com - 中国新闻" type="rss" xmlUrl="http://www.zaobao.com/zg/zg.xml" htmlUrl="http://www.zaobao.com"/>
+      <outline text="BBCChinese.com | 中文网主页" title="BBCChinese.com | 中文网主页" type="rss" xmlUrl="http://newsrss.bbc.co.uk/rss/chinese/simp/news/rss.xml" htmlUrl="http://www.google.com/reader/view/feed%2Fhttp%3A%2F%2Fnewsrss.bbc.co.uk%2Frss%2Fchinese%2Fsimp%2Fnews%2Frss.xml"/>
+      <outline text="我爱打折" title="我爱打折" type="rss" xmlUrl="http://bbs.55bbs.com/rss.php?auth=0" htmlUrl="http://bbs.55bbs.com/index.php"/>
+      <outline text="凤凰网~社会" title="凤凰网~社会" type="rss" xmlUrl="http://news.phoenixtv.com/pubres/rss/society/feed.xml" htmlUrl="http://news.ifeng.com/society/"/>
+      <outline text="凤凰网~视点" title="凤凰网~视点" type="rss" xmlUrl="http://news.phoenixtv.com/pubres/rss/opinion/feed.xml" htmlUrl="http://news.ifeng.com/opinion/"/>
+      <outline text="联合早报网 zaobao.com - 言论/社论/天下事新闻" title="联合早报网 zaobao.com - 言论/社论/天下事新闻" type="rss" xmlUrl="http://www.zaobao.com/yl/yl.xml" htmlUrl="http://www.zaobao.com"/>
+      <outline text="凤凰网~大陆" title="凤凰网~大陆" type="rss" xmlUrl="http://news.phoenixtv.com/pubres/rss/mainland/feed.xml" htmlUrl="http://news.ifeng.com/mainland/"/>
+      <outline text="IT社区&amp;媒体平台" title="IT社区&amp;媒体平台" type="rss" xmlUrl="http://www.donews.com/RSS.aspx" htmlUrl="http://www.donews.com"/>
+    </outline>
+    <outline text="tech">
+      <outline text="comman1999" title="comman1999" type="rss" xmlUrl="http://blog.csdn.net/comman1999/Rss.aspx" htmlUrl="http://blog.csdn.net/comman1999"/>
+      <outline text="CSDN Blog：焦点" title="CSDN Blog：焦点" type="rss" xmlUrl="http://blog.csdn.net/feed.aspx?Column=1803f9c1-606f-46c0-a2a8-c55f818d748a" htmlUrl="http://blog.csdn.net/feed.aspx?Column=1803f9c1-606f-46c0-a2a8-c55f818d748a"/>
+      <outline text="...::瀚海星云 AI板::..." title="...::瀚海星云 AI板::..." type="rss" xmlUrl="http://bbs.ustc.edu.cn/cgi/bbsrss?board=AI" htmlUrl="http://bbs.ustc.edu.cn/cgi/go?cgi=bbsdoc&amp;board=AI"/>
+      <outline text="笑对人生，傲立寰宇" title="笑对人生，傲立寰宇" type="rss" xmlUrl="http://cid-1ab3bc993db84fd7.users.api.live.net/Users(1924088832168841175)/Main?$format=rss20" htmlUrl="http://dahuasky.wordpress.com"/>
+      <outline text="CSDN Blog：每日一帖" title="CSDN Blog：每日一帖" type="rss" xmlUrl="http://blog.csdn.net/feed.aspx?Column=20ae1eea-93f5-4b2e-b86f-e7e9b1b4b738" htmlUrl="http://blog.csdn.net/feed.aspx?Column=20ae1eea-93f5-4b2e-b86f-e7e9b1b4b738"/>
+      <outline text="cloudseawang" title="cloudseawang" type="rss" xmlUrl="http://www.cnblogs.com/cloudseawang/Rss.aspx" htmlUrl="http://www.cnblogs.com/cloudseawang/"/>
+      <outline text="CSDN Blog：头条" title="CSDN Blog：头条" type="rss" xmlUrl="http://blog.csdn.net/feed.aspx?Column=f57b94b7-6b0a-42dd-802c-f01de024a3f3" htmlUrl="http://blog.csdn.net/feed.aspx?Column=f57b94b7-6b0a-42dd-802c-f01de024a3f3"/>
+      <outline text="CSDN Blog：专家Blog" title="CSDN Blog：专家Blog" type="rss" xmlUrl="http://blog.csdn.net/feed.aspx?Column=1062eaf3-fe01-49f6-8bf5-3908c5f341e0" htmlUrl="http://blog.csdn.net/feed.aspx?Column=1062eaf3-fe01-49f6-8bf5-3908c5f341e0"/>
+	  
+    </outline>
+	
+	<outline type="rss" title="DogEye www.DogEye.Net" text="DogEye www.DogEye.Net" htmlUrl="http://www.dogeye.net" xmlUrl="http://www.dogeye.net/feed/"/>
+<outline type="rss" title="Beyond the Void" text="Beyond the Void" htmlUrl="http://www.byvoid.com/" xmlUrl="https://www.byvoid.com/blog/feed"/>
+<outline type="rss" title="中文互联网数据研究资讯中心" text="中文互联网数据研究资讯中心" htmlUrl="http://www.199it.com" xmlUrl="http://www.199it.com/feed"/>
+<outline type="rss" title="风雪之隅" text="风雪之隅" htmlUrl="http://www.laruence.com" xmlUrl="http://www.laruence.com/feed"/>
+<outline type="rss" title="Blog of Felix021" text="Blog of Felix021" htmlUrl="http://www.felix021.com/blog/index.php" xmlUrl="http://www.felix021.com/blog/feed.php"/>
+<outline type="rss" title="远行's life" text="远行's life" htmlUrl="http://www.xpc-yx.com" xmlUrl="http://www.xpc-yx.com/feed/"/>
+<outline type="rss" title="Adam's" text="Adam's" htmlUrl="http://creativecommons.org/licenses/by-nc-sa/3.0/" xmlUrl="http://feeds.feedburner.com/adam8157"/>
+<outline type="rss" title="优哉·幽斋" text="优哉·幽斋" htmlUrl="http://liyaos.com/blog" xmlUrl="http://liyaos.com/blog/feed/"/>
+<outline type="rss" title="sparkliang的专栏" text="sparkliang的专栏" htmlUrl="http://blog.csdn.net/sparkliang" xmlUrl="http://blog.csdn.net/sparkliang/rss/list"/>
+<outline type="rss" title="pagefault" text="pagefault" htmlUrl="http://www.pagefault.info" xmlUrl="http://www.pagefault.info/?feed=rss2"/>
+<outline type="rss" title="籟・来・也" text="籟・来・也" htmlUrl="http://www.hhanger.com" xmlUrl="http://www.hhanger.com/?feed=rss2"/>
+<outline type="rss" title="桃花石上书生" text="桃花石上书生" htmlUrl="http://ellazhyy.blog.163.com" xmlUrl="http://ellazhyy.blog.163.com/rss"/>
+<outline type="rss" title="C++博客-首页原创精华区" text="C++博客-首页原创精华区" htmlUrl="http://www.cppblog.com/" xmlUrl="http://cppblog.com/rss.aspx"/>
+<outline type="rss" title="Chun Tian (binghe)" text="Chun Tian (binghe)" htmlUrl="http://tianchunbinghe.blog.163.com" xmlUrl="http://tianchunbinghe.blog.163.com/rss"/>
+<outline type="rss" title="cnBeta.com精彩优秀评论" text="cnBeta.com精彩优秀评论" htmlUrl="http://www.cnbeta.com" xmlUrl="http://cnbeta.feedsportal.com/c/34306/f/665640/index.rss"/>
+<outline type="rss" title="Kangzj" text="Kangzj" htmlUrl="http://blog.kangzj.net" xmlUrl="http://blog.kangzj.net/feed/"/>
+<outline type="rss" title="Matrix67: My Blog" text="Matrix67: My Blog" htmlUrl="http://www.matrix67.com/blog" xmlUrl="http://feed.feedsky.com/matrix67"/>
+<outline type="rss" title="大猫の意淫筆記" text="大猫の意淫筆記" htmlUrl="http://bigc.at" xmlUrl="http://bigc.at/feed"/>
+<outline type="rss" title="蜗窝科技" text="蜗窝科技" htmlUrl="http://www.wowotech.net/" xmlUrl="http://wowotech.net/rss.php"/>
+<outline type="rss" title="小众软件" text="小众软件" htmlUrl="http://www.appinn.com" xmlUrl="http://feed.appinn.com"/>
+<outline type="rss" title="异次元软件世界" text="异次元软件世界" htmlUrl="http://www.iplaysoft.com" xmlUrl="http://feed.iplaysoft.com"/>
+<outline type="rss" title="陋室" text="陋室" htmlUrl="http://sonnewilling.com/" xmlUrl="http://sonnewilling.com/atom.xml"/>
+<outline type="rss" title="CodingLabs" text="CodingLabs" htmlUrl="http://blog.codinglabs.org" xmlUrl="http://blog.codinglabs.org/rss.xml"/>
+<outline type="rss" title="码蜂笔记" text="码蜂笔记" htmlUrl="http://coderbee.net" xmlUrl="http://coderbee.net/index.php/feed"/>
+<outline type="rss" title="DBA Notes" text="DBA Notes" htmlUrl="http://dbanotes.net" xmlUrl="http://dbanotes.net/feed"/>
+<outline type="rss" title="Hawstein's Blog" text="Hawstein's Blog" htmlUrl="http://hawstein.com/" xmlUrl="http://hawstein.com/atom.xml"/>
+<outline type="rss" title="isnowfy" text="isnowfy" htmlUrl="http://www.isnowfy.com" xmlUrl="http://www.isnowfy.com/feed/"/>
+<outline type="rss" title="Keep on Fighting!" text="Keep on Fighting!" htmlUrl="http://yihui.name" xmlUrl="http://yihui.name/cn/feed/"/>
+<outline type="rss" title="MoreWindows" text="MoreWindows" htmlUrl="http://blog.csdn.net/morewindows" xmlUrl="http://blog.csdn.net/MoreWindows/rss/list"/>
+<outline type="rss" title="Resys China" text="Resys China" htmlUrl="http://www.resyschina.com" xmlUrl="http://www.resyschina.com/feed"/>
+<outline type="rss" title="Storiable" text="Storiable" htmlUrl="http://blog.bukn.info" xmlUrl="http://blog.bukn.info/?feed=rss2"/>
+<outline type="rss" title="wzyboy's blog" text="wzyboy's blog" htmlUrl="https://wzyboy.im" xmlUrl="https://wzyboy.im/feed"/>
+<outline type="rss" title="ZRJ" text="ZRJ" htmlUrl="http://zrj.me" xmlUrl="http://zrj.me/feed"/>
+<outline type="rss" title="云风的 BLOG" text="云风的 BLOG" htmlUrl="http://blog.codingnow.com/" xmlUrl="http://blog.codingnow.com/atom.xml"/>
+<outline type="rss" title="博客园-lulu Studio" text="博客园-lulu Studio" htmlUrl="http://cnblogs.com" xmlUrl="http://cnblogs.com/QLeelulu/rss"/>
+<outline type="rss" title="博客园_Apocalypsa" text="博客园_Apocalypsa" htmlUrl="http://cnblogs.com" xmlUrl="http://cnblogs.com/figure9/rss"/>
+<outline type="rss" title="博客园_刘浩de技术博客" text="博客园_刘浩de技术博客" htmlUrl="http://cnblogs.com" xmlUrl="http://cnblogs.com/liuhao/rss"/>
+<outline type="rss" title="天空之珵" text="天空之珵" htmlUrl="http://blog.sina.com.cn/ciciatc" xmlUrl="http://blog.sina.com.cn/rss/1676594533.xml"/>
+<outline type="rss" title="孩子气 | C++, Lua, 大连,程序员" text="孩子气 | C++, Lua, 大连,程序员" htmlUrl="http://sunxiunan.com" xmlUrl="http://sunxiunan.com/?feed=rss2"/>
+<outline type="rss" title="张佳玮写东西的地方" text="张佳玮写东西的地方" htmlUrl="http://zhangjiawei.blog.tianya.cn/" xmlUrl="http://blog.tianya.cn/blogger/rss.asp?BlogID=38484"/>
+<outline type="rss" title="无知的 TonySeek" text="无知的 TonySeek" htmlUrl="https://blog.tonyseek.com/" xmlUrl="https://blog.tonyseek.com/atom.xml"/>
+<outline type="rss" title="木遥的窗子" text="木遥的窗子" htmlUrl="http://blog.farmostwood.net" xmlUrl="http://blog.farmostwood.net/feed"/>
+<outline type="rss" title="梁斌的博客" text="梁斌的博客" htmlUrl="http://blog.sina.com.cn/pennyliang05g" xmlUrl="http://blog.sina.com.cn/rss/1497035431.xml"/>
+<outline type="rss" title="火丁笔记" text="火丁笔记" htmlUrl="http://huoding.com" xmlUrl="http://huoding.com/feed"/>
+<outline type="rss" title="白板报" text="白板报" htmlUrl="http://www.baibanbao.net" xmlUrl="http://www.baibanbao.net/feed/"/>
+<outline type="rss" title="程序人生" text="程序人生" htmlUrl="http://www.programlife.net" xmlUrl="http://www.programlife.net/feed"/>
+<outline type="rss" title="结构之法 算法之道" text="结构之法 算法之道" htmlUrl="http://blog.csdn.net/v_july_v" xmlUrl="http://blog.csdn.net/v_JULY_v/rss/list"/>
+<outline type="rss" title="统计之都" text="统计之都" htmlUrl="http://cos.name" xmlUrl="http://cos.name/feed/"/>
+<outline type="rss" title="老三" text="老三" htmlUrl="http://blog.sina.com.cn/usobama" xmlUrl="http://blog.sina.com.cn/rss/1880254557.xml"/>
+<outline type="rss" title="考据癖" text="考据癖" htmlUrl="http://localhost-8080.com" xmlUrl="http://localhost-8080.com/feed/"/>
+<outline type="rss" title="逸仙时空：程序设计竞赛" text="逸仙时空：程序设计竞赛" htmlUrl="http://bbs.sysu.edu.cn/bbsdoc?board=ACMICPC" xmlUrl="http://bbs.sysu.edu.cn/rss/ACMICPC.xml"/>
+<outline type="rss" title="腾讯安全响应中心" text="腾讯安全响应中心" htmlUrl="http://security.tencent.com" xmlUrl="http://security.tencent.com/index.php/feed/blog/0"/>
+<outline type="rss" title="酷壳 - CoolShell.cn" text="酷壳 - CoolShell.cn" htmlUrl="http://coolshell.cn" xmlUrl="http://coolshell.cn/feed"/>
+<outline type="rss" title="阅乎" text="阅乎" htmlUrl="http://feeds.lepture.com" xmlUrl="http://feeds.lepture.com/yuehu"/>
+<outline type="rss" title="阮一峰的网络日志" text="阮一峰的网络日志" htmlUrl="http://www.ruanyifeng.com/blog/" xmlUrl="http://feeds.feedburner.com/ruanyifeng"/>
+<outline type="rss" title="风一样的年代" text="风一样的年代" htmlUrl="http://www.hangxyz.com" xmlUrl="http://www.hangxyz.com/feed"/>
+<outline type="rss" title="Strongart(思壮尔)如是说" text="Strongart(思壮尔)如是说" htmlUrl="http://blog.sina.com.cn/strongart" xmlUrl="http://blog.sina.com.cn/rss/1215048895.xml"/>
+<outline type="rss" title="博客园-lulu Studio" text="博客园-lulu Studio" htmlUrl="http://feed.cnblogs.com" xmlUrl="http://feed.cnblogs.com/blog/u/30181/rss"/>
+<outline type="rss" title="博客园_Apocalypsa" text="博客园_Apocalypsa" htmlUrl="http://feed.cnblogs.com" xmlUrl="http://feed.cnblogs.com/blog/u/42441/rss"/>
+<outline type="rss" title="博客园_Cat in dotNET" text="博客园_Cat in dotNET" htmlUrl="http://feed.cnblogs.com" xmlUrl="http://feed.cnblogs.com/blog/u/22107/rss"/>
+<outline type="rss" title="博客园_一个人的旅行" text="博客园_一个人的旅行" htmlUrl="http://feed.cnblogs.com" xmlUrl="http://feed.cnblogs.com/blog/u/80995/rss"/>
+<outline type="rss" title="FT中文网一周十大热门文章" text="FT中文网一周十大热门文章" htmlUrl="http://www.ftchinese.com/" xmlUrl="http://www.ftchinese.com/rss/hotstoryby7day"/>
+<outline type="rss" title="四号程序员四号程序员" text="四号程序员四号程序员" htmlUrl="http://www.coder4.com" xmlUrl="http://www.coder4.com/feed"/>
+<outline type="rss" title="博客园_f_x_p" text="博客园_f_x_p" htmlUrl="http://feed.cnblogs.com" xmlUrl="http://feed.cnblogs.com/blog/u/114251/rss"/>
+<outline type="rss" title="滿座衣冠似雪" text="滿座衣冠似雪" htmlUrl="http://blog.163.com/jonas_hwang" xmlUrl="http://blog.163.com/jonas_hwang/rss"/>
+<outline type="rss" title="知乎每日精选" text="知乎每日精选" htmlUrl="http://www.zhihu.com" xmlUrl="http://www.zhihu.com/rss"/>
+<outline type="rss" title="陈硕的Blog" text="陈硕的Blog" htmlUrl="http://blog.csdn.net/solstice" xmlUrl="http://blog.csdn.net/solstice/rss/list"/>
+<outline type="rss" title="CSDN 极客头条(最新)" text="CSDN 极客头条(最新)" htmlUrl="http://geek.csdn.net" xmlUrl="http://geek.csdn.net/news/rss"/>
+<outline type="rss" title="志趣高雅，安贫乐道" text="志趣高雅，安贫乐道" htmlUrl="http://blog.sina.com.cn/zza62088208" xmlUrl="http://blog.sina.com.cn/rss/1235954402.xml"/>
+<outline type="rss" title="老罗的Android之旅" text="老罗的Android之旅" htmlUrl="http://blog.csdn.net/luoshengyang" xmlUrl="http://blog.csdn.net/Luoshengyang/rss/list"/>
+<outline type="rss" title="十大热门话题" text="十大热门话题" htmlUrl="http://www.newsmth.net/nForum" xmlUrl="http://www.newsmth.net/nForum/rss/topten"/>
+<outline type="rss" title="孕峰" text="孕峰" htmlUrl="http://www.yunkeji.com" xmlUrl="http://yunkeji.com/?feed=rss2"/>
+<outline type="rss" title="博客园_刘浩de技术博客" text="博客园_刘浩de技术博客" htmlUrl="http://feed.cnblogs.com" xmlUrl="http://feed.cnblogs.com/blog/u/91139/rss"/>
+<outline type="rss" title="華旻豪" text="華旻豪" htmlUrl="http://www.huaminhao.com" xmlUrl="http://www.huaminhao.com/feed/"/>
+<outline type="rss" title="知乎日报" text="知乎日报" htmlUrl="http://www.zhihudaily.net" xmlUrl="http://feeds.feedburner.com/zhihu-daily"/>
+<outline type="rss" title="糗事百科" text="糗事百科" htmlUrl="http://www.qiushibaike.com/" xmlUrl="http://feed.feedsky.com/qiushi"/>
+<outline type="rss" title="It Talks-魏武挥的blog" text="It Talks-魏武挥的blog" htmlUrl="http://weiwuhui.com" xmlUrl="http://feed.feedsky.com/ittalks"/>
+<outline type="rss" title="创意– 创意产品,创意设计,创意生活–先看看" text="创意– 创意产品,创意设计,创意生活–先看看" htmlUrl="http://www.xiankankan.com" xmlUrl="http://www.xiankankan.com/index.php/feed"/>
+<outline type="rss" title="实时热点排行榜" text="实时热点排行榜" htmlUrl="http://top.baidu.com/buzz?p=top10" xmlUrl="http://top.baidu.com/rss_xml.php?p=top10"/>
+<outline type="rss" title="左岸读书_blog" text="左岸读书_blog" htmlUrl="http://www.zreading.cn" xmlUrl="http://feed.feedsky.com/clzzxf"/>
+<outline type="rss" title="有趣的广告设计- poboo.com" text="有趣的广告设计- poboo.com" htmlUrl="http://www.poboo.com" xmlUrl="http://www.poboo.com/feed"/>
+<outline type="rss" title="科学松鼠会" text="科学松鼠会" htmlUrl="http://songshuhui.net" xmlUrl="http://songshuhui.net/feed"/>
+<outline type="rss" title="译言精选-摘要" text="译言精选-摘要" htmlUrl="http://select.yeeyan.org" xmlUrl="http://feed.feedsky.com/yeeyan-select"/>
+<outline type="rss" title="電腦玩物" text="電腦玩物" htmlUrl="http://www.playpcesor.com/" xmlUrl="http://feeds.feedburner.com/playpc"/>
+
+  </body>
+</opml>
