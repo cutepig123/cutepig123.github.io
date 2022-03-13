@@ -115,3 +115,9 @@ F:\Users\cutepig\Downloads\rclone-v1.57.0-windows-amd64>rclone mount test:/ a:
 2022/03/03 19:05:09 Fatal error: failed to mount FUSE fs: mount stopped before calling Init: mount failed: cgofuse: cannot find winfsp
 ```
 
+# 相关技术
+
+winfuse
+
+winfsp
+
