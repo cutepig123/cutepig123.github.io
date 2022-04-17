@@ -263,4 +263,22 @@ Grafana官方为我们提供了很多dashboard页面，可直接下载使用。�
 
  至此Prometheus监控Windows机器，配置完成。
 
-# 如何设置alert？
+# TODO：如何设置alert？
+
+# TODO：实际案例
+
+？？
+
+
+
+# TODO：相关协议
+
+# Ref
+
+https://songjiayang.gitbooks.io/prometheus/
+
+https://cloud.tencent.com/developer/article/1919007
+
+https://zhuanlan.zhihu.com/p/355884791
+
+https://yunlzheng.gitbook.io/prometheus-book
