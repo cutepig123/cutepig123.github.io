@@ -126,7 +126,7 @@ https://youtu.be/NGCUfZhxY9U
 
 https://github.com/bwaldvogel/neighbourhood
 
-
+每个设备弄一个boolean sensor?累死我啊。因为sensor是动态获取的
 
 
 
