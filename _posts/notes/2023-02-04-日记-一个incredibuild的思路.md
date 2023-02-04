@@ -1,0 +1,9 @@
+20230202
+incredibuild的几个思路
+
+idea1。fastbuild之类
+把vcproj转换成fastbuild proj，然后全部委托给fastbuild
+
+idea2。监视创建cl进程，转发给其他机器上的cl进程
+
+todo，研究一下现在的incredibuild是怎么做的
