@@ -175,15 +175,15 @@ handler通過如下代碼注冊
 ```go
 // RegisterRoutes registers routes for this handler on the given router
 func (aH *APIHandler) RegisterRoutes(router *mux.Router) {
-	aH.handleFunc(router, aH.getTrace, "/traces/{%s}", traceIDParam).Methods(http.MethodGet)
-	aH.handleFunc(router, aH.archiveTrace, "/archive/{%s}", traceIDParam).Methods(http.MethodPost)
+	aH.handleFunc(router, aH.getTrace, "/traces/{ %s}", traceIDParam).Methods(http.MethodGet)
+	aH.handleFunc(router, aH.archiveTrace, "/archive/{ %s}", traceIDParam).Methods(http.MethodPost)
     // 這是我們現在看的，把"/traces"的handler設置爲aH.search函數
 	aH.handleFunc(router, aH.search, "/traces").Methods(http.MethodGet)
 	aH.handleFunc(router, aH.getServices, "/services").Methods(http.MethodGet)
 	// TODO change the UI to use this endpoint. Requires ?service= parameter.
 	aH.handleFunc(router, aH.getOperations, "/operations").Methods(http.MethodGet)
 	// TODO - remove this when UI catches up
-	aH.handleFunc(router, aH.getOperationsLegacy, "/services/{%s}/operations", serviceParam).Methods(http.MethodGet)
+	aH.handleFunc(router, aH.getOperationsLegacy, "/services/{ %s}/operations", serviceParam).Methods(http.MethodGet)
 	aH.handleFunc(router, aH.dependencies, "/dependencies").Methods(http.MethodGet)
 	aH.handleFunc(router, aH.latencies, "/metrics/latencies").Methods(http.MethodGet)
 	aH.handleFunc(router, aH.calls, "/metrics/calls").Methods(http.MethodGet)
